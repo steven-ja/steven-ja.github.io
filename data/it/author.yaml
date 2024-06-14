@@ -1,0 +1,21 @@
+# some information about you
+name: "Stefano Giannini"
+nickname: "Stefano"
+# greeting message before your name. it will default to "Hi! I am" if not provided
+greeting: "Hi, I am"
+image: "images/author/profile.jpg"
+# give your some contact information. they will be used in the footer
+contactInfo:
+  email: "..."
+  phone: "..."
+  github: rageSpin
+  linkedin: stefano-giannini-33511197
+  researchgate: Stefano Giannini
+
+# some summary about what you do
+summary:
+  - I am a Data Scientist
+  - I am a Machine Learning Engineer
+  - I love Physics and Maths
+  - I like open-source projects
+  - I like challenges
