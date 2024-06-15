@@ -11,63 +11,63 @@ section:
 # Your experiences
 experiences:
 - company:
-    name: Example Co.
-    url: "https://www.example.com"
-    location: Dhaka Branch
-    logo: /images/sections/experiences/company1.jpg
+    name: Stellantis
+    url: "https://www.stellantis.com"
+    location: Orbassano, Italy
+    logo: /images/sections/experience/stellantis_logo.png
     # Can optionally show a different logo for dark theme
     # darkLogo: /images/sections/experiences/company1.jpg
     # company overview
-    overview: Example Co. is a widely recognized company for cloud-native development. It builds tools for Kubernetes.
+    overview: Research Center for one of the biggest car-maker in Europe.
   positions:
-  - designation: Senior Software Engineer
-    start: Nov 2019
+  - designation: Senior Data Scientist
+    start: Feb 2023
     # don't provide end date if you are currently working there. It will be replaced by "Present"
-    # end: Dec 2020
+    end: Nov 2023
     # give some points about what was your responsibilities at the company.
     responsibilities:
     - Design and develop XYZ tool for ABC task
     - Design, develop and manage disaster recovery tool [Xtool](https://www.example.com) that backup Kubernetes volumes, databases, and cluster's resource definition.
-    - Lead backend team.
+    - Lead 
 
-  - designation: Junior Software Engineer
-    start: Nov 2017
-    end: Oct 2019
+  - designation: Junior Data Scientist
+    start: Aug 2022
+    end: Feb 2023
     responsibilities:
-    - Implement and test xyz feature for abc tool.
-    - Support client for abc tool.
-    - Learn k,d,w technology for xyz.
+    - Implement possible in-car demo for tailored in-cabin user experience.
+    - Computer Vision _(Video Activity Classification, Pose Landmark Detection, 2D/ 3D ConvNet, RNN)_ 
+    - GUI prototyping from back-end scratch (QT or imGUI frameworks)
 
 - company:
-    name: PreExample Co.
-    url: "https://www.example.com"
-    location: Nowhere
-    logo: /images/sections/experiences/company2.jpg
+    name: Smairt Hero
+    url: "#"
+    location: Turin, Italy
+    logo: /images/sections/experience/smairthero.png
     # Can optionally show a different logo for dark theme
     # darkLogo: /images/sections/experiences/company2.jpg
-    overview: PreExample Co. is a gateway company to enter into Example co. So, nothing special here.
+    overview: Startup building healthcare wearable device for emergency detections
   positions:
-  - designation: Software Engineer
-    start: March 2016
-    end: May 2017
+  - designation: Data Scientist (& Data Engineer)
+    start: Nov 2019
+    end: Jun 2021
     responsibilities:
-    - Write lots of example codes.
-    - Read lots of examples.
-    - See lots of example videos.
+    - Analysis of data from a healthcare wearable device (Fall Detection, Sleeping, REM phases)
+    - Data ETL using PySpark and Cassandra (NoSQL DB)
+    - Build automated analysis process for every users in the DB with Microsoft _Azure_ Cloud
 
 - company:
-    name: Intern Counting Company (ICC).
-    url: "https://www.example.com"
-    location: Intern Land
-    logo: /images/sections/experiences/company3.jpg
+    name: Soave Asset Management
+    url: "#"
+    location: Lugano, Switzerland
+    logo: images/sections/experience/Soave_logo.jpg
     # Can optionally show a different logo for dark theme
     # darkLogo: /images/sections/experiences/company3.jpg
-    overview: Intern counting Company (ICC) is responsible for counting worldwide intern Engineers.
+    overview: Blockchain and Data Analyst responsible for the technical analysis of crypto to choose in a investment portfolio.
   positions:
-  - designation: Intern
-    start: Jun 2015
-    end: Jan 2016
+  - designation: Blockchain Data Analyst
+    start: Dec 2017
+    end: Apr 2019
     responsibilities:
-    - Count lost of interns.
-    - Count more interns.
-    - Count me as an intern.
+    - Analysing white papers
+    - Evaluating profitability of Crypto ICO
+    - Cash Flow and code analysist of the blockchain technology behind the trendies crypto

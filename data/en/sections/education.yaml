@@ -10,26 +10,26 @@ section:
   # hideTitle: true
 
 degrees:
-- name: Ph.D in Quantum Cryptography
+- name: M.Sc. in Nanotechnology
   icon: fa-microscope
-  timeframe: 2016-2020
+  timeframe: 2021-2024
   institution:
-    name: ABC University of Technology
-    url: "#"
-    logo: /images/sections/education/tech_college.png
+    name: Polytechnic of Turin
+    url: "https://www.polito.it/en/education/master-s-degree-programmes/nanotechnologies-for-icts"
+    logo: /images/sections/education/politecnico_logo.png
     # Can optionally show a different logo for dark theme
     # darkLogo: /images/sections/education/tech_college.png
   grade: #(optional)
     scale: CGPA
-    achieved: 3.6
-    outOf: 4
-  publications: #(optional)
-  - title: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    url: "#"
-  - title: Fusce eu augue ut odio porttitor pulvinar.
-    url: "#"
-  - title: Nullam vitae orci tincidunt purus viverra pulvinar.
-    url: "#"
+    achieved: 4.5
+    outOf: 5
+  # publications: #(optional)
+  # - title: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  #   url: "#"
+  # - title: Fusce eu augue ut odio porttitor pulvinar.
+  #   url: "#"
+  # - title: Nullam vitae orci tincidunt purus viverra pulvinar.
+  #   url: "#"
 - name: B.Sc. in Physics
   icon: fa-graduation-cap
   timeframe: 2016-2021
