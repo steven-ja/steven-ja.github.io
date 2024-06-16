@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Forecasting on Stefano&#39;s Blog</title>
+    <link>http://localhost:1313/tags/forecasting/</link>
+    <description>Recent content in Forecasting on Stefano&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 16 Jun 2024 00:00:00 +0100</lastBuildDate><atom:link href="http://localhost:1313/tags/forecasting/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>Microsoft Stock Prediction using LSTM or GRU</title>
+      <link>http://localhost:1313/posts/finance/stock_prediction/gru/</link>
+      <pubDate>Sun, 16 Jun 2024 00:00:00 +0100</pubDate>
+      
+      <guid>http://localhost:1313/posts/finance/stock_prediction/gru/</guid>
+      <description>Poem &amp;rsquo; &amp;hellip; &#39;
+Message to take home </description>
+    </item>
+    
+    
+  </channel>
+</rss>

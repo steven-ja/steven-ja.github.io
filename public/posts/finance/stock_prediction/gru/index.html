@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-    <title>Machine Learning</title>
+    <title>Microsoft Stock Prediction using LSTM or GRU</title>
     <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -23,20 +23,27 @@
 
   <link rel="icon" type="image/png" href="/images/site/favicon_hub02d7508a1c89b2b7812eab204efeb9a_4223_42x0_resize_box_3.png" />
 
-<meta property="og:url" content="http://localhost:1313/posts/machine-learning/">
+<meta property="og:url" content="http://localhost:1313/posts/finance/stock_prediction/gru/">
   <meta property="og:site_name" content="Stefano&#39;s Blog">
-  <meta property="og:title" content="Machine Learning">
+  <meta property="og:title" content="Microsoft Stock Prediction using LSTM or GRU">
+  <meta property="og:description" content="Short Stock price analysis on MSFT, then a prediction is tested using GRU">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-06-16T00:00:00+01:00">
+    <meta property="article:modified_time" content="2024-06-16T00:00:00+01:00">
+    <meta property="article:tag" content="Finance">
+    <meta property="article:tag" content="Deep Learning">
+    <meta property="article:tag" content="Forecasting">
 
     
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Machine Learning">
+  <meta name="twitter:title" content="Microsoft Stock Prediction using LSTM or GRU">
+  <meta name="twitter:description" content="Short Stock price analysis on MSFT, then a prediction is tested using GRU">
 
     
     
-<meta name="description" content="Machine Learning" />
+<meta name="description" content="Short Stock price analysis on MSFT, then a prediction is tested using GRU" />
 
 
     
@@ -273,9 +280,12 @@
   
   
   
+    
+    
+  
   
     
-    <li><a class=" list-link" href="/posts/finance/stock_prediction/gru/" title="Poems">Poems</a></li>
+    <li><a class="active list-link" href="/posts/finance/stock_prediction/gru/" title="Poems">Poems</a></li>
   
 
 
@@ -302,12 +312,12 @@
         <div class="author-profile ms-auto align-self-lg-center">
           <img class="rounded-circle" src='/images/author/profile_hu8a567cefac8c1a165d433ac0796ac418_3088978_120x120_fit_q75_box.jpg' alt="Author Image">
           <h5 class="author-name">Stefano Giannini</h5>
-          <p class="text-muted">Monday, January 1, 1 | 0 minutes</p>
+          <p class="text-muted">Sunday, June 16, 2024 | 1 minute</p>
         </div>
         
         
         <div class="title">
-          <h1>Machine Learning</h1>
+          <h1>Microsoft Stock Prediction using LSTM or GRU</h1>
         </div>
 
         
@@ -316,12 +326,36 @@
           <div class="tags">
   <ul style="padding-left: 0;">
     
+    
+    <li class="rounded"><a href="/tags/finance/" class="btn btn-sm btn-info">Finance</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/deep-learning/" class="btn btn-sm btn-info">Deep Learning</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/forecasting/" class="btn btn-sm btn-info">Forecasting</a></li>
+    
   </ul>
 </div>
 
         
         <div class="post-content" id="post-content">
-          
+          <h2 id="pick-a-stock-commodity">Pick a stock commodity</h2>
+<p>&rsquo;
+&hellip;
+'</p>
+<h2 id="statistical-analysis-on-the-price">Statistical Analysis on the price</h2>
+<h2 id="statistical-analysis-on-the-returns">Statistical Analysis on the returns</h2>
+<h2 id="gru-model">GRU Model</h2>
+<h3 id="init">Init</h3>
+<h3 id="training">Training</h3>
+<h3 id="testing-metrics">Testing Metrics</h3>
+<ul>
+<li>mean squared error</li>
+</ul>
+<h2 id="lstm-comparison">LSTM Comparison</h2>
+<h2 id="possible-trading-performance">Possible trading performance</h2>
+
         </div>
 
         
@@ -331,36 +365,36 @@
           
             <strong>Share on:</strong>
             
-            <a class="btn icon-button bg-facebook" href="https://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2f" target="_blank">
+            <a class="btn icon-button bg-facebook" href="https://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2ffinance%2fstock_prediction%2fgru%2f" target="_blank">
               <i class="fab fa-facebook"></i>
             </a>
             
             
-                <a class="btn icon-button bg-twitter" href="https://twitter.com/share?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2f&text=Machine%20Learning&via=Stefano%27s%20Blog" target="_blank">
+                <a class="btn icon-button bg-twitter" href="https://twitter.com/share?url=http%3a%2f%2flocalhost%3a1313%2fposts%2ffinance%2fstock_prediction%2fgru%2f&text=Microsoft%20Stock%20Prediction%20using%20LSTM%20or%20GRU&via=Stefano%27s%20Blog" target="_blank">
                   <i class="fab fa-twitter"></i>
                 </a>
             
             
-                <a  class="btn icon-button bg-reddit" href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2f&title=Machine%20Learning" target="_blank">
+                <a  class="btn icon-button bg-reddit" href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2ffinance%2fstock_prediction%2fgru%2f&title=Microsoft%20Stock%20Prediction%20using%20LSTM%20or%20GRU" target="_blank">
                   <i class="fab fa-reddit"></i>
                 </a>
             
             
             
             
-                <a class="btn icon-button bg-linkedin" href="https://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2f&title=Machine%20Learning" target="_blank">
+                <a class="btn icon-button bg-linkedin" href="https://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fposts%2ffinance%2fstock_prediction%2fgru%2f&title=Microsoft%20Stock%20Prediction%20using%20LSTM%20or%20GRU" target="_blank">
                   <i class="fab fa-linkedin"></i>
                 </a>
             
             
              
             
-                 <a class="btn icon-button bg-whatsapp" href="https://api.whatsapp.com/send?text=Machine%20Learning http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2f" target="_blank">
+                 <a class="btn icon-button bg-whatsapp" href="https://api.whatsapp.com/send?text=Microsoft%20Stock%20Prediction%20using%20LSTM%20or%20GRU http%3a%2f%2flocalhost%3a1313%2fposts%2ffinance%2fstock_prediction%2fgru%2f" target="_blank">
                   <i class="fab fa-whatsapp"></i>
                 </a>
             
             
-                <a class="btn icon-button" href="mailto:?subject=Machine%20Learning&body=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2f" target="_blank">
+                <a class="btn icon-button" href="mailto:?subject=Microsoft%20Stock%20Prediction%20using%20LSTM%20or%20GRU&body=http%3a%2f%2flocalhost%3a1313%2fposts%2ffinance%2fstock_prediction%2fgru%2f" target="_blank">
                   <i class="fas fa-envelope-open-text"></i>
                 </a>
             
@@ -374,7 +408,7 @@
           
           <div class="col-md-6 btn-improve-page">
              
-               <a href="https://github.com/hugo-toha/hugo-toha.github.io/edit/main/content/posts%5cmachine%20learning%5cindex.md" title="Improve this page" target="_blank" rel="noopener">
+               <a href="https://github.com/hugo-toha/hugo-toha.github.io/edit/main/content/posts%5cfinance%5cstock_prediction%5cGRU%5cindex.md" title="Improve this page" target="_blank" rel="noopener">
             
                 <i class="fas fa-code-branch"></i>
                 Improve this page
@@ -411,10 +445,20 @@
   
 
   
+    
+    
+  
   
 
 
 <div class="row next-prev-navigator">
+  
+    <div class="col-md-6 previous-article">
+      <a href="/posts/physics/percolation/" title="Percolation" class="btn filled-button">
+        <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
+        <div class="next-prev-text">Percolation</div>
+      </a>
+    </div>
   
   
 </div>
@@ -445,7 +489,22 @@
       <h5 class="text-center ps-3">Table of Contents</h5>
       <hr>
       <div class="toc">
-        <nav id="TableOfContents"></nav>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#pick-a-stock-commodity">Pick a stock commodity</a></li>
+    <li><a href="#statistical-analysis-on-the-price">Statistical Analysis on the price</a></li>
+    <li><a href="#statistical-analysis-on-the-returns">Statistical Analysis on the returns</a></li>
+    <li><a href="#gru-model">GRU Model</a>
+      <ul>
+        <li><a href="#init">Init</a></li>
+        <li><a href="#training">Training</a></li>
+        <li><a href="#testing-metrics">Testing Metrics</a></li>
+      </ul>
+    </li>
+    <li><a href="#lstm-comparison">LSTM Comparison</a></li>
+    <li><a href="#possible-trading-performance">Possible trading performance</a></li>
+  </ul>
+</nav>
       </div>
     </div>
     
