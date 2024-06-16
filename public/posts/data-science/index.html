@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-    <title>Search Results</title>
+    <title></title>
     <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -23,31 +23,21 @@
 
   <link rel="icon" type="image/png" href="/images/site/favicon_hub02d7508a1c89b2b7812eab204efeb9a_4223_42x0_resize_box_3.png" />
 
-<meta property="og:url" content="http://localhost:1313/search/">
+<meta property="og:url" content="http://localhost:1313/posts/data-science/">
   <meta property="og:site_name" content="Stefano&#39;s Blog">
-  <meta property="og:title" content="Search Results">
-  <meta property="og:description" content="This file exists solely to respond to /search URL with the related search layout template.
-No content shown here is rendered, all content is based in the template layouts/page/search.html
-Setting a very low sitemap priority will tell search engines this is not important content.
-This implementation uses Fusejs and mark.js
-Initial setup Search depends on additional output content type of JSON in config.toml ``` [outputs] home = [“HTML”, “JSON”] ```">
+  <meta property="og:title" content="Stefano&#39;s Blog">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
-    <meta property="article:section" content="search">
-    <meta property="article:published_time" content="2010-06-08T08:06:25+06:00">
-    <meta property="article:modified_time" content="2010-06-08T08:06:25+06:00">
+    <meta property="article:section" content="posts">
 
     
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Search Results">
-  <meta name="twitter:description" content="This file exists solely to respond to /search URL with the related search layout template.
-No content shown here is rendered, all content is based in the template layouts/page/search.html
-Setting a very low sitemap priority will tell search engines this is not important content.
-This implementation uses Fusejs and mark.js
-Initial setup Search depends on additional output content type of JSON in config.toml ``` [outputs] home = [“HTML”, “JSON”] ```">
+  <meta name="twitter:title" content="Stefano&#39;s Blog">
 
     
-     
+    
+<meta name="description" content="" />
+
 
     
 
@@ -69,7 +59,7 @@ Initial setup Search depends on additional output content type of JSON in config
     </script>
   </head>
 
-  <body class="type-search kind-page" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
+  <body class="type-posts kind-page" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
     <div class="container-fluid bg-secondary wrapper">
       
       
@@ -241,11 +231,6 @@ Initial setup Search depends on additional output content type of JSON in config
 
       
       
-  
-  
-    
-  
-
   <section class="sidebar-section" id="sidebar-section">
     <div class="sidebar-holder">
       <div class="sidebar" id="sidebar">
@@ -254,7 +239,7 @@ Initial setup Search depends on additional output content type of JSON in config
         </form>
         <div class="sidebar-tree">
           <ul class="tree" id="tree">
-            <li id="list-heading"><a href="/search" data-filter="all">Search</a></li>
+            <li id="list-heading"><a href="/posts/" data-filter="all">Posts</a></li>
             <div class="subtree">
                 
   
@@ -264,6 +249,33 @@ Initial setup Search depends on additional output content type of JSON in config
   
     
     <li><a class=" list-link" href="/posts/introduction/index.md/" title="Introduction">Introduction</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/montecarlo_simulation/" title="Monte Carlo">Monte Carlo</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/percolation/" title="Physics">Physics</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/poems/stacy/" title="Poems">Poems</a></li>
   
 
 
@@ -277,51 +289,168 @@ Initial setup Search depends on additional output content type of JSON in config
 
       
       
-<script>
-  document.body.classList.replace('kind-page', 'kind-section');
-</script>
 <section class="content-section" id="content-section">
-  <div class="content container-fluid" id="content">
-    <div class="container-fluid post-card-holder" id="post-card-holder">
-      <div id="search-results" style="display: flex; flex-wrap: wrap;">
+  <div class="content">
+    <div class="container p-0 read-area">
+      
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/images/default-hero.jpg);'>
+      </div>
 
-        <script id="search-result-template" type="text/x-js-template">
-          <div class="post-card">
-              <div class="card">
-                <div class="card-head">
-                  <a href="${link}" class="post-card-link">
-                  <img class="card-img-top" src="${hero}" alt="Card Heading Image">
-                  </a>
-                </div>
-                <div class="card-body">
-                  <a href="${link}" class="post-card-link">
-                    <h5 class="card-title">${title}</h5>
-                    <p class="card-text post-summary">${summary}</p>
-                  </a>
-                  
-                  <div class="tags">
-                    <ul style="padding-left: 0;">
-                    ${tags}
-                    </ul>
-                  </div>
-                  
-                </div>
-                <div class="card-footer">
-                  <span class="float-start">${date}</span>
-                  <a href="${link}" class="float-end btn btn-outline-info btn-sm">Read</a>
-                </div>
-              </div>
+      
+      <div class="page-content">
+        
+        <div class="author-profile ms-auto align-self-lg-center">
+          <img class="rounded-circle" src='/images/author/profile_hu8a567cefac8c1a165d433ac0796ac418_3088978_120x120_fit_q75_box.jpg' alt="Author Image">
+          <h5 class="author-name">Stefano Giannini</h5>
+          <p class="text-muted">Monday, January 1, 1 | 0 minutes</p>
+        </div>
+        
+        
+        <div class="title">
+          <h1></h1>
+        </div>
+
+        
+
+        
+          <div class="tags">
+  <ul style="padding-left: 0;">
+    
+  </ul>
+</div>
+
+        
+        <div class="post-content" id="post-content">
+          
+        </div>
+
+        
+        <div class="row ps-3 pe-3">
+        
+          <div class="col-md-6 share-buttons">
+          
+            <strong>Share on:</strong>
+            
+            <a class="btn icon-button bg-facebook" href="https://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2fdata-science%2f" target="_blank">
+              <i class="fab fa-facebook"></i>
+            </a>
+            
+            
+                <a class="btn icon-button bg-twitter" href="https://twitter.com/share?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fdata-science%2f&text=&via=Stefano%27s%20Blog" target="_blank">
+                  <i class="fab fa-twitter"></i>
+                </a>
+            
+            
+                <a  class="btn icon-button bg-reddit" href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fdata-science%2f&title=" target="_blank">
+                  <i class="fab fa-reddit"></i>
+                </a>
+            
+            
+            
+            
+                <a class="btn icon-button bg-linkedin" href="https://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fdata-science%2f&title=" target="_blank">
+                  <i class="fab fa-linkedin"></i>
+                </a>
+            
+            
+             
+            
+                 <a class="btn icon-button bg-whatsapp" href="https://api.whatsapp.com/send?text= http%3a%2f%2flocalhost%3a1313%2fposts%2fdata-science%2f" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+            
+            
+                <a class="btn icon-button" href="mailto:?subject=&body=http%3a%2f%2flocalhost%3a1313%2fposts%2fdata-science%2f" target="_blank">
+                  <i class="fas fa-envelope-open-text"></i>
+                </a>
+            
+          
           </div>
-        </script>
+
+        
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/hugo-toha/hugo-toha.github.io/edit/main/content/posts%5cdata%20science%5cindex.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+  
+</div>
+
+      <hr />
+
+      
+      
+
+      
+      
 
       </div>
     </div>
   </div>
+  
+  <a id="scroll-to-top" class="btn" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Scroll to top">
+    <i class="fas fa-chevron-circle-up"></i>
+  </a>
 </section>
 
 
       
-       
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center ps-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents"></nav>
+      </div>
+    </div>
+    
+  </section>
+
     </div>
 
     
