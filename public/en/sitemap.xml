@@ -104,14 +104,8 @@
     <lastmod>2010-06-08T08:06:25+06:00</lastmod>
     <priority>0.1</priority>
   </url><url>
-    <loc>http://localhost:1313/tags/basic/</loc>
-    <lastmod>2024-06-08T08:06:25+06:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/categories/basic/</loc>
-    <lastmod>2024-06-08T08:06:25+06:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2024-06-08T08:06:25+06:00</lastmod>
+    <lastmod>2024-06-12T08:06:25+06:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="it"
@@ -123,17 +117,23 @@
                 href="http://localhost:1313/categories/"
                 />
   </url><url>
-    <loc>http://localhost:1313/posts/introduction/index.md/</loc>
-    <lastmod>2024-06-08T08:06:25+06:00</lastmod>
+    <loc>http://localhost:1313/posts/physics/montecarlo_simulation/</loc>
+    <lastmod>2024-06-12T08:06:25+06:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/multi-lingual/</loc>
-    <lastmod>2024-06-08T08:06:25+06:00</lastmod>
+    <loc>http://localhost:1313/categories/physics/</loc>
+    <lastmod>2024-06-12T08:06:25+06:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2024-06-08T08:06:25+06:00</lastmod>
+    <lastmod>2024-06-12T08:06:25+06:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/science/</loc>
+    <lastmod>2024-06-12T08:06:25+06:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/statistics/</loc>
+    <lastmod>2024-06-12T08:06:25+06:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2024-06-08T08:06:25+06:00</lastmod>
+    <lastmod>2024-06-12T08:06:25+06:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="it"
@@ -146,7 +146,7 @@
                 />
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2024-06-08T08:06:25+06:00</lastmod>
+    <lastmod>2024-06-12T08:06:25+06:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="it"
@@ -157,6 +157,33 @@
                 hreflang="en"
                 href="http://localhost:1313/tags/"
                 />
+  </url><url>
+    <loc>http://localhost:1313/tags/art/</loc>
+    <lastmod>2024-06-08T08:06:25+06:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/basic/</loc>
+    <lastmod>2024-06-08T08:06:25+06:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/basic/</loc>
+    <lastmod>2024-06-08T08:06:25+06:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/introduction/index.md/</loc>
+    <lastmod>2024-06-08T08:06:25+06:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/multi-lingual/</loc>
+    <lastmod>2024-06-08T08:06:25+06:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/physics/percolation/</loc>
+    <lastmod>2024-06-08T08:06:25+06:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/poems/</loc>
+    <lastmod>2024-06-08T08:06:25+06:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/poems/</loc>
+    <lastmod>2024-06-08T08:06:25+06:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/poems/stacy/</loc>
+    <lastmod>2024-06-08T08:06:25+06:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/notes/</loc>
     <lastmod>2010-06-08T08:06:25+06:00</lastmod>
@@ -183,6 +210,14 @@
                 hreflang="en"
                 href="http://localhost:1313/search/"
                 />
+  </url><url>
+    <loc>http://localhost:1313/posts/data-science/</loc>
+  </url><url>
+    <loc>http://localhost:1313/posts/nanotech/</loc>
+  </url><url>
+    <loc>http://localhost:1313/posts/finance/</loc>
+  </url><url>
+    <loc>http://localhost:1313/posts/machine-learning/</loc>
   </url><url>
     <loc>http://localhost:1313/search/</loc>
     <priority>0.1</priority>

@@ -4,9 +4,10 @@ date: 2024-06-16T00:00:00+01:00
 description: "Short Stock price analysis on MSFT, then a prediction is tested using GRU"
 menu:
   sidebar:
-    name: Poems
-    identifier: Stacy 
-    weight: 15
+    name: GRU
+    identifier: GRU
+    parent: finance 
+    weight: 9
 tags: ["Finance", "Deep Learning", "Forecasting"]
 categories: ["Finance"]
 ---
