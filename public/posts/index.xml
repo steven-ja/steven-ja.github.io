@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Stefano&#39;s Blog</title>
+    <title>Posts on Stefano Giannini</title>
     <link>http://localhost:1313/posts/</link>
-    <description>Recent content in Posts on Stefano&#39;s Blog</description>
+    <description>Recent content in Posts on Stefano Giannini</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sun, 16 Jun 2024 00:00:00 +0100</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" /><item>
-      <title>Microsoft Stock Prediction using LSTM or GRU</title>
+      <title>MSFT Stock Prediction using LSTM or GRU</title>
       <link>http://localhost:1313/posts/finance/stock_prediction/gru/</link>
       <pubDate>Sun, 16 Jun 2024 00:00:00 +0100</pubDate>
       
       <guid>http://localhost:1313/posts/finance/stock_prediction/gru/</guid>
-      <description>Pick a stock commodity &amp;rsquo; &amp;hellip; &#39;
-Statistical Analysis on the price Statistical Analysis on the returns GRU Model Init Training Testing Metrics mean squared error LSTM Comparison Possible trading performance </description>
+      <description>Introduction In this article, we will explore time series data extracted from the stock market, focusing on prominent technology companies such as Apple, Amazon, Google, and Microsoft. Our objective is to equip data analysts and scientists with the essential skills to effectively manipulate and interpret stock market data.
+To achieve this, we will utilize the yfinance library to fetch stock information and leverage visualization tools such as Seaborn and Matplotlib to illustrate various facets of the data.</description>
     </item>
     
     <item>
