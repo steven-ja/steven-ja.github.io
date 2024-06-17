@@ -36,12 +36,12 @@ languages:
   en:
     languageCode: en
     languageName: English
-    title: "Stefano's Blog"
+    title: "Stefano Giannini"
     weight: 1
   it:
     languageCode: it
     languageName: Italiano
-    title: "Blog di Stefano"
+    title: "Stefano Giannini"
     weight: 2
   # se:
   #   languageCode: se
@@ -96,7 +96,7 @@ params:
     favicon: /images/site/favicon.png
 
   # GitHub repo of your site
-  gitRepo: https://github.com/hugo-toha/hugo-toha.github.io
+  gitRepo: https://github.com/ragespin/ragespin.github.io
   # Default branch of your Git repo
   gitBranch: main
 
