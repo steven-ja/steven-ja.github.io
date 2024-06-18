@@ -1,4 +1,4 @@
----
+<!-- ---
 title: "Monte Carlo Simulation"
 date: 2024-06-12T08:06:25+06:00
 description: Ha°lo
@@ -22,4 +22,4 @@ categories: ["Physics"]
 
 ### #2
 
-
+ -->

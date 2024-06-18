@@ -17,71 +17,12 @@ To achieve this, we will utilize the yfinance library to fetch stock information
     </item>
     
     <item>
-      <title>Monte Carlo Simulation</title>
-      <link>http://localhost:1313/posts/physics/montecarlo_simulation/</link>
-      <pubDate>Wed, 12 Jun 2024 08:06:25 +0600</pubDate>
-      
-      <guid>http://localhost:1313/posts/physics/montecarlo_simulation/</guid>
-      <description>What is Monte Carlo? Why is it important? Examples #1 #2 </description>
-    </item>
-    
-    <item>
-      <title>Introduction</title>
-      <link>http://localhost:1313/posts/introduction/index.md/</link>
-      <pubDate>Sat, 08 Jun 2024 08:06:25 +0600</pubDate>
-      
-      <guid>http://localhost:1313/posts/introduction/index.md/</guid>
-      <description>This is bold text, and this is emphasized text.
-Visit the Hugo website!
-Halooo ..
-Wie geth&amp;rsquo;s? </description>
-    </item>
-    
-    <item>
       <title>Percolation</title>
       <link>http://localhost:1313/posts/physics/percolation/</link>
       <pubDate>Sat, 08 Jun 2024 08:06:25 +0600</pubDate>
       
       <guid>http://localhost:1313/posts/physics/percolation/</guid>
-      <description>What is Percolation &amp;rsquo; &amp;hellip; &#39;
-Why is it important? How can simulate it? </description>
-    </item>
-    
-    <item>
-      <title>Stacy</title>
-      <link>http://localhost:1313/posts/poems/stacy/</link>
-      <pubDate>Sat, 08 Jun 2024 08:06:25 +0600</pubDate>
-      
-      <guid>http://localhost:1313/posts/poems/stacy/</guid>
-      <description>Poem &amp;rsquo; &amp;hellip; &#39;
-Message to take home </description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://localhost:1313/posts/data-science/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/posts/data-science/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://localhost:1313/posts/nanotech/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/posts/nanotech/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Machine Learning</title>
-      <link>http://localhost:1313/posts/machine-learning/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/posts/machine-learning/</guid>
-      <description></description>
+      <description>Introduction Percolation theory is a fundamental concept in statistical physics and mathematics that describes the behavior of connected clusters in a random graph. It is a model for understanding how a network behaves when nodes or links are added, leading to a phase transition from a state of disconnected clusters to a state where a large, connected cluster spans the system. This transition occurs at a critical threshold, known as the percolation threshold.</description>
     </item>
     
     

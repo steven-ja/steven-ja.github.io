@@ -26,7 +26,7 @@
 <meta property="og:url" content="http://localhost:1313/posts/physics/percolation/">
   <meta property="og:site_name" content="Stefano Giannini">
   <meta property="og:title" content="Percolation">
-  <meta property="og:description" content="Swedish Poems">
+  <meta property="og:description" content="Physical Process of Percolation">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -37,11 +37,11 @@
     
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Percolation">
-  <meta name="twitter:description" content="Swedish Poems">
+  <meta name="twitter:description" content="Physical Process of Percolation">
 
     
     
-<meta name="description" content="Swedish Poems" />
+<meta name="description" content="Physical Process of Percolation" />
 
 
     
@@ -253,15 +253,6 @@
   
   
     
-    <li><a class=" list-link" href="/posts/introduction/index.md/" title="Introduction">Introduction</a></li>
-  
-
-  
-  
-  
-  
-  
-    
     <li>
       <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/"> Finance</a>
       
@@ -301,30 +292,31 @@
   
   
   
+    
+    
+  
   
     
-    <li><a class=" list-link" href="/posts/physics/montecarlo_simulation/" title="Monte Carlo">Monte Carlo</a></li>
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/physics/"> Physics</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li><a class="active list-link" href="/posts/physics/percolation/" title="Percolation">Percolation</a></li>
   
 
-  
-  
-  
-  
-    
-    
-  
-  
-    
-    <li><a class="active list-link" href="/posts/physics/percolation/" title="Physics">Physics</a></li>
-  
 
-  
-  
-  
-  
-  
-    
-    <li><a class=" list-link" href="/posts/poems/stacy/" title="Poems">Poems</a></li>
+      </ul>
+    </li>
   
 
 
@@ -351,7 +343,7 @@
         <div class="author-profile ms-auto align-self-lg-center">
           <img class="rounded-circle" src='/images/author/profile_hu8a567cefac8c1a165d433ac0796ac418_3088978_120x120_fit_q75_box.jpg' alt="Author Image">
           <h5 class="author-name">Stefano Giannini</h5>
-          <p class="text-muted">Saturday, June 8, 2024 | 1 minute</p>
+          <p class="text-muted">Saturday, June 8, 2024 | 3 minutes</p>
         </div>
         
         
@@ -376,12 +368,74 @@
 
         
         <div class="post-content" id="post-content">
-          <h2 id="what-is-percolation">What is Percolation</h2>
-<p>&rsquo;
-&hellip;
-'</p>
-<h2 id="why-is-it-important">Why is it important?</h2>
-<h2 id="how-can-simulate-it">How can simulate it?</h2>
+          <h2 id="introduction">Introduction</h2>
+<p>Percolation theory is a fundamental concept in statistical physics and mathematics that describes the behavior of connected clusters in a random graph. It is a model for understanding how a network behaves when nodes or links are added, leading to a phase transition from a state of disconnected clusters to a state where a large, connected cluster spans the system. This transition occurs at a critical threshold, known as the percolation threshold. The theory has applications in various fields, including material science, epidemiology, and network theory.</p>
+<h2 id="why-is-percolation-important-useful-applications">Why is Percolation Important? Useful Applications</h2>
+<p>Percolation theory provides insights into the behavior of complex systems and phase transitions. Here are some key applications:</p>
+<h3 id="material-science">Material Science</h3>
+<p>Percolation theory helps understand the properties of composite materials, such as electrical conductivity and strength. For example, the electrical conductivity of a composite material can change dramatically when the concentration of conductive filler reaches the percolation threshold.</p>
+<h3 id="epidemiology">Epidemiology</h3>
+<p>In studying disease spread, percolation models can predict the outbreak and spread of epidemics. The percolation threshold represents the critical point at which a disease becomes widespread in a population.</p>
+<h3 id="network-theory">Network Theory</h3>
+<p>Percolation theory is used to study the robustness and connectivity of networks like the internet or social networks. It helps understand how networks can be disrupted and how to make them more resilient.</p>
+<h3 id="geophysics">Geophysics</h3>
+<p>In oil recovery, percolation theory models the flow of fluids through porous rocks, helping to optimize extraction processes.</p>
+<h3 id="forest-fires">Forest Fires</h3>
+<p>Percolation models can simulate the spread of forest fires, aiding in the development of strategies for fire prevention and control.</p>
+<h2 id="python-simulation-code">Python Simulation Code</h2>
+<p>Here is a simple example of a site percolation simulation on a square lattice in Python:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> scipy.ndimage
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_lattice</span>(n, p):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Generate an n x n lattice with site vacancy probability p.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>rand(n, n) <span style="color:#f92672">&lt;</span> p
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">percolates</span>(lattice):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Check if the lattice percolates.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    labeled_lattice, num_features <span style="color:#f92672">=</span> scipy<span style="color:#f92672">.</span>ndimage<span style="color:#f92672">.</span>label(lattice)
+</span></span><span style="display:flex;"><span>    top_labels <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>unique(labeled_lattice[<span style="color:#ae81ff">0</span>, :])
+</span></span><span style="display:flex;"><span>    bottom_labels <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>unique(labeled_lattice[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, :])
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>intersect1d(top_labels, bottom_labels)<span style="color:#f92672">.</span>size <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">plot_lattice</span>(lattice):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Plot the lattice.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>imshow(lattice, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;binary&#39;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>show()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Parameters</span>
+</span></span><span style="display:flex;"><span>n <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>  <span style="color:#75715e"># Lattice size</span>
+</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.6</span>  <span style="color:#75715e"># Site vacancy probability</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Generate and plot lattice</span>
+</span></span><span style="display:flex;"><span>lattice <span style="color:#f92672">=</span> generate_lattice(n, p)
+</span></span><span style="display:flex;"><span>plot_lattice(lattice)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Check percolation</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> percolates(lattice):
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;The system percolates.&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;The system does not percolate.&#34;</span>)
+</span></span></code></pre></div><p>This code generates a square lattice of size <code>n</code> with site vacancy probability <code>p</code>, checks if the lattice percolates (i.e., if there is a connected path from the top to the bottom), and plots the lattice.</p>
+<h2 id="github-repositories">GitHub Repositories</h2>
+<p>For more advanced simulations and visualizations, you can refer to the following GitHub repositories:</p>
+<ul>
+<li><strong>Simulating Percolation Algorithms with Python</strong>: This project models percolation using Python, Tkinter for animation, and matplotlib for graphs. It can be found <a href="https://github.com/mrbrianevans/percolation" target="_blank" rel="noopener">here</a>.</li>
+<li><strong>Site Percolation Simulation on Square Lattice</strong>: This repository provides two Python applications to simulate percolation on a square lattice, using Django and Jupyter frameworks. It can be found <a href="https://xsources.github.io/sitepercol.html" target="_blank" rel="noopener">here</a>.</li>
+</ul>
+<p>These resources provide a comprehensive starting point for understanding and simulating percolation processes using Python.</p>
+<p>Citations:
+[1] <a href="https://www.routledge.com/Introduction-To-Percolation-Theory-Second-Edition/Stauffer-Aharony/p/book/9780748402533" target="_blank" rel="noopener">https://www.routledge.com/Introduction-To-Percolation-Theory-Second-Edition/Stauffer-Aharony/p/book/9780748402533</a>
+[2] <a href="https://introcs.cs.princeton.edu/python/24percolation/" target="_blank" rel="noopener">https://introcs.cs.princeton.edu/python/24percolation/</a>
+[3] <a href="https://github.com/mrbrianevans/percolation" target="_blank" rel="noopener">https://github.com/mrbrianevans/percolation</a>
+[4] <a href="https://arxiv.org/pdf/1709.01141.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1709.01141.pdf</a>
+[5] <a href="https://xsources.github.io/sitepercol.html" target="_blank" rel="noopener">https://xsources.github.io/sitepercol.html</a>
+[6] <a href="https://science4performance.com/2023/04/11/percolating-python-with-chatgpt/" target="_blank" rel="noopener">https://science4performance.com/2023/04/11/percolating-python-with-chatgpt/</a>
+[7] <a href="https://www.math.chalmers.se/~steif/perc.pdf" target="_blank" rel="noopener">https://www.math.chalmers.se/~steif/perc.pdf</a>
+[8] <a href="https://github.com/dh4gan/percolation-model" target="_blank" rel="noopener">https://github.com/dh4gan/percolation-model</a>
+[9] <a href="https://en.wikipedia.org/wiki/Percolation_theory" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Percolation_theory</a>
+[10] <a href="https://www.taylorfrancis.com/books/mono/10.1201/9781315274386/introduction-percolation-theory-ammon-aharony-dietrich-stauffer" target="_blank" rel="noopener">https://www.taylorfrancis.com/books/mono/10.1201/9781315274386/introduction-percolation-theory-ammon-aharony-dietrich-stauffer</a></p>
 
         </div>
 
@@ -435,7 +489,7 @@
           
           <div class="col-md-6 btn-improve-page">
              
-               <a href="https://github.com/ragespin/ragespin.github.io/edit/main/content/posts%5cphysics%5cpercolation.md" title="Improve this page" target="_blank" rel="noopener">
+               <a href="https://github.com/ragespin/ragespin.github.io/edit/main/content/posts%5cphysics%5cpercolation%5cindex.md" title="Improve this page" target="_blank" rel="noopener">
             
                 <i class="fas fa-code-branch"></i>
                 Improve this page
@@ -466,17 +520,8 @@
   
 
   
-  
-
-  
-  
-
-  
     
     
-  
-  
-
   
   
 
@@ -484,24 +529,13 @@
 <div class="row next-prev-navigator">
   
     <div class="col-md-6 previous-article">
-      <a href="/posts/physics/montecarlo_simulation/" title="Monte Carlo Simulation" class="btn filled-button">
+      <a href="/posts/finance/stock_prediction/gru/" title="MSFT Stock Prediction using LSTM or GRU" class="btn filled-button">
         <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
-        <div class="next-prev-text">Monte Carlo Simulation</div>
+        <div class="next-prev-text">MSFT Stock Prediction using LSTM or GRU</div>
       </a>
     </div>
   
   
-      
-      
-        
-      
-      <div class="col-md-6 next-article">
-        <a href="/posts/poems/stacy/" title="Stacy" class="btn filled-button">
-          <div>Next <i class="fas fa-chevron-circle-right"></i></div>
-          <div class="next-prev-text">Stacy</div>
-        </a>
-      </div>
-    
 </div>
 
       <hr />
@@ -532,9 +566,18 @@
       <div class="toc">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#what-is-percolation">What is Percolation</a></li>
-    <li><a href="#why-is-it-important">Why is it important?</a></li>
-    <li><a href="#how-can-simulate-it">How can simulate it?</a></li>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#why-is-percolation-important-useful-applications">Why is Percolation Important? Useful Applications</a>
+      <ul>
+        <li><a href="#material-science">Material Science</a></li>
+        <li><a href="#epidemiology">Epidemiology</a></li>
+        <li><a href="#network-theory">Network Theory</a></li>
+        <li><a href="#geophysics">Geophysics</a></li>
+        <li><a href="#forest-fires">Forest Fires</a></li>
+      </ul>
+    </li>
+    <li><a href="#python-simulation-code">Python Simulation Code</a></li>
+    <li><a href="#github-repositories">GitHub Repositories</a></li>
   </ul>
 </nav>
       </div>
