@@ -359,7 +359,7 @@
         <div class="author-profile ms-auto align-self-lg-center">
           <img class="rounded-circle" src='/images/author/profile_hu8a567cefac8c1a165d433ac0796ac418_3088978_120x120_fit_q75_box.jpg' alt="Author Image">
           <h5 class="author-name">Stefano Giannini</h5>
-          <p class="text-muted">Sunday, June 16, 2024 | 5 minutes</p>
+          <p class="text-muted">Sunday, June 16, 2024 | 6 minutes</p>
         </div>
         
         
@@ -506,7 +506,7 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> i<span style="color:#f92672">&lt;=</span> seq_length<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>:
 </span></span><span style="display:flex;"><span>        print(x_train)
 </span></span><span style="display:flex;"><span>        print(y_train, end<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>  
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Convert the x_train and y_train to numpy arrays </span>
 </span></span><span style="display:flex;"><span>x_train, y_train <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(x_train), np<span style="color:#f92672">.</span>array(y_train)
 </span></span><span style="display:flex;"><span>
@@ -525,7 +525,7 @@
 </span></span><span style="display:flex;"><span>lstm_model<span style="color:#f92672">.</span>add(Dense(units<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>lstm_model<span style="color:#f92672">.</span>compile(optimizer<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;adam&#39;</span>, loss<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;mean_squared_error&#39;</span>)
-</span></span><span style="display:flex;"><span>lstm_model<span style="color:#f92672">.</span>fit(x_train, y_train, epochs<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>lstm_model<span style="color:#f92672">.</span>fit(x_train, y_train, epochs<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span>)
 </span></span></code></pre></div><h2 id="lstm">LSTM</h2>
 <p>Long Short-Term Memory (LSTM) is adopted in this part</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> tensorflow.keras.layers <span style="color:#f92672">import</span> LSTM
@@ -538,13 +538,92 @@
 </span></span><span style="display:flex;"><span>lstm_model<span style="color:#f92672">.</span>add(Dense(units<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>lstm_model<span style="color:#f92672">.</span>compile(optimizer<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;adam&#39;</span>, loss<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;mean_squared_error&#39;</span>)
-</span></span><span style="display:flex;"><span>lstm_model<span style="color:#f92672">.</span>fit(x_train, y_train, epochs<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>lstm_model<span style="color:#f92672">.</span>fit(x_train, y_train, epochs<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span>)
 </span></span></code></pre></div><h2 id="testing-metrics">Testing Metrics</h2>
 <ul>
-<li>mean squared error</li>
+<li>root mean squared error (RMSE)</li>
 </ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create the testing data set</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a new array containing scaled values from index 1543 to 2002 </span>
+</span></span><span style="display:flex;"><span>test_data <span style="color:#f92672">=</span> scaled_data[training_data_len <span style="color:#f92672">-</span> <span style="color:#ae81ff">60</span>: , :]
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create the data sets x_test and y_test</span>
+</span></span><span style="display:flex;"><span>x_test <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>y_test <span style="color:#f92672">=</span> dataset[training_data_len:, :]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">60</span>, len(test_data)):
+</span></span><span style="display:flex;"><span>    x_test<span style="color:#f92672">.</span>append(test_data[i<span style="color:#f92672">-</span><span style="color:#ae81ff">60</span>:i, <span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Convert the data to a numpy array</span>
+</span></span><span style="display:flex;"><span>x_test <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(x_test)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Reshape the data</span>
+</span></span><span style="display:flex;"><span>x_test <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>reshape(x_test, (x_test<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], x_test<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">1</span> ))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Get the models predicted price values </span>
+</span></span><span style="display:flex;"><span>predictions_gru <span style="color:#f92672">=</span> gru_model<span style="color:#f92672">.</span>predict(x_test)
+</span></span><span style="display:flex;"><span>predictions_gru <span style="color:#f92672">=</span> scaler<span style="color:#f92672">.</span>inverse_transform(predictions_gru)
+</span></span><span style="display:flex;"><span>predictions_lstm <span style="color:#f92672">=</span> lstm_model<span style="color:#f92672">.</span>predict(x_test)
+</span></span><span style="display:flex;"><span>predictions_lstm <span style="color:#f92672">=</span> scaler<span style="color:#f92672">.</span>inverse_transform(predictions_lstm)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Get the root mean squared error (RMSE)</span>
+</span></span><span style="display:flex;"><span>rmse_lstm <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sqrt(np<span style="color:#f92672">.</span>mean(((predictions_lstm <span style="color:#f92672">-</span> y_test) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>)))
+</span></span><span style="display:flex;"><span>rmse_gru <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sqrt(np<span style="color:#f92672">.</span>mean(((predictions_gru <span style="color:#f92672">-</span> y_test) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>)))
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;LSTM RMSE: </span><span style="color:#e6db74">{</span>rmse_lstm<span style="color:#e6db74">:</span><span style="color:#e6db74">.4f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">, GRU RMSE: </span><span style="color:#e6db74">{</span>rmse_gru<span style="color:#e6db74">:</span><span style="color:#e6db74">.4f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><blockquote>
+<p>&ldquo;LSTM RMSE: 4.2341, GRU RMSE: {3.3575}&rdquo;</p>
+</blockquote>
 <h3 id="test-plot">Test Plot</h3>
+<p><img src="/posts/finance/stock_prediction/GRU/images/test_results.png"
+    
+        alt="Results"
+    
+    
+    
+    
+    
+        class="center"
+    
+>
+
+GRU-based model shows a bit better results both graphically and on MSE. However, this does not tell us anything about the actual profitability of these models.</p>
 <h2 id="possible-trading-performance">Possible trading performance</h2>
+<p>The strategy implementation is:</p>
+<ul>
+<li>BUY: if prediction &gt; actual_price</li>
+<li>SELL: if prediction &lt; actual_price</li>
+</ul>
+<p>To close a position the next candle <em>close</em> is waited. However, LSTM and GRU has some offset that does not allow a proper utilization of this strategy.</p>
+<p>Hence, the <strong>returns</strong> of the predictions are adopted.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Assume a trading capital of $10,000</span>
+</span></span><span style="display:flex;"><span>trading_capital <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span>
+</span></span><span style="display:flex;"><span>pred_gru_df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(predictions_gru, columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;Price&#39;</span>])
+</span></span><span style="display:flex;"><span>pred_test_df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(y_test, columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;Price&#39;</span>])
+</span></span><span style="display:flex;"><span>pred_gru_df[<span style="color:#e6db74">&#39;returns&#39;</span>] <span style="color:#f92672">=</span> pred_gru_df<span style="color:#f92672">.</span>pct_change(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>pred_test_df[<span style="color:#e6db74">&#39;returns&#39;</span>] <span style="color:#f92672">=</span> pred_test_df<span style="color:#f92672">.</span>pct_change(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Compute Wins</span>
+</span></span><span style="display:flex;"><span>wins <span style="color:#f92672">=</span> ((pred_gru_df<span style="color:#f92672">.</span>dropna()<span style="color:#f92672">.</span>returns<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span>) <span style="color:#f92672">&amp;</span> (pred_test_df<span style="color:#f92672">.</span>dropna()<span style="color:#f92672">.</span>returns<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span>)) <span style="color:#f92672">|</span> ((pred_gru_df<span style="color:#f92672">.</span>dropna()<span style="color:#f92672">.</span>returns<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">0</span>) <span style="color:#f92672">&amp;</span> (pred_test_df<span style="color:#f92672">.</span>dropna()<span style="color:#f92672">.</span>returns<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>print(wins<span style="color:#f92672">.</span>value_counts())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>returns_df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat([pred_gru_df<span style="color:#f92672">.</span>returns, pred_test_df<span style="color:#f92672">.</span>returns], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>dropna()
+</span></span><span style="display:flex;"><span>total_pos_return <span style="color:#f92672">=</span> pred_test_df<span style="color:#f92672">.</span>dropna()<span style="color:#f92672">.</span>returns[wins]<span style="color:#f92672">.</span>abs()<span style="color:#f92672">.</span>sum()
+</span></span><span style="display:flex;"><span>total_neg_return <span style="color:#f92672">=</span> pred_test_df<span style="color:#f92672">.</span>dropna()<span style="color:#f92672">.</span>returns[np<span style="color:#f92672">.</span>logical_not(wins)]<span style="color:#f92672">.</span>abs()<span style="color:#f92672">.</span>sum()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># compute final capital and compare with BUY&amp;HOLD strategy</span>
+</span></span><span style="display:flex;"><span>final_capital <span style="color:#f92672">=</span> trading_capital<span style="color:#f92672">*</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">+</span>total_pos_return<span style="color:#f92672">-</span>total_neg_return)
+</span></span><span style="display:flex;"><span>benchmark_return <span style="color:#f92672">=</span> (valid<span style="color:#f92672">.</span>Close<span style="color:#f92672">.</span>iloc[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> valid<span style="color:#f92672">.</span>Close<span style="color:#f92672">.</span>iloc[<span style="color:#ae81ff">0</span>])<span style="color:#f92672">/</span>valid<span style="color:#f92672">.</span>Close<span style="color:#f92672">.</span>iloc[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>bench_capital <span style="color:#f92672">=</span> trading_capital<span style="color:#f92672">*</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">+</span>benchmark_return)
+</span></span><span style="display:flex;"><span>print(final_capital, bench_capital)
+</span></span></code></pre></div><blockquote>
+<p>returns
+True     81
+False    72
+Name: count, dtype: int64
+10535.325897548326 9617.616876598737</p>
+</blockquote>
+<h2 id="conclusion">Conclusion</h2>
+<p>As showed in the previous section, these two simple Deep Learning models exhibits interesting positive results both regarding regression and trading metrics.
+The latter is particularly important, indeed a return of <strong>5%</strong> is obtained while the stock price decreased of approximately 4%. This also lead to a very high sharpe and colmar ratio.</p>
 
         </div>
 
@@ -720,6 +799,7 @@
       </ul>
     </li>
     <li><a href="#possible-trading-performance">Possible trading performance</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
       </div>
