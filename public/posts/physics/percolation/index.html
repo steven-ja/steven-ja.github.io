@@ -165,6 +165,14 @@
               
               
                 <li class="nav-item">
+                  <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
                   <a class="nav-link" href="/#experiences">Experiences</a>
                 </li>
               
@@ -334,7 +342,7 @@
   <div class="content">
     <div class="container p-0 read-area">
       
-      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/images/default-hero.jpg);'>
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/posts/physics/percolation/images/lattice_illustration.png);'>
       </div>
 
       
@@ -343,7 +351,7 @@
         <div class="author-profile ms-auto align-self-lg-center">
           <img class="rounded-circle" src='/images/author/profile_hu8a567cefac8c1a165d433ac0796ac418_3088978_120x120_fit_q75_box.jpg' alt="Author Image">
           <h5 class="author-name">Stefano Giannini</h5>
-          <p class="text-muted">Saturday, June 8, 2024 | 3 minutes</p>
+          <p class="text-muted">Saturday, June 8, 2024 | 4 minutes</p>
         </div>
         
         
@@ -369,22 +377,27 @@
         
         <div class="post-content" id="post-content">
           <h2 id="introduction">Introduction</h2>
-<p>Percolation theory is a fundamental concept in statistical physics and mathematics that describes the behavior of connected clusters in a random graph. It is a model for understanding how a network behaves when nodes or links are added, leading to a phase transition from a state of disconnected clusters to a state where a large, connected cluster spans the system. This transition occurs at a critical threshold, known as the percolation threshold. The theory has applications in various fields, including material science, epidemiology, and network theory.</p>
+<p><a href="https://en.wikipedia.org/wiki/Percolation_theory" target="_blank" rel="noopener">Percolation theory</a> is a fundamental concept in statistical physics and mathematics that describes the behavior of connected clusters in a random graph. It is a model for understanding how a network behaves when nodes or links are added, leading to a phase transition from a state of disconnected clusters to a state where a large, connected cluster spans the system. This transition occurs at a critical threshold, known as the percolation threshold. The theory has applications in various fields, including material science, epidemiology, and network theory.</p>
 <h2 id="why-is-percolation-important-useful-applications">Why is Percolation Important? Useful Applications</h2>
-<p>Percolation theory provides insights into the behavior of complex systems and phase transitions. Here are some key applications:</p>
-<h3 id="material-science">Material Science</h3>
-<p>Percolation theory helps understand the properties of composite materials, such as electrical conductivity and strength. For example, the electrical conductivity of a composite material can change dramatically when the concentration of conductive filler reaches the percolation threshold.</p>
-<h3 id="epidemiology">Epidemiology</h3>
-<p>In studying disease spread, percolation models can predict the outbreak and spread of epidemics. The percolation threshold represents the critical point at which a disease becomes widespread in a population.</p>
-<h3 id="network-theory">Network Theory</h3>
-<p>Percolation theory is used to study the robustness and connectivity of networks like the internet or social networks. It helps understand how networks can be disrupted and how to make them more resilient.</p>
-<h3 id="geophysics">Geophysics</h3>
-<p>In oil recovery, percolation theory models the flow of fluids through porous rocks, helping to optimize extraction processes.</p>
-<h3 id="forest-fires">Forest Fires</h3>
-<p>Percolation models can simulate the spread of forest fires, aiding in the development of strategies for fire prevention and control.</p>
+<p>Percolation theory is important because it provides insights into the behavior of complex systems and phase transitions. Here are some key applications:</p>
+<ul>
+<li><strong>Material Science</strong>: Percolation theory helps in understanding the properties of composite materials, such as conductivity and strength. For example, the electrical conductivity of a composite material can change dramatically when the concentration of conductive filler reaches the percolation threshold</li>
+<li><strong>Epidemiology</strong>: In the study of disease spread, percolation models can predict the outbreak and spread of epidemics. The percolation threshold can represent the critical point at which a disease becomes widespread in a population</li>
+<li><strong>Network Theory</strong>: Percolation theory is used to study the robustness and connectivity of networks, such as the internet or social networks. It helps in understanding how networks can be disrupted and how they can be made more resilient</li>
+<li><strong>Geophysics</strong>: In oil recovery, percolation theory models the flow of fluids through porous rocks, helping to optimize extraction processes</li>
+<li><strong>Forest Fires</strong>: Percolation models can simulate the spread of forest fires, helping in the development of strategies for fire prevention and control
+.</li>
+</ul>
 <h2 id="python-simulation-code">Python Simulation Code</h2>
 <p>Here is a simple example of a site percolation simulation on a square lattice in Python:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># -*- coding: utf-8 -*-</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Created on Wed Jun 19 07:15:50 2024
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">@author: stefa
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> scipy.ndimage
 </span></span><span style="display:flex;"><span>
@@ -394,48 +407,115 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">percolates</span>(lattice):
 </span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Check if the lattice percolates.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    intersection <span style="color:#f92672">=</span> get_intersection(lattice)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> intersection<span style="color:#f92672">.</span>size <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_intersection</span>(lattice):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Check if the bottom labels or top labels have more than 1 value equal    &#34;&#34;&#34;</span>
 </span></span><span style="display:flex;"><span>    labeled_lattice, num_features <span style="color:#f92672">=</span> scipy<span style="color:#f92672">.</span>ndimage<span style="color:#f92672">.</span>label(lattice)
 </span></span><span style="display:flex;"><span>    top_labels <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>unique(labeled_lattice[<span style="color:#ae81ff">0</span>, :])
 </span></span><span style="display:flex;"><span>    bottom_labels <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>unique(labeled_lattice[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, :])
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>intersect1d(top_labels, bottom_labels)<span style="color:#f92672">.</span>size <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    print(top_labels, bottom_labels, np<span style="color:#f92672">.</span>intersect1d(top_labels, bottom_labels)<span style="color:#f92672">.</span>size)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>intersect1d(top_labels, bottom_labels)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">plot_lattice</span>(lattice):
 </span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Plot the lattice.&#34;&#34;&#34;</span>
 </span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>imshow(lattice, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;binary&#39;</span>)
 </span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>show()
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">lattice_to_image</span>(lattice):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Convert the lattice in an RGB image (even if will be black and white)&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    r_ch <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(lattice, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">255</span>)
+</span></span><span style="display:flex;"><span>    g_ch <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(lattice, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">255</span>)
+</span></span><span style="display:flex;"><span>    b_ch <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(lattice, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">255</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    image <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>concatenate((
+</span></span><span style="display:flex;"><span>        np<span style="color:#f92672">.</span>expand_dims(r_ch, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>),
+</span></span><span style="display:flex;"><span>        np<span style="color:#f92672">.</span>expand_dims(g_ch, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>),
+</span></span><span style="display:flex;"><span>        np<span style="color:#f92672">.</span>expand_dims(b_ch, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>),
+</span></span><span style="display:flex;"><span>        ), axis<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> image
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_path</span>(lattice):
+</span></span><span style="display:flex;"><span>    intersection <span style="color:#f92672">=</span> get_intersection(lattice)
+</span></span><span style="display:flex;"><span>    labeled_lattice, num_features <span style="color:#f92672">=</span> scipy<span style="color:#f92672">.</span>ndimage<span style="color:#f92672">.</span>label(lattice)
+</span></span><span style="display:flex;"><span>    print(intersection)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> labeled_lattice <span style="color:#f92672">==</span> intersection[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add_path_img</span>(image, path):
+</span></span><span style="display:flex;"><span>    blank_image <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(image<span style="color:#f92672">.</span>shape)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># set the red channel to 255-&gt; get a red percolation path</span>
+</span></span><span style="display:flex;"><span>    image[path, <span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">255</span>
+</span></span><span style="display:flex;"><span>    image[path, <span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> image
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Parameters</span>
 </span></span><span style="display:flex;"><span>n <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>  <span style="color:#75715e"># Lattice size</span>
-</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.6</span>  <span style="color:#75715e"># Site vacancy probability</span>
+</span></span><span style="display:flex;"><span>p_values <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0.2</span>, <span style="color:#ae81ff">0.3</span>, <span style="color:#ae81ff">0.4</span>, <span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.58</span>, <span style="color:#ae81ff">0.6</span>]  <span style="color:#75715e"># Site vacancy probabilities</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Generate and plot lattice</span>
-</span></span><span style="display:flex;"><span>lattice <span style="color:#f92672">=</span> generate_lattice(n, p)
-</span></span><span style="display:flex;"><span>plot_lattice(lattice)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a figure with subplots</span>
+</span></span><span style="display:flex;"><span>fig, axs <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">8</span>))
+</span></span><span style="display:flex;"><span>axs <span style="color:#f92672">=</span> axs<span style="color:#f92672">.</span>flatten()
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Check percolation</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> percolates(lattice):
-</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;The system percolates.&#34;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>:
-</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;The system does not percolate.&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plot lattices for different p values</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i, p <span style="color:#f92672">in</span> enumerate(p_values):
+</span></span><span style="display:flex;"><span>    lattice <span style="color:#f92672">=</span> generate_lattice(n, p)
+</span></span><span style="display:flex;"><span>    lattice_img <span style="color:#f92672">=</span> lattice_to_image(lattice)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> percolates(lattice):
+</span></span><span style="display:flex;"><span>        axs[i]<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;p = </span><span style="color:#e6db74">{</span>p<span style="color:#e6db74">}</span><span style="color:#e6db74"> (Percolates)&#34;</span>)
+</span></span><span style="display:flex;"><span>        path <span style="color:#f92672">=</span> get_path(lattice)
+</span></span><span style="display:flex;"><span>        lattice_img <span style="color:#f92672">=</span> add_path_img(lattice_img, path)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        axs[i]<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;p = </span><span style="color:#e6db74">{</span>p<span style="color:#e6db74">}</span><span style="color:#e6db74"> (Does not percolate)&#34;</span>)
+</span></span><span style="display:flex;"><span>    axs[i]<span style="color:#f92672">.</span>imshow(lattice_img)
+</span></span><span style="display:flex;"><span>    axs[i]<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#39;off&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Adjust spacing between subplots</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplots_adjust(wspace<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>, hspace<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Show the plot</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
 </span></span></code></pre></div><p>This code generates a square lattice of size <code>n</code> with site vacancy probability <code>p</code>, checks if the lattice percolates (i.e., if there is a connected path from the top to the bottom), and plots the lattice.</p>
-<h2 id="github-repositories">GitHub Repositories</h2>
-<p>For more advanced simulations and visualizations, you can refer to the following GitHub repositories:</p>
-<ul>
-<li><strong>Simulating Percolation Algorithms with Python</strong>: This project models percolation using Python, Tkinter for animation, and matplotlib for graphs. It can be found <a href="https://github.com/mrbrianevans/percolation" target="_blank" rel="noopener">here</a>.</li>
-<li><strong>Site Percolation Simulation on Square Lattice</strong>: This repository provides two Python applications to simulate percolation on a square lattice, using Django and Jupyter frameworks. It can be found <a href="https://xsources.github.io/sitepercol.html" target="_blank" rel="noopener">here</a>.</li>
-</ul>
-<p>These resources provide a comprehensive starting point for understanding and simulating percolation processes using Python.</p>
-<p>Citations:
-[1] <a href="https://www.routledge.com/Introduction-To-Percolation-Theory-Second-Edition/Stauffer-Aharony/p/book/9780748402533" target="_blank" rel="noopener">https://www.routledge.com/Introduction-To-Percolation-Theory-Second-Edition/Stauffer-Aharony/p/book/9780748402533</a>
-[2] <a href="https://introcs.cs.princeton.edu/python/24percolation/" target="_blank" rel="noopener">https://introcs.cs.princeton.edu/python/24percolation/</a>
-[3] <a href="https://github.com/mrbrianevans/percolation" target="_blank" rel="noopener">https://github.com/mrbrianevans/percolation</a>
-[4] <a href="https://arxiv.org/pdf/1709.01141.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1709.01141.pdf</a>
-[5] <a href="https://xsources.github.io/sitepercol.html" target="_blank" rel="noopener">https://xsources.github.io/sitepercol.html</a>
-[6] <a href="https://science4performance.com/2023/04/11/percolating-python-with-chatgpt/" target="_blank" rel="noopener">https://science4performance.com/2023/04/11/percolating-python-with-chatgpt/</a>
-[7] <a href="https://www.math.chalmers.se/~steif/perc.pdf" target="_blank" rel="noopener">https://www.math.chalmers.se/~steif/perc.pdf</a>
-[8] <a href="https://github.com/dh4gan/percolation-model" target="_blank" rel="noopener">https://github.com/dh4gan/percolation-model</a>
-[9] <a href="https://en.wikipedia.org/wiki/Percolation_theory" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Percolation_theory</a>
-[10] <a href="https://www.taylorfrancis.com/books/mono/10.1201/9781315274386/introduction-percolation-theory-ammon-aharony-dietrich-stauffer" target="_blank" rel="noopener">https://www.taylorfrancis.com/books/mono/10.1201/9781315274386/introduction-percolation-theory-ammon-aharony-dietrich-stauffer</a></p>
+<p>In further version, also a connected path from left to right can be considered.</p>
+<h3 id="results">Results</h3>
+<img src="/posts/physics/percolation/images/percolation_plot.png"
+    
+        alt="Results"
+    
+    
+    
+    
+    
+        class="center"
+    
+>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>The previous plot shows that with <em>p&gt;0.58</em> a percolation path starts to be observed. However, this is so not alwasy happening for stochastical reasons. Hence that plot is the result of several iteration to find the most interesting plot. With <em>p&gt;0.60</em> percolation happens more than 90% of the time.</p>
+<p>In further articles we will explore some <a href="https://pypercolate.readthedocs.io/en/stable/" target="_blank" rel="noopener">python libraries</a> to develop a more advanced and practical example.</p>
+<!-- ## GitHub Repositories
+
+For more advanced simulations and visualizations, you can refer to the following GitHub repositories:
+
+- **Simulating Percolation Algorithms with Python**: This project models percolation using Python, Tkinter for animation, and matplotlib for graphs. It can be found [here](https://github.com/mrbrianevans/percolation).
+- **Site Percolation Simulation on Square Lattice**: This repository provides two Python applications to simulate percolation on a square lattice, using Django and Jupyter frameworks. It can be found [here](https://xsources.github.io/sitepercol.html).
+
+These resources provide a comprehensive starting point for understanding and simulating percolation processes using Python.
+
+Citations:
+[2] https://introcs.cs.princeton.edu/python/24percolation/
+[3] https://github.com/mrbrianevans/percolation
+[4] https://arxiv.org/pdf/1709.01141.pdf
+[5] https://xsources.github.io/sitepercol.html
+[6] https://science4performance.com/2023/04/11/percolating-python-with-chatgpt/
+[7] https://www.math.chalmers.se/~steif/perc.pdf
+[8] https://github.com/dh4gan/percolation-model
+[9] https://en.wikipedia.org/wiki/Percolation_theory
+[10] https://www.taylorfrancis.com/books/mono/10.1201/9781315274386/introduction-percolation-theory-ammon-aharony-dietrich-stauffer -->
 
         </div>
 
@@ -567,17 +647,13 @@
         <nav id="TableOfContents">
   <ul>
     <li><a href="#introduction">Introduction</a></li>
-    <li><a href="#why-is-percolation-important-useful-applications">Why is Percolation Important? Useful Applications</a>
+    <li><a href="#why-is-percolation-important-useful-applications">Why is Percolation Important? Useful Applications</a></li>
+    <li><a href="#python-simulation-code">Python Simulation Code</a>
       <ul>
-        <li><a href="#material-science">Material Science</a></li>
-        <li><a href="#epidemiology">Epidemiology</a></li>
-        <li><a href="#network-theory">Network Theory</a></li>
-        <li><a href="#geophysics">Geophysics</a></li>
-        <li><a href="#forest-fires">Forest Fires</a></li>
+        <li><a href="#results">Results</a></li>
       </ul>
     </li>
-    <li><a href="#python-simulation-code">Python Simulation Code</a></li>
-    <li><a href="#github-repositories">GitHub Repositories</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
       </div>
@@ -661,6 +737,15 @@
                 
                 <li class="nav-item">
                   <a class="smooth-scroll" href="http://localhost:1313/#about">About</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="http://localhost:1313/#skills">Skills</a>
                 </li>
               
               
