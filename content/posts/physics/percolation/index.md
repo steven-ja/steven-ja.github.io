@@ -9,7 +9,7 @@ menu:
     parent: physics
     weight: 9
 hero: images/lattice_illustration.png
-tags: ["Science", ""]
+tags: ["Science", "Physics", "Statistics"]
 categories: ["Physics"]
 ---
 ## Introduction
@@ -25,7 +25,37 @@ Percolation theory is important because it provides insights into the behavior o
 * **Network Theory**: Percolation theory is used to study the robustness and connectivity of networks, such as the internet or social networks. It helps in understanding how networks can be disrupted and how they can be made more resilient
 * **Geophysics**: In oil recovery, percolation theory models the flow of fluids through porous rocks, helping to optimize extraction processes
 * **Forest Fires**: Percolation models can simulate the spread of forest fires, helping in the development of strategies for fire prevention and control
-  .
+
+
+## Mathematical and Physics Theory
+
+Percolation theory can be studied using site percolation or bond percolation models. In site percolation, each site (or node) on a lattice is either occupied with probability $ p $ or empty with probability $ 1 - p $. In bond percolation, each bond (or edge) between sites is open with probability $ p $ or closed with probability $ 1 - p $.
+
+### Step-by-Step Explanation:
+
+1. **Define the Lattice**: Consider a 2D square lattice or a 3D cubic lattice. For simplicity, let's use a 2D square lattice.
+
+2. **Assign Probabilities**: For each site (or bond), assign a probability $ p $ that it is occupied (or open).
+
+3. **Cluster Formation**: Identify clusters of connected sites (or bonds). Two sites are in the same cluster if there is a path of occupied sites (or open bonds) connecting them.
+
+4. **Critical Threshold $ p_c $**: Determine the critical probability $ p_c $ at which an infinite cluster first appears. For a 2D square lattice, it has been rigorously shown that $ p_c \approx 0.5927 $.
+
+5. **Mathematical Formulation**: The percolation probability $ P(p) $ is the probability that a given site belongs to the infinite cluster. Near the critical threshold, this follows a power-law behavior:
+   $$
+   P(p) \sim (p - p_c)^\beta
+   $$
+   where $ \beta $ is a critical exponent and equal to $\frac{5}{36}$ for 2D squared lattice.
+
+6. **Correlation Length $ \xi $**: The average size of finite clusters below $ p_c $ is characterized by the correlation length $ \xi $, which diverges as:
+   $$
+   \xi \sim |p - p_c|^{-\nu}
+   $$
+   where $ \nu $ is another critical exponent
+
+7. **Conductivity and Other Properties**: In practical applications, properties like electrical conductivity in materials can be modeled by considering the effective medium theory or numerical simulations to calculate the likelihood of percolation and the size of clusters.
+
+By analyzing these steps, percolation theory provides a comprehensive understanding of how macroscopic properties emerge from microscopic randomness, revealing universal behaviors that transcend specific systems.
 
 ## Python Simulation Code
 
@@ -119,6 +149,7 @@ for i, p in enumerate(p_values):
 # Adjust spacing between subplots
 plt.subplots_adjust(wspace=0.1, hspace=0.1)
 
+
 # Show the plot
 plt.show()
 ```
@@ -132,6 +163,7 @@ In further version, also a connected path from left to right can be considered.
 
 ## Conclusion
 The previous plot shows that with _p>0.58_ a percolation path starts to be observed. However, this is so not alwasy happening for stochastical reasons. Hence that plot is the result of several iteration to find the most interesting plot. With _p>0.60_ percolation happens more than 90% of the time.
+In general, this confirms the numerical value of $p_c$ that can be found in [literature](https://arxiv.org/abs/cond-mat/0005264) of 0.5927
 
 In further articles we will explore some [python libraries](https://pypercolate.readthedocs.io/en/stable/) to develop a more advanced and practical example.
 

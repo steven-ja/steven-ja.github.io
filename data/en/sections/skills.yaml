@@ -43,6 +43,17 @@ skills:
 #   logo: /images/sections/skills/prometheus.png
 #   summary: "Capable of setup, configure Prometheus metrics. Experienced with PromQL, AlertManager. Also, experienced with writing metric exporters."
 #   url: "https://prometheus.io/"
+- name: Apache Cassandra DB
+  logo: /images/sections/skills/cassandra.png
+  summary: "Experience with NoSQL and distributed database"
+
+- name: _Apache_ Spark
+  logo:
+  summary: Big Data Analytics and Processing. Used with Scala and Python.
+
+- name: TCAD Sentaurus
+  logo: 
+  summary: "Nanodevices design and electrical simulation (FinFET, GAAFET, NanoWires, InfraRed Pixels)"
 
 - name: Linux
   logo: /images/sections/skills/linux.png
@@ -55,4 +66,4 @@ skills:
 
 - name: C++
   logo: /images/sections/skills/c++.png
-  summary: "Know basic C/C++ programming. Used often to accelerate python computational time"
+  summary: "Know basic C/C++ programming. I used often to accelerate python computational time"
