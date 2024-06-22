@@ -47,8 +47,8 @@ skills:
   logo: /images/sections/skills/cassandra.png
   summary: "Experience with NoSQL and distributed database"
 
-- name: _Apache_ Spark
-  logo:
+- name: Apache Spark
+  logo: /images/sections/skills/spark.png
   summary: Big Data Analytics and Processing. Used with Scala and Python.
 
 - name: TCAD Sentaurus

@@ -255,7 +255,7 @@ rmse_gru = np.sqrt(np.mean(((predictions_gru - y_test) ** 2)))
 print(f"LSTM RMSE: {rmse_lstm:.4f}, GRU RMSE: {rmse_gru:.4f}")
 ```
 
-> "LSTM RMSE: 4.2341, GRU RMSE: {3.3575}"
+> "LSTM RMSE: **4.2341**, GRU RMSE: 3.3575"
 
 ### Test Plot
 
