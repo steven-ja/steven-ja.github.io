@@ -34,11 +34,11 @@ socialLinks:
 
 - name: Stackoverflow
   icon: "fab fa-stack-overflow"
-  url: "#"
+  url: "https://stackoverflow.com/users/11341998/stefano-giannini"
 
 - name: LinkedIn
   icon: "fab fa-linkedin"
-  url: "#"
+  url: "https://www.linkedin.com/in/stefano-giannini-33511197/"
 
 # - name: Twitter
 #   icon: "fab fa-twitter"
@@ -61,7 +61,7 @@ socialLinks:
 # For example, you can put link for your resume.
 resourceLinks:
 - title: "My Resume"
-  url: "files/resume.pdf"
+  url: "files/Stefano_Giannini_CV_ENG.pdf"
 
 # Show your badges
 # You can show your verifiable certificates from https://www.credly.com.
