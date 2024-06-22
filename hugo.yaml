@@ -10,13 +10,13 @@ module:
   - path: github.com/hugo-toha/hugo-toha.github.io
     disable: false
     mounts:
-    #- source: content
-    #  target: content
-    - source: layouts
-      target: layouts
-    #- source: data
-    #  target: data
-    - source: assets
+  #   # - source: content
+  #   #   target: content
+  #   # - source: layouts
+  #   #  target: layouts
+  #   #- source: data
+  #   #  target: data
+    - source: assets 
       target: assets
     - source: static
       target: static
@@ -29,6 +29,12 @@ module:
     target: static/files
   - source: ./node_modules/katex/dist/fonts
     target: static/fonts
+  - source: content
+    target: content
+  - source: assets
+    target: assets
+  # - source: static
+    # target: static
 
 # Manage languages
 # For any more details, you can check the official documentation: https://gohugo.io/content-management/multilingual/
@@ -38,11 +44,11 @@ languages:
     languageName: English
     title: "Stefano Giannini"
     weight: 1
-  it:
-    languageCode: it
-    languageName: Italiano
-    title: "Stefano Giannini"
-    weight: 2
+  # it:
+  #   languageCode: it
+  #   languageName: Italiano
+  #   title: "Stefano Giannini"
+  #   weight: 2
   # se:
   #   languageCode: se
   #   languageName: Svenska

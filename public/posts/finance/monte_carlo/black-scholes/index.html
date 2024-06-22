@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <title>Monte Carlo Simulation for Option Pricing</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<link rel="stylesheet" href="/application.fba7e2c0b4d0535aec97a3442d40338651f3354b1ee38f3630059796de18930f.css" integrity="sha256-&#43;6fiwLTQU1rsl6NELUAzhlHzNUse4482MAWXlt4Ykw8=" />
+
+
+
+
+
+  
+
+  
+  
+  
+    
+  
+  
+
+  <link rel="icon" type="image/png" href="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" />
+
+<meta property="og:url" content="http://localhost:1313/posts/finance/monte_carlo/black-scholes/">
+  <meta property="og:site_name" content="Stefano Giannini">
+  <meta property="og:title" content="Monte Carlo Simulation for Option Pricing">
+  <meta property="og:description" content="Physical Process of Percolation">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-06-23T00:08:25+01:00">
+    <meta property="article:modified_time" content="2024-06-23T00:08:25+01:00">
+    <meta property="article:tag" content="Finance">
+    <meta property="article:tag" content="Options">
+    <meta property="article:tag" content="Statistics">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Monte Carlo Simulation for Option Pricing">
+  <meta name="twitter:description" content="Physical Process of Percolation">
+
+    
+    
+<meta name="description" content="Physical Process of Percolation" />
+
+
+    
+
+    
+
+
+
+
+<script>
+      theme = localStorage.getItem('darkmode:color-scheme') || 'system';
+      if (theme == 'system') {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          theme = 'dark';
+        } else {
+          theme = 'light';
+        }
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
+  </head>
+
+  <body class="type-posts kind-page" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
+    <div class="container-fluid bg-secondary wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+
+<nav class="navbar navbar-expand-xl top-navbar shadow " id="top-navbar">
+  <div class="container">
+    
+    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button">
+      <i data-feather="sidebar"></i>
+    </button>
+    
+    <a class="navbar-brand" href="/">
+      
+        <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" id="logo" alt="Logo">
+      Stefano Giannini</a>
+    <button
+      class="navbar-toggler navbar-light"
+      id="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#top-nav-items"
+      aria-label="menu"
+    >
+      <i data-feather="menu"></i>
+    </button>
+
+    <div class="collapse navbar-collapse dynamic-navbar" id="top-nav-items">
+      <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/#home">Home</a>
+        </li>
+        
+          
+          
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#about">About</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#experiences">Experiences</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#education">Education</a>
+                </li>
+              
+            
+          
+        
+        
+          <div id="top-navbar-divider"></div>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="blog-link" href="/posts">Posts</a>
+          </li>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="note-link" href="/notes">Notes</a>
+          </li>
+        
+        
+            
+              <li class="nav-item">
+                <a class="nav-link" href="https://toha-guides.netlify.app/posts/">Docs</a>
+              </li>
+            
+        
+        
+        
+          <li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle"  href="#" id="themeSelector" role="button"
+  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <img id="navbar-theme-icon-svg" class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
+</a>
+<div id="themeMenu" class="dropdown-menu dropdown-menu-icons-only" aria-labelledby="themeSelector">
+  <a class="dropdown-item nav-link" href="#" data-scheme="light">
+    <img class="theme-icon" src="/icons/sun-svgrepo-com.svg" width=20 alt="Light Theme">
+  </a>
+  <a class="dropdown-item nav-link" href="#" data-scheme="dark">
+    <img class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
+  </a>
+  <a class="dropdown-item nav-link" href="#" data-scheme="system">
+    <img class="theme-icon" src="/icons/computer-svgrepo-com.svg" width=20 alt="System Theme">
+  </a>
+</div>
+</li>
+
+        
+      </ul>
+    </div>
+  </div>
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="main-logo" alt="Logo">
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="inverted-logo" alt="Inverted Logo">
+  
+</nav>
+
+
+
+      
+      
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/posts/" data-filter="all">Posts</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/finance/"> Finance</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/finance/monte_carlo/"> Monte Carlo</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li><a class="active list-link" href="/posts/finance/monte_carlo/black-scholes/" title="Option Pricing">Option Pricing</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/stock_prediction/"> Stock Prediction</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/gru/" title="GRU">GRU</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/physics/"> Physics</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/percolation/" title="Percolation">Percolation</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content">
+    <div class="container p-0 read-area">
+      
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/posts/finance/monte_carlo/black-scholes/Option-Pricing-Models-1.jpg);'>
+      </div>
+
+      
+      <div class="page-content">
+        
+        <div class="author-profile ms-auto align-self-lg-center">
+          <img class="rounded-circle" src='/images/author/profile_hu8a567cefac8c1a165d433ac0796ac418_3088978_120x120_fit_q75_box.jpg' alt="Author Image">
+          <h5 class="author-name">Stefano Giannini</h5>
+          <p class="text-muted">Sunday, June 23, 2024 | 6 minutes</p>
+        </div>
+        
+        
+        <div class="title">
+          <h1>Monte Carlo Simulation for Option Pricing</h1>
+        </div>
+
+        
+
+        
+          <div class="tags">
+  <ul style="padding-left: 0;">
+    
+    
+    <li class="rounded"><a href="/tags/finance/" class="btn btn-sm btn-info">Finance</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/options/" class="btn btn-sm btn-info">Options</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/statistics/" class="btn btn-sm btn-info">Statistics</a></li>
+    
+  </ul>
+</div>
+
+        
+        <div class="post-content" id="post-content">
+          <h2 id="1-introduction">1. Introduction</h2>
+<p>In the dynamic world of finance, options play a crucial role in risk management, speculation, and portfolio optimization. An option is a contract that gives the holder the right, but not the obligation, to buy (call option) or sell (put option) an underlying asset at a predetermined price (strike price) within a specific time frame. The challenge lies in accurately pricing these financial instruments, given the uncertainties in market movements.</p>
+<p>Traditional analytical methods, while powerful, often struggle with complex option structures or realistic market conditions. This is where Monte Carlo simulation steps in, offering a flexible and robust approach to option pricing. By leveraging the power of computational methods, Monte Carlo simulations can handle a wide array of option types and market scenarios, making it an indispensable tool in a quantitative analyst&rsquo;s toolkit.</p>
+<h2 id="2-the-black-scholes-model">2. The Black-Scholes Model</h2>
+<p>Before diving into Monte Carlo methods, it&rsquo;s crucial to understand the Black-Scholes model, a cornerstone in option pricing theory. Developed by Fischer Black, Myron Scholes, and Robert Merton in the early 1970s, this model revolutionized the field of quantitative finance.</p>
+<h3 id="the-black-scholes-formula">The Black-Scholes Formula</h3>
+<p>For a European call option, the Black-Scholes formula is:</p>
+<p>$$
+C = S₀N(d_1) - Ke^{-rT}N(d_2)
+$$
+Where:
+$$
+d_1 = \frac{(ln(S_0/K) + (r + σ²/2)T)}{(σ\sqrt{T})}, \quad
+d_2 = d_1 - \sigma \sqrt{T}
+$$</p>
+<ul>
+<li>C: Call option price</li>
+<li>S₀: Current stock price</li>
+<li>K: Strike price</li>
+<li>r: Risk-free interest rate</li>
+<li>T: Time to maturity</li>
+<li>σ: Volatility of the underlying asset</li>
+<li>N(x): Cumulative standard normal distribution function</li>
+</ul>
+<h3 id="assumptions-of-the-black-scholes-model">Assumptions of the Black-Scholes Model</h3>
+<p>The Black-Scholes model rests on several key assumptions:</p>
+<ol>
+<li>The stock price follows a geometric Brownian motion with constant drift and volatility.</li>
+<li>No arbitrage opportunities exist in the market.</li>
+<li>It&rsquo;s possible to buy and sell any amount of stock or options (including fractional amounts).</li>
+<li>There are no transaction costs or taxes.</li>
+<li>All securities are perfectly divisible.</li>
+<li>The risk-free interest rate is constant and known.</li>
+<li>The underlying stock does not pay dividends.</li>
+</ol>
+<h3 id="limitations-of-the-black-scholes-model">Limitations of the Black-Scholes Model</h3>
+<p>While groundbreaking, the Black-Scholes model has several limitations:</p>
+<ol>
+<li>
+<p><strong>Constant Volatility</strong>: The model assumes volatility is constant, which doesn&rsquo;t hold in real markets where volatility can change dramatically.</p>
+</li>
+<li>
+<p><strong>Log-normal Distribution</strong>: It assumes stock returns are normally distributed, which doesn&rsquo;t account for the fat-tailed distributions observed in reality.</p>
+</li>
+<li>
+<p><strong>Continuous Trading</strong>: The model assumes continuous trading is possible, which isn&rsquo;t realistic in practice.</p>
+</li>
+<li>
+<p><strong>No Dividends</strong>: It doesn&rsquo;t account for dividends, which can significantly affect option prices.</p>
+</li>
+<li>
+<p><strong>European Options Only</strong>: The original model only prices European-style options, not American or exotic options.</p>
+</li>
+<li>
+<p><strong>Risk-free Rate</strong>: It assumes a constant, known risk-free rate, which can vary in reality.</p>
+</li>
+</ol>
+<p>These limitations highlight why more flexible approaches like Monte Carlo simulation are valuable in option pricing.</p>
+<h2 id="3-monte-carlo-simulation-theoretical-background">3. Monte Carlo Simulation: Theoretical Background</h2>
+<p>Monte Carlo simulation addresses many of the Black-Scholes model&rsquo;s limitations by using computational power to model a wide range of possible future scenarios.</p>
+<h3 id="basic-principles">Basic Principles</h3>
+<p>Monte Carlo methods use repeated random sampling to obtain numerical results. In the context of option pricing, we simulate many possible price paths for the underlying asset and then calculate the option&rsquo;s payoff for each path.</p>
+<h3 id="application-to-option-pricing">Application to Option Pricing</h3>
+<p>For option pricing, we model the stock price movement using a stochastic differential equation:</p>
+<pre tabindex="0"><code>dS = μSdt + σSdW
+</code></pre><p>Where:</p>
+<ul>
+<li>S: Stock price</li>
+<li>μ: Expected return</li>
+<li>σ: Volatility</li>
+<li>dW: Wiener process (random walk)</li>
+</ul>
+<p>This equation is then discretized for simulation purposes.</p>
+<h2 id="4-implementing-monte-carlo-simulation-in-python">4. Implementing Monte Carlo Simulation in Python</h2>
+<p>Let&rsquo;s implement a basic Monte Carlo simulation for pricing a European call option:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">monte_carlo_option_pricing</span>(S0, K, T, r, sigma, num_simulations, num_steps):
+</span></span><span style="display:flex;"><span>    dt <span style="color:#f92672">=</span> T <span style="color:#f92672">/</span> num_steps
+</span></span><span style="display:flex;"><span>    paths <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((num_simulations, num_steps <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>    paths[:, <span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> S0
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> t <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, num_steps <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>        z <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>standard_normal(num_simulations)
+</span></span><span style="display:flex;"><span>        paths[:, t] <span style="color:#f92672">=</span> paths[:, t<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>exp((r <span style="color:#f92672">-</span> <span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> sigma<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>) <span style="color:#f92672">*</span> dt <span style="color:#f92672">+</span> sigma <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sqrt(dt) <span style="color:#f92672">*</span> z)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    option_payoffs <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>maximum(paths[:, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> K, <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    option_price <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>exp(<span style="color:#f92672">-</span>r <span style="color:#f92672">*</span> T) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>mean(option_payoffs)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> option_price, paths
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Example usage</span>
+</span></span><span style="display:flex;"><span>S0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>  <span style="color:#75715e"># Initial stock price</span>
+</span></span><span style="display:flex;"><span>K <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>   <span style="color:#75715e"># Strike price</span>
+</span></span><span style="display:flex;"><span>T <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>     <span style="color:#75715e"># Time to maturity (in years)</span>
+</span></span><span style="display:flex;"><span>r <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.05</span>  <span style="color:#75715e"># Risk-free rate</span>
+</span></span><span style="display:flex;"><span>sigma <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.2</span>  <span style="color:#75715e"># Volatility</span>
+</span></span><span style="display:flex;"><span>num_simulations <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span>
+</span></span><span style="display:flex;"><span>num_steps <span style="color:#f92672">=</span> <span style="color:#ae81ff">252</span>  <span style="color:#75715e"># Number of trading days in a year</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>price, paths <span style="color:#f92672">=</span> monte_carlo_option_pricing(S0, K, T, r, sigma, num_simulations, num_steps)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Estimated option price: </span><span style="color:#e6db74">{</span>price<span style="color:#e6db74">:</span><span style="color:#e6db74">.2f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><p>This code simulates multiple stock price paths, calculates the option payoff for each path, and then averages these payoffs to estimate the option price.</p>
+<h2 id="5-visualization-and-analysis">5. Visualization and Analysis</h2>
+<p>Visualizing the results helps in understanding the distribution of possible outcomes:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">6</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(paths[:<span style="color:#ae81ff">100</span>, :]<span style="color:#f92672">.</span>T)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Sample Stock Price Paths&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Time Steps&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Stock Price&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">6</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>hist(paths[:, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], bins<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Distribution of Final Stock Prices&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Stock Price&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Frequency&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p>These visualizations show the range of possible stock price paths and the distribution of final stock prices, providing insight into the option&rsquo;s potential outcomes.</p>
+<h2 id="6-comparison-with-analytical-solutions">6. Comparison with Analytical Solutions</h2>
+<p>To validate our Monte Carlo results, we can compare them with the Black-Scholes analytical solution:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> scipy.stats <span style="color:#f92672">import</span> norm
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">black_scholes_call</span>(S0, K, T, r, sigma):
+</span></span><span style="display:flex;"><span>    d1 <span style="color:#f92672">=</span> (np<span style="color:#f92672">.</span>log(S0 <span style="color:#f92672">/</span> K) <span style="color:#f92672">+</span> (r <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> sigma<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>) <span style="color:#f92672">*</span> T) <span style="color:#f92672">/</span> (sigma <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sqrt(T))
+</span></span><span style="display:flex;"><span>    d2 <span style="color:#f92672">=</span> d1 <span style="color:#f92672">-</span> sigma <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sqrt(T)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> S0 <span style="color:#f92672">*</span> norm<span style="color:#f92672">.</span>cdf(d1) <span style="color:#f92672">-</span> K <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>exp(<span style="color:#f92672">-</span>r <span style="color:#f92672">*</span> T) <span style="color:#f92672">*</span> norm<span style="color:#f92672">.</span>cdf(d2)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>bs_price <span style="color:#f92672">=</span> black_scholes_call(S0, K, T, r, sigma)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Black-Scholes price: </span><span style="color:#e6db74">{</span>bs_price<span style="color:#e6db74">:</span><span style="color:#e6db74">.2f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Monte Carlo price: </span><span style="color:#e6db74">{</span>price<span style="color:#e6db74">:</span><span style="color:#e6db74">.2f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Difference: </span><span style="color:#e6db74">{</span>abs(bs_price <span style="color:#f92672">-</span> price)<span style="color:#e6db74">:</span><span style="color:#e6db74">.4f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><p>The difference between the two methods gives us an idea of the Monte Carlo simulation&rsquo;s accuracy.</p>
+<h2 id="7-advanced-topics-and-extensions">7. Advanced Topics and Extensions</h2>
+<p>Monte Carlo simulation&rsquo;s flexibility allows for various extensions:</p>
+<ol>
+<li><strong>Variance Reduction Techniques</strong>: Methods like antithetic variates can improve accuracy without increasing computational cost.</li>
+<li><strong>Exotic Options</strong>: Monte Carlo can price complex options like Asian or barrier options, which are challenging for analytical methods.</li>
+<li><strong>Incorporating Dividends</strong>: We can easily modify the simulation to account for dividend payments.</li>
+<li><strong>Stochastic Volatility</strong>: Models like Heston can be implemented to account for changing volatility.</li>
+</ol>
+<h2 id="8-conclusion">8. Conclusion</h2>
+<p>Monte Carlo simulation offers a powerful and flexible approach to option pricing, addressing many limitations of analytical methods like the Black-Scholes model. While it can be computationally intensive, it handles complex scenarios and option structures with relative ease.</p>
+<p>The method&rsquo;s ability to incorporate various market dynamics, such as changing volatility or dividend payments, makes it invaluable in real-world financial modeling. As computational power continues to increase, Monte Carlo methods are likely to play an even more significant role in quantitative finance.</p>
+<p>However, it&rsquo;s important to remember that any model, including Monte Carlo simulation, is only as good as its underlying assumptions. Careful consideration of these assumptions and regular validation against market data remain crucial in applying these techniques effectively in practice.</p>
+
+        </div>
+
+        
+        <div class="row ps-3 pe-3">
+        
+          <div class="col-md-6 share-buttons">
+          
+            <strong>Share on:</strong>
+            
+            <a class="btn icon-button bg-facebook" href="https://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2ffinance%2fmonte_carlo%2fblack-scholes%2f" target="_blank">
+              <i class="fab fa-facebook"></i>
+            </a>
+            
+            
+                <a class="btn icon-button bg-twitter" href="https://twitter.com/share?url=http%3a%2f%2flocalhost%3a1313%2fposts%2ffinance%2fmonte_carlo%2fblack-scholes%2f&text=Monte%20Carlo%20Simulation%20for%20Option%20Pricing&via=Stefano%20Giannini" target="_blank">
+                  <i class="fab fa-twitter"></i>
+                </a>
+            
+            
+                <a  class="btn icon-button bg-reddit" href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2ffinance%2fmonte_carlo%2fblack-scholes%2f&title=Monte%20Carlo%20Simulation%20for%20Option%20Pricing" target="_blank">
+                  <i class="fab fa-reddit"></i>
+                </a>
+            
+            
+            
+            
+                <a class="btn icon-button bg-linkedin" href="https://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fposts%2ffinance%2fmonte_carlo%2fblack-scholes%2f&title=Monte%20Carlo%20Simulation%20for%20Option%20Pricing" target="_blank">
+                  <i class="fab fa-linkedin"></i>
+                </a>
+            
+            
+             
+            
+                 <a class="btn icon-button bg-whatsapp" href="https://api.whatsapp.com/send?text=Monte%20Carlo%20Simulation%20for%20Option%20Pricing http%3a%2f%2flocalhost%3a1313%2fposts%2ffinance%2fmonte_carlo%2fblack-scholes%2f" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+            
+            
+                <a class="btn icon-button" href="mailto:?subject=Monte%20Carlo%20Simulation%20for%20Option%20Pricing&body=http%3a%2f%2flocalhost%3a1313%2fposts%2ffinance%2fmonte_carlo%2fblack-scholes%2f" target="_blank">
+                  <i class="fas fa-envelope-open-text"></i>
+                </a>
+            
+          
+          </div>
+
+        
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/ragespin/ragespin.github.io/edit/main/content/posts%5cfinance%5cmonte_carlo%5cBlack-Scholes%5cindex.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+    
+    
+  
+  
+
+  
+  
+
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+  
+      
+      
+      <div class="col-md-12 next-article">
+        <a href="/posts/finance/stock_prediction/gru/" title="MSFT Stock Prediction using LSTM or GRU" class="btn filled-button">
+          <div>Next <i class="fas fa-chevron-circle-right"></i></div>
+          <div class="next-prev-text">MSFT Stock Prediction using LSTM or GRU</div>
+        </a>
+      </div>
+    
+</div>
+
+      <hr />
+
+      
+      
+
+      
+      
+
+      </div>
+    </div>
+  </div>
+  
+  <a id="scroll-to-top" class="btn" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Scroll to top">
+    <i class="fas fa-chevron-circle-up"></i>
+  </a>
+</section>
+
+
+      
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center ps-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-introduction">1. Introduction</a></li>
+    <li><a href="#2-the-black-scholes-model">2. The Black-Scholes Model</a>
+      <ul>
+        <li><a href="#the-black-scholes-formula">The Black-Scholes Formula</a></li>
+        <li><a href="#assumptions-of-the-black-scholes-model">Assumptions of the Black-Scholes Model</a></li>
+        <li><a href="#limitations-of-the-black-scholes-model">Limitations of the Black-Scholes Model</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-monte-carlo-simulation-theoretical-background">3. Monte Carlo Simulation: Theoretical Background</a>
+      <ul>
+        <li><a href="#basic-principles">Basic Principles</a></li>
+        <li><a href="#application-to-option-pricing">Application to Option Pricing</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-implementing-monte-carlo-simulation-in-python">4. Implementing Monte Carlo Simulation in Python</a></li>
+    <li><a href="#5-visualization-and-analysis">5. Visualization and Analysis</a></li>
+    <li><a href="#6-comparison-with-analytical-solutions">6. Comparison with Analytical Solutions</a></li>
+    <li><a href="#7-advanced-topics-and-extensions">7. Advanced Topics and Extensions</a></li>
+    <li><a href="#8-conclusion">8. Conclusion</a></li>
+  </ul>
+</nav>
+      </div>
+    </div>
+    
+  </section>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+    
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-start">
+        
+        
+        
+        
+      </div>
+    </div>
+    
+    <hr />
+    <div class="container">
+      <p id="disclaimer"><strong>Liability Notice:</strong> This theme is under MIT license. So, you can use it for non-commercial, commercial, or private uses. You can modify or distribute the theme without requiring any permission from the theme author. However, the theme author does not provide any warranty or takes any liability for any issue with the theme.</p>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-start">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
+            <img src="/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2024 Copyright.</div>
+        <div class="col-md-4 text-end">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script src="/application.8669a77c1c2b64f230ab285a28097248a3a17fc732cf65c2b18e966128edf7af.js" integrity="sha256-hmmnfBwrZPIwqyhaKAlySKOhf8cyz2XCsY6WYSjt968=" defer></script>
+
+
+    
+     
+
+    
+    
+
+</body>
+</html>

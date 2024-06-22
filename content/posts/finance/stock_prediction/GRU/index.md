@@ -297,11 +297,16 @@ print(final_capital, bench_capital)
 ```
 
 > returns
+>
+>
 > True     81
 > False    72
+>
 > Name: count, dtype: int64
-> 10535.325897548326 9617.616876598737
+
+> 10535.325 9617.617
 
 ## Conclusion
+
 As showed in the previous section, these two simple Deep Learning models exhibits interesting positive results both regarding regression and trading metrics.
 The latter is particularly important, indeed a return of **5%** is obtained while the stock price decreased of approximately 4%. This also lead to a very high sharpe and colmar ratio.

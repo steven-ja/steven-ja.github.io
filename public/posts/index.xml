@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Stefano Giannini</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 16 Jun 2024 00:00:00 +0100</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Sun, 23 Jun 2024 00:08:25 +0100</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>Monte Carlo Simulation for Option Pricing</title>
+      <link>http://localhost:1313/posts/finance/monte_carlo/black-scholes/</link>
+      <pubDate>Sun, 23 Jun 2024 00:08:25 +0100</pubDate>
+      
+      <guid>http://localhost:1313/posts/finance/monte_carlo/black-scholes/</guid>
+      <description>1. Introduction In the dynamic world of finance, options play a crucial role in risk management, speculation, and portfolio optimization. An option is a contract that gives the holder the right, but not the obligation, to buy (call option) or sell (put option) an underlying asset at a predetermined price (strike price) within a specific time frame. The challenge lies in accurately pricing these financial instruments, given the uncertainties in market movements.</description>
+    </item>
+    
+    <item>
       <title>MSFT Stock Prediction using LSTM or GRU</title>
       <link>http://localhost:1313/posts/finance/stock_prediction/gru/</link>
       <pubDate>Sun, 16 Jun 2024 00:00:00 +0100</pubDate>

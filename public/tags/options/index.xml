@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Options on Stefano Giannini</title>
+    <link>http://localhost:1313/tags/options/</link>
+    <description>Recent content in Options on Stefano Giannini</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 23 Jun 2024 00:08:25 +0100</lastBuildDate><atom:link href="http://localhost:1313/tags/options/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>Monte Carlo Simulation for Option Pricing</title>
+      <link>http://localhost:1313/posts/finance/monte_carlo/black-scholes/index.md/</link>
+      <pubDate>Sun, 23 Jun 2024 00:08:25 +0100</pubDate>
+      
+      <guid>http://localhost:1313/posts/finance/monte_carlo/black-scholes/index.md/</guid>
+      <description>1. Introduction In the dynamic world of finance, options play a crucial role in risk management, speculation, and portfolio optimization. An option is a contract that gives the holder the right, but not the obligation, to buy (call option) or sell (put option) an underlying asset at a predetermined price (strike price) within a specific time frame. The challenge lies in accurately pricing these financial instruments, given the uncertainties in market movements.</description>
+    </item>
+    
+    
+  </channel>
+</rss>

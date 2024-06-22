@@ -46,6 +46,7 @@ skills:
 - name: Apache Cassandra DB
   logo: /images/sections/skills/cassandra.png
   summary: "Experience with NoSQL and distributed database"
+  url: https://cassandra.apache.org/_/index.html
 
 - name: Apache Spark
   logo: /images/sections/skills/spark.png
