@@ -7,6 +7,9 @@ Created on Sun Jun 23 11:30:47 2024
 
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
+sns.set_style('whitegrid')
+plt.style.use("fivethirtyeight")
 
 def monte_carlo_option_pricing(S0, K, T, r, sigma, num_simulations, num_steps):
     dt = T / num_steps
@@ -35,15 +38,15 @@ price, paths = monte_carlo_option_pricing(S0, K, T, r, sigma, num_simulations, n
 print(f"Estimated option price: {price:.3f}")
 
 ## Visualization
-plt.figure(figsize=(10, 6))
-plt.plot(paths[:100, :].T)
+plt.figure(figsize=(12, 8))
+plt.plot(paths[:100, :].T, linewidth=1)
 plt.title("Sample Stock Price Paths")
 plt.xlabel("Time Steps")
 plt.ylabel("Stock Price")
 plt.show()
 plt.savefig("images/simulation_path.png", dpi=300)
 
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(12, 8))
 plt.hist(paths[:, -1], bins=100)
 plt.title("Distribution of Final Stock Prices")
 plt.xlabel("Stock Price")

@@ -121,7 +121,7 @@ def monte_carlo_option_pricing(S0, K, T, r, sigma, num_simulations, num_steps):
 
 # Example usage
 S0 = 100  # Initial stock price
-K = 100   # Strike price
+K = 98.5   # Strike price
 T = 1     # Time to maturity (in years)
 r = 0.05  # Risk-free rate
 sigma = 0.2  # Volatility
@@ -154,9 +154,11 @@ plt.ylabel("Frequency")
 plt.show()
 ```
 
-{{< img src="\posts\finance\monte_carlo\Black-Scholes\images\simulation_path.png" align="center" title="Results">}}
+{{< img src="/posts/finance/monte_carlo/Black-Scholes/images/simulation_path.png" align="center">}}
 
-{{< img src="/posts/finance/monte_carlo/Black-Scholes/images/simulation_histogram.png" align="center" title="Results">}}
+---
+
+{{< img src="/posts/finance/monte_carlo/Black-Scholes/images/simulation_histogram.png" align="center" title="Histogram">}}
 
 These visualizations show the range of possible stock price paths and the distribution of final stock prices, providing insight into the option's potential outcomes.
 
@@ -173,8 +175,8 @@ def black_scholes_call(S0, K, T, r, sigma):
     return S0 * norm.cdf(d1) - K * np.exp(-r * T) * norm.cdf(d2)
 
 bs_price = black_scholes_call(S0, K, T, r, sigma)
-print(f"Black-Scholes price: {bs_price:.2f}")
-print(f"Monte Carlo price: {price:.2f}")
+print(f"Black-Scholes price: {bs_price:.3f}")
+print(f"Monte Carlo price: {price:.3f}")
 print(f"Difference: {abs(bs_price - price):.4f}")
 ```
 
