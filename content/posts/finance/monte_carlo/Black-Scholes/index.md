@@ -154,11 +154,11 @@ plt.ylabel("Frequency")
 plt.show()
 ```
 
-{{< img src="/posts/finance/monte_carlo/Black-Scholes/images/simulation_path.png" align="center" title="Paths">}}
+{{< img src="/posts/finance/monte_carlo/black-scholes/images/simulation_path.png" align="center" title="Paths">}}
 
 These visualizations show the range of possible stock price paths and the distribution of final stock prices, providing insight into the option's potential outcomes.
 
-{{< img src="/posts/finance/monte_carlo/Black-Scholes/images/simulation_histogram.png" align="center" title="Histogram">}}
+{{< img src="/posts/finance/monte_carlo/black-scholes/images/simulation_histogram.png" align="center" title="Histogram">}}
 
 ## 6. Comparison with Analytical Solutions
 
