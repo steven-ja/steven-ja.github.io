@@ -30,7 +30,6 @@ For a European call option, the Black-Scholes formula is:
 
 $$
 C = S₀N(d_1) - Ke^{-rT}N(d_2)
-
 $$
 
 Where:
@@ -38,7 +37,6 @@ Where:
 $$
 d_1 = \frac{(ln(S_0/K) + (r + σ²/2)T)}{(σ\sqrt{T})}, \quad 
 d_2 = d_1 - \sigma \sqrt{T}
-
 $$
 
 - C: Call option price
@@ -86,9 +84,9 @@ Monte Carlo methods use repeated random sampling to obtain numerical results. In
 
 For option pricing, we model the stock price movement using a stochastic differential equation:
 
-```
-dS = μSdt + σSdW
-```
+$$
+dS = \mu Sdt + \sigma SdW
+$$
 
 Where:
 

@@ -18,8 +18,8 @@ module:
   #   #  target: data
     - source: assets 
       target: assets
-    - source: static
-      target: static
+    # - source: static
+      # target: static
   mounts:
   - source: static/files
     target: static/files
