@@ -154,7 +154,7 @@ plt.ylabel("Frequency")
 plt.show()
 ```
 
-{{< img src="/posts/finance/monte_carlo/Black-Scholes/images/simulation_path.png" align="center">}}
+{{< img src="/posts/finance/monte_carlo/Black-Scholes/images/simulation_path.png" align="center" title="Paths">}}
 
 ---
 
