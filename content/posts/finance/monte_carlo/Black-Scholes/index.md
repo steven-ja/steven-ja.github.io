@@ -12,12 +12,13 @@ hero: Option-Pricing-Models-1.jpg
 tags: ["Finance", "Options", "Statistics"]
 categories: ["Finance"]
 ---
-
 ## 1. Introduction
 
 In the dynamic world of finance, options play a crucial role in risk management, speculation, and portfolio optimization. An option is a contract that gives the holder the right, but not the obligation, to buy (call option) or sell (put option) an underlying asset at a predetermined price (strike price) within a specific time frame. The challenge lies in accurately pricing these financial instruments, given the uncertainties in market movements.
 
 Traditional analytical methods, while powerful, often struggle with complex option structures or realistic market conditions. This is where Monte Carlo simulation steps in, offering a flexible and robust approach to option pricing. By leveraging the power of computational methods, Monte Carlo simulations can handle a wide array of option types and market scenarios, making it an indispensable tool in a quantitative analyst's toolkit.
+
+For further explanation about *options pricing*, check [Investopedia](https://www.investopedia.com/articles/optioninvestor/07/options_beat_market.asp).
 
 ## 2. The Black-Scholes Model
 
@@ -29,12 +30,17 @@ For a European call option, the Black-Scholes formula is:
 
 $$
 C = S₀N(d_1) - Ke^{-rT}N(d_2)
+
 $$
+
 Where:
+
 $$
 d_1 = \frac{(ln(S_0/K) + (r + σ²/2)T)}{(σ\sqrt{T})}, \quad 
 d_2 = d_1 - \sigma \sqrt{T}
+
 $$
+
 - C: Call option price
 - S₀: Current stock price
 - K: Strike price
@@ -60,15 +66,10 @@ The Black-Scholes model rests on several key assumptions:
 While groundbreaking, the Black-Scholes model has several limitations:
 
 1. **Constant Volatility**: The model assumes volatility is constant, which doesn't hold in real markets where volatility can change dramatically.
-
 2. **Log-normal Distribution**: It assumes stock returns are normally distributed, which doesn't account for the fat-tailed distributions observed in reality.
-
 3. **Continuous Trading**: The model assumes continuous trading is possible, which isn't realistic in practice.
-
 4. **No Dividends**: It doesn't account for dividends, which can significantly affect option prices.
-
 5. **European Options Only**: The original model only prices European-style options, not American or exotic options.
-
 6. **Risk-free Rate**: It assumes a constant, known risk-free rate, which can vary in reality.
 
 These limitations highlight why more flexible approaches like Monte Carlo simulation are valuable in option pricing.
@@ -90,6 +91,7 @@ dS = μSdt + σSdW
 ```
 
 Where:
+
 - S: Stock price
 - μ: Expected return
 - σ: Volatility
@@ -109,14 +111,14 @@ def monte_carlo_option_pricing(S0, K, T, r, sigma, num_simulations, num_steps):
     dt = T / num_steps
     paths = np.zeros((num_simulations, num_steps + 1))
     paths[:, 0] = S0
-    
+  
     for t in range(1, num_steps + 1):
         z = np.random.standard_normal(num_simulations)
         paths[:, t] = paths[:, t-1] * np.exp((r - 0.5 * sigma**2) * dt + sigma * np.sqrt(dt) * z)
-    
+  
     option_payoffs = np.maximum(paths[:, -1] - K, 0)
     option_price = np.exp(-r * T) * np.mean(option_payoffs)
-    
+  
     return option_price, paths
 
 # Example usage
@@ -154,6 +156,10 @@ plt.ylabel("Frequency")
 plt.show()
 ```
 
+{{< img src="\posts\finance\monte_carlo\Black-Scholes\images\simulation_path.png" align="center" title="Results">}}
+
+{{< img src="/posts/finance/monte_carlo/Black-Scholes/images/simulation_histogram.png" align="center" title="Results">}}
+
 These visualizations show the range of possible stock price paths and the distribution of final stock prices, providing insight into the option's potential outcomes.
 
 ## 6. Comparison with Analytical Solutions
@@ -176,6 +182,12 @@ print(f"Difference: {abs(bs_price - price):.4f}")
 
 The difference between the two methods gives us an idea of the Monte Carlo simulation's accuracy.
 
+> Black-Scholes price: 11.270
+>
+> Monte Carlo price: 11.445
+>
+> Difference: 0.1744
+
 ## 7. Advanced Topics and Extensions
 
 Monte Carlo simulation's flexibility allows for various extensions:
@@ -192,4 +204,3 @@ Monte Carlo simulation offers a powerful and flexible approach to option pricing
 The method's ability to incorporate various market dynamics, such as changing volatility or dividend payments, makes it invaluable in real-world financial modeling. As computational power continues to increase, Monte Carlo methods are likely to play an even more significant role in quantitative finance.
 
 However, it's important to remember that any model, including Monte Carlo simulation, is only as good as its underlying assumptions. Careful consideration of these assumptions and regular validation against market data remain crucial in applying these techniques effectively in practice.
-
