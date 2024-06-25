@@ -170,6 +170,10 @@
   </url><url>
     <loc>http://localhost:1313/posts/data-science/</loc>
   </url><url>
+    <loc>http://localhost:1313/posts/machine-learning/</loc>
+  </url><url>
+    <loc>http://localhost:1313/posts/machine-learning/deep-learning/</loc>
+  </url><url>
     <loc>http://localhost:1313/posts/nanotech/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/poems/stacy/</loc>

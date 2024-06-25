@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <title>Florence-2 - Vision Foundation Model - Examples</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<link rel="stylesheet" href="/application.fba7e2c0b4d0535aec97a3442d40338651f3354b1ee38f3630059796de18930f.css" integrity="sha256-&#43;6fiwLTQU1rsl6NELUAzhlHzNUse4482MAWXlt4Ykw8=" />
+
+
+
+
+
+  
+
+  
+  
+  
+    
+  
+  
+
+  <link rel="icon" type="image/png" href="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" />
+
+<meta property="og:url" content="http://localhost:1313/posts/machine-learning/deep-learning/computer-vision/florence/">
+  <meta property="og:site_name" content="Stefano Giannini">
+  <meta property="og:title" content="Florence-2 - Vision Foundation Model - Examples">
+  <meta property="og:description" content="Examples and usage of Florence-2 Vision Model">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-06-25T00:08:25+01:00">
+    <meta property="article:modified_time" content="2024-06-25T00:08:25+01:00">
+    <meta property="article:tag" content="Deep Learning">
+    <meta property="article:tag" content="Computer Vision">
+    <meta property="article:tag" content="Machine Learning">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Florence-2 - Vision Foundation Model - Examples">
+  <meta name="twitter:description" content="Examples and usage of Florence-2 Vision Model">
+
+    
+    
+<meta name="description" content="Examples and usage of Florence-2 Vision Model" />
+
+
+    
+
+    
+
+
+
+
+<script>
+      theme = localStorage.getItem('darkmode:color-scheme') || 'system';
+      if (theme == 'system') {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          theme = 'dark';
+        } else {
+          theme = 'light';
+        }
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
+  </head>
+
+  <body class="type-posts kind-page" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
+    <div class="container-fluid bg-secondary wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+
+<nav class="navbar navbar-expand-xl top-navbar shadow " id="top-navbar">
+  <div class="container">
+    
+    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button">
+      <i data-feather="sidebar"></i>
+    </button>
+    
+    <a class="navbar-brand" href="/">
+      
+        <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" id="logo" alt="Logo">
+      Stefano Giannini</a>
+    <button
+      class="navbar-toggler navbar-light"
+      id="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#top-nav-items"
+      aria-label="menu"
+    >
+      <i data-feather="menu"></i>
+    </button>
+
+    <div class="collapse navbar-collapse dynamic-navbar" id="top-nav-items">
+      <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/#home">Home</a>
+        </li>
+        
+          
+          
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#about">About</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#experiences">Experiences</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#education">Education</a>
+                </li>
+              
+            
+          
+        
+        
+          <div id="top-navbar-divider"></div>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="blog-link" href="/posts">Posts</a>
+          </li>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="note-link" href="/notes">Notes</a>
+          </li>
+        
+        
+            
+              <li class="nav-item">
+                <a class="nav-link" href="https://toha-guides.netlify.app/posts/">Docs</a>
+              </li>
+            
+        
+        
+        
+          <li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle"  href="#" id="themeSelector" role="button"
+  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <img id="navbar-theme-icon-svg" class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
+</a>
+<div id="themeMenu" class="dropdown-menu dropdown-menu-icons-only" aria-labelledby="themeSelector">
+  <a class="dropdown-item nav-link" href="#" data-scheme="light">
+    <img class="theme-icon" src="/icons/sun-svgrepo-com.svg" width=20 alt="Light Theme">
+  </a>
+  <a class="dropdown-item nav-link" href="#" data-scheme="dark">
+    <img class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
+  </a>
+  <a class="dropdown-item nav-link" href="#" data-scheme="system">
+    <img class="theme-icon" src="/icons/computer-svgrepo-com.svg" width=20 alt="System Theme">
+  </a>
+</div>
+</li>
+
+        
+      </ul>
+    </div>
+  </div>
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="main-logo" alt="Logo">
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="inverted-logo" alt="Inverted Logo">
+  
+</nav>
+
+
+
+      
+      
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/posts/" data-filter="all">Posts</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/"> Finance</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/monte_carlo/"> Monte Carlo</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/monte_carlo/black-scholes/" title="Option Pricing">Option Pricing</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/stock_prediction/"> Stock Prediction</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/gru/" title="GRU">GRU</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/machine-learning/"> Machine Learning</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/machine-learning/deep-learning/"> Deep Learning</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/machine-learning/deep-learning/computer-vision/"> Computer Vision</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li><a class="active list-link" href="/posts/machine-learning/deep-learning/computer-vision/florence/" title="Florence-2 LVM">Florence-2 LVM</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/physics/"> Physics</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/percolation/" title="Percolation">Percolation</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content">
+    <div class="container p-0 read-area">
+      
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/posts/machine-learning/deep-learning/computer-vision/florence/images/florence-2-lvm-computer-vision-exploration_28_3.png);'>
+      </div>
+
+      
+      <div class="page-content">
+        
+        <div class="author-profile ms-auto align-self-lg-center">
+          <img class="rounded-circle" src='/images/author/profile_hu8a567cefac8c1a165d433ac0796ac418_3088978_120x120_fit_q75_box.jpg' alt="Author Image">
+          <h5 class="author-name">Stefano Giannini</h5>
+          <p class="text-muted">Tuesday, June 25, 2024 | 5 minutes</p>
+        </div>
+        
+        
+        <div class="title">
+          <h1>Florence-2 - Vision Foundation Model - Examples</h1>
+        </div>
+
+        
+
+        
+          <div class="tags">
+  <ul style="padding-left: 0;">
+    
+    
+    <li class="rounded"><a href="/tags/deep-learning/" class="btn btn-sm btn-info">Deep Learning</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/computer-vision/" class="btn btn-sm btn-info">Computer Vision</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/machine-learning/" class="btn btn-sm btn-info">Machine Learning</a></li>
+    
+  </ul>
+</div>
+
+        
+        <div class="post-content" id="post-content">
+          <h2 id="install-dependencies">Install dependencies</h2>
+<p>Type the following command to install possible needed dependencies (especially if the inference is performed on the CPU)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">%</span>pip install einops flash_attn
+</span></span></code></pre></div><p>In Kaggle, <code>transformers</code> and <code>torch</code> are already installed. Otherwise you also need to install them on your local PC.</p>
+<h2 id="import-libraries">Import Libraries</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> transformers <span style="color:#f92672">import</span> AutoProcessor, AutoModelForCausalLM  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> copy
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span>matplotlib inline  
+</span></span></code></pre></div><h2 id="import-the-model">Import the model</h2>
+<p>We can choose <em>Florence-2-large</em> or <em>Florence-2-large-ft</em> (fine-tuned).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>model_id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;microsoft/Florence-2-large-ft&#39;</span>
+</span></span><span style="display:flex;"><span>device <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>device(<span style="color:#e6db74">&#34;cuda&#34;</span> <span style="color:#66d9ef">if</span> torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>is_available() <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#34;cpu&#34;</span>)
+</span></span><span style="display:flex;"><span>print(device)
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> AutoModelForCausalLM<span style="color:#f92672">.</span>from_pretrained(model_id, trust_remote_code<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)<span style="color:#f92672">.</span>eval()
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>to(device)      <span style="color:#75715e"># put the model on the available GPU</span>
+</span></span><span style="display:flex;"><span>processor <span style="color:#f92672">=</span> AutoProcessor<span style="color:#f92672">.</span>from_pretrained(model_id, trust_remote_code<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span></code></pre></div><h2 id="define-inference-function">Define inference function</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run_inference</span>(task_prompt, text_input<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> text_input <span style="color:#f92672">is</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>        prompt <span style="color:#f92672">=</span> task_prompt
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        prompt <span style="color:#f92672">=</span> task_prompt <span style="color:#f92672">+</span> text_input
+</span></span><span style="display:flex;"><span>    inputs <span style="color:#f92672">=</span> processor(text<span style="color:#f92672">=</span>prompt, images<span style="color:#f92672">=</span>image, return_tensors<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pt&#34;</span>)<span style="color:#f92672">.</span>to(device)
+</span></span><span style="display:flex;"><span>    generated_ids <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>generate(
+</span></span><span style="display:flex;"><span>      input_ids<span style="color:#f92672">=</span>inputs[<span style="color:#e6db74">&#34;input_ids&#34;</span>],
+</span></span><span style="display:flex;"><span>      pixel_values<span style="color:#f92672">=</span>inputs[<span style="color:#e6db74">&#34;pixel_values&#34;</span>],
+</span></span><span style="display:flex;"><span>      max_new_tokens<span style="color:#f92672">=</span><span style="color:#ae81ff">1024</span>,
+</span></span><span style="display:flex;"><span>      early_stopping<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
+</span></span><span style="display:flex;"><span>      do_sample<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
+</span></span><span style="display:flex;"><span>      num_beams<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    generated_text <span style="color:#f92672">=</span> processor<span style="color:#f92672">.</span>batch_decode(generated_ids, skip_special_tokens<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>    parsed_answer <span style="color:#f92672">=</span> processor<span style="color:#f92672">.</span>post_process_generation(
+</span></span><span style="display:flex;"><span>        generated_text, 
+</span></span><span style="display:flex;"><span>        task<span style="color:#f92672">=</span>task_prompt, 
+</span></span><span style="display:flex;"><span>        image_size<span style="color:#f92672">=</span>(image<span style="color:#f92672">.</span>width, image<span style="color:#f92672">.</span>height)
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> parsed_answer
+</span></span></code></pre></div><h2 id="get-image-link">Get image link</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>image_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://lerablog.org/wp-content/uploads/2013/06/two-cars.jpg&#34;</span>  <span style="color:#75715e"># an arbitrary image link or filepath can be inserted here</span>
+</span></span><span style="display:flex;"><span>image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(requests<span style="color:#f92672">.</span>get(image_url, stream<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)<span style="color:#f92672">.</span>raw)
+</span></span><span style="display:flex;"><span>image
+</span></span></code></pre></div><p><img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/florence/images/florence-2-lvm-computer-vision-exploration_8_0.png"></p>
+<h2 id="run-pre-defined-tasks-without-additional-inputs">Run pre-defined tasks without additional inputs</h2>
+<h3 id="caption">Caption</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>task_prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&lt;CAPTION&gt;&#39;</span>
+</span></span><span style="display:flex;"><span>run_inference(task_prompt)
+</span></span></code></pre></div><blockquote>
+<p>{&rsquo;<CAPTION>&rsquo;: &lsquo;Two sports cars parked next to each other on a road.&rsquo;}</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>task_prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&lt;DETAILED_CAPTION&gt;&#39;</span>
+</span></span><span style="display:flex;"><span>run_inference(task_prompt)
+</span></span></code></pre></div><blockquote>
+<p>{&rsquo;&lt;DETAILED_CAPTION&gt;&rsquo;: &lsquo;In this image we can see two cars on the road. In the background, we can also see water, hills and the sky.&rsquo;}</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>task_prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&lt;MORE_DETAILED_CAPTION&gt;&#39;</span>
+</span></span><span style="display:flex;"><span>run_inference(task_prompt)
+</span></span></code></pre></div><blockquote>
+<p>{&rsquo;&lt;MORE_DETAILED_CAPTION&gt;&rsquo;: &lsquo;There are two cars parked on the street. There is water behind the cars. There are mountains behind the water. The cars are yellow and black. &lsquo;}</p>
+</blockquote>
+<h2 id="object-detection">Object Detection</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>task_prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&lt;OD&gt;&#39;</span>
+</span></span><span style="display:flex;"><span>results <span style="color:#f92672">=</span> run_inference(task_prompt)
+</span></span><span style="display:flex;"><span>print(results)
+</span></span></code></pre></div><!-- {'<OD>': {'bboxes': [[336.1050109863281, 115.95000457763672, 599.4450073242188, 248.5500030517578], [18.584999084472656, 117.45000457763672, 304.6050109863281, 236.25001525878906], [113.08499908447266, 177.15000915527344, 172.30499267578125, 235.95001220703125], [404.1449890136719, 187.95001220703125, 454.54498291015625, 248.25001525878906], [336.1050109863281, 176.25, 380.2049865722656, 235.95001220703125], [26.774999618530273, 173.85000610351562, 73.3949966430664, 228.15000915527344], [244.125, 216.15000915527344, 291.375, 231.15000915527344], [546.5250244140625, 236.5500030517578, 588.7349853515625, 245.85000610351562], [481.635009765625, 148.35000610351562, 509.3550109863281, 157.65000915527344]], 'labels': ['car', 'car', 'wheel', 'wheel', 'wheel', 'wheel', 'wheel', 'wheel', 'wheel']}} -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.patches <span style="color:#66d9ef">as</span> patches  
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">plot_bbox</span>(image, data):
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e"># Create a figure and axes  </span>
+</span></span><span style="display:flex;"><span>    fig, ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots()  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Display the image  </span>
+</span></span><span style="display:flex;"><span>    ax<span style="color:#f92672">.</span>imshow(image)  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Plot each bounding box  </span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> bbox, label <span style="color:#f92672">in</span> zip(data[<span style="color:#e6db74">&#39;bboxes&#39;</span>], data[<span style="color:#e6db74">&#39;labels&#39;</span>]):  
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Unpack the bounding box coordinates  </span>
+</span></span><span style="display:flex;"><span>        x1, y1, x2, y2 <span style="color:#f92672">=</span> bbox  
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Create a Rectangle patch  </span>
+</span></span><span style="display:flex;"><span>        rect <span style="color:#f92672">=</span> patches<span style="color:#f92672">.</span>Rectangle((x1, y1), x2<span style="color:#f92672">-</span>x1, y2<span style="color:#f92672">-</span>y1, linewidth<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, edgecolor<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;r&#39;</span>, facecolor<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;none&#39;</span>)  
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Add the rectangle to the Axes  </span>
+</span></span><span style="display:flex;"><span>        ax<span style="color:#f92672">.</span>add_patch(rect)  
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Annotate the label  </span>
+</span></span><span style="display:flex;"><span>        plt<span style="color:#f92672">.</span>text(x1, y1, label, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;white&#39;</span>, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span>, bbox<span style="color:#f92672">=</span>dict(facecolor<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;red&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>))  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Remove the axis ticks and labels  </span>
+</span></span><span style="display:flex;"><span>    ax<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#39;off&#39;</span>)  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Show the plot  </span>
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>show()  
+</span></span></code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>plot_bbox(image, results[<span style="color:#e6db74">&#39;&lt;OD&gt;&#39;</span>])
+</span></span></code></pre></div><p><img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/florence/images/florence-2-lvm-computer-vision-exploration_16_0.png"></p>
+<h2 id="dense-region-caption">Dense Region Caption</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>task_prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&lt;DENSE_REGION_CAPTION&gt;&#39;</span>
+</span></span><span style="display:flex;"><span>results <span style="color:#f92672">=</span> run_inference(task_prompt)
+</span></span><span style="display:flex;"><span>dense_region_res <span style="color:#f92672">=</span> results
+</span></span><span style="display:flex;"><span>print(results)
+</span></span></code></pre></div><blockquote>
+<p>{&rsquo;&lt;DENSE_REGION_CAPTION&gt;&rsquo;: {&lsquo;bboxes&rsquo;: [[334.8450012207031, 115.95000457763672, 599.4450073242188, 248.5500030517578], [18.584999084472656, 117.45000457763672, 304.6050109863281, 236.&gt; 25001525878906], [113.71499633789062, 177.15000915527344, 172.30499267578125, 235.95001220703125], [404.1449890136719, 187.95001220703125, 453.9150085449219, 248.25001525878906], [26.&gt; 774999618530273, 173.85000610351562, 73.3949966430664, 228.15000915527344], [336.1050109863281, 176.25, 380.2049865722656, 235.95001220703125], [244.125, 216.45001220703125,
+290.7449951171875, 230.85000610351562], [546.5250244140625, 236.5500030517578, 588.7349853515625, 245.85000610351562], [481.635009765625, 148.35000610351562, 509.3550109863281,
+157.65000915527344]], &rsquo;labels&rsquo;: [&lsquo;yellow sports car&rsquo;, &lsquo;sports car&rsquo;, &lsquo;wheel&rsquo;, &lsquo;wheel&rsquo;, &lsquo;wheel&rsquo;, &lsquo;wheel&rsquo;, &lsquo;wheel&rsquo;, &lsquo;wheel&rsquo;, &lsquo;wheel&rsquo;]}}</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>plot_bbox(image, results[<span style="color:#e6db74">&#39;&lt;DENSE_REGION_CAPTION&gt;&#39;</span>])
+</span></span></code></pre></div><!-- <img src="/images/images/florence-2-lvm-computer-vision-exploration_19_0.png"
+    
+        alt="Histogram"
+    
+    
+    
+    
+    
+        class="center"
+    
+>
+ -->
+<p><img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/florence/images/florence-2-lvm-computer-vision-exploration_19_0.png"></p>
+<h2 id="phrase-grounding">Phrase Grounding</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>task_prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&lt;CAPTION_TO_PHRASE_GROUNDING&gt;&#39;</span>
+</span></span><span style="display:flex;"><span>results <span style="color:#f92672">=</span> run_inference(task_prompt, text_input<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Yellow car with islands in background&#34;</span>)
+</span></span><span style="display:flex;"><span>print(results)
+</span></span><span style="display:flex;"><span>plot_bbox(image, results[<span style="color:#e6db74">&#39;&lt;CAPTION_TO_PHRASE_GROUNDING&gt;&#39;</span>])
+</span></span></code></pre></div><p>{&rsquo;&lt;CAPTION_TO_PHRASE_GROUNDING&gt;&rsquo;: {&lsquo;bboxes&rsquo;: [[335.4750061035156, 115.6500015258789, 601.9649658203125, 250.35000610351562], [0.3149999976158142, 12.15000057220459, 629.0549926757812, 103.6500015258789]], &rsquo;labels&rsquo;: [&lsquo;Yellow car&rsquo;, &lsquo;islands&rsquo;]}}
+<img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/florence/images/florence-2-lvm-computer-vision-exploration_21_1.png"></p>
+<h2 id="segmentation">Segmentation</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>task_prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&lt;REFERRING_EXPRESSION_SEGMENTATION&gt;&#39;</span>
+</span></span><span style="display:flex;"><span>results <span style="color:#f92672">=</span> run_inference(task_prompt, text_input<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;yellow car and island&#34;</span>)
+</span></span><span style="display:flex;"><span>print(results)
+</span></span></code></pre></div><!-- {'<REFERRING_EXPRESSION_SEGMENTATION>': {'polygons': [[[348.07501220703125, 149.85000610351562, 364.4549865722656, 147.75, 387.135009765625, 126.75000762939453, 414.8550109863281, 118.35000610351562, 473.44500732421875, 116.25000762939453, 508.7250061035156, 120.45000457763672, 538.3350219726562, 147.15000915527344, 545.2650146484375, 145.0500030517578, 557.2349853515625, 149.25, 557.864990234375, 156.15000915527344, 547.7849731445312, 159.75, 572.9849853515625, 169.65000915527344, 588.7349853515625, 178.0500030517578, 596.9249877929688, 202.65000915527344, 599.4450073242188, 223.65000915527344, 596.9249877929688, 236.25001525878906, 588.7349853515625, 237.75001525878906, 579.2849731445312, 246.15000915527344, 553.4550170898438, 246.15000915527344, 547.1549682617188, 239.85000610351562, 450.135009765625, 239.85000610351562, 438.79498291015625, 248.25001525878906, 419.2649841308594, 248.25001525878906, 407.92498779296875, 237.75001525878906, 406.6650085449219, 229.35000610351562, 378.94500732421875, 225.15000915527344, 376.42498779296875, 233.5500030517578, 348.07501220703125, 235.65000915527344, 339.2550048828125, 225.15000915527344, 336.1050109863281, 198.45001220703125, 336.7349853515625, 175.95001220703125, 343.6650085449219, 159.75]]], 'labels': ['']}} -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image, ImageDraw, ImageFont 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> random
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>colormap <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;blue&#39;</span>,<span style="color:#e6db74">&#39;orange&#39;</span>,<span style="color:#e6db74">&#39;green&#39;</span>,<span style="color:#e6db74">&#39;purple&#39;</span>,<span style="color:#e6db74">&#39;brown&#39;</span>,<span style="color:#e6db74">&#39;pink&#39;</span>,<span style="color:#e6db74">&#39;gray&#39;</span>,<span style="color:#e6db74">&#39;olive&#39;</span>,<span style="color:#e6db74">&#39;cyan&#39;</span>,<span style="color:#e6db74">&#39;red&#39;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;lime&#39;</span>,<span style="color:#e6db74">&#39;indigo&#39;</span>,<span style="color:#e6db74">&#39;violet&#39;</span>,<span style="color:#e6db74">&#39;aqua&#39;</span>,<span style="color:#e6db74">&#39;magenta&#39;</span>,<span style="color:#e6db74">&#39;coral&#39;</span>,<span style="color:#e6db74">&#39;gold&#39;</span>,<span style="color:#e6db74">&#39;tan&#39;</span>,<span style="color:#e6db74">&#39;skyblue&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">draw_polygons</span>(image, prediction, fill_mask<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>):  
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;  
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Draws segmentation masks with polygons on an image.  
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Parameters:  
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    - image_path: Path to the image file.  
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    - prediction: Dictionary containing &#39;polygons&#39; and &#39;labels&#39; keys.  
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                  &#39;polygons&#39; is a list of lists, each containing vertices of a polygon.  
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                  &#39;labels&#39; is a list of labels corresponding to each polygon.  
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    - fill_mask: Boolean indicating whether to fill the polygons with color.  
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Load the image  </span>
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>    draw <span style="color:#f92672">=</span> ImageDraw<span style="color:#f92672">.</span>Draw(image)  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Set up scale factor if needed (use 1 if not scaling)  </span>
+</span></span><span style="display:flex;"><span>    scale <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Iterate over polygons and labels  </span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> polygons, label <span style="color:#f92672">in</span> zip(prediction[<span style="color:#e6db74">&#39;polygons&#39;</span>], prediction[<span style="color:#e6db74">&#39;labels&#39;</span>]):  
+</span></span><span style="display:flex;"><span>        color <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>choice(colormap)  
+</span></span><span style="display:flex;"><span>        fill_color <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>choice(colormap) <span style="color:#66d9ef">if</span> fill_mask <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">None</span>  
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> _polygon <span style="color:#f92672">in</span> polygons:  
+</span></span><span style="display:flex;"><span>            _polygon <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(_polygon)<span style="color:#f92672">.</span>reshape(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>)  
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> len(_polygon) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>:  
+</span></span><span style="display:flex;"><span>                print(<span style="color:#e6db74">&#39;Invalid polygon:&#39;</span>, _polygon)  
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>  
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>            _polygon <span style="color:#f92672">=</span> (_polygon <span style="color:#f92672">*</span> scale)<span style="color:#f92672">.</span>reshape(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>tolist()  
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Draw the polygon  </span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> fill_mask:  
+</span></span><span style="display:flex;"><span>                draw<span style="color:#f92672">.</span>polygon(_polygon, outline<span style="color:#f92672">=</span>color, fill<span style="color:#f92672">=</span>fill_color)  
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>:  
+</span></span><span style="display:flex;"><span>                draw<span style="color:#f92672">.</span>polygon(_polygon, outline<span style="color:#f92672">=</span>color)  
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Draw the label text  </span>
+</span></span><span style="display:flex;"><span>            draw<span style="color:#f92672">.</span>text((_polygon[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">8</span>, _polygon[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>), label, fill<span style="color:#f92672">=</span>color)  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Save or display the image  </span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#image.show()  # Display the image  </span>
+</span></span><span style="display:flex;"><span>    display(image)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>output_image <span style="color:#f92672">=</span> copy<span style="color:#f92672">.</span>deepcopy(image)
+</span></span><span style="display:flex;"><span>draw_polygons(output_image, results[<span style="color:#e6db74">&#39;&lt;REFERRING_EXPRESSION_SEGMENTATION&gt;&#39;</span>], fill_mask<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)  
+</span></span></code></pre></div><p><img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/florence/images/florence-2-lvm-computer-vision-exploration_25_0.png"></p>
+<h3 id="regions-segmentation">Regions Segmentation</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">bbox_to_loc</span>(bbox):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># bbox position need to be rescaled from 0 to 999. the coordinates are x1_y1_x2_y2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;&lt;loc_</span><span style="color:#e6db74">{</span>int(bbox[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">*</span><span style="color:#ae81ff">999</span><span style="color:#f92672">/</span>width)<span style="color:#e6db74">}</span><span style="color:#e6db74">&gt;&lt;loc_</span><span style="color:#e6db74">{</span>int(bbox[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span><span style="color:#ae81ff">999</span><span style="color:#f92672">/</span>height)<span style="color:#e6db74">}</span><span style="color:#e6db74">&gt;&lt;loc_</span><span style="color:#e6db74">{</span>int(bbox[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">*</span><span style="color:#ae81ff">999</span><span style="color:#f92672">/</span>width)<span style="color:#e6db74">}</span><span style="color:#e6db74">&gt;&lt;loc_</span><span style="color:#e6db74">{</span>int(bbox[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">*</span><span style="color:#ae81ff">999</span><span style="color:#f92672">/</span>height)<span style="color:#e6db74">}</span><span style="color:#e6db74">&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>    torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>empty_cache()
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>output_image <span style="color:#f92672">=</span> copy<span style="color:#f92672">.</span>deepcopy(image)
+</span></span><span style="display:flex;"><span>height, width <span style="color:#f92672">=</span> image<span style="color:#f92672">.</span>height, image<span style="color:#f92672">.</span>width 
+</span></span><span style="display:flex;"><span>task_prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&lt;REGION_TO_SEGMENTATION&gt;&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> bbox <span style="color:#f92672">in</span> dense_region_res[<span style="color:#e6db74">&#39;&lt;DENSE_REGION_CAPTION&gt;&#39;</span>][<span style="color:#e6db74">&#39;bboxes&#39;</span>][:]:
+</span></span><span style="display:flex;"><span>    print(bbox_to_loc(bbox))
+</span></span><span style="display:flex;"><span>    results <span style="color:#f92672">=</span> run_inference(task_prompt, text_input<span style="color:#f92672">=</span>bbox_to_loc(bbox)) 
+</span></span><span style="display:flex;"><span>    draw_polygons(output_image, results[task_prompt], fill_mask<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>plot_bbox(output_image, dense_region_res[<span style="color:#e6db74">&#39;&lt;DENSE_REGION_CAPTION&gt;&#39;</span>])
+</span></span></code></pre></div><blockquote>
+<p>&lt;loc_530&gt;&lt;loc_386&gt;&lt;loc_950&gt;&lt;loc_827&gt;
+<img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/florence/images/florence-2-lvm-computer-vision-exploration_28_1.png"></p>
+</blockquote>
+<blockquote>
+<p>&lt;loc_29&gt;&lt;loc_391&gt;&lt;loc_483&gt;&lt;loc_786&gt;
+<img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/florence/images/florence-2-lvm-computer-vision-exploration_28_3.png"></p>
+</blockquote>
+<blockquote>
+<p>&lt;loc_180&gt;&lt;loc_589&gt;&lt;loc_273&gt;&lt;loc_785&gt;
+<img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/florence/images/florence-2-lvm-computer-vision-exploration_28_5.png"></p>
+</blockquote>
+<blockquote>
+<p>&lt;loc_640&gt;&lt;loc_625&gt;&lt;loc_719&gt;&lt;loc_826&gt;
+<img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/florence/images/florence-2-lvm-computer-vision-exploration_28_7.png"></p>
+</blockquote>
+<blockquote>
+<p>&lt;loc_42&gt;&lt;loc_578&gt;&lt;loc_116&gt;&lt;loc_759&gt;
+<img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/florence/images/florence-2-lvm-computer-vision-exploration_28_9.png"></p>
+</blockquote>
+<blockquote>
+<p>&lt;loc_532&gt;&lt;loc_586&gt;&lt;loc_602&gt;&lt;loc_785&gt;
+<img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/florence/images/florence-2-lvm-computer-vision-exploration_28_11.png"></p>
+</blockquote>
+<blockquote>
+<p>&lt;loc_387&gt;&lt;loc_720&gt;&lt;loc_461&gt;&lt;loc_768&gt;
+<img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/florence/images/florence-2-lvm-computer-vision-exploration_28_13.png"></p>
+</blockquote>
+<blockquote>
+<p>&lt;loc_866&gt;&lt;loc_787&gt;&lt;loc_933&gt;&lt;loc_818&gt;
+<img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/florence/images/florence-2-lvm-computer-vision-exploration_28_15.png"></p>
+</blockquote>
+<blockquote>
+<p>&lt;loc_763&gt;&lt;loc_494&gt;&lt;loc_807&gt;&lt;loc_524&gt;
+<img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/florence/images/florence-2-lvm-computer-vision-exploration_28_17.png"></p>
+</blockquote>
+<blockquote>
+<p><img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/florence/images/florence-2-lvm-computer-vision-exploration_28_18.png"></p>
+</blockquote>
+<h2 id="ocr">OCR</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://m.media-amazon.com/images/I/510sf0pRTlL.jpg&#34;</span>
+</span></span><span style="display:flex;"><span>image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(requests<span style="color:#f92672">.</span>get(url, stream<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)<span style="color:#f92672">.</span>raw)<span style="color:#f92672">.</span>convert(<span style="color:#e6db74">&#39;RGB&#39;</span>)
+</span></span><span style="display:flex;"><span>image
+</span></span></code></pre></div><p><img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/florence/images/florence-2-lvm-computer-vision-exploration_30_0.png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>task_prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&lt;OCR_WITH_REGION&gt;&#39;</span>
+</span></span><span style="display:flex;"><span>results <span style="color:#f92672">=</span> run_inference(task_prompt)
+</span></span><span style="display:flex;"><span>print(results)
+</span></span></code></pre></div><blockquote>
+<p>{&rsquo;&lt;OCR_WITH_REGION&gt;&rsquo;: {&lsquo;quad_boxes&rsquo;: [[143.8125, 146.25, 280.9624938964844, 146.25, 280.9624938964844, 172.25, 143.8125, 172.25], [134.0625, 176.25, 281.9375, 176.25, 281.9375, 202.25, 134.0625, 202.25], [172.73748779296875, 206.25, 284.2124938964844, 206.25, 284.2124938964844, 216.25, 172.73748779296875, 216.25], [150.3125, 238.25, 281.9375, 238.25, 281.9375, 247.25, 150.3125, 247.25], [139.58749389648438, 254.25, 284.2124938964844, 254.25, 284.2124938964844, 277.75, 139.58749389648438, 277.75], [133.08749389648438, 283.75, 285.1875, 283.75, 285.1875, 307.75, 133.08749389648438, 307.75], [140.5625, 312.75, 281.9375, 312.75, 281.9375, 320.75, 140.5625, 320.75]], &rsquo;labels&rsquo;: [&rsquo;</s><strong>QUANTUM&rsquo;, &lsquo;MECHANICS&rsquo;, &lsquo;(Non-relativistic Theory)&rsquo;, &lsquo;Course of Theoretical Phyias Volume 3&rsquo;, &lsquo;L.D. LANDAU&rsquo;, &lsquo;E.M. LIFSHITZ&rsquo;, &lsquo;Initiute of Physical Problems, USSR Academy of</strong>&rsquo;]}}</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">draw_ocr_bboxes</span>(image, prediction):
+</span></span><span style="display:flex;"><span>    scale <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    draw <span style="color:#f92672">=</span> ImageDraw<span style="color:#f92672">.</span>Draw(image)
+</span></span><span style="display:flex;"><span>    bboxes, labels <span style="color:#f92672">=</span> prediction[<span style="color:#e6db74">&#39;quad_boxes&#39;</span>], prediction[<span style="color:#e6db74">&#39;labels&#39;</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> box, label <span style="color:#f92672">in</span> zip(bboxes, labels):
+</span></span><span style="display:flex;"><span>        color <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>choice(colormap)
+</span></span><span style="display:flex;"><span>        new_box <span style="color:#f92672">=</span> (np<span style="color:#f92672">.</span>array(box) <span style="color:#f92672">*</span> scale)<span style="color:#f92672">.</span>tolist()
+</span></span><span style="display:flex;"><span>        draw<span style="color:#f92672">.</span>polygon(new_box, width<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, outline<span style="color:#f92672">=</span>color)
+</span></span><span style="display:flex;"><span>        draw<span style="color:#f92672">.</span>text((new_box[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">-</span><span style="color:#ae81ff">8</span>, new_box[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>),
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(label),
+</span></span><span style="display:flex;"><span>                    align<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;right&#34;</span>,
+</span></span><span style="display:flex;"><span>                    fill<span style="color:#f92672">=</span>color)
+</span></span><span style="display:flex;"><span>    display(image)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>output_image <span style="color:#f92672">=</span> copy<span style="color:#f92672">.</span>deepcopy(image)
+</span></span><span style="display:flex;"><span>draw_ocr_bboxes(output_image, results[<span style="color:#e6db74">&#39;&lt;OCR_WITH_REGION&gt;&#39;</span>])  
+</span></span></code></pre></div><p><img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/florence/images/florence-2-lvm-computer-vision-exploration_32_0.png"></p>
+
+        </div>
+
+        
+        <div class="row ps-3 pe-3">
+        
+          <div class="col-md-6 share-buttons">
+          
+            <strong>Share on:</strong>
+            
+            <a class="btn icon-button bg-facebook" href="https://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fcomputer-vision%2fflorence%2f" target="_blank">
+              <i class="fab fa-facebook"></i>
+            </a>
+            
+            
+                <a class="btn icon-button bg-twitter" href="https://twitter.com/share?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fcomputer-vision%2fflorence%2f&text=Florence-2%20-%20Vision%20Foundation%20Model%20-%20Examples&via=Stefano%20Giannini" target="_blank">
+                  <i class="fab fa-twitter"></i>
+                </a>
+            
+            
+                <a  class="btn icon-button bg-reddit" href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fcomputer-vision%2fflorence%2f&title=Florence-2%20-%20Vision%20Foundation%20Model%20-%20Examples" target="_blank">
+                  <i class="fab fa-reddit"></i>
+                </a>
+            
+            
+            
+            
+                <a class="btn icon-button bg-linkedin" href="https://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fcomputer-vision%2fflorence%2f&title=Florence-2%20-%20Vision%20Foundation%20Model%20-%20Examples" target="_blank">
+                  <i class="fab fa-linkedin"></i>
+                </a>
+            
+            
+             
+            
+                 <a class="btn icon-button bg-whatsapp" href="https://api.whatsapp.com/send?text=Florence-2%20-%20Vision%20Foundation%20Model%20-%20Examples http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fcomputer-vision%2fflorence%2f" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+            
+            
+                <a class="btn icon-button" href="mailto:?subject=Florence-2%20-%20Vision%20Foundation%20Model%20-%20Examples&body=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fcomputer-vision%2fflorence%2f" target="_blank">
+                  <i class="fas fa-envelope-open-text"></i>
+                </a>
+            
+          
+          </div>
+
+        
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/ragespin/ragespin.github.io/edit/main/content/posts%5cmachine%20learning%5cdeep%20learning%5ccomputer%20vision%5cflorence%5cindex.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+    
+  
+  
+
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+    <div class="col-md-6 previous-article">
+      <a href="/posts/finance/stock_prediction/gru/" title="MSFT Stock Prediction using LSTM or GRU" class="btn filled-button">
+        <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
+        <div class="next-prev-text">MSFT Stock Prediction using LSTM or GRU</div>
+      </a>
+    </div>
+  
+  
+      
+      
+        
+      
+      <div class="col-md-6 next-article">
+        <a href="/posts/physics/percolation/" title="Percolation" class="btn filled-button">
+          <div>Next <i class="fas fa-chevron-circle-right"></i></div>
+          <div class="next-prev-text">Percolation</div>
+        </a>
+      </div>
+    
+</div>
+
+      <hr />
+
+      
+      
+
+      
+      
+
+      </div>
+    </div>
+  </div>
+  
+  <a id="scroll-to-top" class="btn" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Scroll to top">
+    <i class="fas fa-chevron-circle-up"></i>
+  </a>
+</section>
+
+
+      
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center ps-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#install-dependencies">Install dependencies</a></li>
+    <li><a href="#import-libraries">Import Libraries</a></li>
+    <li><a href="#import-the-model">Import the model</a></li>
+    <li><a href="#define-inference-function">Define inference function</a></li>
+    <li><a href="#get-image-link">Get image link</a></li>
+    <li><a href="#run-pre-defined-tasks-without-additional-inputs">Run pre-defined tasks without additional inputs</a>
+      <ul>
+        <li><a href="#caption">Caption</a></li>
+      </ul>
+    </li>
+    <li><a href="#object-detection">Object Detection</a></li>
+    <li><a href="#dense-region-caption">Dense Region Caption</a></li>
+    <li><a href="#phrase-grounding">Phrase Grounding</a></li>
+    <li><a href="#segmentation">Segmentation</a>
+      <ul>
+        <li><a href="#regions-segmentation">Regions Segmentation</a></li>
+      </ul>
+    </li>
+    <li><a href="#ocr">OCR</a></li>
+  </ul>
+</nav>
+      </div>
+    </div>
+    
+  </section>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+    
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-start">
+        
+        
+        
+        
+      </div>
+    </div>
+    
+    <hr />
+    <div class="container">
+      <p id="disclaimer"><strong>Liability Notice:</strong> This theme is under MIT license. So, you can use it for non-commercial, commercial, or private uses. You can modify or distribute the theme without requiring any permission from the theme author. However, the theme author does not provide any warranty or takes any liability for any issue with the theme.</p>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-start">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
+            <img src="/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2024 Copyright.</div>
+        <div class="col-md-4 text-end">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script src="/application.97f51c3e286071444c3471235d1690400d75a930a8787cc86f8c8e4d2767277e.js" integrity="sha256-l/UcPihgcURMNHEjXRaQQA11qTCoeHzIb4yOTSdnJ34=" defer></script>
+
+
+    
+     
+
+    
+    
+
+</body>
+</html>

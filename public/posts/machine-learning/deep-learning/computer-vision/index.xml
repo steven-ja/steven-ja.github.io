@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Computer Vision on Stefano Giannini</title>
+    <link>http://localhost:1313/posts/machine-learning/deep-learning/computer-vision/</link>
+    <description>Recent content in Computer Vision on Stefano Giannini</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 25 Jun 2024 00:08:25 +0100</lastBuildDate><atom:link href="http://localhost:1313/posts/machine-learning/deep-learning/computer-vision/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>Florence-2 - Vision Foundation Model - Examples</title>
+      <link>http://localhost:1313/posts/machine-learning/deep-learning/computer-vision/florence/</link>
+      <pubDate>Tue, 25 Jun 2024 00:08:25 +0100</pubDate>
+      
+      <guid>http://localhost:1313/posts/machine-learning/deep-learning/computer-vision/florence/</guid>
+      <description>Install dependencies Type the following command to install possible needed dependencies (especially if the inference is performed on the CPU)
+%pip install einops flash_attn In Kaggle, transformers and torch are already installed. Otherwise you also need to install them on your local PC.
+Import Libraries from transformers import AutoProcessor, AutoModelForCausalLM from PIL import Image import requests import copy import torch %matplotlib inline Import the model We can choose Florence-2-large or Florence-2-large-ft (fine-tuned).</description>
+    </item>
+    
+    
+  </channel>
+</rss>
