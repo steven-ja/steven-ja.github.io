@@ -27,7 +27,7 @@ experiences:
     # give some points about what was your responsibilities at the company.
     responsibilities:
     - Designing of NLP models as DistilBERT or GPT-2. Then ChatGPT API and Anthropic.
-    - Evaluation of the future _junior_ candidates in my team.
+    - Evaluation of future _junior_ candidates in my team.
     - Managing (on the technical side) an external company / service provider of our team.
     - Emotion Detection from voice/ audio -> state-of-the-art model (TIM-Net)
 
