@@ -438,7 +438,7 @@
   <div class="content">
     <div class="container p-0 read-area">
       
-      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/images/default-hero.jpg);'>
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/posts/finance/stock_prediction/arima/images/find_d.png);'>
       </div>
 
       
@@ -447,7 +447,7 @@
         <div class="author-profile ms-auto align-self-lg-center">
           <img class="rounded-circle" src='/images/author/profile_hu8a567cefac8c1a165d433ac0796ac418_3088978_120x120_fit_q75_box.jpg' alt="Author Image">
           <h5 class="author-name">Stefano Giannini</h5>
-          <p class="text-muted">Friday, June 28, 2024 | 5 minutes</p>
+          <p class="text-muted">Friday, June 28, 2024 | 6 minutes</p>
         </div>
         
         
@@ -541,6 +541,7 @@ $$</p>
 </span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;ADF Statistic:&#39;</span>, result[<span style="color:#ae81ff">0</span>])
 </span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;p-value:&#39;</span>, result[<span style="color:#ae81ff">1</span>])
 </span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># if p-value is &gt; 0.05, it means the series is not stationary.</span>
 </span></span><span style="display:flex;"><span>test_stationarity(ts)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># If non-stationary, difference the series</span>
@@ -578,6 +579,30 @@ $$</p>
 <li><strong>Grid search</strong>: Trying different combinations of p, d, and q and selecting the best based on information criteria like AIC or BIC.</li>
 <li><strong>Diagnostic checking</strong>: Analyzing residuals to ensure they resemble white noise.</li>
 </ol>
+<h3 id="finding-arima-parameters-p-d-q">Finding ARIMA Parameters (p, d, q)</h3>
+<p>Determining the optimal ARIMA parameters involves a combination of statistical tests, visual inspection, and iterative processes. Here&rsquo;s a systematic approach to finding p, d, and q:</p>
+<ul>
+<li>Determine d (Differencing Order):
+<ul>
+<li>Use the Augmented Dickey-Fuller test to check for stationarity.</li>
+<li>If the series is not stationary, difference it and test again until stationarity is achieved.</li>
+</ul>
+</li>
+<li>Determine p (AR Order) and q (MA Order):
+<ul>
+<li>After differencing, use ACF (Autocorrelation Function) and PACF (Partial Autocorrelation Function) plots.</li>
+<li>The lag where the ACF cuts off indicates the q value.</li>
+<li>The lag where the PACF cuts off indicates the p value.</li>
+</ul>
+</li>
+<li>Fine-tune with Information Criteria:
+<ul>
+<li>Use AIC (Akaike Information Criterion) or BIC (Bayesian Information Criterion) to compare different models.</li>
+</ul>
+</li>
+</ul>
+<h3 id="finding-d-values-from-plots">Finding d values from plots</h3>
+<h3 id="grid-search">Grid Search</h3>
 <p>Here&rsquo;s a Python function to perform a grid search:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">grid_search_arima</span>(ts, p_range, d_range, q_range):
 </span></span><span style="display:flex;"><span>    best_aic <span style="color:#f92672">=</span> float(<span style="color:#e6db74">&#39;inf&#39;</span>)
@@ -788,7 +813,13 @@ $$</p>
       </ul>
     </li>
     <li><a href="#4-implementing-arima-models-in-python">4. Implementing ARIMA Models in Python</a></li>
-    <li><a href="#5-model-selection-and-diagnostic-checking">5. Model Selection and Diagnostic Checking</a></li>
+    <li><a href="#5-model-selection-and-diagnostic-checking">5. Model Selection and Diagnostic Checking</a>
+      <ul>
+        <li><a href="#finding-arima-parameters-p-d-q">Finding ARIMA Parameters (p, d, q)</a></li>
+        <li><a href="#finding-d-values-from-plots">Finding d values from plots</a></li>
+        <li><a href="#grid-search">Grid Search</a></li>
+      </ul>
+    </li>
     <li><a href="#6-limitations-and-considerations">6. Limitations and Considerations</a></li>
     <li><a href="#7-advanced-topics-and-extensions">7. Advanced Topics and Extensions</a></li>
     <li><a href="#8-conclusion">8. Conclusion</a></li>

@@ -34,16 +34,17 @@ print(results.summary())
 
 # Forecast
 forecast = results.forecast(steps=30)
-help(forecast)
+# help(forecast)
+print(forecast)
 
 # Plot the results
 plt.figure(figsize=(12,6))
 plt.plot(ts.index[-100:], ts.values[-100:], label='Observed')
 plt.plot(forecast.index, forecast.values, color='r', label='Forecast')
-plt.fill_between(forecast.index, 
-                 forecast.conf_int().iloc[:, 0], 
-                 forecast.conf_int().iloc[:, 1], 
-                 color='pink', alpha=0.3)
+# plt.fill_between(forecast.index, 
+#                  forecast.iloc[:, 0], 
+#                  forecast.iloc[:, 1], 
+#                  color='pink', alpha=0.3)
 plt.title(f'{ticker} Stock Price Prediction')
 plt.legend()
 plt.show()

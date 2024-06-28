@@ -8,7 +8,7 @@ menu:
     identifier: ARIMA
     parent: stock_prediction 
     weight: 10
-hero: 
+hero: images/find_d.png
 tags: ["Finance", "Statistics", "Forecasting"]
 categories: ["Finance"]
 ---
@@ -93,6 +93,7 @@ def test_stationarity(timeseries):
     print('ADF Statistic:', result[0])
     print('p-value:', result[1])
 
+# if p-value is > 0.05, it means the series is not stationary.
 test_stationarity(ts)
 
 # If non-stationary, difference the series
@@ -134,6 +135,23 @@ Choosing the right ARIMA model involves selecting appropriate values for p, d, a
 2. **Grid search**: Trying different combinations of p, d, and q and selecting the best based on information criteria like AIC or BIC.
 3. **Diagnostic checking**: Analyzing residuals to ensure they resemble white noise.
 
+### Finding ARIMA Parameters (p, d, q)
+Determining the optimal ARIMA parameters involves a combination of statistical tests, visual inspection, and iterative processes. Here's a systematic approach to finding p, d, and q:
+
+* Determine d (Differencing Order): 
+  - Use the Augmented Dickey-Fuller test to check for stationarity.
+  - If the series is not stationary, difference it and test again until stationarity is achieved.
+* Determine p (AR Order) and q (MA Order): 
+  - After differencing, use ACF (Autocorrelation Function) and PACF (Partial Autocorrelation Function) plots.
+  - The lag where the ACF cuts off indicates the q value.
+  - The lag where the PACF cuts off indicates the p value.
+* Fine-tune with Information Criteria:
+  - Use AIC (Akaike Information Criterion) or BIC (Bayesian Information Criterion) to compare different models.
+
+### Finding d values from plots
+
+
+### Grid Search
 Here's a Python function to perform a grid search:
 
 ```python
