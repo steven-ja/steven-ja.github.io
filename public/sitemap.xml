@@ -103,16 +103,61 @@
     <priority>0.1</priority>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2024-06-23T00:08:25+01:00</lastmod>
+    <lastmod>2024-06-28T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/finance/</loc>
-    <lastmod>2024-06-23T00:08:25+01:00</lastmod>
+    <lastmod>2024-06-28T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/finance/</loc>
-    <lastmod>2024-06-23T00:08:25+01:00</lastmod>
+    <lastmod>2024-06-28T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/finance/</loc>
-    <lastmod>2024-06-23T00:08:25+01:00</lastmod>
+    <lastmod>2024-06-28T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/forecasting/</loc>
+    <lastmod>2024-06-28T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/</loc>
+    <lastmod>2024-06-28T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/statistics/</loc>
+    <lastmod>2024-06-28T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2024-06-28T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/finance/stock_prediction/</loc>
+    <lastmod>2024-06-28T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2024-06-28T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/finance/stock_prediction/arima/</loc>
+    <lastmod>2024-06-28T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/computer-vision/</loc>
+    <lastmod>2024-06-25T00:08:25+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/computer-vision/</loc>
+    <lastmod>2024-06-25T00:08:25+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/machine-learning/deep-learning/computer-vision/</loc>
+    <lastmod>2024-06-25T00:08:25+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/deep-learning/</loc>
+    <lastmod>2024-06-25T00:08:25+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/machine-learning/deep-learning/</loc>
+    <lastmod>2024-06-25T00:08:25+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/machine-learning/deep-learning/computer-vision/florence/</loc>
+    <lastmod>2024-06-25T00:08:25+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/machine-learning/</loc>
+    <lastmod>2024-06-25T00:08:25+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/machine-learning/</loc>
+    <lastmod>2024-06-25T00:08:25+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/finance/monte_carlo/</loc>
     <lastmod>2024-06-23T00:08:25+01:00</lastmod>
@@ -123,28 +168,7 @@
     <loc>http://localhost:1313/tags/options/</loc>
     <lastmod>2024-06-23T00:08:25+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2024-06-23T00:08:25+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/statistics/</loc>
-    <lastmod>2024-06-23T00:08:25+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/</loc>
-    <lastmod>2024-06-23T00:08:25+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2024-06-23T00:08:25+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/deep-learning/</loc>
-    <lastmod>2024-06-16T00:00:00+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/forecasting/</loc>
-    <lastmod>2024-06-16T00:00:00+01:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/posts/finance/stock_prediction/gru/</loc>
-    <lastmod>2024-06-16T00:00:00+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/finance/stock_prediction/</loc>
     <lastmod>2024-06-16T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/physics/percolation/</loc>
@@ -169,10 +193,6 @@
     <lastmod>2010-06-08T08:06:25+06:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/data-science/</loc>
-  </url><url>
-    <loc>http://localhost:1313/posts/machine-learning/</loc>
-  </url><url>
-    <loc>http://localhost:1313/posts/machine-learning/deep-learning/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/nanotech/</loc>
   </url><url>

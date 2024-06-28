@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <title>Time Series Analysis and ARIMA Models for Stock Price Prediction</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<link rel="stylesheet" href="/application.fba7e2c0b4d0535aec97a3442d40338651f3354b1ee38f3630059796de18930f.css" integrity="sha256-&#43;6fiwLTQU1rsl6NELUAzhlHzNUse4482MAWXlt4Ykw8=" />
+
+
+
+
+
+  
+
+  
+  
+  
+    
+  
+  
+
+  <link rel="icon" type="image/png" href="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" />
+
+<meta property="og:url" content="http://localhost:1313/posts/finance/stock_prediction/arima/">
+  <meta property="og:site_name" content="Stefano Giannini">
+  <meta property="og:title" content="Time Series Analysis and ARIMA Models for Stock Price Prediction">
+  <meta property="og:description" content="Short Stock price analysis on AAPL, then a prediction is tested using ARIMA basic model">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-06-28T00:00:00+01:00">
+    <meta property="article:modified_time" content="2024-06-28T00:00:00+01:00">
+    <meta property="article:tag" content="Finance">
+    <meta property="article:tag" content="Statistics">
+    <meta property="article:tag" content="Forecasting">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Time Series Analysis and ARIMA Models for Stock Price Prediction">
+  <meta name="twitter:description" content="Short Stock price analysis on AAPL, then a prediction is tested using ARIMA basic model">
+
+    
+    
+<meta name="description" content="Short Stock price analysis on AAPL, then a prediction is tested using ARIMA basic model" />
+
+
+    
+
+    
+
+
+
+
+<script>
+      theme = localStorage.getItem('darkmode:color-scheme') || 'system';
+      if (theme == 'system') {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          theme = 'dark';
+        } else {
+          theme = 'light';
+        }
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
+  </head>
+
+  <body class="type-posts kind-page" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
+    <div class="container-fluid bg-secondary wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+
+<nav class="navbar navbar-expand-xl top-navbar shadow " id="top-navbar">
+  <div class="container">
+    
+    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button">
+      <i data-feather="sidebar"></i>
+    </button>
+    
+    <a class="navbar-brand" href="/">
+      
+        <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" id="logo" alt="Logo">
+      Stefano Giannini</a>
+    <button
+      class="navbar-toggler navbar-light"
+      id="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#top-nav-items"
+      aria-label="menu"
+    >
+      <i data-feather="menu"></i>
+    </button>
+
+    <div class="collapse navbar-collapse dynamic-navbar" id="top-nav-items">
+      <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/#home">Home</a>
+        </li>
+        
+          
+          
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#about">About</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#experiences">Experiences</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#education">Education</a>
+                </li>
+              
+            
+          
+        
+        
+          <div id="top-navbar-divider"></div>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="blog-link" href="/posts">Posts</a>
+          </li>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="note-link" href="/notes">Notes</a>
+          </li>
+        
+        
+            
+              <li class="nav-item">
+                <a class="nav-link" href="https://toha-guides.netlify.app/posts/">Docs</a>
+              </li>
+            
+        
+        
+        
+          <li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle"  href="#" id="themeSelector" role="button"
+  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <img id="navbar-theme-icon-svg" class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
+</a>
+<div id="themeMenu" class="dropdown-menu dropdown-menu-icons-only" aria-labelledby="themeSelector">
+  <a class="dropdown-item nav-link" href="#" data-scheme="light">
+    <img class="theme-icon" src="/icons/sun-svgrepo-com.svg" width=20 alt="Light Theme">
+  </a>
+  <a class="dropdown-item nav-link" href="#" data-scheme="dark">
+    <img class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
+  </a>
+  <a class="dropdown-item nav-link" href="#" data-scheme="system">
+    <img class="theme-icon" src="/icons/computer-svgrepo-com.svg" width=20 alt="System Theme">
+  </a>
+</div>
+</li>
+
+        
+      </ul>
+    </div>
+  </div>
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="main-logo" alt="Logo">
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="inverted-logo" alt="Inverted Logo">
+  
+</nav>
+
+
+
+      
+      
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/posts/" data-filter="all">Posts</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/finance/"> Finance</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/monte_carlo/"> Monte Carlo</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/monte_carlo/black-scholes/" title="Option Pricing">Option Pricing</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/finance/stock_prediction/"> Stock Prediction</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/gru/" title="GRU">GRU</a></li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li><a class="active list-link" href="/posts/finance/stock_prediction/arima/" title="ARIMA">ARIMA</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/machine-learning/"> Machine Learning</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/machine-learning/deep-learning/"> Deep Learning</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/machine-learning/deep-learning/computer-vision/"> Computer Vision</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/machine-learning/deep-learning/computer-vision/florence/" title="Florence-2 LVM">Florence-2 LVM</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/physics/"> Physics</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/percolation/" title="Percolation">Percolation</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content">
+    <div class="container p-0 read-area">
+      
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/images/default-hero.jpg);'>
+      </div>
+
+      
+      <div class="page-content">
+        
+        <div class="author-profile ms-auto align-self-lg-center">
+          <img class="rounded-circle" src='/images/author/profile_hu8a567cefac8c1a165d433ac0796ac418_3088978_120x120_fit_q75_box.jpg' alt="Author Image">
+          <h5 class="author-name">Stefano Giannini</h5>
+          <p class="text-muted">Friday, June 28, 2024 | 5 minutes</p>
+        </div>
+        
+        
+        <div class="title">
+          <h1>Time Series Analysis and ARIMA Models for Stock Price Prediction</h1>
+        </div>
+
+        
+
+        
+          <div class="tags">
+  <ul style="padding-left: 0;">
+    
+    
+    <li class="rounded"><a href="/tags/finance/" class="btn btn-sm btn-info">Finance</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/statistics/" class="btn btn-sm btn-info">Statistics</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/forecasting/" class="btn btn-sm btn-info">Forecasting</a></li>
+    
+  </ul>
+</div>
+
+        
+        <div class="post-content" id="post-content">
+          <h2 id="1-introduction">1. Introduction</h2>
+<p>Time series analysis is a fundamental technique in quantitative finance, particularly for understanding and predicting stock price movements. Among the various time series models, ARIMA (Autoregressive Integrated Moving Average) models have gained popularity due to their flexibility and effectiveness in capturing complex patterns in financial data.</p>
+<p>This article will explore the application of time series analysis and ARIMA models to stock price prediction. We&rsquo;ll cover the theoretical foundations, practical implementation in Python, and critical considerations for using these models in real-world financial scenarios.</p>
+<h2 id="2-fundamentals-of-time-series-analysis">2. Fundamentals of Time Series Analysis</h2>
+<h3 id="components-of-a-time-series">Components of a Time Series</h3>
+<p>A time series typically consists of four components:</p>
+<ol>
+<li><strong>Trend</strong>: The long-term movement in the series</li>
+<li><strong>Seasonality</strong>: Regular, periodic fluctuations</li>
+<li><strong>Cyclical</strong>: Irregular fluctuations, often related to economic cycles</li>
+<li><strong>Residual</strong>: Random, unpredictable variations</li>
+</ol>
+<p>Understanding these components is crucial for effective time series modeling.</p>
+<h3 id="stationarity">Stationarity</h3>
+<p>A key concept in time series analysis is stationarity. A stationary time series has constant statistical properties over time, including mean and variance. Many time series models, including ARIMA, assume stationarity. We often need to transform non-stationary data (like most stock price series) to achieve stationarity.</p>
+<h2 id="3-arima-models-theoretical-background">3. ARIMA Models: Theoretical Background</h2>
+<p>ARIMA models combine three components:</p>
+<ol>
+<li><strong>AR (Autoregressive)</strong>: The model uses the dependent relationship between an observation and some number of lagged observations.</li>
+<li><strong>I (Integrated)</strong>: The use of differencing of raw observations to make the time series stationary.</li>
+<li><strong>MA (Moving Average)</strong>: The model uses the dependency between an observation and a residual error from a moving average model applied to lagged observations.</li>
+</ol>
+<p>The ARIMA model is typically denoted as ARIMA(p,d,q), where:</p>
+<ul>
+<li>p is the order of the AR term</li>
+<li>d is the degree of differencing</li>
+<li>q is the order of the MA term</li>
+</ul>
+<h3 id="mathematical-representation">Mathematical Representation</h3>
+<p>The ARIMA model can be written as:</p>
+<p>$$
+Y_t = c + \varphi_1 Y_{t-1} + \varphi_2 Y_{t-2} + &hellip; + \varphi_p Y_{t-p} + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + &hellip; + \theta_q \epsilon_{t-q} + \epsilon_t
+$$</p>
+<p>Where:</p>
+<ul>
+<li>$Y_t$ is the differenced series (it may have been differenced more than once)</li>
+<li><strong>c</strong> is a constant</li>
+<li>$\phi_i$ are the parameters of the autoregressive part</li>
+<li>$\theta_i$ are the parameters of the moving average part</li>
+<li>$\epsilon_t$ is white noise</li>
+</ul>
+<h2 id="4-implementing-arima-models-in-python">4. Implementing ARIMA Models in Python</h2>
+<p>Let&rsquo;s implement an ARIMA model for stock price prediction using Python and the statsmodels library:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> statsmodels.tsa.arima.model <span style="color:#f92672">import</span> ARIMA
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> statsmodels.tsa.stattools <span style="color:#f92672">import</span> adfuller
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.metrics <span style="color:#f92672">import</span> mean_squared_error
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> yfinance <span style="color:#66d9ef">as</span> yf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Download stock data</span>
+</span></span><span style="display:flex;"><span>ticker <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;AAPL&#34;</span>
+</span></span><span style="display:flex;"><span>start_date <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2010-01-01&#34;</span>
+</span></span><span style="display:flex;"><span>end_date <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;2023-06-23&#34;</span>
+</span></span><span style="display:flex;"><span>data <span style="color:#f92672">=</span> yf<span style="color:#f92672">.</span>download(ticker, start<span style="color:#f92672">=</span>start_date, end<span style="color:#f92672">=</span>end_date)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Prepare the data</span>
+</span></span><span style="display:flex;"><span>ts <span style="color:#f92672">=</span> data[<span style="color:#e6db74">&#39;Close&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Check for stationarity</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_stationarity</span>(timeseries):
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> adfuller(timeseries, autolag<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;AIC&#39;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;ADF Statistic:&#39;</span>, result[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;p-value:&#39;</span>, result[<span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>test_stationarity(ts)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># If non-stationary, difference the series</span>
+</span></span><span style="display:flex;"><span>ts_diff <span style="color:#f92672">=</span> ts<span style="color:#f92672">.</span>diff()<span style="color:#f92672">.</span>dropna()
+</span></span><span style="display:flex;"><span>test_stationarity(ts_diff)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Fit ARIMA model</span>
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> ARIMA(ts_diff, order<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>results <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>fit()
+</span></span><span style="display:flex;"><span>print(results<span style="color:#f92672">.</span>summary())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Forecast</span>
+</span></span><span style="display:flex;"><span>forecast <span style="color:#f92672">=</span> results<span style="color:#f92672">.</span>forecast(steps<span style="color:#f92672">=</span><span style="color:#ae81ff">30</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plot the results</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>,<span style="color:#ae81ff">6</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(ts<span style="color:#f92672">.</span>index[<span style="color:#f92672">-</span><span style="color:#ae81ff">100</span>:], ts<span style="color:#f92672">.</span>values[<span style="color:#f92672">-</span><span style="color:#ae81ff">100</span>:], label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Observed&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(forecast<span style="color:#f92672">.</span>index, forecast<span style="color:#f92672">.</span>values, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;r&#39;</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Forecast&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>fill_between(forecast<span style="color:#f92672">.</span>index, 
+</span></span><span style="display:flex;"><span>                 forecast<span style="color:#f92672">.</span>conf_int()<span style="color:#f92672">.</span>iloc[:, <span style="color:#ae81ff">0</span>], 
+</span></span><span style="display:flex;"><span>                 forecast<span style="color:#f92672">.</span>conf_int()<span style="color:#f92672">.</span>iloc[:, <span style="color:#ae81ff">1</span>], 
+</span></span><span style="display:flex;"><span>                 color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;pink&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.3</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span>ticker<span style="color:#e6db74">}</span><span style="color:#e6db74"> Stock Price Prediction&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>legend()
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Evaluate the model</span>
+</span></span><span style="display:flex;"><span>mse <span style="color:#f92672">=</span> mean_squared_error(ts<span style="color:#f92672">.</span>diff()<span style="color:#f92672">.</span>dropna()[<span style="color:#f92672">-</span><span style="color:#ae81ff">30</span>:], forecast)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Mean Squared Error: </span><span style="color:#e6db74">{</span>mse<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span></code></pre></div><p>This script downloads stock data, checks for stationarity, fits an ARIMA model, makes predictions, and evaluates the model&rsquo;s performance.</p>
+<h2 id="5-model-selection-and-diagnostic-checking">5. Model Selection and Diagnostic Checking</h2>
+<p>Choosing the right ARIMA model involves selecting appropriate values for p, d, and q. This process often involves:</p>
+<ol>
+<li><strong>Analyzing ACF and PACF plots</strong>: These help in identifying potential AR and MA orders.</li>
+<li><strong>Grid search</strong>: Trying different combinations of p, d, and q and selecting the best based on information criteria like AIC or BIC.</li>
+<li><strong>Diagnostic checking</strong>: Analyzing residuals to ensure they resemble white noise.</li>
+</ol>
+<p>Here&rsquo;s a Python function to perform a grid search:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">grid_search_arima</span>(ts, p_range, d_range, q_range):
+</span></span><span style="display:flex;"><span>    best_aic <span style="color:#f92672">=</span> float(<span style="color:#e6db74">&#39;inf&#39;</span>)
+</span></span><span style="display:flex;"><span>    best_order <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> p <span style="color:#f92672">in</span> p_range:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> d <span style="color:#f92672">in</span> d_range:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> q <span style="color:#f92672">in</span> q_range:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>                    model <span style="color:#f92672">=</span> ARIMA(ts, order<span style="color:#f92672">=</span>(p, d, q))
+</span></span><span style="display:flex;"><span>                    results <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>fit()
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> results<span style="color:#f92672">.</span>aic <span style="color:#f92672">&lt;</span> best_aic:
+</span></span><span style="display:flex;"><span>                        best_aic <span style="color:#f92672">=</span> results<span style="color:#f92672">.</span>aic
+</span></span><span style="display:flex;"><span>                        best_order <span style="color:#f92672">=</span> (p, d, q)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Best ARIMA order: </span><span style="color:#e6db74">{</span>best_order<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> best_order
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>best_order <span style="color:#f92672">=</span> grid_search_arima(ts_diff, range(<span style="color:#ae81ff">3</span>), range(<span style="color:#ae81ff">2</span>), range(<span style="color:#ae81ff">3</span>))
+</span></span></code></pre></div><h2 id="6-limitations-and-considerations">6. Limitations and Considerations</h2>
+<p>While ARIMA models can be powerful for time series prediction, they have limitations:</p>
+<ol>
+<li><strong>Assumption of linearity</strong>: ARIMA models assume linear relationships, which may not hold for complex financial data.</li>
+<li><strong>Limited forecasting horizon</strong>: They tend to perform poorly for long-term forecasts.</li>
+<li><strong>Sensitivity to outliers</strong>: Extreme values can significantly impact model performance.</li>
+<li><strong>Assumption of constant variance</strong>: This may not hold for volatile stock prices.</li>
+<li><strong>No consideration of external factors</strong>: ARIMA models only use past values of the time series, ignoring other potentially relevant variables.</li>
+</ol>
+<h2 id="7-advanced-topics-and-extensions">7. Advanced Topics and Extensions</h2>
+<p>Several extensions to basic ARIMA models address some of these limitations:</p>
+<ol>
+<li><strong>SARIMA</strong>: Incorporates seasonality</li>
+<li><strong>ARIMAX</strong>: Includes exogenous variables</li>
+<li><strong>GARCH</strong>: Models time-varying volatility</li>
+<li><strong>Vector ARIMA</strong>: Handles multiple related time series simultaneously</li>
+</ol>
+<h2 id="8-conclusion">8. Conclusion</h2>
+<p>Time series analysis and ARIMA models provide valuable tools for understanding and predicting stock price movements. While they have limitations, particularly in the complex and often non-linear world of financial markets, they serve as a strong foundation for more advanced modeling techniques.</p>
+<p>When applying these models to real-world financial data, it&rsquo;s crucial to:</p>
+<ol>
+<li>Thoroughly understand the underlying assumptions</li>
+<li>Carefully preprocess and analyze the data</li>
+<li>Conduct rigorous model selection and diagnostic checking</li>
+<li>Interpret results with caution, considering the model&rsquo;s limitations</li>
+<li>Combine with other analytical techniques and domain expertise for comprehensive analysis</li>
+</ol>
+<p>As with all financial modeling, remember that past performance does not guarantee future results. Time series models should be one tool in a broader analytical toolkit, complemented by fundamental analysis, market sentiment assessment, and a deep understanding of the specific stock and its market context.</p>
+
+        </div>
+
+        
+        <div class="row ps-3 pe-3">
+        
+          <div class="col-md-6 share-buttons">
+          
+            <strong>Share on:</strong>
+            
+            <a class="btn icon-button bg-facebook" href="https://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2ffinance%2fstock_prediction%2farima%2f" target="_blank">
+              <i class="fab fa-facebook"></i>
+            </a>
+            
+            
+                <a class="btn icon-button bg-twitter" href="https://twitter.com/share?url=http%3a%2f%2flocalhost%3a1313%2fposts%2ffinance%2fstock_prediction%2farima%2f&text=Time%20Series%20Analysis%20and%20ARIMA%20Models%20for%20Stock%20Price%20Prediction&via=Stefano%20Giannini" target="_blank">
+                  <i class="fab fa-twitter"></i>
+                </a>
+            
+            
+                <a  class="btn icon-button bg-reddit" href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2ffinance%2fstock_prediction%2farima%2f&title=Time%20Series%20Analysis%20and%20ARIMA%20Models%20for%20Stock%20Price%20Prediction" target="_blank">
+                  <i class="fab fa-reddit"></i>
+                </a>
+            
+            
+            
+            
+                <a class="btn icon-button bg-linkedin" href="https://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fposts%2ffinance%2fstock_prediction%2farima%2f&title=Time%20Series%20Analysis%20and%20ARIMA%20Models%20for%20Stock%20Price%20Prediction" target="_blank">
+                  <i class="fab fa-linkedin"></i>
+                </a>
+            
+            
+             
+            
+                 <a class="btn icon-button bg-whatsapp" href="https://api.whatsapp.com/send?text=Time%20Series%20Analysis%20and%20ARIMA%20Models%20for%20Stock%20Price%20Prediction http%3a%2f%2flocalhost%3a1313%2fposts%2ffinance%2fstock_prediction%2farima%2f" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+            
+            
+                <a class="btn icon-button" href="mailto:?subject=Time%20Series%20Analysis%20and%20ARIMA%20Models%20for%20Stock%20Price%20Prediction&body=http%3a%2f%2flocalhost%3a1313%2fposts%2ffinance%2fstock_prediction%2farima%2f" target="_blank">
+                  <i class="fas fa-envelope-open-text"></i>
+                </a>
+            
+          
+          </div>
+
+        
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/ragespin/ragespin.github.io/edit/main/content/posts%5cfinance%5cstock_prediction%5cARIMA%5cindex.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+    
+  
+  
+
+  
+  
+
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+    <div class="col-md-6 previous-article">
+      <a href="/posts/finance/stock_prediction/gru/" title="MSFT Stock Prediction using LSTM or GRU" class="btn filled-button">
+        <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
+        <div class="next-prev-text">MSFT Stock Prediction using LSTM or GRU</div>
+      </a>
+    </div>
+  
+  
+      
+      
+        
+      
+      <div class="col-md-6 next-article">
+        <a href="/posts/machine-learning/deep-learning/computer-vision/florence/" title="Florence-2 - Vision Foundation Model - Examples" class="btn filled-button">
+          <div>Next <i class="fas fa-chevron-circle-right"></i></div>
+          <div class="next-prev-text">Florence-2 - Vision Foundation Model - Examples</div>
+        </a>
+      </div>
+    
+</div>
+
+      <hr />
+
+      
+      
+
+      
+      
+
+      </div>
+    </div>
+  </div>
+  
+  <a id="scroll-to-top" class="btn" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Scroll to top">
+    <i class="fas fa-chevron-circle-up"></i>
+  </a>
+</section>
+
+
+      
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center ps-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-introduction">1. Introduction</a></li>
+    <li><a href="#2-fundamentals-of-time-series-analysis">2. Fundamentals of Time Series Analysis</a>
+      <ul>
+        <li><a href="#components-of-a-time-series">Components of a Time Series</a></li>
+        <li><a href="#stationarity">Stationarity</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-arima-models-theoretical-background">3. ARIMA Models: Theoretical Background</a>
+      <ul>
+        <li><a href="#mathematical-representation">Mathematical Representation</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-implementing-arima-models-in-python">4. Implementing ARIMA Models in Python</a></li>
+    <li><a href="#5-model-selection-and-diagnostic-checking">5. Model Selection and Diagnostic Checking</a></li>
+    <li><a href="#6-limitations-and-considerations">6. Limitations and Considerations</a></li>
+    <li><a href="#7-advanced-topics-and-extensions">7. Advanced Topics and Extensions</a></li>
+    <li><a href="#8-conclusion">8. Conclusion</a></li>
+  </ul>
+</nav>
+      </div>
+    </div>
+    
+  </section>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+    
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-start">
+        
+        
+        
+        
+      </div>
+    </div>
+    
+    <hr />
+    <div class="container">
+      <p id="disclaimer"><strong>Liability Notice:</strong> This theme is under MIT license. So, you can use it for non-commercial, commercial, or private uses. You can modify or distribute the theme without requiring any permission from the theme author. However, the theme author does not provide any warranty or takes any liability for any issue with the theme.</p>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-start">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
+            <img src="/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2024 Copyright.</div>
+        <div class="col-md-4 text-end">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script src="/application.97f51c3e286071444c3471235d1690400d75a930a8787cc86f8c8e4d2767277e.js" integrity="sha256-l/UcPihgcURMNHEjXRaQQA11qTCoeHzIb4yOTSdnJ34=" defer></script>
+
+
+    
+     
+
+    
+    
+
+</body>
+</html>

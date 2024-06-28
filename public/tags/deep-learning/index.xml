@@ -6,7 +6,18 @@
     <description>Recent content in Deep Learning on Stefano Giannini</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 16 Jun 2024 00:00:00 +0100</lastBuildDate><atom:link href="http://localhost:1313/tags/deep-learning/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Tue, 25 Jun 2024 00:08:25 +0100</lastBuildDate><atom:link href="http://localhost:1313/tags/deep-learning/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>Florence-2 - Vision Foundation Model - Examples</title>
+      <link>http://localhost:1313/posts/machine-learning/deep-learning/computer-vision/florence/</link>
+      <pubDate>Tue, 25 Jun 2024 00:08:25 +0100</pubDate>
+      
+      <guid>http://localhost:1313/posts/machine-learning/deep-learning/computer-vision/florence/</guid>
+      <description>Install dependencies Type the following command to install possible needed dependencies (especially if the inference is performed on the CPU)
+%pip install einops flash_attn In Kaggle, transformers and torch are already installed. Otherwise you also need to install them on your local PC.
+Import Libraries from transformers import AutoProcessor, AutoModelForCausalLM from PIL import Image import requests import copy import torch %matplotlib inline Import the model We can choose Florence-2-large or Florence-2-large-ft (fine-tuned).</description>
+    </item>
+    
+    <item>
       <title>MSFT Stock Prediction using LSTM or GRU</title>
       <link>http://localhost:1313/posts/finance/stock_prediction/gru/</link>
       <pubDate>Sun, 16 Jun 2024 00:00:00 +0100</pubDate>

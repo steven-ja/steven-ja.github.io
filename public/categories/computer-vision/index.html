@@ -297,13 +297,15 @@
   <div class="card">
     <div class="card-head">
       <a href="/posts/machine-learning/deep-learning/computer-vision/florence/" class="post-card-link">
-        <img class="card-img-top" src='/posts/machine-learning/deep-learning/computer-vision/florence/images/florence-2-lvm-computer-vision-exploration_19_0.png' alt="Hero Image">
+        <img class="card-img-top" src='/posts/machine-learning/deep-learning/computer-vision/florence/images/florence-2-lvm-computer-vision-exploration_28_3.png' alt="Hero Image">
       </a>
     </div>
     <div class="card-body">
       <a href="/posts/machine-learning/deep-learning/computer-vision/florence/" class="post-card-link">
         <h5 class="card-title">Florence-2 - Vision Foundation Model - Examples</h5>
-        <p class="card-text post-summary">Import Libraries from transformers import AutoProcessor, AutoModelForCausalLM from PIL import Image import requests import copy import torch %matplotlib inline 2024-06-23 20:14:39.038256: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered 2024-06-23 20:14:39.038355: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered 2024-06-23 20:14:39.157537: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered</p>
+        <p class="card-text post-summary">Install dependencies Type the following command to install possible needed dependencies (especially if the inference is performed on the CPU)
+%pip install einops flash_attn In Kaggle, transformers and torch are already installed. Otherwise you also need to install them on your local PC.
+Import Libraries from transformers import AutoProcessor, AutoModelForCausalLM from PIL import Image import requests import copy import torch %matplotlib inline Import the model We can choose Florence-2-large or Florence-2-large-ft (fine-tuned).</p>
       </a>
       
         <div class="tags">
@@ -326,7 +328,7 @@
     <div class="card-footer">
       <span class="float-start">
           Tuesday, June 25, 2024
-           | 7 minutes </span>
+           | 5 minutes </span>
       <a
       href="/posts/machine-learning/deep-learning/computer-vision/florence/"
       class="float-end btn btn-outline-info btn-sm">Read</a>

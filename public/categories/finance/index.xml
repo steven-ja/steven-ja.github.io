@@ -6,7 +6,17 @@
     <description>Recent content in Finance on Stefano Giannini</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 23 Jun 2024 00:08:25 +0100</lastBuildDate><atom:link href="http://localhost:1313/categories/finance/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Fri, 28 Jun 2024 00:00:00 +0100</lastBuildDate><atom:link href="http://localhost:1313/categories/finance/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>Time Series Analysis and ARIMA Models for Stock Price Prediction</title>
+      <link>http://localhost:1313/posts/finance/stock_prediction/arima/</link>
+      <pubDate>Fri, 28 Jun 2024 00:00:00 +0100</pubDate>
+      
+      <guid>http://localhost:1313/posts/finance/stock_prediction/arima/</guid>
+      <description>Time Series Analysis and ARIMA Models for Stock Price Prediction 1. Introduction Time series analysis is a fundamental technique in quantitative finance, particularly for understanding and predicting stock price movements. Among the various time series models, ARIMA (Autoregressive Integrated Moving Average) models have gained popularity due to their flexibility and effectiveness in capturing complex patterns in financial data.
+This article will explore the application of time series analysis and ARIMA models to stock price prediction.</description>
+    </item>
+    
+    <item>
       <title>Monte Carlo Simulation for Option Pricing</title>
       <link>http://localhost:1313/posts/finance/monte_carlo/black-scholes/</link>
       <pubDate>Sun, 23 Jun 2024 00:08:25 +0100</pubDate>
