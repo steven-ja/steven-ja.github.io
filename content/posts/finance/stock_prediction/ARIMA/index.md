@@ -77,11 +77,12 @@ from statsmodels.tsa.arima.model import ARIMA
 from statsmodels.tsa.stattools import adfuller
 from sklearn.metrics import mean_squared_error
 import yfinance as yf
+import seaborn as sns
 
 # Download stock data
 ticker = "AAPL"
-start_date = "2010-01-01"
-end_date = "2023-06-23"
+start_date = "2018-01-01"
+end_date = "2024-06-23"
 data = yf.download(ticker, start=start_date, end=end_date)
 
 # Prepare the data
@@ -92,40 +93,38 @@ def test_stationarity(timeseries):
     result = adfuller(timeseries, autolag='AIC')
     print('ADF Statistic:', result[0])
     print('p-value:', result[1])
+    return result[1]
 
-# if p-value is > 0.05, it means the series is not stationary.
-test_stationarity(ts)
-
-# If non-stationary, difference the series
-ts_diff = ts.diff().dropna()
-test_stationarity(ts_diff)
-
-# Fit ARIMA model
-model = ARIMA(ts_diff, order=(1,1,1))
-results = model.fit()
-print(results.summary())
-
-# Forecast
-forecast = results.forecast(steps=30)
-
-# Plot the results
+# Plot the time-series
 plt.figure(figsize=(12,6))
-plt.plot(ts.index[-100:], ts.values[-100:], label='Observed')
-plt.plot(forecast.index, forecast.values, color='r', label='Forecast')
-plt.fill_between(forecast.index, 
-                 forecast.conf_int().iloc[:, 0], 
-                 forecast.conf_int().iloc[:, 1], 
-                 color='pink', alpha=0.3)
-plt.title(f'{ticker} Stock Price Prediction')
-plt.legend()
+plt.plot(ts.index[:], ts.values[:], label='Observed')
+plt.title(f'{ticker} Stock Price ')
+# plt.legend()
+plt.tight_layout()
 plt.show()
 
-# Evaluate the model
-mse = mean_squared_error(ts.diff().dropna()[-30:], forecast)
-print(f'Mean Squared Error: {mse}')
-```
 
-This script downloads stock data, checks for stationarity, fits an ARIMA model, makes predictions, and evaluates the model's performance.
+p_val = test_stationarity(ts)
+
+if p_val > 0.05:
+    # If non-stationary, difference the series
+    ts_diff = ts.diff().dropna()
+    p_val = test_stationarity(ts_diff)
+    d = 1
+    if p_val > 0.05:
+        ts_diff = ts.diff().diff().dropna()
+        p_val = test_stationarity(ts_diff)
+        d = 2
+
+print(f"\nd = {d}")
+```
+> *Output:*
+> 
+> d = 1
+
+![png](images/time_series.png)
+
+This script downloads stock data, checks for stationarity, fits an ARIMA model, makes predictions, and evaluates the model's performance. In this case, as expected from the plot, the time-series is not stationary. Hence, *d* has to be greater or equal to 1.
 
 ## 5. Model Selection and Diagnostic Checking
 
@@ -148,7 +147,38 @@ Determining the optimal ARIMA parameters involves a combination of statistical t
 * Fine-tune with Information Criteria:
   - Use AIC (Akaike Information Criterion) or BIC (Bayesian Information Criterion) to compare different models.
 
-### Finding d values from plots
+### Finding d parameter from plots
+Since, the stationary was already checkd in the previous, this paragraph is useful for graphical and comphrension purpose. Moreover, with autocorrelation parameters, it is possible to find better values of d that the ADF test cannot recognize.
+
+```python
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+
+plt.rcParams.update({'figure.figsize':(15,10), 'figure.dpi':80})
+
+# Import data
+df = data.copy()
+
+# Original Series
+fig, axes = plt.subplots(3, 2, sharex=False)
+axes[0, 0].plot(df.index, df.Close); axes[0, 0].set_title('Original Series - '+ticker)
+plot_acf(df.Close, ax=axes[0, 1], lags=len(df)-1, color='k', auto_ylims=True)
+
+# 1st Differencing
+axes[1, 0].plot(df.index, df.Close.diff()); axes[1, 0].set_title('1st Order Differencing')
+plot_acf(df.Close.diff().dropna(), ax=axes[1, 1], lags=len(df)/7-2, color='k', auto_ylims=True)
+
+# 2nd Differencing
+axes[2, 0].plot(df.index, df.Close.diff().diff()); axes[2, 0].set_title('2nd Order Differencing')
+plot_acf(df.Close.diff().diff().dropna(), ax=axes[2, 1], lags=len(df)/7-3, color='k', auto_ylims=True)
+
+plt.tight_layout()
+plt.show()
+```
+![png](images/find_d.png)
+
+Indeed, from the plot, *d=2* is probably a better solution since we have few coefficient that goes above the confidence threshold. 
+
+### Finding p parameter from plots
 
 
 ### Grid Search
@@ -174,6 +204,8 @@ def grid_search_arima(ts, p_range, d_range, q_range):
 
 best_order = grid_search_arima(ts_diff, range(3), range(2), range(3))
 ```
+
+
 
 ## 6. Limitations and Considerations
 
