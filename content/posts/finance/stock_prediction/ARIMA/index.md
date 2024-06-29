@@ -8,7 +8,7 @@ menu:
     identifier: ARIMA
     parent: stock_prediction 
     weight: 10
-hero: images/find_d.png
+hero: images/test_forecast.png
 tags: ["Finance", "Statistics", "Forecasting"]
 categories: ["Finance"]
 ---
