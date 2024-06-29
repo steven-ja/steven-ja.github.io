@@ -447,7 +447,7 @@
         <div class="author-profile ms-auto align-self-lg-center">
           <img class="rounded-circle" src='/images/author/profile_hu8a567cefac8c1a165d433ac0796ac418_3088978_120x120_fit_q75_box.jpg' alt="Author Image">
           <h5 class="author-name">Stefano Giannini</h5>
-          <p class="text-muted">Friday, June 28, 2024 | 9 minutes</p>
+          <p class="text-muted">Friday, June 28, 2024 | 8 minutes</p>
         </div>
         
         
@@ -648,27 +648,7 @@ Y_t = c + \varphi_1 Y_{t-1} + \varphi_2 Y_{t-2} + &hellip; + \varphi_p Y_{t-p} +
 </span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
 </span></span></code></pre></div><p><img alt="png" src="/posts/finance/stock_prediction/arima/images/find_q.png"></p>
 <p>ACF looks very similar to PCF for smaller lags. Hence, even in this case a value of 8 can be used as <em>q</em>.</p>
-<h3 id="grid-search">Grid Search</h3>
-<p>Here&rsquo;s a Python function to perform a grid search:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">grid_search_arima</span>(ts, p_range, d_range, q_range):
-</span></span><span style="display:flex;"><span>    best_aic <span style="color:#f92672">=</span> float(<span style="color:#e6db74">&#39;inf&#39;</span>)
-</span></span><span style="display:flex;"><span>    best_order <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> p <span style="color:#f92672">in</span> p_range:
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> d <span style="color:#f92672">in</span> d_range:
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> q <span style="color:#f92672">in</span> q_range:
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span>:
-</span></span><span style="display:flex;"><span>                    model <span style="color:#f92672">=</span> ARIMA(ts, order<span style="color:#f92672">=</span>(p, d, q))
-</span></span><span style="display:flex;"><span>                    results <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>fit()
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> results<span style="color:#f92672">.</span>aic <span style="color:#f92672">&lt;</span> best_aic:
-</span></span><span style="display:flex;"><span>                        best_aic <span style="color:#f92672">=</span> results<span style="color:#f92672">.</span>aic
-</span></span><span style="display:flex;"><span>                        best_order <span style="color:#f92672">=</span> (p, d, q)
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">except</span>:
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">continue</span>
-</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Best ARIMA order: </span><span style="color:#e6db74">{</span>best_order<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> best_order
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>best_order <span style="color:#f92672">=</span> grid_search_arima(ts_diff, range(<span style="color:#ae81ff">3</span>), range(<span style="color:#ae81ff">2</span>), range(<span style="color:#ae81ff">3</span>))
-</span></span></code></pre></div><h2 id="6-arima-model-fitting">6. ARIMA model fitting</h2>
+<h2 id="6-arima-model-fitting">6. ARIMA model fitting</h2>
 <h3 id="predict-arima-model-on-all-data">Predict ARIMA model on all data</h3>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>model <span style="color:#f92672">=</span> ARIMA(df<span style="color:#f92672">.</span>Close, order<span style="color:#f92672">=</span>(<span style="color:#ae81ff">8</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">8</span>)) <span style="color:#75715e"># p,d,q</span>
 </span></span><span style="display:flex;"><span>results <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>fit()
@@ -744,7 +724,7 @@ Y_t = c + \varphi_1 Y_{t-1} + \varphi_2 Y_{t-2} + &hellip; + \varphi_p Y_{t-p} +
 <p>&lsquo;corr&rsquo;: 0.4484875181364141,</p>
 <p>&lsquo;minmax&rsquo;: 0.07810488835602647}</p>
 </blockquote>
-<h3 id="grid-search-1">Grid Search</h3>
+<h3 id="grid-search">Grid Search</h3>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">grid_search_arima</span>(train, test, p_range, d_range, q_range):
 </span></span><span style="display:flex;"><span>    best_aic <span style="color:#f92672">=</span> float(<span style="color:#e6db74">&#39;inf&#39;</span>)
 </span></span><span style="display:flex;"><span>    best_mape <span style="color:#f92672">=</span> float(<span style="color:#e6db74">&#39;inf&#39;</span>)
@@ -784,6 +764,7 @@ Y_t = c + \varphi_1 Y_{t-1} + \varphi_2 Y_{t-2} + &hellip; + \varphi_p Y_{t-p} +
 <p>temp best: (3, 2, 4) 0.07647187068962996</p>
 <p>Best ARIMA order based on grid search: (3, 2, 4)</p>
 </blockquote>
+<p>In g</p>
 <h2 id="7-limitations-and-considerations">7. Limitations and Considerations</h2>
 <p>While ARIMA models can be powerful for time series prediction, they have limitations:</p>
 <ol>
@@ -982,14 +963,13 @@ Indeed, several extensions to basic ARIMA models address some of these limitatio
         <li><a href="#finding-d-parameter-from-plots">Finding d parameter from plots</a></li>
         <li><a href="#finding-p-parameter-from-plots">Finding p parameter from plots</a></li>
         <li><a href="#finding-q-parameter-from-plots">Finding q parameter from plots</a></li>
-        <li><a href="#grid-search">Grid Search</a></li>
       </ul>
     </li>
     <li><a href="#6-arima-model-fitting">6. ARIMA model fitting</a>
       <ul>
         <li><a href="#predict-arima-model-on-all-data">Predict ARIMA model on all data</a></li>
         <li><a href="#train-test-split">Train/ Test split</a></li>
-        <li><a href="#grid-search-1">Grid Search</a></li>
+        <li><a href="#grid-search">Grid Search</a></li>
       </ul>
     </li>
     <li><a href="#7-limitations-and-considerations">7. Limitations and Considerations</a></li>

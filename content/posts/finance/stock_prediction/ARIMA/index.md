@@ -218,31 +218,6 @@ plt.show()
 
 ACF looks very similar to PCF for smaller lags. Hence, even in this case a value of 8 can be used as *q*.
 
-### Grid Search
-
-Here's a Python function to perform a grid search:
-
-```python
-def grid_search_arima(ts, p_range, d_range, q_range):
-    best_aic = float('inf')
-    best_order = None
-    for p in p_range:
-        for d in d_range:
-            for q in q_range:
-                try:
-                    model = ARIMA(ts, order=(p, d, q))
-                    results = model.fit()
-                    if results.aic < best_aic:
-                        best_aic = results.aic
-                        best_order = (p, d, q)
-                except:
-                    continue
-    print(f'Best ARIMA order: {best_order}')
-    return best_order
-
-best_order = grid_search_arima(ts_diff, range(3), range(2), range(3))
-```
-
 ## 6. ARIMA model fitting
 
 ### Predict ARIMA model on all data
