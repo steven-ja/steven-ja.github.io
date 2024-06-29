@@ -447,7 +447,7 @@
         <div class="author-profile ms-auto align-self-lg-center">
           <img class="rounded-circle" src='/images/author/profile_hu8a567cefac8c1a165d433ac0796ac418_3088978_120x120_fit_q75_box.jpg' alt="Author Image">
           <h5 class="author-name">Stefano Giannini</h5>
-          <p class="text-muted">Friday, June 28, 2024 | 7 minutes</p>
+          <p class="text-muted">Friday, June 28, 2024 | 9 minutes</p>
         </div>
         
         
@@ -506,8 +506,8 @@
 <h3 id="mathematical-representation">Mathematical Representation</h3>
 <p>The ARIMA model can be written as:</p>
 <p>$$
-Y_t = c + \varphi_1 Y_{t-1} + \varphi_2 Y_{t-2} + &hellip; + \varphi_p Y_{t-p} + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + &hellip; + \theta_q \epsilon_{t-q} + \epsilon_t
-$$</p>
+Y_t = c + \varphi_1 Y_{t-1} + \varphi_2 Y_{t-2} + &hellip; + \varphi_p Y_{t-p} + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + &hellip; + \theta_q \epsilon_{t-q} + \epsilon_t</p>
+<p>$$</p>
 <p>Where:</p>
 <ul>
 <li>$Y_t$ is the differenced series (it may have been differenced more than once)</li>
@@ -632,13 +632,22 @@ $$</p>
 </span></span><span style="display:flex;"><span>fig, axes <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, sharex<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
 </span></span><span style="display:flex;"><span>axes[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>plot(df<span style="color:#f92672">.</span>index, df<span style="color:#f92672">.</span>Close<span style="color:#f92672">.</span>diff()); axes[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;1st Differencing&#39;</span>)
 </span></span><span style="display:flex;"><span>axes[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>set(ylim<span style="color:#f92672">=</span>(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">5</span>))
-</span></span><span style="display:flex;"><span>plot_pacf(df<span style="color:#f92672">.</span>Close<span style="color:#f92672">.</span>diff()<span style="color:#f92672">.</span>dropna(), ax<span style="color:#f92672">=</span>axes[<span style="color:#ae81ff">1</span>], lags<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;k&#39;</span>, auto_ylims<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, zero<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>plot_pacf(df<span style="color:#f92672">.</span>Close<span style="color:#f92672">.</span>diff()<span style="color:#f92672">.</span>dropna(), ax<span style="color:#f92672">=</span>axes[<span style="color:#ae81ff">1</span>], lags<span style="color:#f92672">=</span><span style="color:#ae81ff">200</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;k&#39;</span>, auto_ylims<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, zero<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>tight_layout()
 </span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
 </span></span></code></pre></div><p><img alt="png" src="/posts/finance/stock_prediction/arima/images/find_p.png"></p>
 <p>A possible choice of <strong>p</strong> can 8 or 18, where the coefficient crosses the confidence intervals.</p>
 <h3 id="finding-q-parameter-from-plots">Finding q parameter from plots</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>rcParams<span style="color:#f92672">.</span>update({<span style="color:#e6db74">&#39;figure.figsize&#39;</span>:(<span style="color:#ae81ff">15</span>,<span style="color:#ae81ff">5</span>), <span style="color:#e6db74">&#39;figure.dpi&#39;</span>:<span style="color:#ae81ff">80</span>})
+</span></span><span style="display:flex;"><span>fig, axes <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, sharex<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>axes[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>plot(df<span style="color:#f92672">.</span>Close<span style="color:#f92672">.</span>diff()); axes[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;1st Differencing&#39;</span>)
+</span></span><span style="display:flex;"><span>axes[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>set(ylim<span style="color:#f92672">=</span>(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1.2</span>))
+</span></span><span style="display:flex;"><span>plot_acf(df<span style="color:#f92672">.</span>Close<span style="color:#f92672">.</span>diff()<span style="color:#f92672">.</span>dropna(), ax<span style="color:#f92672">=</span>axes[<span style="color:#ae81ff">1</span>], lags<span style="color:#f92672">=</span><span style="color:#ae81ff">200</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;k&#39;</span>, auto_ylims<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, zero<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>tight_layout()
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p><img alt="png" src="/posts/finance/stock_prediction/arima/images/find_q.png"></p>
+<p>ACF looks very similar to PCF for smaller lags. Hence, even in this case a value of 8 can be used as <em>q</em>.</p>
 <h3 id="grid-search">Grid Search</h3>
 <p>Here&rsquo;s a Python function to perform a grid search:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">grid_search_arima</span>(ts, p_range, d_range, q_range):
@@ -659,7 +668,123 @@ $$</p>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> best_order
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>best_order <span style="color:#f92672">=</span> grid_search_arima(ts_diff, range(<span style="color:#ae81ff">3</span>), range(<span style="color:#ae81ff">2</span>), range(<span style="color:#ae81ff">3</span>))
-</span></span></code></pre></div><h2 id="6-limitations-and-considerations">6. Limitations and Considerations</h2>
+</span></span></code></pre></div><h2 id="6-arima-model-fitting">6. ARIMA model fitting</h2>
+<h3 id="predict-arima-model-on-all-data">Predict ARIMA model on all data</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>model <span style="color:#f92672">=</span> ARIMA(df<span style="color:#f92672">.</span>Close, order<span style="color:#f92672">=</span>(<span style="color:#ae81ff">8</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">8</span>)) <span style="color:#75715e"># p,d,q</span>
+</span></span><span style="display:flex;"><span>results <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>fit()
+</span></span><span style="display:flex;"><span>print(results<span style="color:#f92672">.</span>summary())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Actual vs Fitted o</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(results<span style="color:#f92672">.</span>predict()[<span style="color:#f92672">-</span><span style="color:#ae81ff">100</span>:], <span style="color:#e6db74">&#39;-*&#39;</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;prediction&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(df<span style="color:#f92672">.</span>Close[<span style="color:#f92672">-</span><span style="color:#ae81ff">100</span>:], <span style="color:#e6db74">&#39;-*&#39;</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;actual&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>legend()
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Prediction vs. Actual on All Data &#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>tight_layout()
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p><img alt="png" src="/posts/finance/stock_prediction/arima/images/train_pred.png"></p>
+<h3 id="train-test-split">Train/ Test split</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> statsmodels.tsa.stattools <span style="color:#f92672">import</span> acf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create Training and Test</span>
+</span></span><span style="display:flex;"><span>train <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>Close[:int(len(df)<span style="color:#f92672">*</span><span style="color:#ae81ff">0.8</span>)]
+</span></span><span style="display:flex;"><span>test <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>Close[int(len(df)<span style="color:#f92672">*</span><span style="color:#ae81ff">0.8</span>):]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># model = ARIMA(train, order=(3,2,1))  </span>
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> ARIMA(train, order<span style="color:#f92672">=</span>(<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">8</span>))  
+</span></span><span style="display:flex;"><span>fitted <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>fit()  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Forecast</span>
+</span></span><span style="display:flex;"><span>fc <span style="color:#f92672">=</span> fitted<span style="color:#f92672">.</span>get_forecast(steps<span style="color:#f92672">=</span>len(test), alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.05</span>)  <span style="color:#75715e"># 95% conf</span>
+</span></span><span style="display:flex;"><span>conf <span style="color:#f92672">=</span> fc<span style="color:#f92672">.</span>conf_int()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Make as pandas series</span>
+</span></span><span style="display:flex;"><span>fc_series <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(fitted<span style="color:#f92672">.</span>forecast(steps<span style="color:#f92672">=</span>len(test))<span style="color:#f92672">.</span>values, index<span style="color:#f92672">=</span>test<span style="color:#f92672">.</span>index)
+</span></span><span style="display:flex;"><span>lower_series <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(conf<span style="color:#f92672">.</span>iloc[:, <span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>values, index<span style="color:#f92672">=</span>test<span style="color:#f92672">.</span>index)
+</span></span><span style="display:flex;"><span>upper_series <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(conf<span style="color:#f92672">.</span>iloc[:, <span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>values, index<span style="color:#f92672">=</span>test<span style="color:#f92672">.</span>index)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plot</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>,<span style="color:#ae81ff">5</span>), dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(train[<span style="color:#f92672">-</span><span style="color:#ae81ff">200</span>:], label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;training&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(test, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;actual&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(fc_series, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;forecast&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>fill_between(lower_series<span style="color:#f92672">.</span>index, lower_series, upper_series, 
+</span></span><span style="display:flex;"><span>                 color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;k&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">.15</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;Forecast vs Actuals&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>legend(loc<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;upper left&#39;</span>, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>tight_layout()
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p><img alt="png" src="/posts/finance/stock_prediction/arima/images/test_forecast.png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Accuracy metrics</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forecast_accuracy</span>(forecast, actual):
+</span></span><span style="display:flex;"><span>    mape <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>mean(np<span style="color:#f92672">.</span>abs(forecast <span style="color:#f92672">-</span> actual)<span style="color:#f92672">/</span>np<span style="color:#f92672">.</span>abs(actual))    <span style="color:#75715e"># MAPE</span>
+</span></span><span style="display:flex;"><span>    me <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>mean(forecast <span style="color:#f92672">-</span> actual)                             <span style="color:#75715e"># ME</span>
+</span></span><span style="display:flex;"><span>    mae <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>mean(np<span style="color:#f92672">.</span>abs(forecast <span style="color:#f92672">-</span> actual))                    <span style="color:#75715e"># MAE</span>
+</span></span><span style="display:flex;"><span>    mpe <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>mean((forecast <span style="color:#f92672">-</span> actual)<span style="color:#f92672">/</span>actual)                   <span style="color:#75715e"># MPE</span>
+</span></span><span style="display:flex;"><span>    rmse <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>mean((forecast <span style="color:#f92672">-</span> actual)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>)<span style="color:#f92672">**</span><span style="color:#ae81ff">.5</span>                  <span style="color:#75715e"># RMSE</span>
+</span></span><span style="display:flex;"><span>    corr <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>corrcoef(forecast, actual)[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>]                   <span style="color:#75715e"># corr</span>
+</span></span><span style="display:flex;"><span>    mins <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>amin(np<span style="color:#f92672">.</span>hstack([forecast[:,<span style="color:#66d9ef">None</span>], 
+</span></span><span style="display:flex;"><span>                              actual[:,<span style="color:#66d9ef">None</span>]]), axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    maxs <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>amax(np<span style="color:#f92672">.</span>hstack([forecast[:,<span style="color:#66d9ef">None</span>], 
+</span></span><span style="display:flex;"><span>                              actual[:,<span style="color:#66d9ef">None</span>]]), axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    minmax <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> np<span style="color:#f92672">.</span>mean(mins<span style="color:#f92672">/</span>maxs)                             <span style="color:#75715e"># minmax</span>
+</span></span><span style="display:flex;"><span>    acf1 <span style="color:#f92672">=</span> acf(forecast<span style="color:#f92672">-</span>test)[<span style="color:#ae81ff">1</span>]                                <span style="color:#75715e"># ACF1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span>({<span style="color:#e6db74">&#39;mape&#39;</span>:mape, <span style="color:#e6db74">&#39;me&#39;</span>:me, <span style="color:#e6db74">&#39;mae&#39;</span>: mae, 
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;mpe&#39;</span>: mpe, <span style="color:#e6db74">&#39;rmse&#39;</span>:rmse, <span style="color:#e6db74">&#39;acf1&#39;</span>:acf1, 
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;corr&#39;</span>:corr, <span style="color:#e6db74">&#39;minmax&#39;</span>:minmax})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>forecast_accuracy(fc_series<span style="color:#f92672">.</span>values, test<span style="color:#f92672">.</span>values)
+</span></span></code></pre></div><blockquote>
+<p>Output:</p>
+<p>{&lsquo;mape&rsquo;: 0.07829701788549515,</p>
+<p>&lsquo;me&rsquo;: -12.898037657120996,</p>
+<p>&lsquo;mae&rsquo;: 14.483068468837455,</p>
+<p>&lsquo;mpe&rsquo;: -0.068860507560246,</p>
+<p>&lsquo;rmse&rsquo;: 16.906382957008496,</p>
+<p>&lsquo;acf1&rsquo;: 0.9702976318229376,</p>
+<p>&lsquo;corr&rsquo;: 0.4484875181364141,</p>
+<p>&lsquo;minmax&rsquo;: 0.07810488835602647}</p>
+</blockquote>
+<h3 id="grid-search-1">Grid Search</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">grid_search_arima</span>(train, test, p_range, d_range, q_range):
+</span></span><span style="display:flex;"><span>    best_aic <span style="color:#f92672">=</span> float(<span style="color:#e6db74">&#39;inf&#39;</span>)
+</span></span><span style="display:flex;"><span>    best_mape <span style="color:#f92672">=</span> float(<span style="color:#e6db74">&#39;inf&#39;</span>)
+</span></span><span style="display:flex;"><span>    best_order <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> p <span style="color:#f92672">in</span> p_range:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> d <span style="color:#f92672">in</span> d_range:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> q <span style="color:#f92672">in</span> q_range:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>                    model <span style="color:#f92672">=</span> ARIMA(train<span style="color:#f92672">.</span>values, order<span style="color:#f92672">=</span>(p,d,q))
+</span></span><span style="display:flex;"><span>                    results <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>fit()
+</span></span><span style="display:flex;"><span>                    fc_series <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(results<span style="color:#f92672">.</span>forecast(steps<span style="color:#f92672">=</span>len(test)), index<span style="color:#f92672">=</span>test<span style="color:#f92672">.</span>index)  <span style="color:#75715e"># 95% conf</span>
+</span></span><span style="display:flex;"><span>                    test_metrics <span style="color:#f92672">=</span> forecast_accuracy(fc_series<span style="color:#f92672">.</span>values, test<span style="color:#f92672">.</span>values)
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e"># if results.aic &lt; best_aic:</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">#     best_aic = results.aic</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">#     best_order = (p,d,q)</span>
+</span></span><span style="display:flex;"><span>                    print(p,d,q, test_metrics[<span style="color:#e6db74">&#39;mape&#39;</span>])
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> test_metrics[<span style="color:#e6db74">&#39;mape&#39;</span>] <span style="color:#f92672">&lt;</span> best_mape:
+</span></span><span style="display:flex;"><span>                        best_mape <span style="color:#f92672">=</span> test_metrics[<span style="color:#e6db74">&#39;mape&#39;</span>]
+</span></span><span style="display:flex;"><span>                        best_order <span style="color:#f92672">=</span> (p,d,q)
+</span></span><span style="display:flex;"><span>                        print(<span style="color:#e6db74">&#34;temp best:&#34;</span>, best_order, test_metrics[<span style="color:#e6db74">&#39;mape&#39;</span>])
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span>                    print(e)
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> best_order
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Grid search for best p and q (assuming d is known)</span>
+</span></span><span style="display:flex;"><span>best_order <span style="color:#f92672">=</span> grid_search_arima(train, test, range(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">9</span>), [d, d<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>], range(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">9</span>))
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Best ARIMA order based on grid search: </span><span style="color:#e6db74">{</span>best_order<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><blockquote>
+<p>Suggested d value: 1</p>
+<p>temp best: (1, 1, 1) 0.14570196898952395</p>
+<p>temp best: (1, 1, 5) 0.14514639508226412</p>
+<p>temp best: (1, 1, 6) 0.14499024417142595</p>
+<p>temp best: (1, 1, 7) 0.1439625731680348</p>
+<p>temp best: (1, 2, 1) 0.07729490750827837</p>
+<p>temp best: (1, 2, 2) 0.0764917667521908</p>
+<p>temp best: (3, 2, 4) 0.07647187068962996</p>
+<p>Best ARIMA order based on grid search: (3, 2, 4)</p>
+</blockquote>
+<h2 id="7-limitations-and-considerations">7. Limitations and Considerations</h2>
 <p>While ARIMA models can be powerful for time series prediction, they have limitations:</p>
 <ol>
 <li><strong>Assumption of linearity</strong>: ARIMA models assume linear relationships, which may not hold for complex financial data.</li>
@@ -667,14 +792,6 @@ $$</p>
 <li><strong>Sensitivity to outliers</strong>: Extreme values can significantly impact model performance.</li>
 <li><strong>Assumption of constant variance</strong>: This may not hold for volatile stock prices.</li>
 <li><strong>No consideration of external factors</strong>: ARIMA models only use past values of the time series, ignoring other potentially relevant variables.</li>
-</ol>
-<h2 id="7-advanced-topics-and-extensions">7. Advanced Topics and Extensions</h2>
-<p>Several extensions to basic ARIMA models address some of these limitations:</p>
-<ol>
-<li><strong>SARIMA</strong>: Incorporates seasonality</li>
-<li><strong>ARIMAX</strong>: Includes exogenous variables</li>
-<li><strong>GARCH</strong>: Models time-varying volatility</li>
-<li><strong>Vector ARIMA</strong>: Handles multiple related time series simultaneously</li>
 </ol>
 <h2 id="8-conclusion">8. Conclusion</h2>
 <p>Time series analysis and ARIMA models provide valuable tools for understanding and predicting stock price movements. While they have limitations, particularly in the complex and often non-linear world of financial markets, they serve as a strong foundation for more advanced modeling techniques.</p>
@@ -687,6 +804,15 @@ $$</p>
 <li>Combine with other analytical techniques and domain expertise for comprehensive analysis</li>
 </ol>
 <p>As with all financial modeling, remember that past performance does not guarantee future results. Time series models should be one tool in a broader analytical toolkit, complemented by fundamental analysis, market sentiment assessment, and a deep understanding of the specific stock and its market context.</p>
+<h3 id="next-steps">Next Steps</h3>
+<p>In next articles, we are going to explore about time-series decomposition, seasanality, exogenous variables.
+Indeed, several extensions to basic ARIMA models address some of these limitations:</p>
+<ol>
+<li><strong>SARIMA</strong>: Incorporates seasonality.</li>
+<li><strong>ARIMAX</strong>: Includes exogenous variables.</li>
+<li><strong>GARCH</strong>: Models time-varying volatility.</li>
+<li><strong>Vector ARIMA</strong>: Handles multiple related time series simultaneously.</li>
+</ol>
 
         </div>
 
@@ -859,9 +985,19 @@ $$</p>
         <li><a href="#grid-search">Grid Search</a></li>
       </ul>
     </li>
-    <li><a href="#6-limitations-and-considerations">6. Limitations and Considerations</a></li>
-    <li><a href="#7-advanced-topics-and-extensions">7. Advanced Topics and Extensions</a></li>
-    <li><a href="#8-conclusion">8. Conclusion</a></li>
+    <li><a href="#6-arima-model-fitting">6. ARIMA model fitting</a>
+      <ul>
+        <li><a href="#predict-arima-model-on-all-data">Predict ARIMA model on all data</a></li>
+        <li><a href="#train-test-split">Train/ Test split</a></li>
+        <li><a href="#grid-search-1">Grid Search</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-limitations-and-considerations">7. Limitations and Considerations</a></li>
+    <li><a href="#8-conclusion">8. Conclusion</a>
+      <ul>
+        <li><a href="#next-steps">Next Steps</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
       </div>

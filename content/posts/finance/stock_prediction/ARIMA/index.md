@@ -12,8 +12,6 @@ hero: images/test_forecast.png
 tags: ["Finance", "Statistics", "Forecasting"]
 categories: ["Finance"]
 ---
-
-
 ## 1. Introduction
 
 Time series analysis is a fundamental technique in quantitative finance, particularly for understanding and predicting stock price movements. Among the various time series models, ARIMA (Autoregressive Integrated Moving Average) models have gained popularity due to their flexibility and effectiveness in capturing complex patterns in financial data.
@@ -46,6 +44,7 @@ ARIMA models combine three components:
 3. **MA (Moving Average)**: The model uses the dependency between an observation and a residual error from a moving average model applied to lagged observations.
 
 The ARIMA model is typically denoted as ARIMA(p,d,q), where:
+
 - p is the order of the AR term
 - d is the degree of differencing
 - q is the order of the MA term
@@ -56,9 +55,11 @@ The ARIMA model can be written as:
 
 $$
 Y_t = c + \varphi_1 Y_{t-1} + \varphi_2 Y_{t-2} + ... + \varphi_p Y_{t-p} + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + ... + \theta_q \epsilon_{t-q} + \epsilon_t
+
 $$
 
 Where:
+
 - $Y_t$ is the differenced series (it may have been differenced more than once)
 - **c** is a constant
 - $\phi_i$ are the parameters of the autoregressive part
@@ -118,8 +119,9 @@ if p_val > 0.05:
 
 print(f"\nd = {d}")
 ```
+
 > *Output:*
-> 
+>
 > d = 1
 
 ![png](images/time_series.png)
@@ -135,12 +137,13 @@ Choosing the right ARIMA model involves selecting appropriate values for p, d, a
 3. **Diagnostic checking**: Analyzing residuals to ensure they resemble white noise.
 
 ### Finding ARIMA Parameters (p, d, q)
+
 Determining the optimal ARIMA parameters involves a combination of statistical tests, visual inspection, and iterative processes. Here's a systematic approach to finding p, d, and q:
 
-* Determine d (Differencing Order): 
+* Determine d (Differencing Order):
   - Use the Augmented Dickey-Fuller test to check for stationarity.
   - If the series is not stationary, difference it and test again until stationarity is achieved.
-* Determine p (AR Order) and q (MA Order): 
+* Determine p (AR Order) and q (MA Order):
   - After differencing, use ACF (Autocorrelation Function) and PACF (Partial Autocorrelation Function) plots.
   - The lag where the ACF cuts off indicates the q value.
   - The lag where the PACF cuts off indicates the p value.
@@ -148,6 +151,7 @@ Determining the optimal ARIMA parameters involves a combination of statistical t
   - Use AIC (Akaike Information Criterion) or BIC (Bayesian Information Criterion) to compare different models.
 
 ### Finding d parameter from plots
+
 Since, the stationary was already checkd in the previous, this paragraph is useful for graphical and comphrension purpose. Moreover, with autocorrelation parameters, it is possible to find better values of d that the ADF test cannot recognize.
 
 ```python
@@ -174,11 +178,13 @@ plot_acf(df.Close.diff().diff().dropna(), ax=axes[2, 1], lags=len(df)/7-3, color
 plt.tight_layout()
 plt.show()
 ```
+
 ![png](images/find_d.png)
 
-Indeed, from the plot, *d=2* is probably a better solution since we have few coefficient that goes above the confidence threshold. 
+Indeed, from the plot, *d=2* is probably a better solution since we have few coefficient that goes above the confidence threshold.
 
 ### Finding p parameter from plots
+
 As suggest previously, Partical Correlation Plot is adopted to find the **p** parameter.
 
 ```python
@@ -186,7 +192,7 @@ plt.rcParams.update({'figure.figsize':(15,5), 'figure.dpi':80})
 fig, axes = plt.subplots(1, 2, sharex=False)
 axes[0].plot(df.index, df.Close.diff()); axes[0].set_title('1st Differencing')
 axes[1].set(ylim=(0,5))
-plot_pacf(df.Close.diff().dropna(), ax=axes[1], lags=20, color='k', auto_ylims=True, zero=False)
+plot_pacf(df.Close.diff().dropna(), ax=axes[1], lags=200, color='k', auto_ylims=True, zero=False)
 
 plt.tight_layout()
 plt.show()
@@ -198,7 +204,22 @@ A possible choice of **p** can 8 or 18, where the coefficient crosses the confid
 
 ### Finding q parameter from plots
 
+```python
+plt.rcParams.update({'figure.figsize':(15,5), 'figure.dpi':80})
+fig, axes = plt.subplots(1, 2, sharex=False)
+axes[0].plot(df.Close.diff()); axes[0].set_title('1st Differencing')
+axes[1].set(ylim=(0,1.2))
+plot_acf(df.Close.diff().dropna(), ax=axes[1], lags=200, color='k', auto_ylims=True, zero=False)
+plt.tight_layout()
+plt.show()
+```
+
+![png](images/find_q.png)
+
+ACF looks very similar to PCF for smaller lags. Hence, even in this case a value of 8 can be used as *q*.
+
 ### Grid Search
+
 Here's a Python function to perform a grid search:
 
 ```python
@@ -222,9 +243,157 @@ def grid_search_arima(ts, p_range, d_range, q_range):
 best_order = grid_search_arima(ts_diff, range(3), range(2), range(3))
 ```
 
+## 6. ARIMA model fitting
 
+### Predict ARIMA model on all data
 
-## 6. Limitations and Considerations
+```python
+model = ARIMA(df.Close, order=(8,2,8)) # p,d,q
+results = model.fit()
+print(results.summary())
+
+# Actual vs Fitted o
+plt.plot(results.predict()[-100:], '-*', label='prediction')
+plt.plot(df.Close[-100:], '-*', label='actual')
+plt.legend()
+plt.title("Prediction vs. Actual on All Data ")
+plt.tight_layout()
+plt.show()
+```
+
+![png](images/train_pred.png)
+
+### Train/ Test split
+
+```python
+from statsmodels.tsa.stattools import acf
+
+# Create Training and Test
+train = df.Close[:int(len(df)*0.8)]
+test = df.Close[int(len(df)*0.8):]
+
+# model = ARIMA(train, order=(3,2,1))  
+model = ARIMA(train, order=(8, 2, 8))  
+fitted = model.fit()  
+
+# Forecast
+fc = fitted.get_forecast(steps=len(test), alpha=0.05)  # 95% conf
+conf = fc.conf_int()
+
+# Make as pandas series
+fc_series = pd.Series(fitted.forecast(steps=len(test)).values, index=test.index)
+lower_series = pd.Series(conf.iloc[:, 0].values, index=test.index)
+upper_series = pd.Series(conf.iloc[:, 1].values, index=test.index)
+
+# Plot
+plt.figure(figsize=(12,5), dpi=100)
+plt.plot(train[-200:], label='training')
+plt.plot(test, label='actual')
+plt.plot(fc_series, label='forecast')
+plt.fill_between(lower_series.index, lower_series, upper_series, 
+                 color='k', alpha=.15)
+plt.title('Forecast vs Actuals')
+plt.legend(loc='upper left', fontsize=10)
+plt.tight_layout()
+plt.show()
+```
+
+![png](images/test_forecast.png)
+
+```python
+# Accuracy metrics
+def forecast_accuracy(forecast, actual):
+    mape = np.mean(np.abs(forecast - actual)/np.abs(actual))    # MAPE
+    me = np.mean(forecast - actual)                             # ME
+    mae = np.mean(np.abs(forecast - actual))                    # MAE
+    mpe = np.mean((forecast - actual)/actual)                   # MPE
+    rmse = np.mean((forecast - actual)**2)**.5                  # RMSE
+    corr = np.corrcoef(forecast, actual)[0,1]                   # corr
+    mins = np.amin(np.hstack([forecast[:,None], 
+                              actual[:,None]]), axis=1)
+    maxs = np.amax(np.hstack([forecast[:,None], 
+                              actual[:,None]]), axis=1)
+    minmax = 1 - np.mean(mins/maxs)                             # minmax
+    acf1 = acf(forecast-test)[1]                                # ACF1
+    return({'mape':mape, 'me':me, 'mae': mae, 
+            'mpe': mpe, 'rmse':rmse, 'acf1':acf1, 
+            'corr':corr, 'minmax':minmax})
+
+forecast_accuracy(fc_series.values, test.values)
+```
+
+> Output:
+>
+> {'mape': 0.07829701788549515,
+>
+> 'me': -12.898037657120996,
+>
+> 'mae': 14.483068468837455,
+>
+> 'mpe': -0.068860507560246,
+>
+> 'rmse': 16.906382957008496,
+>
+> 'acf1': 0.9702976318229376,
+>
+> 'corr': 0.4484875181364141,
+>
+> 'minmax': 0.07810488835602647}
+
+### Grid Search
+
+```python
+def grid_search_arima(train, test, p_range, d_range, q_range):
+    best_aic = float('inf')
+    best_mape = float('inf')
+    best_order = None
+    for p in p_range:
+        for d in d_range:
+            for q in q_range:
+                try:
+                    model = ARIMA(train.values, order=(p,d,q))
+                    results = model.fit()
+                    fc_series = pd.Series(results.forecast(steps=len(test)), index=test.index)  # 95% conf
+                    test_metrics = forecast_accuracy(fc_series.values, test.values)
+                    # if results.aic < best_aic:
+                    #     best_aic = results.aic
+                    #     best_order = (p,d,q)
+                    print(p,d,q, test_metrics['mape'])
+                    if test_metrics['mape'] < best_mape:
+                        best_mape = test_metrics['mape']
+                        best_order = (p,d,q)
+                        print("temp best:", best_order, test_metrics['mape'])
+                except Exception as e:
+                    print(e)
+                    continue
+    return best_order
+
+# Grid search for best p and q (assuming d is known)
+best_order = grid_search_arima(train, test, range(1,9), [d, d+1], range(1,9))
+print(f"Best ARIMA order based on grid search: {best_order}")
+```
+
+> Suggested d value: 1
+>
+> temp best: (1, 1, 1) 0.14570196898952395
+>
+> temp best: (1, 1, 5) 0.14514639508226412
+>
+> temp best: (1, 1, 6) 0.14499024417142595
+>
+> temp best: (1, 1, 7) 0.1439625731680348
+>
+> temp best: (1, 2, 1) 0.07729490750827837
+>
+> temp best: (1, 2, 2) 0.0764917667521908
+>
+> temp best: (3, 2, 4) 0.07647187068962996
+>
+> Best ARIMA order based on grid search: (3, 2, 4)
+
+In g
+
+## 7. Limitations and Considerations
 
 While ARIMA models can be powerful for time series prediction, they have limitations:
 
@@ -233,15 +402,6 @@ While ARIMA models can be powerful for time series prediction, they have limitat
 3. **Sensitivity to outliers**: Extreme values can significantly impact model performance.
 4. **Assumption of constant variance**: This may not hold for volatile stock prices.
 5. **No consideration of external factors**: ARIMA models only use past values of the time series, ignoring other potentially relevant variables.
-
-## 7. Advanced Topics and Extensions
-
-Several extensions to basic ARIMA models address some of these limitations:
-
-1. **SARIMA**: Incorporates seasonality
-2. **ARIMAX**: Includes exogenous variables
-3. **GARCH**: Models time-varying volatility
-4. **Vector ARIMA**: Handles multiple related time series simultaneously
 
 ## 8. Conclusion
 
@@ -257,3 +417,12 @@ When applying these models to real-world financial data, it's crucial to:
 
 As with all financial modeling, remember that past performance does not guarantee future results. Time series models should be one tool in a broader analytical toolkit, complemented by fundamental analysis, market sentiment assessment, and a deep understanding of the specific stock and its market context.
 
+### Next Steps
+
+In next articles, we are going to explore about time-series decomposition, seasanality, exogenous variables.
+Indeed, several extensions to basic ARIMA models address some of these limitations:
+
+1. **SARIMA**: Incorporates seasonality.
+2. **ARIMAX**: Includes exogenous variables.
+3. **GARCH**: Models time-varying volatility.
+4. **Vector ARIMA**: Handles multiple related time series simultaneously.
