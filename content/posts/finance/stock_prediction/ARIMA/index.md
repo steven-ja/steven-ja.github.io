@@ -179,7 +179,24 @@ plt.show()
 Indeed, from the plot, *d=2* is probably a better solution since we have few coefficient that goes above the confidence threshold. 
 
 ### Finding p parameter from plots
+As suggest previously, Partical Correlation Plot is adopted to find the **p** parameter.
 
+```python
+plt.rcParams.update({'figure.figsize':(15,5), 'figure.dpi':80})
+fig, axes = plt.subplots(1, 2, sharex=False)
+axes[0].plot(df.index, df.Close.diff()); axes[0].set_title('1st Differencing')
+axes[1].set(ylim=(0,5))
+plot_pacf(df.Close.diff().dropna(), ax=axes[1], lags=20, color='k', auto_ylims=True, zero=False)
+
+plt.tight_layout()
+plt.show()
+```
+
+![png](images/find_p.png)
+
+A possible choice of **p** can 8 or 18, where the coefficient crosses the confidence intervals.
+
+### Finding q parameter from plots
 
 ### Grid Search
 Here's a Python function to perform a grid search:
