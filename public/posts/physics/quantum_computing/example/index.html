@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <title></title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<link rel="stylesheet" href="/application.fba7e2c0b4d0535aec97a3442d40338651f3354b1ee38f3630059796de18930f.css" integrity="sha256-&#43;6fiwLTQU1rsl6NELUAzhlHzNUse4482MAWXlt4Ykw8=" />
+
+
+
+
+
+  
+
+  
+  
+  
+    
+  
+  
+
+  <link rel="icon" type="image/png" href="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" />
+
+<meta property="og:url" content="http://localhost:1313/posts/physics/quantum_computing/example/">
+  <meta property="og:site_name" content="Stefano Giannini">
+  <meta property="og:title" content="Stefano Giannini">
+  <meta property="og:description" content="from qiskit import QuantumCircuit from qiskit.quantum_info import SparsePauliOp from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager # from qiskit_ibm_runtime import EstimatorV2 as Estimator # Create a new circuit with two qubits qc = QuantumCircuit(2) # Add a Hadamard gate to qubit 0 qc.h(0) # Perform a controlled-X gate on qubit 1, controlled by qubit 0 qc.cx(0, 1) # Return a drawing of the circuit using MatPlotLib (&#34;mpl&#34;). This is the # last line of the cell, so the drawing appears in the cell output.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Stefano Giannini">
+  <meta name="twitter:description" content="from qiskit import QuantumCircuit from qiskit.quantum_info import SparsePauliOp from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager # from qiskit_ibm_runtime import EstimatorV2 as Estimator # Create a new circuit with two qubits qc = QuantumCircuit(2) # Add a Hadamard gate to qubit 0 qc.h(0) # Perform a controlled-X gate on qubit 1, controlled by qubit 0 qc.cx(0, 1) # Return a drawing of the circuit using MatPlotLib (&#34;mpl&#34;). This is the # last line of the cell, so the drawing appears in the cell output.">
+
+    
+    
+<meta name="description" content="" />
+
+
+    
+
+    
+
+
+
+
+<script>
+      theme = localStorage.getItem('darkmode:color-scheme') || 'system';
+      if (theme == 'system') {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          theme = 'dark';
+        } else {
+          theme = 'light';
+        }
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
+  </head>
+
+  <body class="type-posts kind-page" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
+    <div class="container-fluid bg-secondary wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+
+<nav class="navbar navbar-expand-xl top-navbar shadow " id="top-navbar">
+  <div class="container">
+    
+    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button">
+      <i data-feather="sidebar"></i>
+    </button>
+    
+    <a class="navbar-brand" href="/">
+      
+        <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" id="logo" alt="Logo">
+      Stefano Giannini</a>
+    <button
+      class="navbar-toggler navbar-light"
+      id="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#top-nav-items"
+      aria-label="menu"
+    >
+      <i data-feather="menu"></i>
+    </button>
+
+    <div class="collapse navbar-collapse dynamic-navbar" id="top-nav-items">
+      <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/#home">Home</a>
+        </li>
+        
+          
+          
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#about">About</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#experiences">Experiences</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#education">Education</a>
+                </li>
+              
+            
+          
+        
+        
+          <div id="top-navbar-divider"></div>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="blog-link" href="/posts">Posts</a>
+          </li>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="note-link" href="/notes">Notes</a>
+          </li>
+        
+        
+            
+              <li class="nav-item">
+                <a class="nav-link" href="https://toha-guides.netlify.app/posts/">Docs</a>
+              </li>
+            
+        
+        
+        
+          <li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle"  href="#" id="themeSelector" role="button"
+  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <img id="navbar-theme-icon-svg" class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
+</a>
+<div id="themeMenu" class="dropdown-menu dropdown-menu-icons-only" aria-labelledby="themeSelector">
+  <a class="dropdown-item nav-link" href="#" data-scheme="light">
+    <img class="theme-icon" src="/icons/sun-svgrepo-com.svg" width=20 alt="Light Theme">
+  </a>
+  <a class="dropdown-item nav-link" href="#" data-scheme="dark">
+    <img class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
+  </a>
+  <a class="dropdown-item nav-link" href="#" data-scheme="system">
+    <img class="theme-icon" src="/icons/computer-svgrepo-com.svg" width=20 alt="System Theme">
+  </a>
+</div>
+</li>
+
+        
+      </ul>
+    </div>
+  </div>
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="main-logo" alt="Logo">
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="inverted-logo" alt="Inverted Logo">
+  
+</nav>
+
+
+
+      
+      
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/posts/" data-filter="all">Posts</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/"> Finance</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/monte_carlo/"> Monte Carlo</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/monte_carlo/black-scholes/" title="Option Pricing">Option Pricing</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/stock_prediction/"> Stock Prediction</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/gru/" title="GRU">GRU</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/arima/" title="ARIMA">ARIMA</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/machine-learning/"> Machine Learning</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/machine-learning/deep-learning/"> Deep Learning</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/machine-learning/deep-learning/computer-vision/"> Computer Vision</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/machine-learning/deep-learning/computer-vision/florence/" title="Florence-2 LVM">Florence-2 LVM</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/physics/"> Physics</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/percolation/" title="Percolation">Percolation</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content">
+    <div class="container p-0 read-area">
+      
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/images/default-hero.jpg);'>
+      </div>
+
+      
+      <div class="page-content">
+        
+        <div class="author-profile ms-auto align-self-lg-center">
+          <img class="rounded-circle" src='/images/author/profile_hu8a567cefac8c1a165d433ac0796ac418_3088978_120x120_fit_q75_box.jpg' alt="Author Image">
+          <h5 class="author-name">Stefano Giannini</h5>
+          <p class="text-muted">Monday, January 1, 1 | 4 minutes</p>
+        </div>
+        
+        
+        <div class="title">
+          <h1></h1>
+        </div>
+
+        
+
+        
+          <div class="tags">
+  <ul style="padding-left: 0;">
+    
+  </ul>
+</div>
+
+        
+        <div class="post-content" id="post-content">
+          <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit <span style="color:#f92672">import</span> QuantumCircuit
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit.quantum_info <span style="color:#f92672">import</span> SparsePauliOp
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit.transpiler.preset_passmanagers <span style="color:#f92672">import</span> generate_preset_pass_manager
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># from qiskit_ibm_runtime import EstimatorV2 as Estimator</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a new circuit with two qubits</span>
+</span></span><span style="display:flex;"><span>qc <span style="color:#f92672">=</span> QuantumCircuit(<span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Add a Hadamard gate to qubit 0</span>
+</span></span><span style="display:flex;"><span>qc<span style="color:#f92672">.</span>h(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Perform a controlled-X gate on qubit 1, controlled by qubit 0</span>
+</span></span><span style="display:flex;"><span>qc<span style="color:#f92672">.</span>cx(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Return a drawing of the circuit using MatPlotLib (&#34;mpl&#34;). This is the</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># last line of the cell, so the drawing appears in the cell output.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Remove the &#34;mpl&#34; argument to get a text drawing.</span>
+</span></span><span style="display:flex;"><span>qc<span style="color:#f92672">.</span>draw(<span style="color:#e6db74">&#34;mpl&#34;</span>)
+</span></span></code></pre></div><p><img alt="png" src="example_files/example_0_0.png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># # Create a Quantum Circuit with 2 qubits and 2 classical bits</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># qc = QuantumCircuit(2, 2)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># # Apply Hadamard gates to both qubits</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># qc.h([0, 1])</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># # Apply the oracle (X gate to qubit 1)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># qc.x(1)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># # Apply a CNOT gate with qubit 0 as control and qubit 1 as target</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># qc.cx(0, 1)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># # Apply the oracle (X gate to qubit 1)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># qc.x(1)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># # Apply Hadamard gates to both qubits</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># qc.h([0, 1])</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># # Measure the qubits</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># qc.measure([0, 1], [0, 1])</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># # Draw the circuit</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># qc.draw(&#39;mpl&#39;)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Set up six different observables.</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit.quantum_info <span style="color:#f92672">import</span> SparsePauliOp
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>observables_labels <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;ZZ&#34;</span>, <span style="color:#e6db74">&#34;ZI&#34;</span>, <span style="color:#e6db74">&#34;IZ&#34;</span>, <span style="color:#e6db74">&#34;XX&#34;</span>, <span style="color:#e6db74">&#34;XI&#34;</span>, <span style="color:#e6db74">&#34;IX&#34;</span>]
+</span></span><span style="display:flex;"><span>observables <span style="color:#f92672">=</span> [SparsePauliOp(label) <span style="color:#66d9ef">for</span> label <span style="color:#f92672">in</span> observables_labels]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>observables
+</span></span></code></pre></div><pre><code>[SparsePauliOp(['ZZ'],
+               coeffs=[1.+0.j]),
+ SparsePauliOp(['ZI'],
+               coeffs=[1.+0.j]),
+ SparsePauliOp(['IZ'],
+               coeffs=[1.+0.j]),
+ SparsePauliOp(['XX'],
+               coeffs=[1.+0.j]),
+ SparsePauliOp(['XI'],
+               coeffs=[1.+0.j]),
+ SparsePauliOp(['IX'],
+               coeffs=[1.+0.j])]
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit_aer.primitives <span style="color:#f92672">import</span> Estimator
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>estimator <span style="color:#f92672">=</span> Estimator()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>job <span style="color:#f92672">=</span> estimator<span style="color:#f92672">.</span>run([qc]<span style="color:#f92672">*</span>len(observables), observables)
+</span></span><span style="display:flex;"><span>job<span style="color:#f92672">.</span>result()
+</span></span></code></pre></div><pre><code>EstimatorResult(values=array([ 1.        , -0.0390625 , -0.0390625 ,  1.        , -0.04296875,
+       -0.04296875]), metadata=[{'shots': 1024, 'variance': 0.0, 'simulator_metadata': [{'batched_shots_optimization': False, 'required_memory_mb': 0, 'method': 'stabilizer', 'active_input_qubits': [0, 1], 'device': 'CPU', 'remapped_qubits': False, 'num_qubits': 2, 'num_clbits': 2, 'time_taken': 0.0034544, 'sample_measure_time': 0.0009696, 'input_qubit_map': [[0, 0], [1, 1]], 'max_memory_mb': 7563, 'measure_sampling': True, 'noise': 'ideal', 'parallel_shots': 1, 'parallel_state_update': 16, 'runtime_parameter_bind': False, 'num_bind_params': 1, 'fusion': {'enabled': False}}]}, {'shots': 1024, 'variance': 0.99847412109375, 'simulator_metadata': [{'batched_shots_optimization': False, 'required_memory_mb': 0, 'method': 'stabilizer', 'active_input_qubits': [0, 1], 'device': 'CPU', 'remapped_qubits': False, 'num_qubits': 2, 'num_clbits': 2, 'time_taken': 0.0034544, 'sample_measure_time': 0.0009696, 'input_qubit_map': [[0, 0], [1, 1]], 'max_memory_mb': 7563, 'measure_sampling': True, 'noise': 'ideal', 'parallel_shots': 1, 'parallel_state_update': 16, 'runtime_parameter_bind': False, 'num_bind_params': 1, 'fusion': {'enabled': False}}]}, {'shots': 1024, 'variance': 0.99847412109375, 'simulator_metadata': [{'batched_shots_optimization': False, 'required_memory_mb': 0, 'method': 'stabilizer', 'active_input_qubits': [0, 1], 'device': 'CPU', 'remapped_qubits': False, 'num_qubits': 2, 'num_clbits': 2, 'time_taken': 0.0034544, 'sample_measure_time': 0.0009696, 'input_qubit_map': [[0, 0], [1, 1]], 'max_memory_mb': 7563, 'measure_sampling': True, 'noise': 'ideal', 'parallel_shots': 1, 'parallel_state_update': 16, 'runtime_parameter_bind': False, 'num_bind_params': 1, 'fusion': {'enabled': False}}]}, {'shots': 1024, 'variance': 0.0, 'simulator_metadata': [{'batched_shots_optimization': False, 'required_memory_mb': 0, 'method': 'stabilizer', 'active_input_qubits': [0, 1], 'device': 'CPU', 'remapped_qubits': False, 'num_qubits': 2, 'num_clbits': 2, 'time_taken': 0.0032652, 'sample_measure_time': 0.0013482, 'input_qubit_map': [[0, 0], [1, 1]], 'max_memory_mb': 7563, 'measure_sampling': True, 'noise': 'ideal', 'parallel_shots': 1, 'parallel_state_update': 16, 'runtime_parameter_bind': False, 'num_bind_params': 1, 'fusion': {'enabled': False}}]}, {'shots': 1024, 'variance': 0.9981536865234375, 'simulator_metadata': [{'batched_shots_optimization': False, 'required_memory_mb': 0, 'method': 'stabilizer', 'active_input_qubits': [0, 1], 'device': 'CPU', 'remapped_qubits': False, 'num_qubits': 2, 'num_clbits': 2, 'time_taken': 0.0032652, 'sample_measure_time': 0.0013482, 'input_qubit_map': [[0, 0], [1, 1]], 'max_memory_mb': 7563, 'measure_sampling': True, 'noise': 'ideal', 'parallel_shots': 1, 'parallel_state_update': 16, 'runtime_parameter_bind': False, 'num_bind_params': 1, 'fusion': {'enabled': False}}]}, {'shots': 1024, 'variance': 0.9981536865234375, 'simulator_metadata': [{'batched_shots_optimization': False, 'required_memory_mb': 0, 'method': 'stabilizer', 'active_input_qubits': [0, 1], 'device': 'CPU', 'remapped_qubits': False, 'num_qubits': 2, 'num_clbits': 2, 'time_taken': 0.0032652, 'sample_measure_time': 0.0013482, 'input_qubit_map': [[0, 0], [1, 1]], 'max_memory_mb': 7563, 'measure_sampling': True, 'noise': 'ideal', 'parallel_shots': 1, 'parallel_state_update': 16, 'runtime_parameter_bind': False, 'num_bind_params': 1, 'fusion': {'enabled': False}}]}])
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># post-processing</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>values <span style="color:#f92672">=</span> job<span style="color:#f92672">.</span>result()<span style="color:#f92672">.</span>values
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(observables_labels, values, <span style="color:#e6db74">&#39;-o&#39;</span>)
+</span></span></code></pre></div><pre><code>[&lt;matplotlib.lines.Line2D at 0x17b6fd097c0&gt;]
+</code></pre>
+<p><img alt="png" src="example_files/example_4_1.png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Quantum Computing with Qiskit: Introduction and Basic Circuits</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit <span style="color:#f92672">import</span> QuantumCircuit
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit_aer <span style="color:#f92672">import</span> AerSimulator
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit.visualization <span style="color:#f92672">import</span> plot_histogram
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a quantum circuit with 2 qubits and 2 classical bits</span>
+</span></span><span style="display:flex;"><span>qc <span style="color:#f92672">=</span> QuantumCircuit(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Apply a Hadamard gate to the first qubit</span>
+</span></span><span style="display:flex;"><span>qc<span style="color:#f92672">.</span>h(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Apply a CNOT gate with control qubit 0 and target qubit 1</span>
+</span></span><span style="display:flex;"><span>qc<span style="color:#f92672">.</span>cx(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Measure both qubits</span>
+</span></span><span style="display:flex;"><span>qc<span style="color:#f92672">.</span>measure([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>], [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Print the circuit</span>
+</span></span><span style="display:flex;"><span>print(qc)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a simulator</span>
+</span></span><span style="display:flex;"><span>simulator <span style="color:#f92672">=</span> AerSimulator()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Run the quantum circuit on the simulator backend</span>
+</span></span><span style="display:flex;"><span>job <span style="color:#f92672">=</span> simulator<span style="color:#f92672">.</span>run(qc, shots<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Get the results of the simulation</span>
+</span></span><span style="display:flex;"><span>result <span style="color:#f92672">=</span> job<span style="color:#f92672">.</span>result()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Get the counts of measurement outcomes</span>
+</span></span><span style="display:flex;"><span>counts <span style="color:#f92672">=</span> result<span style="color:#f92672">.</span>get_counts(qc)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Print the results</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">Measurement outcomes:&#34;</span>, counts)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Visualize the results</span>
+</span></span><span style="display:flex;"><span>plot_histogram(counts)
+</span></span></code></pre></div><pre><code>     ┌───┐     ┌─┐   
+q_0: ┤ H ├──■──┤M├───
+     └───┘┌─┴─┐└╥┘┌─┐
+q_1: ─────┤ X ├─╫─┤M├
+          └───┘ ║ └╥┘
+c: 2/═══════════╩══╩═
+                0  1 
+
+Measurement outcomes: {'11': 496, '00': 504}
+</code></pre>
+<p><img alt="png" src="example_files/example_5_1.png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Quantum Computing with Qiskit: Introduction and Basic Circuits</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit <span style="color:#f92672">import</span> QuantumCircuit
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit_aer <span style="color:#f92672">import</span> AerSimulator
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit.visualization <span style="color:#f92672">import</span> plot_histogram
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a quantum circuit with 2 qubits and 2 classical bits</span>
+</span></span><span style="display:flex;"><span>qc <span style="color:#f92672">=</span> QuantumCircuit(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Apply a Hadamard gate to the first qubit</span>
+</span></span><span style="display:flex;"><span>qc<span style="color:#f92672">.</span>h(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Apply a CNOT gate with control qubit 0 and target qubit 1</span>
+</span></span><span style="display:flex;"><span>qc<span style="color:#f92672">.</span>cx(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Measure both qubits</span>
+</span></span><span style="display:flex;"><span>qc<span style="color:#f92672">.</span>measure([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>], [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Print the circuit</span>
+</span></span><span style="display:flex;"><span>qc<span style="color:#f92672">.</span>draw(<span style="color:#e6db74">&#34;mpl&#34;</span>)
+</span></span></code></pre></div><p><img alt="png" src="example_files/example_6_0.png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a simulator</span>
+</span></span><span style="display:flex;"><span>simulator <span style="color:#f92672">=</span> AerSimulator()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Run the quantum circuit on the simulator backend</span>
+</span></span><span style="display:flex;"><span>job <span style="color:#f92672">=</span> simulator<span style="color:#f92672">.</span>run(qc, shots<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Get the results of the simulation</span>
+</span></span><span style="display:flex;"><span>result <span style="color:#f92672">=</span> job<span style="color:#f92672">.</span>result()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Get the counts of measurement outcomes</span>
+</span></span><span style="display:flex;"><span>counts <span style="color:#f92672">=</span> result<span style="color:#f92672">.</span>get_counts(qc)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Print the results</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">Measurement outcomes:&#34;</span>, counts)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Visualize the results</span>
+</span></span><span style="display:flex;"><span>plot_histogram(counts)
+</span></span></code></pre></div><pre><code>Measurement outcomes: {'00': 499, '11': 501}
+</code></pre>
+<p><img alt="png" src="example_files/example_7_1.png"></p>
+
+        </div>
+
+        
+        <div class="row ps-3 pe-3">
+        
+          <div class="col-md-6 share-buttons">
+          
+            <strong>Share on:</strong>
+            
+            <a class="btn icon-button bg-facebook" href="https://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2fphysics%2fquantum_computing%2fexample%2f" target="_blank">
+              <i class="fab fa-facebook"></i>
+            </a>
+            
+            
+                <a class="btn icon-button bg-twitter" href="https://twitter.com/share?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fphysics%2fquantum_computing%2fexample%2f&text=&via=Stefano%20Giannini" target="_blank">
+                  <i class="fab fa-twitter"></i>
+                </a>
+            
+            
+                <a  class="btn icon-button bg-reddit" href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fphysics%2fquantum_computing%2fexample%2f&title=" target="_blank">
+                  <i class="fab fa-reddit"></i>
+                </a>
+            
+            
+            
+            
+                <a class="btn icon-button bg-linkedin" href="https://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fphysics%2fquantum_computing%2fexample%2f&title=" target="_blank">
+                  <i class="fab fa-linkedin"></i>
+                </a>
+            
+            
+             
+            
+                 <a class="btn icon-button bg-whatsapp" href="https://api.whatsapp.com/send?text= http%3a%2f%2flocalhost%3a1313%2fposts%2fphysics%2fquantum_computing%2fexample%2f" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+            
+            
+                <a class="btn icon-button" href="mailto:?subject=&body=http%3a%2f%2flocalhost%3a1313%2fposts%2fphysics%2fquantum_computing%2fexample%2f" target="_blank">
+                  <i class="fas fa-envelope-open-text"></i>
+                </a>
+            
+          
+          </div>
+
+        
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/ragespin/ragespin.github.io/edit/main/content/posts%5cphysics%5cquantum_computing%5cexample.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+  
+</div>
+
+      <hr />
+
+      
+      
+
+      
+      
+
+      </div>
+    </div>
+  </div>
+  
+  <a id="scroll-to-top" class="btn" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Scroll to top">
+    <i class="fas fa-chevron-circle-up"></i>
+  </a>
+</section>
+
+
+      
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center ps-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents"></nav>
+      </div>
+    </div>
+    
+  </section>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+    
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-start">
+        
+        
+        
+        
+      </div>
+    </div>
+    
+    <hr />
+    <div class="container">
+      <p id="disclaimer"><strong>Liability Notice:</strong> This theme is under MIT license. So, you can use it for non-commercial, commercial, or private uses. You can modify or distribute the theme without requiring any permission from the theme author. However, the theme author does not provide any warranty or takes any liability for any issue with the theme.</p>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-start">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
+            <img src="/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2024 Copyright.</div>
+        <div class="col-md-4 text-end">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script src="/application.97f51c3e286071444c3471235d1690400d75a930a8787cc86f8c8e4d2767277e.js" integrity="sha256-l/UcPihgcURMNHEjXRaQQA11qTCoeHzIb4yOTSdnJ34=" defer></script>
+
+
+    
+     
+
+    
+    
+
+</body>
+</html>
