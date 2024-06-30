@@ -365,7 +365,7 @@ print(f"Best ARIMA order based on grid search: {best_order}")
 >
 > Best ARIMA order based on grid search: (3, 2, 4)
 
-At the end, we found that *(3,2,4)* offer better testing results (mape of 7.6% vs. 7.8% of manual parameters finding), even if there is only a tiny difference (0.2%). Moreover, since the values of p and q are lower the model will be faster and less prone to overfitting (smaller values of AR or MA coefficients).
+At the end, we found that *(3,2,4)* offer better testing results (mape of 7.6% vs. 7.8% of manual parameters finding), even if there is only a tiny difference (0.2%). Moreover, since the values of p and q are lower the model will be faster and less prone to overfitting (fewer number of AR or MA coefficients).
 
 ## 7. Limitations and Considerations
 
