@@ -29,7 +29,7 @@ Quantum computers hold the promise of solving problems that are intractable for 
 
 Quantum computing's power stems from its unique use of quantum mechanics to represent and manipulate data. This section provides a detailed look into the mathematical principles that underpin quantum computing.
 
-### **Quantum States and Qubits**
+### Quantum States and Qubits
 
 In quantum computing, information is encoded in quantum states of qubits. A qubit is the quantum analog of a classical bit, but it can exist in a superposition of the two basis states $|0⟩$ and $|1⟩$.
 
@@ -47,26 +47,35 @@ In quantum computing, information is encoded in quantum states of qubits. A qubi
 2. **Dirac Notation:**
    The vector form $|ψ⟩$ is often written in Dirac or bra-ket notation, which is a convenient way to describe quantum states. The basis states $|0⟩$ and $|1⟩$ are the eigenstates of the Pauli Z operator (more on this below).
 
-### **Quantum Gates and Operations**
+### Quantum Gates and Operations
 
 Quantum gates are the building blocks of quantum circuits, analogous to classical logic gates. They are represented by unitary matrices that act on the state vectors of qubits. Unitarity ensures that the operation preserves the total probability (i.e., it remains 1).
 
+$$
+\begin{equation}
+\begin{pmatrix}
+     0 & 1 \\\
+     1 & 0
+     \end{pmatrix}
+\end{equation}
+$$
 1. **Pauli Matrices:**
    The Pauli matrices are fundamental in quantum mechanics and quantum computing. They describe basic quantum operations and are used to represent qubit rotations.
 
    - **Pauli-X (NOT Gate):**
-     $$
-     X = \begin{pmatrix}
-     0 & 1 \\
+     $
+     X = 
+     \begin{bmatrix}
+     0 & 1 \\\
      1 & 0
-     \end{pmatrix}
-     $$
+     \end{bmatrix}
+     $
      This gate flips the state of a qubit: $X|0⟩ = |1⟩$ and $X|1⟩ = |0⟩$.
 
    - **Pauli-Y:**
      $$
      Y = \begin{pmatrix}
-     0 & -i \\
+     0 & -i \\\
      i & 0
      \end{pmatrix}
      $$
@@ -75,7 +84,7 @@ Quantum gates are the building blocks of quantum circuits, analogous to classica
    - **Pauli-Z (Phase Flip):**
      $$
      Z = \begin{pmatrix}
-     1 & 0 \\
+     1 & 0 \\\
      0 & -1
      \end{pmatrix}
      $$
@@ -85,7 +94,7 @@ Quantum gates are the building blocks of quantum circuits, analogous to classica
    The Hadamard gate creates a superposition of states. It transforms the basis states as follows:
    $$
    H = \frac{1}{\sqrt{2}} \begin{pmatrix}
-   1 & 1 \\
+   1 & 1 \\\
    1 & -1
    \end{pmatrix}
    $$
@@ -96,9 +105,9 @@ Quantum gates are the building blocks of quantum circuits, analogous to classica
    The CNOT gate is a two-qubit operation that flips the state of the target qubit if the control qubit is in state $|1⟩$.
    $$
    CNOT = \begin{pmatrix}
-   1 & 0 & 0 & 0 \\
-   0 & 1 & 0 & 0 \\
-   0 & 0 & 0 & 1 \\
+   1 & 0 & 0 & 0 \\\
+   0 & 1 & 0 & 0 \\\
+   0 & 0 & 0 & 1 \\\
    0 & 0 & 1 & 0
    \end{pmatrix}
    $$
@@ -108,7 +117,7 @@ Quantum gates are the building blocks of quantum circuits, analogous to classica
    - **S Gate:**
      $$
      S = \begin{pmatrix}
-     1 & 0 \\
+     1 & 0 \\\
      0 & i
      \end{pmatrix}
      $$
@@ -117,13 +126,13 @@ Quantum gates are the building blocks of quantum circuits, analogous to classica
    - **T Gate:**
      $$
      T = \begin{pmatrix}
-     1 & 0 \\
+     1 & 0 \\\
      0 & e^{iπ/4}
      \end{pmatrix}
      $$
      The T gate introduces a phase shift of $π/4$.
 
-### **Quantum Measurement**
+### Quantum Measurement
 
 Measurement in quantum computing collapses a quantum state into one of the basis states, which can be observed as classical information. The probabilities of the outcomes are determined by the amplitudes of the state vector components.
 
@@ -142,9 +151,7 @@ Measurement in quantum computing collapses a quantum state into one of the basis
    After the measurement, the state collapses to $|0⟩$ or $|1⟩$ with the respective probabilities, and the post-measurement state reflects this collapse.
 
 3. **Measurement in Different Bases:**
-   Measurements can also be performed in other bases, such as the $\{|+\rangle, |-\rangle\}$ basis, where $|+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)$ and $|-\rangle = \frac{1}{\sqrt{2}}(|0\r
-
-angle - |1\rangle)$. The probabilities and post-measurement states differ depending on the chosen basis.
+   Measurements can also be performed in other bases, such as the $\{|+\rangle, |-\rangle\}$ basis, where $|+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)$ and $|-\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle)$. The probabilities and post-measurement states differ depending on the chosen basis.
 
 ## **Quantum Circuit Example with Qiskit**
 

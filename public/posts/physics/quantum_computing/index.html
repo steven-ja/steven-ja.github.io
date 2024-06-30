@@ -496,7 +496,7 @@
 <p>Quantum computers hold the promise of solving problems that are intractable for classical computers, such as factoring large numbers, simulating quantum physics, and optimizing complex systems.</p>
 <h2 id="mathematical-basis-of-quantum-computing"><strong>Mathematical Basis of Quantum Computing</strong></h2>
 <p>Quantum computing&rsquo;s power stems from its unique use of quantum mechanics to represent and manipulate data. This section provides a detailed look into the mathematical principles that underpin quantum computing.</p>
-<h3 id="quantum-states-and-qubits"><strong>Quantum States and Qubits</strong></h3>
+<h3 id="quantum-states-and-qubits">Quantum States and Qubits</h3>
 <p>In quantum computing, information is encoded in quantum states of qubits. A qubit is the quantum analog of a classical bit, but it can exist in a superposition of the two basis states $|0⟩$ and $|1⟩$.</p>
 <ol>
 <li>
@@ -516,8 +516,16 @@ This condition ensures that the total probability of the qubit being in state $|
 The vector form $|ψ⟩$ is often written in Dirac or bra-ket notation, which is a convenient way to describe quantum states. The basis states $|0⟩$ and $|1⟩$ are the eigenstates of the Pauli Z operator (more on this below).</p>
 </li>
 </ol>
-<h3 id="quantum-gates-and-operations"><strong>Quantum Gates and Operations</strong></h3>
+<h3 id="quantum-gates-and-operations">Quantum Gates and Operations</h3>
 <p>Quantum gates are the building blocks of quantum circuits, analogous to classical logic gates. They are represented by unitary matrices that act on the state vectors of qubits. Unitarity ensures that the operation preserves the total probability (i.e., it remains 1).</p>
+<p>$$
+\begin{equation}
+\begin{pmatrix}
+0 &amp; 1 \\
+1 &amp; 0
+\end{pmatrix}
+\end{equation}
+$$</p>
 <ol>
 <li>
 <p><strong>Pauli Matrices:</strong>
@@ -525,19 +533,20 @@ The Pauli matrices are fundamental in quantum mechanics and quantum computing. T
 <ul>
 <li>
 <p><strong>Pauli-X (NOT Gate):</strong>
-$$
-X = \begin{pmatrix}
-0 &amp; 1 \
+$
+X =
+\begin{bmatrix}
+0 &amp; 1 \\
 1 &amp; 0
-\end{pmatrix}
-$$
+\end{bmatrix}
+$
 This gate flips the state of a qubit: $X|0⟩ = |1⟩$ and $X|1⟩ = |0⟩$.</p>
 </li>
 <li>
 <p><strong>Pauli-Y:</strong>
 $$
 Y = \begin{pmatrix}
-0 &amp; -i \
+0 &amp; -i \\
 i &amp; 0
 \end{pmatrix}
 $$
@@ -547,7 +556,7 @@ The Pauli-Y gate applies a phase shift and flips the state with a complex phase 
 <p><strong>Pauli-Z (Phase Flip):</strong>
 $$
 Z = \begin{pmatrix}
-1 &amp; 0 \
+1 &amp; 0 \\
 0 &amp; -1
 \end{pmatrix}
 $$
@@ -560,7 +569,7 @@ This gate flips the phase of the qubit’s state: $Z|0⟩ = |0⟩$ and $Z|1⟩ =
 The Hadamard gate creates a superposition of states. It transforms the basis states as follows:
 $$
 H = \frac{1}{\sqrt{2}} \begin{pmatrix}
-1 &amp; 1 \
+1 &amp; 1 \\
 1 &amp; -1
 \end{pmatrix}
 $$</p>
@@ -574,9 +583,9 @@ $$</p>
 The CNOT gate is a two-qubit operation that flips the state of the target qubit if the control qubit is in state $|1⟩$.
 $$
 CNOT = \begin{pmatrix}
-1 &amp; 0 &amp; 0 &amp; 0 \
-0 &amp; 1 &amp; 0 &amp; 0 \
-0 &amp; 0 &amp; 0 &amp; 1 \
+1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 \\
 0 &amp; 0 &amp; 1 &amp; 0
 \end{pmatrix}
 $$
@@ -589,7 +598,7 @@ The matrix operates on a 4-dimensional space corresponding to the possible state
 <p><strong>S Gate:</strong>
 $$
 S = \begin{pmatrix}
-1 &amp; 0 \
+1 &amp; 0 \\
 0 &amp; i
 \end{pmatrix}
 $$
@@ -599,7 +608,7 @@ The S gate introduces a phase shift of $π/2$.</p>
 <p><strong>T Gate:</strong>
 $$
 T = \begin{pmatrix}
-1 &amp; 0 \
+1 &amp; 0 \\
 0 &amp; e^{iπ/4}
 \end{pmatrix}
 $$
@@ -608,7 +617,7 @@ The T gate introduces a phase shift of $π/4$.</p>
 </ul>
 </li>
 </ol>
-<h3 id="quantum-measurement"><strong>Quantum Measurement</strong></h3>
+<h3 id="quantum-measurement">Quantum Measurement</h3>
 <p>Measurement in quantum computing collapses a quantum state into one of the basis states, which can be observed as classical information. The probabilities of the outcomes are determined by the amplitudes of the state vector components.</p>
 <ol>
 <li>
@@ -629,10 +638,9 @@ After the measurement, the state collapses to $|0⟩$ or $|1⟩$ with the respec
 </li>
 <li>
 <p><strong>Measurement in Different Bases:</strong>
-Measurements can also be performed in other bases, such as the ${|+\rangle, |-\rangle}$ basis, where $|+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)$ and $|-\rangle = \frac{1}{\sqrt{2}}(|0\r</p>
+Measurements can also be performed in other bases, such as the ${|+\rangle, |-\rangle}$ basis, where $|+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)$ and $|-\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle)$. The probabilities and post-measurement states differ depending on the chosen basis.</p>
 </li>
 </ol>
-<p>angle - |1\rangle)$. The probabilities and post-measurement states differ depending on the chosen basis.</p>
 <h2 id="quantum-circuit-example-with-qiskit"><strong>Quantum Circuit Example with Qiskit</strong></h2>
 <p>To solidify the understanding of these concepts, let’s look at a practical example using Qiskit to implement a simple quantum circuit.</p>
 <h3 id="example-1">Example 1</h3>
@@ -978,9 +986,9 @@ This circuit uses a Hadamard gate to place the qubit into an equal superposition
     <li><a href="#introduction-to-quantum-computing"><strong>Introduction to Quantum Computing</strong></a></li>
     <li><a href="#mathematical-basis-of-quantum-computing"><strong>Mathematical Basis of Quantum Computing</strong></a>
       <ul>
-        <li><a href="#quantum-states-and-qubits"><strong>Quantum States and Qubits</strong></a></li>
-        <li><a href="#quantum-gates-and-operations"><strong>Quantum Gates and Operations</strong></a></li>
-        <li><a href="#quantum-measurement"><strong>Quantum Measurement</strong></a></li>
+        <li><a href="#quantum-states-and-qubits">Quantum States and Qubits</a></li>
+        <li><a href="#quantum-gates-and-operations">Quantum Gates and Operations</a></li>
+        <li><a href="#quantum-measurement">Quantum Measurement</a></li>
       </ul>
     </li>
     <li><a href="#quantum-circuit-example-with-qiskit"><strong>Quantum Circuit Example with Qiskit</strong></a>

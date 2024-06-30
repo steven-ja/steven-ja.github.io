@@ -6,24 +6,24 @@
     <description>Recent content in Physics on Stefano Giannini</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 08 Jun 2024 08:06:25 +0600</lastBuildDate><atom:link href="http://localhost:1313/tags/physics/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Sun, 30 Jun 2024 08:00:00 +0100</lastBuildDate><atom:link href="http://localhost:1313/tags/physics/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>Quantum Computing - Fundementals (Part 1)</title>
+      <link>http://localhost:1313/posts/physics/quantum_computing/</link>
+      <pubDate>Sun, 30 Jun 2024 08:00:00 +0100</pubDate>
+      
+      <guid>http://localhost:1313/posts/physics/quantum_computing/</guid>
+      <description>Introduction to Quantum Computing Quantum computing represents a transformative leap in computational technology. Unlike classical computers, which use bits as the smallest unit of data, quantum computers employ quantum bits, or qubits. These qubits take advantage of the principles of quantum mechanics, allowing for exponentially greater processing power in certain types of computations.
+Core Concepts:
+Superposition: Unlike classical bits that can be either 0 or 1, qubits can exist in a state that is a superposition of both.</description>
+    </item>
+    
+    <item>
       <title>Percolation</title>
       <link>http://localhost:1313/posts/physics/percolation/</link>
       <pubDate>Sat, 08 Jun 2024 08:06:25 +0600</pubDate>
       
       <guid>http://localhost:1313/posts/physics/percolation/</guid>
       <description>Introduction Percolation theory is a fundamental concept in statistical physics and mathematics that describes the behavior of connected clusters in a random graph. It is a model for understanding how a network behaves when nodes or links are added, leading to a phase transition from a state of disconnected clusters to a state where a large, connected cluster spans the system. This transition occurs at a critical threshold, known as the percolation threshold.</description>
-    </item>
-    
-    <item>
-      <title>Quantum Computing - Fundementals (Part 1)</title>
-      <link>http://localhost:1313/posts/physics/quantum_computing/</link>
-      <pubDate>Sat, 08 Jun 2024 08:06:25 +0600</pubDate>
-      
-      <guid>http://localhost:1313/posts/physics/quantum_computing/</guid>
-      <description>Introduction to Quantum Computing Quantum computing represents a transformative leap in computational technology. Unlike classical computers, which use bits as the smallest unit of data, quantum computers employ quantum bits, or qubits. These qubits take advantage of the principles of quantum mechanics, allowing for exponentially greater processing power in certain types of computations.
-Core Concepts:
-Superposition: Unlike classical bits that can be either 0 or 1, qubits can exist in a state that is a superposition of both.</description>
     </item>
     
     
