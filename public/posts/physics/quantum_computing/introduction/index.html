@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <title>Quantum Computing - Fundementals (Part 1)</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<link rel="stylesheet" href="/application.fba7e2c0b4d0535aec97a3442d40338651f3354b1ee38f3630059796de18930f.css" integrity="sha256-&#43;6fiwLTQU1rsl6NELUAzhlHzNUse4482MAWXlt4Ykw8=" />
+
+
+
+
+
+  
+
+  
+  
+  
+    
+  
+  
+
+  <link rel="icon" type="image/png" href="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" />
+
+<meta property="og:url" content="http://localhost:1313/posts/physics/quantum_computing/introduction/">
+  <meta property="og:site_name" content="Stefano Giannini">
+  <meta property="og:title" content="Quantum Computing - Fundementals (Part 1)">
+  <meta property="og:description" content="Python Implentation of simple quantum circuits">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-06-30T08:00:00+01:00">
+    <meta property="article:modified_time" content="2024-06-30T08:00:00+01:00">
+    <meta property="article:tag" content="Science">
+    <meta property="article:tag" content="Statistics">
+    <meta property="article:tag" content="Quantum">
+    <meta property="article:tag" content="Physics">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Quantum Computing - Fundementals (Part 1)">
+  <meta name="twitter:description" content="Python Implentation of simple quantum circuits">
+
+    
+    
+<meta name="description" content="Python Implentation of simple quantum circuits" />
+
+
+    
+
+    
+
+
+
+
+<script>
+      theme = localStorage.getItem('darkmode:color-scheme') || 'system';
+      if (theme == 'system') {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          theme = 'dark';
+        } else {
+          theme = 'light';
+        }
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
+  </head>
+
+  <body class="type-posts kind-page" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
+    <div class="container-fluid bg-secondary wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+
+<nav class="navbar navbar-expand-xl top-navbar shadow " id="top-navbar">
+  <div class="container">
+    
+    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button">
+      <i data-feather="sidebar"></i>
+    </button>
+    
+    <a class="navbar-brand" href="/">
+      
+        <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" id="logo" alt="Logo">
+      Stefano Giannini</a>
+    <button
+      class="navbar-toggler navbar-light"
+      id="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#top-nav-items"
+      aria-label="menu"
+    >
+      <i data-feather="menu"></i>
+    </button>
+
+    <div class="collapse navbar-collapse dynamic-navbar" id="top-nav-items">
+      <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/#home">Home</a>
+        </li>
+        
+          
+          
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#about">About</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#experiences">Experiences</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#education">Education</a>
+                </li>
+              
+            
+          
+        
+        
+          <div id="top-navbar-divider"></div>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="blog-link" href="/posts">Posts</a>
+          </li>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="note-link" href="/notes">Notes</a>
+          </li>
+        
+        
+            
+              <li class="nav-item">
+                <a class="nav-link" href="https://toha-guides.netlify.app/posts/">Docs</a>
+              </li>
+            
+        
+        
+        
+          <li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle"  href="#" id="themeSelector" role="button"
+  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <img id="navbar-theme-icon-svg" class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
+</a>
+<div id="themeMenu" class="dropdown-menu dropdown-menu-icons-only" aria-labelledby="themeSelector">
+  <a class="dropdown-item nav-link" href="#" data-scheme="light">
+    <img class="theme-icon" src="/icons/sun-svgrepo-com.svg" width=20 alt="Light Theme">
+  </a>
+  <a class="dropdown-item nav-link" href="#" data-scheme="dark">
+    <img class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
+  </a>
+  <a class="dropdown-item nav-link" href="#" data-scheme="system">
+    <img class="theme-icon" src="/icons/computer-svgrepo-com.svg" width=20 alt="System Theme">
+  </a>
+</div>
+</li>
+
+        
+      </ul>
+    </div>
+  </div>
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="main-logo" alt="Logo">
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="inverted-logo" alt="Inverted Logo">
+  
+</nav>
+
+
+
+      
+      
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/posts/" data-filter="all">Posts</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/"> Finance</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/monte_carlo/"> Monte Carlo</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/monte_carlo/black-scholes/" title="Option Pricing">Option Pricing</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/stock_prediction/"> Stock Prediction</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/gru/" title="GRU">GRU</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/arima/" title="ARIMA">ARIMA</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/machine-learning/"> Machine Learning</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/machine-learning/deep-learning/"> Deep Learning</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/machine-learning/deep-learning/computer-vision/"> Computer Vision</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/machine-learning/deep-learning/computer-vision/florence/" title="Florence-2 LVM">Florence-2 LVM</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/physics/"> Physics</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/percolation/" title="Percolation">Percolation</a></li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/physics/quantum_computing/"> Quantum Computing</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li><a class="active list-link" href="/posts/physics/quantum_computing/introduction/" title="Introduction">Introduction</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/quantum_computing/teleportation/" title="Teleportation">Teleportation</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content">
+    <div class="container p-0 read-area">
+      
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/posts/physics/quantum_computing/introduction/images/bell_state_sphere.png);'>
+      </div>
+
+      
+      <div class="page-content">
+        
+        <div class="author-profile ms-auto align-self-lg-center">
+          <img class="rounded-circle" src='/images/author/profile_hu8a567cefac8c1a165d433ac0796ac418_3088978_120x120_fit_q75_box.jpg' alt="Author Image">
+          <h5 class="author-name">Stefano Giannini</h5>
+          <p class="text-muted">Sunday, June 30, 2024 | 7 minutes</p>
+        </div>
+        
+        
+        <div class="title">
+          <h1>Quantum Computing - Fundementals (Part 1)</h1>
+        </div>
+
+        
+
+        
+          <div class="tags">
+  <ul style="padding-left: 0;">
+    
+    
+    <li class="rounded"><a href="/tags/science/" class="btn btn-sm btn-info">Science</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/statistics/" class="btn btn-sm btn-info">Statistics</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/quantum/" class="btn btn-sm btn-info">Quantum</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/physics/" class="btn btn-sm btn-info">Physics</a></li>
+    
+  </ul>
+</div>
+
+        
+        <div class="post-content" id="post-content">
+          <h2 id="introduction-to-quantum-computing"><strong>Introduction to Quantum Computing</strong></h2>
+<p>Quantum computing represents a transformative leap in computational technology. Unlike classical computers, which use bits as the smallest unit of data, quantum computers employ quantum bits, or qubits. These qubits take advantage of the principles of quantum mechanics, allowing for exponentially greater processing power in certain types of computations.</p>
+<p><strong>Core Concepts:</strong></p>
+<ul>
+<li><strong>Superposition:</strong> Unlike classical bits that can be either 0 or 1, qubits can exist in a state that is a superposition of both. This property allows quantum computers to process a massive amount of data simultaneously.</li>
+<li><strong>Entanglement:</strong> Qubits can become entangled, meaning the state of one qubit can depend on the state of another, no matter the distance between them. This interdependence enables complex correlations and faster computation.</li>
+<li><strong>Quantum Interference:</strong> Quantum systems can interfere with themselves, meaning probabilities can add or subtract based on the wave-like nature of qubits. This phenomenon can be harnessed to reduce errors and optimize outcomes in computations.</li>
+</ul>
+<p>Quantum computers hold the promise of solving problems that are intractable for classical computers, such as factoring large numbers, simulating quantum physics, and optimizing complex systems.</p>
+<h2 id="mathematical-basis-of-quantum-computing"><strong>Mathematical Basis of Quantum Computing</strong></h2>
+<p>Quantum computing&rsquo;s power stems from its unique use of quantum mechanics to represent and manipulate data. This section provides a detailed look into the mathematical principles that underpin quantum computing.</p>
+<h3 id="quantum-states-and-qubits">Quantum States and Qubits</h3>
+<p>In quantum computing, information is encoded in quantum states of qubits. A qubit is the quantum analog of a classical bit, but it can exist in a superposition of the two basis states $|0⟩$ and $|1⟩$.</p>
+<ol>
+<li>
+<p><strong>State Representation:</strong>
+A qubit is represented as a vector in a two-dimensional complex vector space, commonly denoted as $|ψ⟩$. The general state of a qubit is given by:
+$$
+|ψ⟩ = α|0⟩ + β|1⟩
+$$
+Here, $α$ and $β$ are complex numbers called probability amplitudes, satisfying the normalization condition:
+$$
+|α|^2 + |β|^2 = 1
+$$
+This condition ensures that the total probability of the qubit being in state $|0⟩$ or $|1⟩$ is 1.</p>
+</li>
+<li>
+<p><strong>Dirac Notation:</strong>
+The vector form $|ψ⟩$ is often written in Dirac or bra-ket notation, which is a convenient way to describe quantum states. The basis states $|0⟩$ and $|1⟩$ are the eigenstates of the Pauli Z operator (more on this below).</p>
+</li>
+</ol>
+<h3 id="quantum-gates-and-operations">Quantum Gates and Operations</h3>
+<p>Quantum gates are the building blocks of quantum circuits, analogous to classical logic gates. They are represented by unitary matrices that act on the state vectors of qubits. Unitarity ensures that the operation preserves the total probability (i.e., it remains 1).</p>
+<p>$$
+\begin{equation}
+\begin{pmatrix}
+0 &amp; 1 \\
+1 &amp; 0
+\end{pmatrix}
+\end{equation}
+$$</p>
+<ol>
+<li>
+<p><strong>Pauli Matrices:</strong>
+The Pauli matrices are fundamental in quantum mechanics and quantum computing. They describe basic quantum operations and are used to represent qubit rotations.</p>
+<ul>
+<li>
+<p><strong>Pauli-X (NOT Gate):</strong>
+$
+X =
+\begin{bmatrix}
+0 &amp; 1 \\
+1 &amp; 0
+\end{bmatrix}
+$
+This gate flips the state of a qubit: $X|0⟩ = |1⟩$ and $X|1⟩ = |0⟩$.</p>
+</li>
+<li>
+<p><strong>Pauli-Y:</strong>
+$$
+Y = \begin{pmatrix}
+0 &amp; -i \\
+i &amp; 0
+\end{pmatrix}
+$$
+The Pauli-Y gate applies a phase shift and flips the state with a complex phase factor $i$.</p>
+</li>
+<li>
+<p><strong>Pauli-Z (Phase Flip):</strong>
+$$
+Z = \begin{pmatrix}
+1 &amp; 0 \\
+0 &amp; -1
+\end{pmatrix}
+$$
+This gate flips the phase of the qubit’s state: $Z|0⟩ = |0⟩$ and $Z|1⟩ = -|1⟩$.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Hadamard Gate:</strong>
+The Hadamard gate creates a superposition of states. It transforms the basis states as follows:
+$$
+H = \frac{1}{\sqrt{2}} \begin{pmatrix}
+1 &amp; 1 \\
+1 &amp; -1
+\end{pmatrix}
+$$</p>
+<ul>
+<li>$H|0⟩ = \frac{1}{\sqrt{2}} (|0⟩ + |1⟩)$</li>
+<li>$H|1⟩ = \frac{1}{\sqrt{2}} (|0⟩ - |1⟩)$</li>
+</ul>
+</li>
+<li>
+<p><strong>Controlled NOT (CNOT) Gate:</strong>
+The CNOT gate is a two-qubit operation that flips the state of the target qubit if the control qubit is in state $|1⟩$.
+$$
+CNOT = \begin{pmatrix}
+1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 \\
+0 &amp; 0 &amp; 1 &amp; 0
+\end{pmatrix}
+$$
+The matrix operates on a 4-dimensional space corresponding to the possible states of two qubits.</p>
+</li>
+<li>
+<p><strong>Phase Gates:</strong></p>
+<ul>
+<li>
+<p><strong>S Gate:</strong>
+$$
+S = \begin{pmatrix}
+1 &amp; 0 \\
+0 &amp; i
+\end{pmatrix}
+$$
+The S gate introduces a phase shift of $π/2$.</p>
+</li>
+<li>
+<p><strong>T Gate:</strong>
+$$
+T = \begin{pmatrix}
+1 &amp; 0 \\
+0 &amp; e^{iπ/4}
+\end{pmatrix}
+$$
+The T gate introduces a phase shift of $π/4$.</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="quantum-measurement">Quantum Measurement</h3>
+<p>Measurement in quantum computing collapses a quantum state into one of the basis states, which can be observed as classical information. The probabilities of the outcomes are determined by the amplitudes of the state vector components.</p>
+<ol>
+<li>
+<p><strong>Measurement in the Computational Basis:</strong>
+The outcome of measuring a qubit in the computational basis ${|0⟩, |1⟩}$ is probabilistically determined by:
+$$
+P(0) = |α|^2 \quad \text{and} \quad P(1) = |β|^2
+$$
+where $ |α|^2 $ and $ |β|^2 $ are the squared magnitudes of the respective probability amplitudes.</p>
+</li>
+<li>
+<p><strong>Projective Measurement:</strong>
+Measurement can be described using projection operators. For a qubit state $|ψ⟩ = α|0⟩ + β|1⟩$, the measurement operator for state $|0⟩$ is:
+$$
+P_0 = |0⟩⟨0|
+$$
+After the measurement, the state collapses to $|0⟩$ or $|1⟩$ with the respective probabilities, and the post-measurement state reflects this collapse.</p>
+</li>
+<li>
+<p><strong>Measurement in Different Bases:</strong>
+Measurements can also be performed in other bases, such as the ${|+\rangle, |-\rangle}$ basis, where $|+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)$ and $|-\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle)$. The probabilities and post-measurement states differ depending on the chosen basis.</p>
+</li>
+</ol>
+<h2 id="quantum-circuit-example-with-qiskit"><strong>Quantum Circuit Example with Qiskit</strong></h2>
+<p>To solidify the understanding of these concepts, let’s look at a practical example using Qiskit to implement a simple quantum circuit.</p>
+<h3 id="example-1">Example 1</h3>
+<p>1-qbit system: analyze matrix multiplication and operators effects. Each operation will be evaluated step-by-step for learning purposes :</p>
+<ol>
+<li>Apply Hadamant (H) Operator to $|0⟩$</li>
+<li>Apply Z or ($\sigma_z$)</li>
+<li>Apply T</li>
+<li>Apply H again</li>
+</ol>
+<!-- ```python
+# Import the necessary Qiskit modules
+from qiskit import QuantumCircuit
+from qiskit_aer import AerSimulator
+from qiskit.visualization import plot_histogram
+from qiskit.quantum_info import Statevector
+
+circuit = QuantumCircuit(1)
+
+circuit.h(0)
+circuit.z(0)
+circuit.t(0)
+circuit.h(0)
+
+circuit.draw('mpl', scale=2)
+```
+
+
+
+
+    
+![png](images/introduction_2_0.png)
+    
+
+ -->
+<!-- ```python
+# ket0 = Statevector([1, 0])
+# v = ket0.evolve(circuit)
+# v.draw("text")
+``` -->
+<!-- > [0.14644661-0.35355339j,0.85355339+0.35355339j] -->
+<h4 id="step-1---apply-h">Step 1 - Apply H</h4>
+<p>The Hadamant Operator should make the ket0 equally probable for on 0 and 1 state.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>circuit <span style="color:#f92672">=</span> QuantumCircuit(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>circuit<span style="color:#f92672">.</span>h(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>plt <span style="color:#f92672">=</span> circuit<span style="color:#f92672">.</span>draw(<span style="color:#e6db74">&#39;mpl&#39;</span>, scale<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>display(plt)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ket0 <span style="color:#f92672">=</span> Statevector([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>v <span style="color:#f92672">=</span> ket0<span style="color:#f92672">.</span>evolve(circuit)
+</span></span><span style="display:flex;"><span>v<span style="color:#f92672">.</span>draw(<span style="color:#e6db74">&#34;latex&#34;</span>)
+</span></span></code></pre></div><p><img alt="png" src="/posts/physics/quantum_computing/introduction/images/introduction_5_0.png"></p>
+<p>$$\frac{\sqrt{2}}{2} |0\rangle+\frac{\sqrt{2}}{2} |1\rangle$$</p>
+<h4 id="step-2---apply-z">Step 2 - Apply Z</h4>
+<p>The Z operator is <em>phase_flip</em>, hence $\ket{1}$ coefficient will change sign.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>circuit <span style="color:#f92672">=</span> QuantumCircuit(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>circuit<span style="color:#f92672">.</span>h(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>circuit<span style="color:#f92672">.</span>z(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>plt <span style="color:#f92672">=</span> circuit<span style="color:#f92672">.</span>draw(<span style="color:#e6db74">&#39;mpl&#39;</span>, scale<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>display(plt)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ket0 <span style="color:#f92672">=</span> Statevector([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>v <span style="color:#f92672">=</span> ket0<span style="color:#f92672">.</span>evolve(circuit)
+</span></span><span style="display:flex;"><span>v<span style="color:#f92672">.</span>draw(<span style="color:#e6db74">&#34;latex&#34;</span>)
+</span></span></code></pre></div><p><img alt="png" src="/posts/physics/quantum_computing/introduction/images/introduction_7_0.png"></p>
+<p>$$\frac{\sqrt{2}}{2} |0\rangle- \frac{\sqrt{2}}{2} |1\rangle$$</p>
+<h4 id="step-3---apply-t">Step 3 - Apply T</h4>
+<p><strong>T</strong> operator applies a phase shift of $\pi/4$, so we expect a change in $\ket{1}$ coefficient. Precisely that coefficient will multiplied by $\frac{\sqrt{2}}{2}(1+i)$</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>circuit <span style="color:#f92672">=</span> QuantumCircuit(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>circuit<span style="color:#f92672">.</span>h(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>circuit<span style="color:#f92672">.</span>z(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>circuit<span style="color:#f92672">.</span>t(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>plt <span style="color:#f92672">=</span> circuit<span style="color:#f92672">.</span>draw(<span style="color:#e6db74">&#39;mpl&#39;</span>, scale<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>display(plt)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ket0 <span style="color:#f92672">=</span> Statevector([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>v <span style="color:#f92672">=</span> ket0<span style="color:#f92672">.</span>evolve(circuit)
+</span></span><span style="display:flex;"><span>v<span style="color:#f92672">.</span>draw(<span style="color:#e6db74">&#34;latex&#34;</span>)
+</span></span></code></pre></div><p><img alt="png" src="/posts/physics/quantum_computing/introduction/images/introduction_9_0.png"></p>
+<p>$$\frac{\sqrt{2}}{2} |0\rangle+(- \frac{1}{2} - \frac{i}{2}) |1\rangle$$</p>
+<h4 id="step-4---apply-h-again">Step 4 - Apply H again</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>circuit <span style="color:#f92672">=</span> QuantumCircuit(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>circuit<span style="color:#f92672">.</span>h(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>circuit<span style="color:#f92672">.</span>z(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>circuit<span style="color:#f92672">.</span>t(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>circuit<span style="color:#f92672">.</span>h(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>plt <span style="color:#f92672">=</span> circuit<span style="color:#f92672">.</span>draw(<span style="color:#e6db74">&#39;mpl&#39;</span>, scale<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>display(plt)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ket0 <span style="color:#f92672">=</span> Statevector([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>v <span style="color:#f92672">=</span> ket0<span style="color:#f92672">.</span>evolve(circuit)
+</span></span><span style="display:flex;"><span>v<span style="color:#f92672">.</span>draw(<span style="color:#e6db74">&#34;latex&#34;</span>)
+</span></span></code></pre></div><p><img alt="png" src="/posts/physics/quantum_computing/introduction/images/introduction_11_0.png"></p>
+<p>$$(0.1464466094 - 0.3535533906 i) |0\rangle+(0.8535533906 + 0.3535533906 i) |1\rangle$$</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(v<span style="color:#f92672">.</span>probabilities_dict()) <span style="color:#75715e"># Aritmetic Probability</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>n_samples <span style="color:#f92672">=</span> <span style="color:#ae81ff">5000</span>
+</span></span><span style="display:flex;"><span>statistics <span style="color:#f92672">=</span> v<span style="color:#f92672">.</span>sample_counts(n_samples)
+</span></span><span style="display:flex;"><span>static_prob <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;0&#34;</span>: statistics[<span style="color:#e6db74">&#39;0&#39;</span>]<span style="color:#f92672">/</span>n_samples, <span style="color:#e6db74">&#34;1&#34;</span>: statistics[<span style="color:#e6db74">&#34;1&#34;</span>]<span style="color:#f92672">/</span>n_samples}
+</span></span><span style="display:flex;"><span>plot_histogram(statistics, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>))
+</span></span><span style="display:flex;"><span>print(static_prob)
+</span></span></code></pre></div><blockquote>
+<p>{&lsquo;0&rsquo;: 0.1464466094067262, &lsquo;1&rsquo;: 0.8535533905932733} # arithmetic</p>
+<p>{&lsquo;0&rsquo;: 0.1406, &lsquo;1&rsquo;: 0.8594}  # statistical sampling</p>
+</blockquote>
+<h3 id="example-2---bell-state">Example 2 - Bell State</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Import the necessary Qiskit modules</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit <span style="color:#f92672">import</span> QuantumCircuit
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit_aer <span style="color:#f92672">import</span> AerSimulator
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit.visualization <span style="color:#f92672">import</span> plot_histogram
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a quantum circuit with 2 qubits and 2 classical bits</span>
+</span></span><span style="display:flex;"><span>qc <span style="color:#f92672">=</span> QuantumCircuit(<span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Apply a Hadamard gate to the first qubit</span>
+</span></span><span style="display:flex;"><span>qc<span style="color:#f92672">.</span>h(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Apply a CNOT gate with control qubit 0 and target qubit 1</span>
+</span></span><span style="display:flex;"><span>qc<span style="color:#f92672">.</span>cx(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Measure both qubits</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># qc.measure([0, 1], [0, 1])</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Deaw the circuit</span>
+</span></span><span style="display:flex;"><span>qc<span style="color:#f92672">.</span>draw(<span style="color:#e6db74">&#39;mpl&#39;</span>, scale<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
+</span></span></code></pre></div><p><img alt="png" src="/posts/physics/quantum_computing/introduction/images/introduction_14_0.png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Set up six different observables.</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit.quantum_info <span style="color:#f92672">import</span> SparsePauliOp
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>observables_labels <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;ZZ&#34;</span>, <span style="color:#e6db74">&#34;ZI&#34;</span>, <span style="color:#e6db74">&#34;IZ&#34;</span>, <span style="color:#e6db74">&#34;XX&#34;</span>, <span style="color:#e6db74">&#34;XI&#34;</span>, <span style="color:#e6db74">&#34;IX&#34;</span>]
+</span></span><span style="display:flex;"><span>observables <span style="color:#f92672">=</span> [SparsePauliOp(label) <span style="color:#66d9ef">for</span> label <span style="color:#f92672">in</span> observables_labels]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>observables
+</span></span></code></pre></div><!-- 
+
+    [SparsePauliOp(['ZZ'],
+                   coeffs=[1.+0.j]),
+     SparsePauliOp(['ZI'],
+                   coeffs=[1.+0.j]),
+     SparsePauliOp(['IZ'],
+                   coeffs=[1.+0.j]),
+     SparsePauliOp(['XX'],
+                   coeffs=[1.+0.j]),
+     SparsePauliOp(['XI'],
+                   coeffs=[1.+0.j]),
+     SparsePauliOp(['IX'],
+                   coeffs=[1.+0.j])] -->
+<h4 id="optimize">Optimize</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit_aer.primitives <span style="color:#f92672">import</span> Estimator
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>estimator <span style="color:#f92672">=</span> Estimator()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>job <span style="color:#f92672">=</span> estimator<span style="color:#f92672">.</span>run([qc]<span style="color:#f92672">*</span>len(observables), observables)
+</span></span><span style="display:flex;"><span>job<span style="color:#f92672">.</span>result()
+</span></span></code></pre></div><!-- 
+
+    EstimatorResult(values=array([ 1.        , -0.03125   , -0.03125   ,  1.        , -0.03710938,
+           -0.03710938]), metadata=[{'shots': 1024, 'variance': 0.0, 'simulator_metadata': [{'batched_shots_optimization': False, 'required_memory_mb': 0, 'method': 'stabilizer', 'active_input_qubits': [0, 1], 'device': 'CPU', 'remapped_qubits': False, 'num_qubits': 2, 'num_clbits': 2, 'time_taken': 0.0050854, 'sample_measure_time': 0.001718, 'input_qubit_map': [[0, 0], [1, 1]], 'max_memory_mb': 7563, 'measure_sampling': True, 'noise': 'ideal', 'parallel_shots': 1, 'parallel_state_update': 16, 'runtime_parameter_bind': False, 'num_bind_params': 1, 'fusion': {'enabled': False}}]}, {'shots': 1024, 'variance': 0.9990234375, 'simulator_metadata': [{'batched_shots_optimization': False, 'required_memory_mb': 0, 'method': 'stabilizer', 'active_input_qubits': [0, 1], 'device': 'CPU', 'remapped_qubits': False, 'num_qubits': 2, 'num_clbits': 2, 'time_taken': 0.0050854, 'sample_measure_time': 0.001718, 'input_qubit_map': [[0, 0], [1, 1]], 'max_memory_mb': 7563, 'measure_sampling': True, 'noise': 'ideal', 'parallel_shots': 1, 'parallel_state_update': 16, 'runtime_parameter_bind': False, 'num_bind_params': 1, 'fusion': {'enabled': False}}]}, {'shots': 1024, 'variance': 0.9990234375, 'simulator_metadata': [{'batched_shots_optimization': False, 'required_memory_mb': 0, 'method': 'stabilizer', 'active_input_qubits': [0, 1], 'device': 'CPU', 'remapped_qubits': False, 'num_qubits': 2, 'num_clbits': 2, 'time_taken': 0.0050854, 'sample_measure_time': 0.001718, 'input_qubit_map': [[0, 0], [1, 1]], 'max_memory_mb': 7563, 'measure_sampling': True, 'noise': 'ideal', 'parallel_shots': 1, 'parallel_state_update': 16, 'runtime_parameter_bind': False, 'num_bind_params': 1, 'fusion': {'enabled': False}}]}, {'shots': 1024, 'variance': 0.0, 'simulator_metadata': [{'batched_shots_optimization': False, 'required_memory_mb': 0, 'method': 'stabilizer', 'active_input_qubits': [0, 1], 'device': 'CPU', 'remapped_qubits': False, 'num_qubits': 2, 'num_clbits': 2, 'time_taken': 0.003552, 'sample_measure_time': 0.0013732, 'input_qubit_map': [[0, 0], [1, 1]], 'max_memory_mb': 7563, 'measure_sampling': True, 'noise': 'ideal', 'parallel_shots': 1, 'parallel_state_update': 16, 'runtime_parameter_bind': False, 'num_bind_params': 1, 'fusion': {'enabled': False}}]}, {'shots': 1024, 'variance': 0.9986228942871094, 'simulator_metadata': [{'batched_shots_optimization': False, 'required_memory_mb': 0, 'method': 'stabilizer', 'active_input_qubits': [0, 1], 'device': 'CPU', 'remapped_qubits': False, 'num_qubits': 2, 'num_clbits': 2, 'time_taken': 0.003552, 'sample_measure_time': 0.0013732, 'input_qubit_map': [[0, 0], [1, 1]], 'max_memory_mb': 7563, 'measure_sampling': True, 'noise': 'ideal', 'parallel_shots': 1, 'parallel_state_update': 16, 'runtime_parameter_bind': False, 'num_bind_params': 1, 'fusion': {'enabled': False}}]}, {'shots': 1024, 'variance': 0.9986228942871094, 'simulator_metadata': [{'batched_shots_optimization': False, 'required_memory_mb': 0, 'method': 'stabilizer', 'active_input_qubits': [0, 1], 'device': 'CPU', 'remapped_qubits': False, 'num_qubits': 2, 'num_clbits': 2, 'time_taken': 0.003552, 'sample_measure_time': 0.0013732, 'input_qubit_map': [[0, 0], [1, 1]], 'max_memory_mb': 7563, 'measure_sampling': True, 'noise': 'ideal', 'parallel_shots': 1, 'parallel_state_update': 16, 'runtime_parameter_bind': False, 'num_bind_params': 1, 'fusion': {'enabled': False}}]}])
+
+ -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># post-processing</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>values <span style="color:#f92672">=</span> job<span style="color:#f92672">.</span>result()<span style="color:#f92672">.</span>values
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(observables_labels, values, <span style="color:#e6db74">&#39;-o&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p><img alt="png" src="/posts/physics/quantum_computing/introduction/images/introduction_18_0.png"></p>
+<p>As expect from the <em>Bell State</em>, only the correlated two-qubits observables like (XX or ZZ) have a non-zero probablity.</p>
+<!-- ```python
+# # Create a simulator
+# simulator = AerSimulator()
+
+# # Run the quantum circuit on the simulator backend
+# job = simulator.run(qc, shots=n_samples)
+
+# # Get the results of the simulation
+# result = job.result()
+
+# # Get the counts of measurement outcomes
+# counts = result.get_counts(qc)
+
+# # Print the results
+# print("\nMeasurement outcomes:", counts)
+
+# # Visualize the results
+# plot_histogram(counts, figsize=(12,8))
+``` -->
+<!-- 
+This circuit uses a Hadamard gate to place the qubit into an equal superposition of $|0⟩$ and $|1⟩$. The measurement collapses the state, and the histogram shows the distribution of measurement outcomes over many trials, ideally 50% $|0⟩$ and 50% $|1⟩$. -->
+<h2 id="conclusion"><strong>Conclusion</strong></h2>
+<p>Understanding the mathematical basis of quantum computing is essential for grasping how quantum computers operate. From the representation of qubits to the actions of quantum gates and the process of measurement, these principles form the foundation upon which quantum algorithms are built. This deeper understanding helps appreciate the transformative potential of quantum computing in solving complex problems that classical computers struggle with.</p>
+<p>For a comprehensive learning experience, explore the delightful course <a href="https://learning.quantum.ibm.com/course/basics-of-quantum-information/" target="_blank" rel="noopener">IBM Quantum Computing Learning platform</a>.</p>
+<h3 id="next-steps">Next Steps</h3>
+<p>In the next articles, we are going to play with more complex and useful quantum circuits to explore the real capabilities of this world.</p>
+<!-- Link to next articles -->
+
+        </div>
+
+        
+        <div class="row ps-3 pe-3">
+        
+          <div class="col-md-6 share-buttons">
+          
+            <strong>Share on:</strong>
+            
+            <a class="btn icon-button bg-facebook" href="https://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2fphysics%2fquantum_computing%2fintroduction%2f" target="_blank">
+              <i class="fab fa-facebook"></i>
+            </a>
+            
+            
+                <a class="btn icon-button bg-twitter" href="https://twitter.com/share?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fphysics%2fquantum_computing%2fintroduction%2f&text=Quantum%20Computing%20-%20Fundementals%20%28Part%201%29&via=Stefano%20Giannini" target="_blank">
+                  <i class="fab fa-twitter"></i>
+                </a>
+            
+            
+                <a  class="btn icon-button bg-reddit" href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fphysics%2fquantum_computing%2fintroduction%2f&title=Quantum%20Computing%20-%20Fundementals%20%28Part%201%29" target="_blank">
+                  <i class="fab fa-reddit"></i>
+                </a>
+            
+            
+            
+            
+                <a class="btn icon-button bg-linkedin" href="https://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fphysics%2fquantum_computing%2fintroduction%2f&title=Quantum%20Computing%20-%20Fundementals%20%28Part%201%29" target="_blank">
+                  <i class="fab fa-linkedin"></i>
+                </a>
+            
+            
+             
+            
+                 <a class="btn icon-button bg-whatsapp" href="https://api.whatsapp.com/send?text=Quantum%20Computing%20-%20Fundementals%20%28Part%201%29 http%3a%2f%2flocalhost%3a1313%2fposts%2fphysics%2fquantum_computing%2fintroduction%2f" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+            
+            
+                <a class="btn icon-button" href="mailto:?subject=Quantum%20Computing%20-%20Fundementals%20%28Part%201%29&body=http%3a%2f%2flocalhost%3a1313%2fposts%2fphysics%2fquantum_computing%2fintroduction%2f" target="_blank">
+                  <i class="fas fa-envelope-open-text"></i>
+                </a>
+            
+          
+          </div>
+
+        
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/ragespin/ragespin.github.io/edit/main/content/posts%5cphysics%5cquantum_computing%5cintroduction%5cindex.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+    
+    
+  
+  
+
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+    <div class="col-md-6 previous-article">
+      <a href="/posts/physics/percolation/" title="Percolation" class="btn filled-button">
+        <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
+        <div class="next-prev-text">Percolation</div>
+      </a>
+    </div>
+  
+  
+      
+      
+        
+      
+      <div class="col-md-6 next-article">
+        <a href="/posts/physics/quantum_computing/teleportation/" title="Quantum Computing - Fundementals - Teleportation" class="btn filled-button">
+          <div>Next <i class="fas fa-chevron-circle-right"></i></div>
+          <div class="next-prev-text">Quantum Computing - Fundementals - Teleportation</div>
+        </a>
+      </div>
+    
+</div>
+
+      <hr />
+
+      
+      
+
+      
+      
+
+      </div>
+    </div>
+  </div>
+  
+  <a id="scroll-to-top" class="btn" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Scroll to top">
+    <i class="fas fa-chevron-circle-up"></i>
+  </a>
+</section>
+
+
+      
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center ps-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction-to-quantum-computing"><strong>Introduction to Quantum Computing</strong></a></li>
+    <li><a href="#mathematical-basis-of-quantum-computing"><strong>Mathematical Basis of Quantum Computing</strong></a>
+      <ul>
+        <li><a href="#quantum-states-and-qubits">Quantum States and Qubits</a></li>
+        <li><a href="#quantum-gates-and-operations">Quantum Gates and Operations</a></li>
+        <li><a href="#quantum-measurement">Quantum Measurement</a></li>
+      </ul>
+    </li>
+    <li><a href="#quantum-circuit-example-with-qiskit"><strong>Quantum Circuit Example with Qiskit</strong></a>
+      <ul>
+        <li><a href="#example-1">Example 1</a>
+          <ul>
+            <li><a href="#step-1---apply-h">Step 1 - Apply H</a></li>
+            <li><a href="#step-2---apply-z">Step 2 - Apply Z</a></li>
+            <li><a href="#step-3---apply-t">Step 3 - Apply T</a></li>
+            <li><a href="#step-4---apply-h-again">Step 4 - Apply H again</a></li>
+          </ul>
+        </li>
+        <li><a href="#example-2---bell-state">Example 2 - Bell State</a>
+          <ul>
+            <li><a href="#optimize">Optimize</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#conclusion"><strong>Conclusion</strong></a>
+      <ul>
+        <li><a href="#next-steps">Next Steps</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+      </div>
+    </div>
+    
+  </section>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+    
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-start">
+        
+        
+        
+        
+      </div>
+    </div>
+    
+    <hr />
+    <div class="container">
+      <p id="disclaimer"><strong>Liability Notice:</strong> This theme is under MIT license. So, you can use it for non-commercial, commercial, or private uses. You can modify or distribute the theme without requiring any permission from the theme author. However, the theme author does not provide any warranty or takes any liability for any issue with the theme.</p>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-start">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
+            <img src="/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2024 Copyright.</div>
+        <div class="col-md-4 text-end">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script src="/application.97f51c3e286071444c3471235d1690400d75a930a8787cc86f8c8e4d2767277e.js" integrity="sha256-l/UcPihgcURMNHEjXRaQQA11qTCoeHzIb4yOTSdnJ34=" defer></script>
+
+
+    
+     
+
+    
+    
+
+</body>
+</html>

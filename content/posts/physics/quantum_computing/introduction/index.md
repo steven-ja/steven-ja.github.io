@@ -4,10 +4,10 @@ date: 2024-06-30T08:00:00+01:00
 description: Python Implentation of simple quantum circuits
 menu:
   sidebar:
-    name: Quantum Computing - Basic 1
-    identifier: quantum_computing
-    parent: physics
-    weight: 9
+    name: Introduction
+    identifier: quantum_computing_intro
+    parent: quantum_computing
+    weight: 12
 hero: images/bell_state_sphere.png
 tags: ["Science", "Statistics", "Quantum", "Physics"]
 categories: ["Physics"]

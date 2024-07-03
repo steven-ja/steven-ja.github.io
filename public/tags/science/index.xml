@@ -8,10 +8,10 @@
     <language>en</language>
     <lastBuildDate>Sun, 30 Jun 2024 08:00:00 +0100</lastBuildDate><atom:link href="http://localhost:1313/tags/science/index.xml" rel="self" type="application/rss+xml" /><item>
       <title>Quantum Computing - Fundementals (Part 1)</title>
-      <link>http://localhost:1313/posts/physics/quantum_computing/</link>
+      <link>http://localhost:1313/posts/physics/quantum_computing/introduction/</link>
       <pubDate>Sun, 30 Jun 2024 08:00:00 +0100</pubDate>
       
-      <guid>http://localhost:1313/posts/physics/quantum_computing/</guid>
+      <guid>http://localhost:1313/posts/physics/quantum_computing/introduction/</guid>
       <description>Introduction to Quantum Computing Quantum computing represents a transformative leap in computational technology. Unlike classical computers, which use bits as the smallest unit of data, quantum computers employ quantum bits, or qubits. These qubits take advantage of the principles of quantum mechanics, allowing for exponentially greater processing power in certain types of computations.
 Core Concepts:
 Superposition: Unlike classical bits that can be either 0 or 1, qubits can exist in a state that is a superposition of both.</description>

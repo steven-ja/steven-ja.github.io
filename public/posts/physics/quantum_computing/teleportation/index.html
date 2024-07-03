@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <title>Quantum Computing - Fundementals - Teleportation</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<link rel="stylesheet" href="/application.fba7e2c0b4d0535aec97a3442d40338651f3354b1ee38f3630059796de18930f.css" integrity="sha256-&#43;6fiwLTQU1rsl6NELUAzhlHzNUse4482MAWXlt4Ykw8=" />
+
+
+
+
+
+  
+
+  
+  
+  
+    
+  
+  
+
+  <link rel="icon" type="image/png" href="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" />
+
+<meta property="og:url" content="http://localhost:1313/posts/physics/quantum_computing/teleportation/">
+  <meta property="og:site_name" content="Stefano Giannini">
+  <meta property="og:title" content="Quantum Computing - Fundementals - Teleportation">
+  <meta property="og:description" content="Python Implentation of teleportation quantum circuits">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-07-03T08:00:00+01:00">
+    <meta property="article:modified_time" content="2024-07-03T08:00:00+01:00">
+    <meta property="article:tag" content="Science">
+    <meta property="article:tag" content="Statistics">
+    <meta property="article:tag" content="Quantum">
+    <meta property="article:tag" content="Physics">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Quantum Computing - Fundementals - Teleportation">
+  <meta name="twitter:description" content="Python Implentation of teleportation quantum circuits">
+
+    
+    
+<meta name="description" content="Python Implentation of teleportation quantum circuits" />
+
+
+    
+
+    
+
+
+
+
+<script>
+      theme = localStorage.getItem('darkmode:color-scheme') || 'system';
+      if (theme == 'system') {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          theme = 'dark';
+        } else {
+          theme = 'light';
+        }
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
+  </head>
+
+  <body class="type-posts kind-page" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
+    <div class="container-fluid bg-secondary wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+
+<nav class="navbar navbar-expand-xl top-navbar shadow " id="top-navbar">
+  <div class="container">
+    
+    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button">
+      <i data-feather="sidebar"></i>
+    </button>
+    
+    <a class="navbar-brand" href="/">
+      
+        <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" id="logo" alt="Logo">
+      Stefano Giannini</a>
+    <button
+      class="navbar-toggler navbar-light"
+      id="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#top-nav-items"
+      aria-label="menu"
+    >
+      <i data-feather="menu"></i>
+    </button>
+
+    <div class="collapse navbar-collapse dynamic-navbar" id="top-nav-items">
+      <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/#home">Home</a>
+        </li>
+        
+          
+          
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#about">About</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#experiences">Experiences</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#education">Education</a>
+                </li>
+              
+            
+          
+        
+        
+          <div id="top-navbar-divider"></div>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="blog-link" href="/posts">Posts</a>
+          </li>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="note-link" href="/notes">Notes</a>
+          </li>
+        
+        
+            
+              <li class="nav-item">
+                <a class="nav-link" href="https://toha-guides.netlify.app/posts/">Docs</a>
+              </li>
+            
+        
+        
+        
+          <li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle"  href="#" id="themeSelector" role="button"
+  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <img id="navbar-theme-icon-svg" class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
+</a>
+<div id="themeMenu" class="dropdown-menu dropdown-menu-icons-only" aria-labelledby="themeSelector">
+  <a class="dropdown-item nav-link" href="#" data-scheme="light">
+    <img class="theme-icon" src="/icons/sun-svgrepo-com.svg" width=20 alt="Light Theme">
+  </a>
+  <a class="dropdown-item nav-link" href="#" data-scheme="dark">
+    <img class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
+  </a>
+  <a class="dropdown-item nav-link" href="#" data-scheme="system">
+    <img class="theme-icon" src="/icons/computer-svgrepo-com.svg" width=20 alt="System Theme">
+  </a>
+</div>
+</li>
+
+        
+      </ul>
+    </div>
+  </div>
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="main-logo" alt="Logo">
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="inverted-logo" alt="Inverted Logo">
+  
+</nav>
+
+
+
+      
+      
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/posts/" data-filter="all">Posts</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/"> Finance</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/monte_carlo/"> Monte Carlo</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/monte_carlo/black-scholes/" title="Option Pricing">Option Pricing</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/stock_prediction/"> Stock Prediction</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/gru/" title="GRU">GRU</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/arima/" title="ARIMA">ARIMA</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/machine-learning/"> Machine Learning</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/machine-learning/deep-learning/"> Deep Learning</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/machine-learning/deep-learning/computer-vision/"> Computer Vision</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/machine-learning/deep-learning/computer-vision/florence/" title="Florence-2 LVM">Florence-2 LVM</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/physics/"> Physics</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/percolation/" title="Percolation">Percolation</a></li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/physics/quantum_computing/"> Quantum Computing</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/quantum_computing/introduction/" title="Introduction">Introduction</a></li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li><a class="active list-link" href="/posts/physics/quantum_computing/teleportation/" title="Teleportation">Teleportation</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content">
+    <div class="container p-0 read-area">
+      
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/posts/physics/quantum_computing/teleportation/images/blog_teleportation.png);'>
+      </div>
+
+      
+      <div class="page-content">
+        
+        <div class="author-profile ms-auto align-self-lg-center">
+          <img class="rounded-circle" src='/images/author/profile_hu8a567cefac8c1a165d433ac0796ac418_3088978_120x120_fit_q75_box.jpg' alt="Author Image">
+          <h5 class="author-name">Stefano Giannini</h5>
+          <p class="text-muted">Wednesday, July 3, 2024 | 8 minutes</p>
+        </div>
+        
+        
+        <div class="title">
+          <h1>Quantum Computing - Fundementals - Teleportation</h1>
+        </div>
+
+        
+
+        
+          <div class="tags">
+  <ul style="padding-left: 0;">
+    
+    
+    <li class="rounded"><a href="/tags/science/" class="btn btn-sm btn-info">Science</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/statistics/" class="btn btn-sm btn-info">Statistics</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/quantum/" class="btn btn-sm btn-info">Quantum</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/physics/" class="btn btn-sm btn-info">Physics</a></li>
+    
+  </ul>
+</div>
+
+        
+        <div class="post-content" id="post-content">
+          <h1 id="quantum-teleportation-concept-mathematics-and-implementation">Quantum Teleportation: Concept, Mathematics, and Implementation</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Quantum teleportation is a fundamental protocol in quantum information science that enables the transfer of quantum information from one location to another. Despite its name, it doesn&rsquo;t involve the transportation of matter, but rather the transmission of the quantum state of a particle.</p>
+<h2 id="the-concept">The Concept</h2>
+<p>In quantum teleportation, we have three main parties:</p>
+<ol>
+<li>Alice: The sender who wants to transmit a quantum state.</li>
+<li>Bob: The receiver who will receive the quantum state.</li>
+<li>A quantum channel: Usually an entangled pair of qubits shared between Alice and Bob.</li>
+</ol>
+<p>The goal is for Alice to transmit the state of her qubit to Bob using only classical communication and their shared entanglement.</p>
+<h2 id="mathematical-formulation">Mathematical Formulation</h2>
+<p>Let&rsquo;s walk through the mathematical formulation of quantum teleportation:</p>
+<ol>
+<li>
+<p>Initial state:
+Alice has a qubit in an unknown state |ψ⟩ = α|0⟩ + β|1⟩, where |α|² + |β|² = 1.
+Alice and Bob share an entangled pair in the Bell state |Φ⁺⟩ = (1/√2)(|00⟩ + |11⟩).</p>
+</li>
+<li>
+<p>The initial state of the entire system:
+|Ψ₀⟩ = |ψ⟩ ⊗ |Φ⁺⟩ = (1/√2)(α|0⟩ + β|1⟩) ⊗ (|00⟩ + |11⟩)</p>
+</li>
+<li>
+<p>Expanding the state:
+|Ψ₀⟩ = (1/√2)[α|000⟩ + α|011⟩ + β|100⟩ + β|111⟩]</p>
+</li>
+<li>
+<p>Alice applies a CNOT gate to her qubits:
+|Ψ₁⟩ = (1/√2)[α|000⟩ + α|011⟩ + β|110⟩ + β|101⟩]</p>
+</li>
+<li>
+<p>Alice applies a Hadamard gate to her first qubit:
+|Ψ₂⟩ = (1/2)[α(|000⟩ + |100⟩) + α(|011⟩ + |111⟩) + β(|010⟩ - |110⟩) + β(|001⟩ - |101⟩)]</p>
+</li>
+<li>
+<p>Rearranging terms:
+|Ψ₂⟩ = (1/2)[|00⟩(α|0⟩ + β|1⟩) + |01⟩(α|1⟩ + β|0⟩) + |10⟩(α|0⟩ - β|1⟩) + |11⟩(α|1⟩ - β|0⟩)]</p>
+</li>
+<li>
+<p>Alice measures her qubits, collapsing the state. There are four possible outcomes:</p>
+<ul>
+<li>00: Bob&rsquo;s qubit is in state α|0⟩ + β|1⟩</li>
+<li>01: Bob&rsquo;s qubit is in state α|1⟩ + β|0⟩</li>
+<li>10: Bob&rsquo;s qubit is in state α|0⟩ - β|1⟩</li>
+<li>11: Bob&rsquo;s qubit is in state α|1⟩ - β|0⟩</li>
+</ul>
+</li>
+<li>
+<p>Based on Alice&rsquo;s measurement, Bob applies the appropriate correction:</p>
+<ul>
+<li>00: I (identity, do nothing)</li>
+<li>01: X (bit flip)</li>
+<li>10: Z (phase flip)</li>
+<li>11: ZX (bit and phase flip)</li>
+</ul>
+</li>
+</ol>
+<p>After Bob&rsquo;s correction, his qubit is in the state α|0⟩ + β|1⟩, which is the original state of Alice&rsquo;s qubit.</p>
+<h2 id="the-protocol-step-by-step">The Protocol: Step-by-Step</h2>
+<ol>
+<li>
+<p>Preparation:</p>
+<ul>
+<li>Alice has a qubit in state |ψ⟩ = α|0⟩ + β|1⟩.</li>
+<li>Alice and Bob share an entangled pair in the Bell state |Φ⁺⟩ = (1/√2)(|00⟩ + |11⟩).</li>
+</ul>
+</li>
+<li>
+<p>Alice&rsquo;s operations:</p>
+<ul>
+<li>Alice applies a CNOT gate with her qubit as control and her half of the entangled pair as target.</li>
+<li>Alice applies a Hadamard gate to her qubit.</li>
+</ul>
+</li>
+<li>
+<p>Measurement:</p>
+<ul>
+<li>Alice measures both of her qubits in the computational basis.</li>
+</ul>
+</li>
+<li>
+<p>Classical communication:</p>
+<ul>
+<li>Alice sends the two classical bits resulting from her measurement to Bob.</li>
+</ul>
+</li>
+<li>
+<p>Bob&rsquo;s correction:</p>
+<ul>
+<li>Based on the classical bits received, Bob applies the appropriate quantum gate(s) to his qubit.</li>
+</ul>
+</li>
+<li>
+<p>Result:</p>
+<ul>
+<li>Bob&rsquo;s qubit is now in the state α|0⟩ + β|1⟩, the original state of Alice&rsquo;s qubit.</li>
+</ul>
+</li>
+</ol>
+<h2 id="implementation-in-qiskit">Implementation in Qiskit</h2>
+<p>Let&rsquo;s implement the quantum teleportation protocol using Qiskit:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit <span style="color:#f92672">import</span> QuantumCircuit, QuantumRegister, ClassicalRegister
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit_aer <span style="color:#f92672">import</span> AerSimulator
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit.visualization <span style="color:#f92672">import</span> plot_histogram
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit.result <span style="color:#f92672">import</span> marginal_distribution
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit.circuit.library <span style="color:#f92672">import</span> UGate
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> numpy <span style="color:#f92672">import</span> pi, random
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> seaborn <span style="color:#66d9ef">as</span> sns
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create quantum and classical registers</span>
+</span></span><span style="display:flex;"><span>qubit <span style="color:#f92672">=</span> QuantumRegister(<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;Q&#34;</span>)
+</span></span><span style="display:flex;"><span>ebit0 <span style="color:#f92672">=</span> QuantumRegister(<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;A&#34;</span>)
+</span></span><span style="display:flex;"><span>ebit1 <span style="color:#f92672">=</span> QuantumRegister(<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;B&#34;</span>)
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> ClassicalRegister(<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;a&#34;</span>)
+</span></span><span style="display:flex;"><span>b <span style="color:#f92672">=</span> ClassicalRegister(<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;b&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create quantum circuit</span>
+</span></span><span style="display:flex;"><span>protocol <span style="color:#f92672">=</span> QuantumCircuit(qubit, ebit0, ebit1, a, b)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Initialize Q to |1⟩ state</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># protocol.x(qubit)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Prepare entangled pair (Bell state) for teleportation</span>
+</span></span><span style="display:flex;"><span>protocol<span style="color:#f92672">.</span>h(ebit0)
+</span></span><span style="display:flex;"><span>protocol<span style="color:#f92672">.</span>cx(ebit0, ebit1)
+</span></span><span style="display:flex;"><span>protocol<span style="color:#f92672">.</span>barrier()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Alice&#39;s operations</span>
+</span></span><span style="display:flex;"><span>protocol<span style="color:#f92672">.</span>cx(qubit, ebit0)
+</span></span><span style="display:flex;"><span>protocol<span style="color:#f92672">.</span>h(qubit)
+</span></span><span style="display:flex;"><span>protocol<span style="color:#f92672">.</span>barrier()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Alice measures and sends classical bits to Bob</span>
+</span></span><span style="display:flex;"><span>protocol<span style="color:#f92672">.</span>measure(ebit0, a)
+</span></span><span style="display:flex;"><span>protocol<span style="color:#f92672">.</span>measure(qubit, b)
+</span></span><span style="display:flex;"><span>protocol<span style="color:#f92672">.</span>barrier()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Bob uses the classical bits to conditionally apply gates</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> protocol<span style="color:#f92672">.</span>if_test((a, <span style="color:#ae81ff">1</span>)):
+</span></span><span style="display:flex;"><span>    protocol<span style="color:#f92672">.</span>x(ebit1)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> protocol<span style="color:#f92672">.</span>if_test((b, <span style="color:#ae81ff">1</span>)):
+</span></span><span style="display:flex;"><span>    protocol<span style="color:#f92672">.</span>z(ebit1)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Display the circuit</span>
+</span></span><span style="display:flex;"><span>display(protocol<span style="color:#f92672">.</span>draw(<span style="color:#e6db74">&#39;mpl&#39;</span>, scale<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>))
+</span></span></code></pre></div><p><img alt="png" src="/posts/physics/quantum_computing/teleportation/images/example_1_0.png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># verification_circuit = QuantumCircuit(qubit, ClassicalRegister(1, &#39;c&#39;))</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># # verification_circuit.x(qubit)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># verification_circuit.measure(qubit, 0)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># simulator = AerSimulator()</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># result = simulator.run(verification_circuit, shots=1000).result()</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># counts = result.get_counts()</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># print(counts)</span>
+</span></span></code></pre></div><p>This code creates a quantum circuit that implements the quantum teleportation protocol. Let&rsquo;s break down the steps:</p>
+<ol>
+<li>
+<p>We create quantum registers for the qubit to be teleported (Q), Alice&rsquo;s entangled qubit (A), and Bob&rsquo;s entangled qubit (B). We also create classical registers to store measurement results.</p>
+</li>
+<li>
+<p>We prepare the entangled pair shared by Alice and Bob using a Hadamard gate and a CNOT gate.</p>
+</li>
+<li>
+<p>Alice performs her operations: a CNOT gate with Q as control and A as target, followed by a Hadamard gate on Q.</p>
+</li>
+<li>
+<p>Alice measures her qubits and stores the results in classical bits.</p>
+</li>
+<li>
+<p>Based on Alice&rsquo;s measurement results, Bob applies X and/or Z gates to his qubit.</p>
+</li>
+</ol>
+<h2 id="verifying-the-teleportation">Verifying the Teleportation</h2>
+<p>To verify that the teleportation worked, we can prepare the initial qubit in a specific state, run the teleportation protocol, and then measure Bob&rsquo;s qubit to see if it matches the initial state. Here&rsquo;s how we can do that:</p>
+<h3 id="random-gate">Random Gate</h3>
+<p>We&rsquo;ll use a randomly generated single-qubit unitary gate (U gate) to create an arbitrary quantum state. Here&rsquo;s how we create this random gate:</p>
+<p><strong>Why Add a Random U Gate?</strong></p>
+<p>The addition of a random U gate serves several important purposes in our verification process:</p>
+<ol>
+<li>Generality: By using a random state, we&rsquo;re testing the teleportation protocol for a general, arbitrary quantum state, not just specific states like |0⟩, |1⟩, or |+⟩.</li>
+<li>Robustness: If the protocol works for a randomly chosen state, it&rsquo;s likely to work for all states. This provides a more thorough verification than testing with a few predetermined states.</li>
+<li>Avoiding Bias: Random testing helps avoid any unintentional bias in our verification process that might arise from choosing specific test states.</li>
+<li>Simulating Real-World Scenarios: In practical applications, the states we need to teleport are often unknown or arbitrary. Testing with a random state better simulates these real-world scenarios.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit.circuit.library <span style="color:#f92672">import</span> UGate, XGate, HGate
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> numpy <span style="color:#f92672">import</span> pi, random
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>random_gate <span style="color:#f92672">=</span> UGate(
+</span></span><span style="display:flex;"><span>    theta<span style="color:#f92672">=</span>random<span style="color:#f92672">.</span>random() <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> pi,
+</span></span><span style="display:flex;"><span>    phi<span style="color:#f92672">=</span>random<span style="color:#f92672">.</span>random() <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> pi,
+</span></span><span style="display:flex;"><span>    lam<span style="color:#f92672">=</span>random<span style="color:#f92672">.</span>random() <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> pi,
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>xgate <span style="color:#f92672">=</span> XGate()
+</span></span><span style="display:flex;"><span>hgate <span style="color:#f92672">=</span> HGate()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>display(random_gate<span style="color:#f92672">.</span>to_matrix(), xgate<span style="color:#f92672">.</span>to_matrix())
+</span></span></code></pre></div><pre><code>array([[-0.61747588+0.j        ,  0.28776308+0.7320628j ],
+       [-0.78573506-0.03665989j, -0.19886638-0.58457559j]])
+
+
+
+array([[0.+0.j, 1.+0.j],
+       [1.+0.j, 0.+0.j]])
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Create a new circuit including the same bits and qubits used in the</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># teleportation protocol.</span>
+</span></span><span style="display:flex;"><span>test <span style="color:#f92672">=</span> QuantumCircuit(qubit, ebit0, ebit1, a, b)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Start with the randomly selected gate on Q</span>
+</span></span><span style="display:flex;"><span>Q_input <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> Q_input <span style="color:#f92672">==</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>]:
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># |1⟩ state, so append X gate before the random gate</span>
+</span></span><span style="display:flex;"><span>    test<span style="color:#f92672">.</span>append(xgate, qubit)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># test.barrier()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>test<span style="color:#f92672">.</span>append(random_gate, qubit)
+</span></span><span style="display:flex;"><span>test<span style="color:#f92672">.</span>barrier()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Append the entire teleportation protocol from above.</span>
+</span></span><span style="display:flex;"><span>test <span style="color:#f92672">=</span> test<span style="color:#f92672">.</span>compose(protocol)
+</span></span><span style="display:flex;"><span>test<span style="color:#f92672">.</span>barrier()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Finally, apply the inverse of the random unitary to B and measure.</span>
+</span></span><span style="display:flex;"><span>test<span style="color:#f92672">.</span>append(random_gate<span style="color:#f92672">.</span>inverse(), ebit1)
+</span></span><span style="display:flex;"><span>result <span style="color:#f92672">=</span> ClassicalRegister(<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;Result&#34;</span>)
+</span></span><span style="display:flex;"><span>test<span style="color:#f92672">.</span>add_register(result)
+</span></span><span style="display:flex;"><span>test<span style="color:#f92672">.</span>measure(ebit1, result)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>display(test<span style="color:#f92672">.</span>draw(<span style="color:#e6db74">&#34;mpl&#34;</span>, scale<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>))
+</span></span></code></pre></div><p><img alt="png" src="/posts/physics/quantum_computing/teleportation/images/example_5_0.png"></p>
+<p>Let&rsquo;s break down this process:</p>
+<ul>
+<li>We apply the random U gate to qubit Q (by default is set to <strong>|0⟩</strong>), creating a random quantum state.</li>
+<li>We then run the teleportation protocol, which should teleport this random state from Q to B.</li>
+<li>After teleportation, we apply the inverse of our random U gate to B.</li>
+<li>Finally, we measure B.</li>
+</ul>
+<p>If the teleportation worked correctly, applying the inverse of the random U gate to B should return it to the |0⟩ state (or |1⟩ if X operator is applied), and our measurement should always yield 0.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit_aer <span style="color:#f92672">import</span> AerSimulator
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit.visualization <span style="color:#f92672">import</span> plot_histogram
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit.result <span style="color:#f92672">import</span> marginal_distribution
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>style<span style="color:#f92672">.</span>use(<span style="color:#e6db74">&#34;ggplot&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>rcParams<span style="color:#f92672">.</span>update({<span style="color:#e6db74">&#39;figure.figsize&#39;</span>:(<span style="color:#ae81ff">8</span>,<span style="color:#ae81ff">5</span>), <span style="color:#e6db74">&#39;figure.dpi&#39;</span>:<span style="color:#ae81ff">200</span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>result <span style="color:#f92672">=</span> AerSimulator()<span style="color:#f92672">.</span>run(test, shots<span style="color:#f92672">=</span><span style="color:#ae81ff">2048</span>)<span style="color:#f92672">.</span>result()
+</span></span><span style="display:flex;"><span>statistics <span style="color:#f92672">=</span> result<span style="color:#f92672">.</span>get_counts()
+</span></span><span style="display:flex;"><span>display(plot_histogram(statistics))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Filter statistics to focus on the test result qubit</span>
+</span></span><span style="display:flex;"><span>filtered_statistics <span style="color:#f92672">=</span> marginal_distribution(statistics, [<span style="color:#ae81ff">2</span>]) <span style="color:#75715e">#2 means the leftmost/ bottom qubit (B in this case)</span>
+</span></span><span style="display:flex;"><span>display(plot_histogram(filtered_statistics))
+</span></span></code></pre></div><p><img alt="png" src="/posts/physics/quantum_computing/teleportation/images/example_7_0.png"></p>
+<p><img alt="png" src="/posts/physics/quantum_computing/teleportation/images/example_7_1.png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"></code></pre></div><p>This code creates a function <code>run_teleportation</code> that takes an initial state, runs the teleportation protocol, and returns the measurement results. We then test this function with various initial states.</p>
+<h2 id="mathematical-analysis-of-the-verification">Mathematical Analysis of the Verification</h2>
+<p>Let&rsquo;s analyze what happens in each case:</p>
+<ol>
+<li>
+<p><em>|0⟩ state</em>:</p>
+<ul>
+<li>Initial state: |ψ⟩ = |0⟩ = 1|0⟩ + 0|1⟩</li>
+<li>Expected final state: |0⟩</li>
+<li>Expected measurement: 100% |0⟩</li>
+</ul>
+</li>
+<li>
+<p><em>|1⟩ state</em>:</p>
+<ul>
+<li>Initial state: |ψ⟩ = |1⟩ = 0|0⟩ + 1|1⟩</li>
+<li>Expected final state: |1⟩</li>
+<li>Expected measurement: 100% |1⟩</li>
+</ul>
+</li>
+<li>
+<p>|+⟩ state:</p>
+<ul>
+<li>Initial state: |ψ⟩ = |+⟩ = (1/√2)(|0⟩ + |1⟩)</li>
+<li>Expected final state: |+⟩</li>
+<li>Expected measurement: 50% |0⟩, 50% |1⟩</li>
+</ul>
+</li>
+<li>
+<p>|−⟩ state:</p>
+<ul>
+<li>Initial state: |ψ⟩ = |−⟩ = (1/√2)(|0⟩ - |1⟩)</li>
+<li>Expected final state: |−⟩</li>
+<li>Expected measurement: 50% |0⟩, 50% |1⟩</li>
+</ul>
+</li>
+</ol>
+<p>Note that for the |+⟩ and |−⟩ states, the measurement results will be the same (50-50 split between |0⟩ and |1⟩). To distinguish between these states, we would need to measure in a different basis (e.g., the X basis).</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Quantum teleportation is a cornerstone protocol in quantum information science. It demonstrates the power of quantum entanglement and how it can be used in conjunction with classical communication to transmit quantum information. While it doesn&rsquo;t allow for faster-than-light communication or the transportation of matter, it&rsquo;s a crucial building block for many quantum communication protocols and quantum computing algorithms.</p>
+<p>The mathematical formulation reveals the intricate quantum mechanics at play, showing how entanglement and quantum measurement work together to achieve the seemingly impossible task of transmitting a quantum state using only classical communication.</p>
+<p>The implementation in Qiskit allows us to simulate this protocol and verify its correctness. As quantum hardware continues to improve, we may see practical applications of quantum teleportation in secure communication systems and distributed quantum computing networks.</p>
+<p>For further details, I suggest this amazing course from IBM: <a href="https://learning.quantum.ibm.com/course/basics-of-quantum-information/" target="_blank" rel="noopener">https://learning.quantum.ibm.com/course/basics-of-quantum-information/</a></p>
+
+        </div>
+
+        
+        <div class="row ps-3 pe-3">
+        
+          <div class="col-md-6 share-buttons">
+          
+            <strong>Share on:</strong>
+            
+            <a class="btn icon-button bg-facebook" href="https://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2fphysics%2fquantum_computing%2fteleportation%2f" target="_blank">
+              <i class="fab fa-facebook"></i>
+            </a>
+            
+            
+                <a class="btn icon-button bg-twitter" href="https://twitter.com/share?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fphysics%2fquantum_computing%2fteleportation%2f&text=Quantum%20Computing%20-%20Fundementals%20-%20Teleportation&via=Stefano%20Giannini" target="_blank">
+                  <i class="fab fa-twitter"></i>
+                </a>
+            
+            
+                <a  class="btn icon-button bg-reddit" href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fphysics%2fquantum_computing%2fteleportation%2f&title=Quantum%20Computing%20-%20Fundementals%20-%20Teleportation" target="_blank">
+                  <i class="fab fa-reddit"></i>
+                </a>
+            
+            
+            
+            
+                <a class="btn icon-button bg-linkedin" href="https://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fphysics%2fquantum_computing%2fteleportation%2f&title=Quantum%20Computing%20-%20Fundementals%20-%20Teleportation" target="_blank">
+                  <i class="fab fa-linkedin"></i>
+                </a>
+            
+            
+             
+            
+                 <a class="btn icon-button bg-whatsapp" href="https://api.whatsapp.com/send?text=Quantum%20Computing%20-%20Fundementals%20-%20Teleportation http%3a%2f%2flocalhost%3a1313%2fposts%2fphysics%2fquantum_computing%2fteleportation%2f" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+            
+            
+                <a class="btn icon-button" href="mailto:?subject=Quantum%20Computing%20-%20Fundementals%20-%20Teleportation&body=http%3a%2f%2flocalhost%3a1313%2fposts%2fphysics%2fquantum_computing%2fteleportation%2f" target="_blank">
+                  <i class="fas fa-envelope-open-text"></i>
+                </a>
+            
+          
+          </div>
+
+        
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/ragespin/ragespin.github.io/edit/main/content/posts%5cphysics%5cquantum_computing%5cteleportation%5cindex.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+    
+    
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+    <div class="col-md-6 previous-article">
+      <a href="/posts/physics/quantum_computing/introduction/" title="Quantum Computing - Fundementals (Part 1)" class="btn filled-button">
+        <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
+        <div class="next-prev-text">Quantum Computing - Fundementals (Part 1)</div>
+      </a>
+    </div>
+  
+  
+</div>
+
+      <hr />
+
+      
+      
+
+      
+      
+
+      </div>
+    </div>
+  </div>
+  
+  <a id="scroll-to-top" class="btn" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Scroll to top">
+    <i class="fas fa-chevron-circle-up"></i>
+  </a>
+</section>
+
+
+      
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center ps-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#the-concept">The Concept</a></li>
+    <li><a href="#mathematical-formulation">Mathematical Formulation</a></li>
+    <li><a href="#the-protocol-step-by-step">The Protocol: Step-by-Step</a></li>
+    <li><a href="#implementation-in-qiskit">Implementation in Qiskit</a></li>
+    <li><a href="#verifying-the-teleportation">Verifying the Teleportation</a>
+      <ul>
+        <li><a href="#random-gate">Random Gate</a></li>
+      </ul>
+    </li>
+    <li><a href="#mathematical-analysis-of-the-verification">Mathematical Analysis of the Verification</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+      </div>
+    </div>
+    
+  </section>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+    
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-start">
+        
+        
+        
+        
+      </div>
+    </div>
+    
+    <hr />
+    <div class="container">
+      <p id="disclaimer"><strong>Liability Notice:</strong> This theme is under MIT license. So, you can use it for non-commercial, commercial, or private uses. You can modify or distribute the theme without requiring any permission from the theme author. However, the theme author does not provide any warranty or takes any liability for any issue with the theme.</p>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-start">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
+            <img src="/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2024 Copyright.</div>
+        <div class="col-md-4 text-end">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script src="/application.97f51c3e286071444c3471235d1690400d75a930a8787cc86f8c8e4d2767277e.js" integrity="sha256-l/UcPihgcURMNHEjXRaQQA11qTCoeHzIb4yOTSdnJ34=" defer></script>
+
+
+    
+     
+
+    
+    
+
+</body>
+</html>
