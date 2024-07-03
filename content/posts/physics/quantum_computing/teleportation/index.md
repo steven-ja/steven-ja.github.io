@@ -12,7 +12,7 @@ hero: images/blog_teleportation.png
 tags: ["Science", "Statistics", "Quantum", "Physics"]
 categories: ["Physics"]
 ---
-# Quantum Teleportation: Concept, Mathematics, and Implementation
+<!-- # Quantum Teleportation: Concept, Mathematics, and Implementation -->
 
 ## Introduction
 
@@ -33,29 +33,29 @@ The goal is for Alice to transmit the state of her qubit to Bob using only class
 Let's walk through the mathematical formulation of quantum teleportation:
 
 1. Initial state:
-   Alice has a qubit in an unknown state |ψ⟩ = α|0⟩ + β|1⟩, where |α|² + |β|² = 1.
-   Alice and Bob share an entangled pair in the Bell state |Φ⁺⟩ = (1/√2)(|00⟩ + |11⟩).
+   Alice has a qubit in an unknown state $|ψ⟩ = α|0⟩ + β|1⟩$, where $|α|² + |β|² = 1$.
+   Alice and Bob share an entangled pair in the Bell state $|Φ⁺⟩ = (1/√2)(|00⟩ + |11⟩)$.
 
 2. The initial state of the entire system:
-   |Ψ₀⟩ = |ψ⟩ ⊗ |Φ⁺⟩ = (1/√2)(α|0⟩ + β|1⟩) ⊗ (|00⟩ + |11⟩)
+   $$|Ψ₀⟩ = |ψ⟩ ⊗ |Φ⁺⟩ = (1/√2)(α|0⟩ + β|1⟩) ⊗ (|00⟩ + |11⟩)$$
 
 3. Expanding the state:
-   |Ψ₀⟩ = (1/√2)[α|000⟩ + α|011⟩ + β|100⟩ + β|111⟩]
+   $$|Ψ₀⟩ = (1/√2)[α|000⟩ + α|011⟩ + β|100⟩ + β|111⟩]$$
 
 4. Alice applies a CNOT gate to her qubits:
-   |Ψ₁⟩ = (1/√2)[α|000⟩ + α|011⟩ + β|110⟩ + β|101⟩]
+   $$|Ψ₁⟩ = (1/√2)[α|000⟩ + α|011⟩ + β|110⟩ + β|101⟩]$$
 
 5. Alice applies a Hadamard gate to her first qubit:
-   |Ψ₂⟩ = (1/2)[α(|000⟩ + |100⟩) + α(|011⟩ + |111⟩) + β(|010⟩ - |110⟩) + β(|001⟩ - |101⟩)]
+   $$|Ψ₂⟩ = (1/2)[α(|000⟩ + |100⟩) + α(|011⟩ + |111⟩) + β(|010⟩ - |110⟩) + β(|001⟩ - |101⟩)]$$
 
 6. Rearranging terms:
-   |Ψ₂⟩ = (1/2)[|00⟩(α|0⟩ + β|1⟩) + |01⟩(α|1⟩ + β|0⟩) + |10⟩(α|0⟩ - β|1⟩) + |11⟩(α|1⟩ - β|0⟩)]
+   $$|Ψ₂⟩ = (1/2)[|00⟩(α|0⟩ + β|1⟩) + |01⟩(α|1⟩ + β|0⟩) + |10⟩(α|0⟩ - β|1⟩) + |11⟩(α|1⟩ - β|0⟩)]$$
 
 7. Alice measures her qubits, collapsing the state. There are four possible outcomes:
-   - 00: Bob's qubit is in state α|0⟩ + β|1⟩
-   - 01: Bob's qubit is in state α|1⟩ + β|0⟩
-   - 10: Bob's qubit is in state α|0⟩ - β|1⟩
-   - 11: Bob's qubit is in state α|1⟩ - β|0⟩
+   - 00: Bob's qubit is in state $α|0⟩ + β|1⟩$
+   - 01: Bob's qubit is in state $α|1⟩ + β|0⟩$
+   - 10: Bob's qubit is in state $α|0⟩ - β|1⟩$
+   - 11: Bob's qubit is in state $α|1⟩ - β|0⟩$
 
 8. Based on Alice's measurement, Bob applies the appropriate correction:
    - 00: I (identity, do nothing)
@@ -63,13 +63,13 @@ Let's walk through the mathematical formulation of quantum teleportation:
    - 10: Z (phase flip)
    - 11: ZX (bit and phase flip)
 
-After Bob's correction, his qubit is in the state α|0⟩ + β|1⟩, which is the original state of Alice's qubit.
+After Bob's correction, his qubit is in the state $α|0⟩ + β|1⟩$, which is the original state of Alice's qubit.
 
 ## The Protocol: Step-by-Step
 
 1. Preparation:
-   - Alice has a qubit in state |ψ⟩ = α|0⟩ + β|1⟩.
-   - Alice and Bob share an entangled pair in the Bell state |Φ⁺⟩ = (1/√2)(|00⟩ + |11⟩).
+   - Alice has a qubit in state $|ψ⟩ = α|0⟩ + β|1⟩$.
+   - Alice and Bob share an entangled pair in the Bell state $|Φ⁺⟩ = (1/√2)(|00⟩ + |11⟩)$.
 
 2. Alice's operations:
    - Alice applies a CNOT gate with her qubit as control and her half of the entangled pair as target.
@@ -85,7 +85,7 @@ After Bob's correction, his qubit is in the state α|0⟩ + β|1⟩, which is th
    - Based on the classical bits received, Bob applies the appropriate quantum gate(s) to his qubit.
 
 6. Result:
-   - Bob's qubit is now in the state α|0⟩ + β|1⟩, the original state of Alice's qubit.
+   - Bob's qubit is now in the state $α|0⟩ + β|1⟩$, the original state of Alice's qubit.
 
 ## Implementation in Qiskit
 
@@ -144,8 +144,7 @@ display(protocol.draw('mpl', scale=2))
     
 ![png](images/example_1_0.png)
     
-
-
+<!-- 
 
 ```python
 # verification_circuit = QuantumCircuit(qubit, ClassicalRegister(1, 'c'))
@@ -156,7 +155,7 @@ display(protocol.draw('mpl', scale=2))
 # result = simulator.run(verification_circuit, shots=1000).result()
 # counts = result.get_counts()
 # print(counts)
-```
+``` -->
 
 
 This code creates a quantum circuit that implements the quantum teleportation protocol. Let's break down the steps:
@@ -205,14 +204,13 @@ display(random_gate.to_matrix(), xgate.to_matrix())
 ```
 
 
-    array([[-0.61747588+0.j        ,  0.28776308+0.7320628j ],
-           [-0.78573506-0.03665989j, -0.19886638-0.58457559j]])
-
-
-
-    array([[0.+0.j, 1.+0.j],
-           [1.+0.j, 0.+0.j]])
-
+>    array([[-0.61747588+0.j        ,  0.28776308+0.7320628j ],
+>
+>           [-0.78573506-0.03665989j, -0.19886638-0.58457559j]])
+>
+>    array([[0.+0.j, 1.+0.j],
+>           [1.+0.j, 0.+0.j]])
+>
 
 
 ```python
@@ -288,22 +286,22 @@ display(plot_histogram(filtered_statistics))
 Let's analyze what happens in each case:
 
 1. *|0⟩ state*: 
-   - Initial state: |ψ⟩ = |0⟩ = 1|0⟩ + 0|1⟩
+   - Initial state: $|ψ⟩ = \ket{0} = 1|0⟩ + 0|1⟩$
    - Expected final state: |0⟩
    - Expected measurement: 100% |0⟩
 
 2. *|1⟩ state*:
-   - Initial state: |ψ⟩ = |1⟩ = 0|0⟩ + 1|1⟩
+   - Initial state: $|ψ⟩ = |1⟩ = 0|0⟩ + 1|1⟩$
    - Expected final state: |1⟩
    - Expected measurement: 100% |1⟩
 
 3. *|+⟩ state*:
-   - Initial state: |ψ⟩ = |+⟩ = (1/√2)(|0⟩ + |1⟩)
+   - Initial state: $|ψ⟩ = |+⟩ = (1/√2)(|0⟩ + |1⟩)$
    - Expected final state: |+⟩
    - Expected measurement: 50% |0⟩, 50% |1⟩
 
 4. *|−⟩ state*:
-   - Initial state: |ψ⟩ = |−⟩ = (1/√2)(|0⟩ - |1⟩)
+   - Initial state: $|ψ⟩ = |−⟩ = (1/√2)(|0⟩ - |1⟩)$
    - Expected final state: |−⟩
    - Expected measurement: 50% |0⟩, 50% |1⟩
 
