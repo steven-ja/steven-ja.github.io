@@ -278,25 +278,11 @@ display(plot_histogram(filtered_statistics))
 ```
 
 
-    
 ![png](images/example_7_0.png)
     
-
-
-
     
 ![png](images/example_7_1.png)
     
-
-
-
-```python
-
-```
-
-
-This code creates a function `run_teleportation` that takes an initial state, runs the teleportation protocol, and returns the measurement results. We then test this function with various initial states.
-
 ## Mathematical Analysis of the Verification
 
 Let's analyze what happens in each case:
@@ -311,12 +297,12 @@ Let's analyze what happens in each case:
    - Expected final state: |1⟩
    - Expected measurement: 100% |1⟩
 
-3. |+⟩ state:
+3. *|+⟩ state*:
    - Initial state: |ψ⟩ = |+⟩ = (1/√2)(|0⟩ + |1⟩)
    - Expected final state: |+⟩
    - Expected measurement: 50% |0⟩, 50% |1⟩
 
-4. |−⟩ state:
+4. *|−⟩ state*:
    - Initial state: |ψ⟩ = |−⟩ = (1/√2)(|0⟩ - |1⟩)
    - Expected final state: |−⟩
    - Expected measurement: 50% |0⟩, 50% |1⟩
@@ -324,7 +310,6 @@ Let's analyze what happens in each case:
 Note that for the |+⟩ and |−⟩ states, the measurement results will be the same (50-50 split between |0⟩ and |1⟩). To distinguish between these states, we would need to measure in a different basis (e.g., the X basis).
 
 ## Conclusion
-
 Quantum teleportation is a cornerstone protocol in quantum information science. It demonstrates the power of quantum entanglement and how it can be used in conjunction with classical communication to transmit quantum information. While it doesn't allow for faster-than-light communication or the transportation of matter, it's a crucial building block for many quantum communication protocols and quantum computing algorithms.
 
 The mathematical formulation reveals the intricate quantum mechanics at play, showing how entanglement and quantum measurement work together to achieve the seemingly impossible task of transmitting a quantum state using only classical communication.
