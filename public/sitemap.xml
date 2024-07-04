@@ -103,39 +103,42 @@
     <priority>0.1</priority>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2024-06-30T08:00:00+01:00</lastmod>
+    <lastmod>2024-07-03T08:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/physics/</loc>
-    <lastmod>2024-06-30T08:00:00+01:00</lastmod>
+    <lastmod>2024-07-03T08:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/physics/</loc>
-    <lastmod>2024-06-30T08:00:00+01:00</lastmod>
+    <lastmod>2024-07-03T08:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/physics/</loc>
-    <lastmod>2024-06-30T08:00:00+01:00</lastmod>
+    <lastmod>2024-07-03T08:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2024-06-30T08:00:00+01:00</lastmod>
+    <lastmod>2024-07-03T08:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/quantum/</loc>
-    <lastmod>2024-06-30T08:00:00+01:00</lastmod>
+    <lastmod>2024-07-03T08:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/physics/quantum_computing/</loc>
-    <lastmod>2024-06-30T08:00:00+01:00</lastmod>
+    <lastmod>2024-07-03T08:00:00+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/physics/quantum_computing/introduction/</loc>
-    <lastmod>2024-06-30T08:00:00+01:00</lastmod>
+    <loc>http://localhost:1313/posts/physics/quantum_computing/teleportation/</loc>
+    <lastmod>2024-07-03T08:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/science/</loc>
-    <lastmod>2024-06-30T08:00:00+01:00</lastmod>
+    <lastmod>2024-07-03T08:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/statistics/</loc>
-    <lastmod>2024-06-30T08:00:00+01:00</lastmod>
+    <lastmod>2024-07-03T08:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2024-06-30T08:00:00+01:00</lastmod>
+    <lastmod>2024-07-03T08:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2024-07-03T08:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/physics/quantum_computing/introduction/</loc>
     <lastmod>2024-06-30T08:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/finance/</loc>

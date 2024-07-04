@@ -6,7 +6,18 @@
     <description>Recent content in Physics on Stefano Giannini</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 30 Jun 2024 08:00:00 +0100</lastBuildDate><atom:link href="http://localhost:1313/categories/physics/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Wed, 03 Jul 2024 08:00:00 +0100</lastBuildDate><atom:link href="http://localhost:1313/categories/physics/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>Quantum Computing - Fundementals - Teleportation</title>
+      <link>http://localhost:1313/posts/physics/quantum_computing/teleportation/</link>
+      <pubDate>Wed, 03 Jul 2024 08:00:00 +0100</pubDate>
+      
+      <guid>http://localhost:1313/posts/physics/quantum_computing/teleportation/</guid>
+      <description>Introduction Quantum teleportation is a fundamental protocol in quantum information science that enables the transfer of quantum information from one location to another. Despite its name, it doesn&amp;rsquo;t involve the transportation of matter, but rather the transmission of the quantum state of a particle.
+The Concept In quantum teleportation, we have three main parties:
+Alice: The sender who wants to transmit a quantum state. Bob: The receiver who will receive the quantum state.</description>
+    </item>
+    
+    <item>
       <title>Quantum Computing - Fundementals (Part 1)</title>
       <link>http://localhost:1313/posts/physics/quantum_computing/introduction/</link>
       <pubDate>Sun, 30 Jun 2024 08:00:00 +0100</pubDate>
