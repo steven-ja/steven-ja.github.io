@@ -12,6 +12,7 @@ hero: images/sarima_example_9_1.png
 tags: ["Finance", "Statistics", "Forecasting"]
 categories: ["Finance"]
 ---
+
 ## Introduction
 
 The Seasonal Autoregressive Integrated Moving Average (SARIMA) model is an extension of the ARIMA model (discussed in the [previous article](/posts/finance/stock_prediction/arima/)) that incorporates seasonality. This makes it particularly useful for analyzing financial time series data, which often exhibits both trend and seasonal patterns. In this article, we'll apply the SARIMA model to Apple (AAPL) stock data, perform signal decomposition, and provide a detailed mathematical explanation of the model.
@@ -303,14 +304,16 @@ plt.show()
     
 ![png](images/sarima_example_9_1.png)
 
-As the prei
+As the previous plot shows, SARIMA model takes into account stagionality with respect to the [ARIMA model]((/posts/finance/stock_prediction/arima/)) and provides better accuracy and *mape* score (5% vs. 7%). Moreover, the stagionality can deal with temporary detachment from the mean value.
+Nonetheless, SARIMA model is slower to train and to interfer (respectively $\approx 100%$ and $50%$ more). It still does not involve exogenous variables (possible with SARIMAX) and potential outbreaks (like Covid-19 or holidays).
+
+
     
 
 
 ## 5. Model Diagnostics
 
 After fitting the model, it's important to check its adequacy:
- 
 
 
 ```python
