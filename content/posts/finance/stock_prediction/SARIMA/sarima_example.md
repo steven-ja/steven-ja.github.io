@@ -1,17 +1,3 @@
----
-title: "Time Series Analysis and SARIMA Model for Stock Price Prediction"
-date: 2024-07-04T00:00:00+01:00
-description: "Short Stock price analysis on AAPL, then a prediction is tested using SARIMA model"
-menu:
-  sidebar:
-    name: SARIMA
-    identifier: SARIMA
-    parent: stock_prediction 
-    weight: 11
-hero: images/sarima_example_9_1.png
-tags: ["Finance", "Statistics", "Forecasting"]
-categories: ["Finance"]
----
 ## Introduction
 
 The Seasonal Autoregressive Integrated Moving Average (SARIMA) model is an extension of the ARIMA model (discussed in the [previous article](/posts/finance/stock_prediction/arima/)) that incorporates seasonality. This makes it particularly useful for analyzing financial time series data, which often exhibits both trend and seasonal patterns. In this article, we'll apply the SARIMA model to Apple (AAPL) stock data, perform signal decomposition, and provide a detailed mathematical explanation of the model.
@@ -52,6 +38,7 @@ plt.xlabel('Date')
 plt.ylabel('Price')
 plt.show()
 
+ts.head(), data['Close'].head()
 ```
 
     [*********************100%%**********************]  1 of 1 completed
@@ -59,11 +46,27 @@ plt.show()
 
 
     
-![png](images/sarima_example_1_1.png)
+![png](sarima_example_files/sarima_example_1_1.png)
     
 
 
 
+
+
+    (Date
+     2022-01-03    182.009995
+     2022-01-04    179.699997
+     2022-01-05    174.919998
+     2022-01-06    172.000000
+     2022-01-07    172.169998
+     Name: Close, dtype: float64,
+     Date
+     2022-01-03    182.009995
+     2022-01-04    179.699997
+     2022-01-05    174.919998
+     2022-01-06    172.000000
+     2022-01-07    172.169998
+     Name: Close, dtype: float64)
 
 
 
@@ -97,8 +100,9 @@ plt.show()
 
 
     
-![png](images/sarima_example_3_0.png)
+![png](sarima_example_files/sarima_example_3_0.png)
     
+
 
 
 This decomposition helps us understand:
@@ -142,6 +146,8 @@ Now that we understand the components and mathematical formulation, let's implem
 From the previous article we found that the best *(p,d,q)*
 
 
+
+
 ```python
 from pmdarima.arima.utils import nsdiffs
 D = nsdiffs(ts,
@@ -151,7 +157,10 @@ D = nsdiffs(ts,
 D
 ```
 
->    0
+
+
+
+    0
 
 
 
@@ -217,6 +226,7 @@ def forecast_accuracy(forecast, actual):
 
 
 ```python
+
 # Determine optimal SARIMA parameters
 # model = auto_arima(ts, seasonal=True, m=12,
 #                     start_p=0, start_q=0, start_P=1, start_Q=1,
@@ -313,7 +323,7 @@ plt.show()
 
 
     
-![png](images/sarima_example_9_1.png)
+![png](sarima_example_files/sarima_example_9_1.png)
     
 
 
@@ -338,7 +348,7 @@ plt.show()
 
 
     
-![png](images/sarima_example_12_0.png)
+![png](sarima_example_files/sarima_example_12_0.png)
     
 
 
