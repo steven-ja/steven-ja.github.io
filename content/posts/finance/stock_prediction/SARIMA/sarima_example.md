@@ -251,13 +251,6 @@ results = sarima_model.fit()
 print(results.summary())
 ```
 
-    c:\Users\stefa\anaconda3\lib\site-packages\statsmodels\tsa\base\tsa_model.py:473: ValueWarning: A date index has been provided, but it has no associated frequency information and so will be ignored when e.g. forecasting.
-      self._init_dates(dates, freq)
-    c:\Users\stefa\anaconda3\lib\site-packages\statsmodels\tsa\base\tsa_model.py:473: ValueWarning: A date index has been provided, but it has no associated frequency information and so will be ignored when e.g. forecasting.
-      self._init_dates(dates, freq)
-    c:\Users\stefa\anaconda3\lib\site-packages\statsmodels\base\model.py:607: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
-      warnings.warn("Maximum Likelihood optimization failed to "
-    
 
                                           SARIMAX Results                                      
     ===========================================================================================
@@ -289,6 +282,7 @@ print(results.summary())
     Warnings:
     [1] Covariance matrix calculated using the outer product of gradients (complex-step).
     
+--- 
 
 
 ```python

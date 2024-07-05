@@ -240,13 +240,6 @@ results = sarima_model.fit()
 
 print(results.summary())
 ```
-
-    c:\Users\stefa\anaconda3\lib\site-packages\statsmodels\tsa\base\tsa_model.py:473: ValueWarning: A date index has been provided, but it has no associated frequency information and so will be ignored when e.g. forecasting.
-      self._init_dates(dates, freq)
-    c:\Users\stefa\anaconda3\lib\site-packages\statsmodels\tsa\base\tsa_model.py:473: ValueWarning: A date index has been provided, but it has no associated frequency information and so will be ignored when e.g. forecasting.
-      self._init_dates(dates, freq)
-    c:\Users\stefa\anaconda3\lib\site-packages\statsmodels\base\model.py:607: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
-      warnings.warn("Maximum Likelihood optimization failed to "
     
 
                                           SARIMAX Results                                      
@@ -307,22 +300,12 @@ plt.legend()
 plt.show()
 ```
 
-    c:\Users\stefa\anaconda3\lib\site-packages\statsmodels\tsa\base\tsa_model.py:836: ValueWarning: No supported index is available. Prediction results will be given with an integer index beginning at `start`.
-      return get_prediction_index(
-    
-
-
     
 ![png](images/sarima_example_9_1.png)
+
+As the prei
     
 
-
-
-```python
-# forec_temp = pd.DataFrame(forecast.predicted_mean)
-# forec_temp.index = forecast_index
-# pd.DataFrame(pd.DataFrame(decomposition.seasonal[test.index]).values + forec_temp.values).plot()
-```
 
 ## 5. Model Diagnostics
 
