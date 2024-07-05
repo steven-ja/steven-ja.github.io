@@ -305,7 +305,7 @@ plt.show()
 ![png](images/sarima_example_9_1.png)
 
 As the previous plot shows, SARIMA model takes into account stagionality with respect to the [ARIMA model]((/posts/finance/stock_prediction/arima/)) and provides better accuracy and *mape* score (5% vs. 7%). Moreover, the stagionality can deal with temporary detachment from the mean value.
-Nonetheless, SARIMA model is slower to train and to interfer (respectively $\approx 100%$ and $50%$ more). It still does not involve exogenous variables (possible with SARIMAX) and potential outbreaks (like Covid-19 or holidays).
+Nonetheless, SARIMA model is slower to train and to interfer (respectively $\approx 100\\% $ and $50\\%$ more). It still does not involve exogenous variables (possible with SARIMAX) and potential outbreaks (like Covid-19 or holidays).
 
 
     
