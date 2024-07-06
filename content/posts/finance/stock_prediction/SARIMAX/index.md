@@ -14,8 +14,10 @@ categories: ["Finance"]
 ---
 
 
+In the previous articles we saw the limitations of the [ARIMA](/posts/finance/stock_prediction/arima) and [SARIMA](/posts/finance/stock_prediction/sarima). Therefore, in this article we are going to implement a SARIMAX model the can include **exogenous variables**
+
 ## Introduction to Exogenous Variables in Time Series Models
-In the previous articles ( [ARIMA](/posts/finance/stock_prediction/arima) and [SARIMA](/posts/finance/stock_prediction/sarima) 
+
 
 Exogenous variables, also known as external regressors, are independent variables that are not part of the main time series but can influence it. In the context of stock price prediction, exogenous variables might include:
 
