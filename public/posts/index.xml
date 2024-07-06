@@ -6,7 +6,17 @@
     <description>Recent content in Posts on Stefano Giannini</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 04 Jul 2024 00:00:00 +0100</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Sat, 06 Jul 2024 00:00:00 +0100</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>SARIMAX Model Analysis of Apple Stock with Exogenous Variables</title>
+      <link>http://localhost:1313/posts/finance/stock_prediction/sarimax/</link>
+      <pubDate>Sat, 06 Jul 2024 00:00:00 +0100</pubDate>
+      
+      <guid>http://localhost:1313/posts/finance/stock_prediction/sarimax/</guid>
+      <description>Introduction to Exogenous Variables in Time Series Models Exogenous variables, also known as external regressors, are independent variables that are not part of the main time series but can influence it. In the context of stock price prediction, exogenous variables might include:
+Market indices (e.g., S&amp;amp;P 500) Economic indicators (e.g., GDP growth, unemployment rate) Company-specific metrics (e.g., revenue, earnings per share) Sentiment indicators (e.g., social media sentiment) Mathematical Formulation of SARIMAX The SARIMAX model extends the SARIMA model by including exogenous variables.</description>
+    </item>
+    
+    <item>
       <title>Time Series Analysis and SARIMA Model for Stock Price Prediction</title>
       <link>http://localhost:1313/posts/finance/stock_prediction/sarima/</link>
       <pubDate>Thu, 04 Jul 2024 00:00:00 +0100</pubDate>

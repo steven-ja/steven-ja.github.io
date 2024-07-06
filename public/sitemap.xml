@@ -103,34 +103,37 @@
     <priority>0.1</priority>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2024-07-04T00:00:00+01:00</lastmod>
+    <lastmod>2024-07-06T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/finance/</loc>
-    <lastmod>2024-07-04T00:00:00+01:00</lastmod>
+    <lastmod>2024-07-06T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/finance/</loc>
-    <lastmod>2024-07-04T00:00:00+01:00</lastmod>
+    <lastmod>2024-07-06T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/finance/</loc>
-    <lastmod>2024-07-04T00:00:00+01:00</lastmod>
+    <lastmod>2024-07-06T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/forecasting/</loc>
-    <lastmod>2024-07-04T00:00:00+01:00</lastmod>
+    <lastmod>2024-07-06T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2024-07-04T00:00:00+01:00</lastmod>
+    <lastmod>2024-07-06T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/finance/stock_prediction/sarimax/index.md/</loc>
+    <lastmod>2024-07-06T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/statistics/</loc>
-    <lastmod>2024-07-04T00:00:00+01:00</lastmod>
+    <lastmod>2024-07-06T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2024-07-04T00:00:00+01:00</lastmod>
+    <lastmod>2024-07-06T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/finance/stock_prediction/</loc>
-    <lastmod>2024-07-04T00:00:00+01:00</lastmod>
+    <lastmod>2024-07-06T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2024-07-04T00:00:00+01:00</lastmod>
+    <lastmod>2024-07-06T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/finance/stock_prediction/sarima/</loc>
     <lastmod>2024-07-04T00:00:00+01:00</lastmod>
