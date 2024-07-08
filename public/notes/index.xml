@@ -24,7 +24,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>http://localhost:1313/notes/physics/electromagnetism/</guid>
-      <description>Maxwell Equation (Integral) Gauss&amp;rsquo; Law: $$ \iint_{\partial \Omega} \mathbf{E} \cdot d\mathbf{S} = 4 \pi \iiint_{\Omega} \rho dV $$
+      <description>Maxwell Equations (Integral) Gauss&amp;rsquo; Law: $$ \iint_{\partial \Omega} \mathbf{E} \cdot d\mathbf{S} = 4 \pi \iiint_{\Omega} \rho dV $$
 Gauss&amp;rsquo; Law for Magnetism: $$ \iint_{\partial \Omega} \mathbf{B} \cdot d\mathbf{S} = 0 $$
 Maxwell-Faraday Equation:
 $$ \oint_{\partial \Omega} \mathbf{E} \cdot d\mathbf{l} = -\frac{d}{dt} \int_{\Sigma} \mathbf{B} \cdot d\mathbf{S} $$
