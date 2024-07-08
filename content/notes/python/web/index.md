@@ -8,6 +8,7 @@ menu:
     parent: notes-python
     weight: 10
 ---
+
 <!-- A Sample Program -->
 {{< note title="Connect to a Websocket">}}
 A sample **python** program is shown here.
@@ -69,4 +70,4 @@ msg := "Hello"
 ```go
 const Phi = 1.618
 ```
-{{< /note >}} --> -->
+{{< /note >}} -->
