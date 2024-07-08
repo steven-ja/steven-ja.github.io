@@ -207,7 +207,7 @@ params:
       enable: false
       services:
         kofi:
-          user: hossainemruz
+          user: 
           text: Tip Me
           textColor: '#f9fafc'
           backgroundColor: '#248aaa'
