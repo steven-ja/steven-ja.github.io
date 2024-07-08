@@ -9,10 +9,14 @@ menu:
     weight: 10
 ---
 <!-- A Sample Program -->
-{{< note title="Maxwell Equation (Integral)" textcolor="white">}}
+{{< note title="Maxwell Equation (Integral)">}}
+* **Gauss' Law**:
 
+$$ \qquad \iint_{\partial \Omega} \mathbf{E} \cdot d\mathbf{S} = 4 \pi \iiint_{\Omega} \rho dV $$ 
 
-$$\delta + 5 $$ 
+* **Gauss' Law for Magnetism**
+$$ \qquad \iint_{\partial \Omega} \mathbf{B} \cdot d\mathbf{S} = 0 $$
+
   
 {{< /note >}}
 

@@ -128,7 +128,8 @@ To achieve this, we will utilize the yfinance library to fetch stock information
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>http://localhost:1313/notes/physics/electromagnetism/</guid>
-      <description>Maxwell Equation (Integral) $$\delta + 5 $$ x</description>
+      <description>Maxwell Equation (Integral) Gauss&amp;rsquo; Law: $$ \qquad \iint_{\partial \Omega} \mathbf{E} \cdot d\mathbf{S} = 4 \pi \iiint_{\Omega} \rho dV $$
+Gauss&amp;rsquo; Law for Magnetism $$ \qquad \iint_{\partial \Omega} \mathbf{B} \cdot d\mathbf{S} = 0 $$ </description>
     </item>
     
     <item>
