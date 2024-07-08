@@ -10,7 +10,7 @@ menu:
 ---
 <!-- A Sample Program -->
 {{< note title="Connect to a Websocket">}}
-A sample **python** program is show here.
+A sample **python** program is shown here.
   
 ```python
 import websocket
