@@ -328,14 +328,54 @@
         <h5 class="note-title"><span>Maxwell Equation (Integral)</span></h5>
         
             <div class="card">
-                <div class="card-body"><ul>
+                <div class="card-body"><ol>
 <li><strong>Gauss&rsquo; Law</strong>:</li>
-</ul>
-<p>$$ \qquad \iint_{\partial \Omega} \mathbf{E} \cdot d\mathbf{S} = 4 \pi \iiint_{\Omega} \rho dV $$</p>
-<ul>
-<li><strong>Gauss&rsquo; Law for Magnetism</strong>
-$$ \qquad \iint_{\partial \Omega} \mathbf{B} \cdot d\mathbf{S} = 0 $$</li>
-</ul></div>
+</ol>
+<p>$$ \iint_{\partial \Omega} \mathbf{E} \cdot d\mathbf{S} = 4 \pi \iiint_{\Omega} \rho dV $$</p>
+<ol start="2">
+<li>
+<p><strong>Gauss&rsquo; Law for Magnetism</strong>:
+$$ \iint_{\partial \Omega} \mathbf{B} \cdot d\mathbf{S} = 0 $$</p>
+</li>
+<li>
+<p><strong>Maxwell-Faraday Equation</strong>:</p>
+</li>
+</ol>
+<p>$$ \oint_{\partial \Omega} \mathbf{E} \cdot d\mathbf{l} = -\frac{d}{dt} \int_{\Sigma} \mathbf{B} \cdot d\mathbf{S} $$</p>
+<ol start="4">
+<li><strong>Ampère&rsquo;s circuital law</strong>:</li>
+</ol>
+<p>$$ \oint_{\partial \Omega} \mathbf{B} \cdot d\mathbf{l} = \mu_0 \left(\iint_{\Sigma} \mathbf{J} \cdot d\mathbf{S} + \epsilon_0 \frac{d}{dt} \iint_{\Sigma} \mathbf{E} \cdot d\mathbf{S}\right) $$</p>
+</div>
+            </div>
+        
+    </div>
+</div>
+
+<div class="note-card ">
+    <div class="item">
+        <h5 class="note-title"><span>Maxwell Equation (Differential)</span></h5>
+        
+            <div class="card">
+                <div class="card-body"><ol>
+<li><strong>Gauss&rsquo; Law</strong>:</li>
+</ol>
+<p>$$ \nabla \cdot \mathbf{E} = \frac{\rho}{\epsilon_0} $$</p>
+<ol start="2">
+<li>
+<p><strong>Gauss&rsquo; Law for Magnetism</strong>:
+$$ \nabla \cdot \mathbf{B} = 0 $$</p>
+</li>
+<li>
+<p><strong>Maxwell-Faraday Equation</strong>:</p>
+</li>
+</ol>
+<p>$$ \nabla \times \mathbf{E} = \frac{\partial \mathbf{B}}{\partial t} $$</p>
+<ol start="4">
+<li><strong>Ampère&rsquo;s circuital law</strong>:</li>
+</ol>
+<p>$$ \nabla \times \mathbf{B} = \mu_0 \left( \mathbf{J} + \epsilon_0 \frac{\partial \mathbf{E}}{\partial t} \right) $$</p>
+</div>
             </div>
         
     </div>
