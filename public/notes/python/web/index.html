@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-    <title>Notes</title>
+    <title>WebSocket</title>
     <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -23,15 +23,18 @@
 
   <link rel="icon" type="image/png" href="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" />
 
-<meta property="og:url" content="http://localhost:1313/notes/">
+<meta property="og:url" content="http://localhost:1313/notes/python/web/">
   <meta property="og:site_name" content="Stefano Giannini">
-  <meta property="og:title" content="Notes">
+  <meta property="og:title" content="WebSocket">
+  <meta property="og:description" content="Connect to a Websocket A sample python program is show here. import websocket def on_message(ws, message): print(message) def on_error(ws, error): print(f&#34;Encountered error: {error}&#34;) def on_close(ws, close_status_code, close_msg): print(&#34;Connection closed&#34;) def on_open(ws): print(&#34;Connection opened&#34;) ws.send(&#34;Hello, Worldy!&#34;) if __name__ == &#34;__main__&#34;: ws = websocket.WebSocketApp(&#34;ws://localhost:xxxx&#34;, # insert here you websocket addres on_message=on_message, on_error=on_error, on_close=on_close) ws.on_open = on_open ws.run_forever() Run the program as below: $ python websocket_example.py --&gt;">
   <meta property="og:locale" content="en">
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="notes">
 
     
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Notes">
+  <meta name="twitter:title" content="WebSocket">
+  <meta name="twitter:description" content="Connect to a Websocket A sample python program is show here. import websocket def on_message(ws, message): print(message) def on_error(ws, error): print(f&#34;Encountered error: {error}&#34;) def on_close(ws, close_status_code, close_msg): print(&#34;Connection closed&#34;) def on_open(ws): print(&#34;Connection opened&#34;) ws.send(&#34;Hello, Worldy!&#34;) if __name__ == &#34;__main__&#34;: ws = websocket.WebSocketApp(&#34;ws://localhost:xxxx&#34;, # insert here you websocket addres on_message=on_message, on_error=on_error, on_close=on_close) ws.on_open = on_open ws.run_forever() Run the program as below: $ python websocket_example.py --&gt;">
 
     
      
@@ -56,7 +59,7 @@
     </script>
   </head>
 
-  <body class="type-notes kind-section" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
+  <body class="type-notes kind-page" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
     <div class="container-fluid bg-secondary wrapper">
       
       
@@ -279,20 +282,26 @@
   
   
   
+    
+    
+  
   
     
     <li>
-      <i data-feather="plus-circle"></i><a class=" list-link" href="/notes/python/"> Python</a>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/notes/python/"> Python</a>
       
-      <ul class="">
+      <ul class="active">
         
   
   
   
   
+    
+    
+  
   
     
-    <li><a class=" list-link" href="/notes/python/web/" title="WebSocket">WebSocket</a></li>
+    <li><a class="active list-link" href="/notes/python/web/" title="WebSocket">WebSocket</a></li>
   
 
 
@@ -314,27 +323,7 @@
 <section class="content-section" id="content-section">
   <div class="content container-fluid" id="content">
     <div class="container-fluid note-card-holder" id="note-card-holder">
-      
-      
-        
-          <!-- A Sample Program -->
-<p><div class="note-card ">
-    <div class="item">
-        <h5 class="note-title"><span>Maxwell Equation (Integral)</span></h5>
-        
-            <div class="card">
-                <div class="card-body">$$\delta + 5 $$</div>
-            </div>
-        
-    </div>
-</div>
-
-x</p>
-
-        
-      
-        
-          <!-- A Sample Program -->
+      <!-- A Sample Program -->
 <div class="note-card ">
     <div class="item">
         <h5 class="note-title"><span>Connect to a Websocket</span></h5>
@@ -409,63 +398,6 @@ x</p>
     </div>
 </div>
  --> -->
-        
-      
-        
-        
-        
-      
-        
-        
-        
-      
-        
-        
-        
-      
-        
-        
-        
-      
-        
-        
-        
-      
-        
-        
-        
-      
-        
-        
-        
-      
-        
-        
-        
-      
-    </div>
-    <div class="paginator">
-      
-    <ul class="pagination pagination-default">
-      <li class="page-item disabled">
-        <a aria-disabled="true" aria-label="First" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&laquo;&laquo;</span></a>
-      </li>
-      <li class="page-item disabled">
-        <a aria-disabled="true" aria-label="Previous" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&laquo;</span></a>
-      </li>
-      <li class="page-item active">
-        <a aria-current="page" aria-label="Page 1" class="page-link" role="button">1</a>
-      </li>
-      <li class="page-item">
-        <a href="/notes/page/2/" aria-label="Page 2" class="page-link" role="button">2</a>
-      </li>
-      <li class="page-item">
-        <a href="/notes/page/2/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
-      </li>
-      <li class="page-item">
-        <a href="/notes/page/2/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
-      </li>
-    </ul>
     </div>
   </div>
 </section>
