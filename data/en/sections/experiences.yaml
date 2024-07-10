@@ -18,7 +18,7 @@ experiences:
     # Can optionally show a different logo for dark theme
     # darkLogo: /images/sections/experiences/company1.jpg
     # company overview
-    overview: Research Center for one of the biggest car-maker in Europe.
+    overview: Innovative projects in the research center for one of the biggest car-maker in Europe.
   positions:
   - designation: Senior Data Scientist
     start: Feb 2023
@@ -55,6 +55,7 @@ experiences:
     - Analysis of data from a healthcare wearable device (Fall Detection, Sleeping, REM phases)
     - Data ETL using PySpark and Cassandra (NoSQL DB)
     - Build automated analysis process for every users in the DB with Microsoft _Azure_ Cloud
+    - Data Dashboard development with _Streamlit_  or Plotly.js
 
 - company:
     name: Soave Asset Management
