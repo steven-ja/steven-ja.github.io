@@ -7,9 +7,26 @@ section:
   showOnNavbar: true
   # Can optionally hide the title in sections
   # hideTitle: true 
-
+# Hello 👋
+# I am an Experimental Physicist, Data Scientist and Python Developer. 
+# I think my hybrid background can be a great fit for your company.
 # Your experiences
 experiences:
+- company: 
+    name: Sky Ray Capital
+    url: 
+    location: Portugal (Remote)
+    logo: 
+    overview: Analysis of the latest financial data for portfolio and strategies optimization 
+  positions:
+  - designation: Senior Data Scientist
+    start: Mar 2024
+    
+    responsibilities:
+    - Time-series Analysis
+    - Financial Reporting
+    - Strategy optimization using Machine Learning and Deep Learning.
+
 - company:
     name: Stellantis
     url: "https://www.stellantis.com"
@@ -20,7 +37,7 @@ experiences:
     # company overview
     overview: Innovative projects in the research center for one of the biggest car-maker in Europe.
   positions:
-  - designation: Senior Data Scientist
+  - designation: Mid-Senior Data Scientist
     start: Feb 2023
     # don't provide end date if you are currently working there. It will be replaced by "Present"
     end: Nov 2023
