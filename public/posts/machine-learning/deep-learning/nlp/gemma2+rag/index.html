@@ -575,20 +575,20 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> llama_index.vector_stores.faiss <span style="color:#f92672">import</span> FaissVectorStore
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> faiss
-</span></span></code></pre></div><h2 id="data-loading">Data Loading</h2>
+</span></span></code></pre></div><h2 id="4-data-loading">4. Data Loading</h2>
 <ul>
 <li>Use <em>SimpleDirectoryReader</em> from llama_index.</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#  Load the PDF</span>
 </span></span><span style="display:flex;"><span>documents <span style="color:#f92672">=</span> SimpleDirectoryReader(<span style="color:#e6db74">&#39;/kaggle/input/superconductivity-lectures/&#39;</span>)<span style="color:#f92672">.</span>load_data()
-</span></span></code></pre></div><h2 id="load-embedding-model">Load Embedding Model</h2>
+</span></span></code></pre></div><h2 id="5-load-embedding-model">5. Load Embedding Model</h2>
 <ul>
 <li>It uses the &ldquo;sentence-transformers/all-MiniLM-L6-v2&rdquo; model to create vector representations of text.</li>
 <li>This model is known for its efficiency in creating semantic embeddings.</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Load embedding model</span>
 </span></span><span style="display:flex;"><span>embed_model <span style="color:#f92672">=</span> HuggingFaceEmbedding(model_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;sentence-transformers/all-MiniLM-L6-v2&#34;</span>)
-</span></span></code></pre></div><h2 id="4-language-model-setup-and-loading">4. Language Model Setup and Loading</h2>
+</span></span></code></pre></div><h2 id="6-language-model-setup-and-loading">6. Language Model Setup and Loading</h2>
 <ul>
 <li>It uses the &ldquo;google/gemma-2-9b-it&rdquo; model, a powerful instruction-tuned language model.</li>
 <li>It configures 8-bit quantization to reduce memory usage</li>
@@ -608,7 +608,7 @@
 </span></span><span style="display:flex;"><span>                           generate_kwargs<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;temperature&#34;</span>: <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;num_return_sequences&#34;</span>:<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;do_sample&#34;</span>: <span style="color:#66d9ef">False</span>},
 </span></span><span style="display:flex;"><span>                           model_kwargs<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;quantization_config&#34;</span>: quantization_config},
 </span></span><span style="display:flex;"><span>                           device_map<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;auto&#39;</span>)
-</span></span></code></pre></div><h2 id="5-direct-llm-querying">5. Direct LLM Querying</h2>
+</span></span></code></pre></div><h2 id="7-direct-llm-querying">7. Direct LLM Querying</h2>
 <p>This part demonstrates direct querying of the LLM:</p>
 <ul>
 <li>It defines a list of queries about superconductivity.</li>
@@ -788,7 +788,7 @@
 </ul>
 <p>Calculate the magnetic field (B) using these values.</p>
 <p>Let me know if you&rsquo;d like me to calculate the numerical value of the magnetic field.</p>
-<h2 id="6-vector-store-and-index-creation">6. Vector Store and Index Creation</h2>
+<h2 id="8-vector-store-and-index-creation">8. Vector Store and Index Creation</h2>
 <p>This section sets up the vector store and creates the index:</p>
 <ul>
 <li>It initializes a FAISS index with the embedding dimension of 384 (the same as the embedding model)</li>
@@ -807,7 +807,7 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># save the vector store locally</span>
 </span></span><span style="display:flex;"><span>index<span style="color:#f92672">.</span>storage_context<span style="color:#f92672">.</span>persist()
-</span></span></code></pre></div><h2 id="7-rag-querying">7. RAG Querying</h2>
+</span></span></code></pre></div><h2 id="9-rag-querying">9. RAG Querying</h2>
 <ul>
 <li>Compare these results with the previous Direct LLM queries</li>
 <li>The default <em>similarity_top_k</em> values is 3. However, I set it up to 5 to have more exhaustive answers.</li>
@@ -825,8 +825,8 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> node <span style="color:#f92672">in</span> resp<span style="color:#f92672">.</span>source_nodes:
 </span></span><span style="display:flex;"><span>        sources<span style="color:#f92672">.</span>append(node<span style="color:#f92672">.</span>metadata[<span style="color:#e6db74">&#39;file_name&#39;</span>])
 </span></span><span style="display:flex;"><span>    display(Markdown(<span style="color:#e6db74">&#34;## &#34;</span> <span style="color:#f92672">+</span> queries[i] <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Sources: _</span><span style="color:#e6db74">{</span>sources<span style="color:#e6db74">}</span><span style="color:#e6db74">_</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> resp<span style="color:#f92672">.</span>response))
-</span></span></code></pre></div><p><span style="font-size:1.5em;font-weight:700">   Which scientists contributed the most to superconductivity? </span>
-Sources: <em>[&lsquo;Lecture1.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;]</em></p>
+</span></span></code></pre></div><p><span style="font-size:1.5em;font-weight:700">   Which scientists contributed the most to superconductivity? </span></p>
+<p>Sources: <em>[&lsquo;Lecture1.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;]</em></p>
 <p>Based on the provided text, the scientists who contributed the most to superconductivity are:</p>
 <ul>
 <li><strong>Heike Kamerlingh Onnes:</strong> Discovered superconductivity.</li>
@@ -841,8 +841,8 @@ Sources: <em>[&lsquo;Lecture1.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;, &lsquo;Lec
 <li><strong>John Cooper:</strong>  His work on electron pairing in superconductors was crucial for the development of the BCS theory.</li>
 </ul>
 <p>The text emphasizes the importance of understanding the microscopic mechanism of superconductivity, highlighting the contributions of Cooper and the development of the BCS theory. It also provides some insights into why certain materials, like noble metals, do not become superconductors.</p>
-<p><span style="font-size:1.5em;font-weight:700">   Which are the differences between Type-I and Type-II superconductors? Describe magnetical properties and show formulas. </span>
-Sources: <em>[&lsquo;Lecture2.pdf&rsquo;, &lsquo;Lecture2.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;]</em></p>
+<p><span style="font-size:1.5em;font-weight:700">   Which are the differences between Type-I and Type-II superconductors? Describe magnetical properties and show formulas. </span></p>
+<p>Sources: <em>[&lsquo;Lecture2.pdf&rsquo;, &lsquo;Lecture2.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;]</em></p>
 <p>Superconductors can be divided into two groups, Type-I and Type-II, characterized by their different responses to external magnetic fields. This classification is crucial in understanding the behavior of superconductors in various applications.</p>
 <p><strong>Type-I Superconductors:</strong></p>
 <ul>
@@ -893,8 +893,8 @@ Sources: <em>[&lsquo;Lecture2.pdf&rsquo;, &lsquo;Lecture2.pdf&rsquo;, &lsquo;Lec
 </li>
 </ul>
 <p>Let me know if you have any other questions.</p>
-<p><span style="font-size:1.5em;font-weight:700">   What are the London Equation? Why are they important? </span>
-Sources: <em>[&lsquo;Lecture1.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;]</em></p>
+<p><span style="font-size:1.5em;font-weight:700">   What are the London Equation? Why are they important? </span></p>
+<p>Sources: <em>[&lsquo;Lecture1.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;]</em></p>
 <p>The London equations are a set of two fundamental equations that describe the behavior of superconductors in electromagnetic fields. They are:</p>
 <ul>
 <li><strong>Equation (3.6):</strong> ∇²H = - (4π/λ²)J<sub>s</sub></li>
@@ -930,8 +930,8 @@ Sources: <em>[&lsquo;Lecture1.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lec
 </ul>
 <p><strong>Contextual Connection:</strong></p>
 <p>The provided text highlights the historical development of superconductivity theory, culminating in the BCS theory. The London equations, while a simplified model, played a crucial role in laying the groundwork for these later, more sophisticated theories. They provided the first concrete explanation for the phenomenon of perfect diamagnetism and zero resistance, paving the way for a deeper understanding of superconductivity.</p>
-<p><span style="font-size:1.5em;font-weight:700">   Solve this problem: Consider a bulk superconductor containing a cylindrical hole of 0.1 mm diameter. There are 7 magnetic flux quanta trapped in the hole. Find the magnetic field in the hole.</span>
-Sources: <em>[&lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;]</em></p>
+<p><span style="font-size:1.5em;font-weight:700">   Solve this problem: Consider a bulk superconductor containing a cylindrical hole of 0.1 mm diameter. There are 7 magnetic flux quanta trapped in the hole. Find the magnetic field in the hole.</span></p>
+<p>Sources: <em>[&lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;]</em></p>
 <p>To solve this problem, we can use the concept of magnetic flux quantization in superconductors.</p>
 <p><strong>1. Magnetic Flux Quantization:</strong></p>
 <p>Each flux quantum (Φ0) is given by:</p>
@@ -954,7 +954,8 @@ Sources: <em>[&lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lec
 <p><strong>3. Numerical Calculation:</strong></p>
 <p>Substitute the values of Φ0, d, and π into the equation to obtain the numerical value of the magnetic field in the hole.</p>
 <p>Let me know if you have any further questions.</p>
-<h2 id="8-conclusion">8. Conclusion</h2>
+<hr>
+<h2 id="10-conclusion">10. Conclusion</h2>
 <p>This implementation demonstrates the power of RAG in combining the strengths of large language models with the ability to retrieve and utilize specific, relevant information. By using FAISS for efficient similarity search and a state-of-the-art language model like Gemma-2-9b, this system can provide informed, context-aware responses to complex queries about superconductivity.
 The comparison between direct LLM responses and RAG responses would likely show the benefits of RAG in providing more detailed, accurate, and source-backed information. This approach is particularly valuable in domains requiring up-to-date or specialized knowledge, where the LLM&rsquo;s pre-trained knowledge might be insufficient or outdated.</p>
 
@@ -1121,13 +1122,13 @@ The comparison between direct LLM responses and RAG responses would likely show 
     <li><a href="#1-introduction">1. Introduction</a></li>
     <li><a href="#2-setup-and-import">2. Setup and Import</a></li>
     <li><a href="#3-model-and-vectordb-imports">3. Model and VectorDB imports</a></li>
-    <li><a href="#data-loading">Data Loading</a></li>
-    <li><a href="#load-embedding-model">Load Embedding Model</a></li>
-    <li><a href="#4-language-model-setup-and-loading">4. Language Model Setup and Loading</a></li>
-    <li><a href="#5-direct-llm-querying">5. Direct LLM Querying</a></li>
-    <li><a href="#6-vector-store-and-index-creation">6. Vector Store and Index Creation</a></li>
-    <li><a href="#7-rag-querying">7. RAG Querying</a></li>
-    <li><a href="#8-conclusion">8. Conclusion</a></li>
+    <li><a href="#4-data-loading">4. Data Loading</a></li>
+    <li><a href="#5-load-embedding-model">5. Load Embedding Model</a></li>
+    <li><a href="#6-language-model-setup-and-loading">6. Language Model Setup and Loading</a></li>
+    <li><a href="#7-direct-llm-querying">7. Direct LLM Querying</a></li>
+    <li><a href="#8-vector-store-and-index-creation">8. Vector Store and Index Creation</a></li>
+    <li><a href="#9-rag-querying">9. RAG Querying</a></li>
+    <li><a href="#10-conclusion">10. Conclusion</a></li>
   </ul>
 </nav>
       </div>

@@ -89,7 +89,7 @@ import faiss
 ```
 
 
-## Data Loading
+## 4. Data Loading
 * Use *SimpleDirectoryReader* from llama_index.
 
 
@@ -98,7 +98,7 @@ import faiss
 documents = SimpleDirectoryReader('/kaggle/input/superconductivity-lectures/').load_data()
 ```
 
-## Load Embedding Model
+## 5. Load Embedding Model
 * It uses the "sentence-transformers/all-MiniLM-L6-v2" model to create vector representations of text.
 * This model is known for its efficiency in creating semantic embeddings.
 
@@ -110,7 +110,7 @@ embed_model = HuggingFaceEmbedding(model_name="sentence-transformers/all-MiniLM-
 
 
 
-## 4. Language Model Setup and Loading
+## 6. Language Model Setup and Loading
 * It uses the "google/gemma-2-9b-it" model, a powerful instruction-tuned language model.
 * It configures 8-bit quantization to reduce memory usage
 * The tokenizer is set globally for consistency.
@@ -135,7 +135,7 @@ llm_model = HuggingFaceLLM(model_name="google/gemma-2-9b-it",
 
 
 
-## 5. Direct LLM Querying
+## 7. Direct LLM Querying
 This part demonstrates direct querying of the LLM:
 
 * It defines a list of queries about superconductivity.
@@ -326,7 +326,7 @@ Let me know if you'd like me to calculate the numerical value of the magnetic fi
 
 
 
-## 6. Vector Store and Index Creation
+## 8. Vector Store and Index Creation
 This section sets up the vector store and creates the index:
 
 * It initializes a FAISS index with the embedding dimension of 384 (the same as the embedding model)
@@ -353,7 +353,7 @@ index.storage_context.persist()
 
 
 
-## 7. RAG Querying
+## 9. RAG Querying
 * Compare these results with the previous Direct LLM queries
 * The default *similarity_top_k* values is 3. However, I set it up to 5 to have more exhaustive answers.
 * We expect more accurate and truthful answers. Anyway, when asked about London Equations, they are wrong. Also in the first query, direct LLM provides only few scientists but do not quote "Josephson" in any case (even after multiple generation). 
@@ -385,6 +385,7 @@ for i, resp in enumerate(rag_responses):
 
 
 <span style="font-size:1.5em;font-weight:700">   Which scientists contributed the most to superconductivity? </span>
+
 Sources: _['Lecture1.pdf', 'Lecture1.pdf', 'Lecture1.pdf', 'Lecture1.pdf', 'Lecture1.pdf']_
 
 
@@ -411,6 +412,7 @@ The text emphasizes the importance of understanding the microscopic mechanism of
 
 
 <span style="font-size:1.5em;font-weight:700">   Which are the differences between Type-I and Type-II superconductors? Describe magnetical properties and show formulas. </span>
+
 Sources: _['Lecture2.pdf', 'Lecture2.pdf', 'Lecture1.pdf', 'Lecture3.pdf', 'Lecture1.pdf']_
 
 
@@ -459,6 +461,7 @@ Let me know if you have any other questions.
 
 
 <span style="font-size:1.5em;font-weight:700">   What are the London Equation? Why are they important? </span>
+
 Sources: _['Lecture1.pdf', 'Lecture3.pdf', 'Lecture3.pdf', 'Lecture3.pdf', 'Lecture1.pdf']_
 
 
@@ -497,8 +500,8 @@ The provided text highlights the historical development of superconductivity the
 
 
 
-
 <span style="font-size:1.5em;font-weight:700">   Solve this problem: Consider a bulk superconductor containing a cylindrical hole of 0.1 mm diameter. There are 7 magnetic flux quanta trapped in the hole. Find the magnetic field in the hole.</span>
+
 Sources: _['Lecture3.pdf', 'Lecture3.pdf', 'Lecture3.pdf', 'Lecture3.pdf', 'Lecture3.pdf']_
 
 
@@ -540,9 +543,9 @@ Substitute the values of Φ0, d, and π into the equation to obtain the numerica
 
 Let me know if you have any further questions.
 
+---
 
-
-## 8. Conclusion
+## 10. Conclusion
 This implementation demonstrates the power of RAG in combining the strengths of large language models with the ability to retrieve and utilize specific, relevant information. By using FAISS for efficient similarity search and a state-of-the-art language model like Gemma-2-9b, this system can provide informed, context-aware responses to complex queries about superconductivity.
 The comparison between direct LLM responses and RAG responses would likely show the benefits of RAG in providing more detailed, accurate, and source-backed information. This approach is particularly valuable in domains requiring up-to-date or specialized knowledge, where the LLM's pre-trained knowledge might be insufficient or outdated.
 
