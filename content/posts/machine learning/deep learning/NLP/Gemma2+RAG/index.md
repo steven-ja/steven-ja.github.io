@@ -182,7 +182,7 @@ llm_model = HuggingFaceLLM(model_name="google/gemma-2-9b-it",
 
 
 
-## Direct LLM Querying
+## 5. Direct LLM Querying
 This part demonstrates direct querying of the LLM:
 
 * It defines a list of queries about superconductivity.
@@ -207,20 +207,14 @@ for query in queries[:]:
     )
 ```
 
-    Which scientists contributed the most to superconductivity?
-    Which are the differences between Type-I and Type-II superconductors? Describe magnetical properties and show formulas.
-    What are the London Equation? Why are they important?
-    Solve this problem: Consider a bulk superconductor containing a cylindrical hole of 0.1 mm diameter. There are 7 magnetic flux quanta trapped in the hole. Find the magnetic field in the hole.
-    
-
-
 ```python
 for i, resp in enumerate(llm_responses):
     display(Markdown("## " + queries[i] + "\n" + resp.text))
 ```
 
 
-### Which scientists contributed the most to superconductivity?
+<span style="font-size:1.5em;font-weight:700"> Which scientists contributed the most to superconductivity? </span>
+
 
 
 It's impossible to name just a few scientists who "contributed the most" to superconductivity, as it's a field built on the work of many brilliant minds over decades. 
@@ -248,11 +242,8 @@ It's important to remember that scientific progress is a collaborative effort, b
 
 
 
+<span style="font-size:1.5em;font-weight:700">Which are the differences between Type-I and Type-II superconductors? Describe magnetical properties and show formulas. </span>
 
-### Which are the differences between Type-I and Type-II superconductors? Describe magnetical properties and show formulas.
-
-
-#### Type-I vs. Type-II Superconductors
 
 Superconductors are materials that exhibit zero electrical resistance below a critical temperature (Tc). They are classified into two main types: Type-I and Type-II, based on their response to magnetic fields.
 
@@ -300,8 +291,7 @@ Superconductors are materials that exhibit zero electrical resistance below a cr
 
 
 
-
-### What are the London Equation? Why are they important?
+<span style="font-size:1.5em;font-weight:700">  What are the London Equation? Why are they important? </span>
 
 
 The London equations are a set of equations that describe the behavior of superconductors. They were first derived by Fritz and Heinz London in 1935.
@@ -342,7 +332,7 @@ Despite their limitations, the London equations are a cornerstone of superconduc
 
 
 
-### Solve this problem: Consider a bulk superconductor containing a cylindrical hole of 0.1 mm diameter. There are 7 magnetic flux quanta trapped in the hole. Find the magnetic field in the hole.
+<span style="font-size:1.5em;font-weight:700">  Solve this problem: Consider a bulk superconductor containing a cylindrical hole of 0.1 mm diameter. There are 7 magnetic flux quanta trapped in the hole. Find the magnetic field in the hole. </span>
 
 
 Here's how to solve the problem:
@@ -383,7 +373,7 @@ Let me know if you'd like me to calculate the numerical value of the magnetic fi
 
 
 
-## Vector Store and Index Creation
+## 6. Vector Store and Index Creation
 This section sets up the vector store and creates the index:
 
 * It initializes a FAISS index with the embedding dimension of 384 (the same as the embedding model)
@@ -410,7 +400,7 @@ index.storage_context.persist()
 
 
 
-## RAG Querying
+## 7. RAG Querying
 * Compare these results with the previous Direct LLM queries
 * The default *similarity_top_k* values is 3. However, I set it up to 5 to have more exhaustive answers.
 * We expect more accurate and truthful answers. Anyway, when asked about London Equations, they are wrong. Also in the first query, direct LLM provides only few scientists but do not quote "Josephson" in any case (even after multiple generation). 
@@ -441,7 +431,7 @@ for i, resp in enumerate(rag_responses):
 ```
 
 
-### Which scientists contributed the most to superconductivity?
+<span style="font-size:1.5em;font-weight:700">   Which scientists contributed the most to superconductivity? </span>
 Sources: _['Lecture1.pdf', 'Lecture1.pdf', 'Lecture1.pdf', 'Lecture1.pdf', 'Lecture1.pdf']_
 
 
@@ -467,7 +457,7 @@ The text emphasizes the importance of understanding the microscopic mechanism of
 
 
 
-### Which are the differences between Type-I and Type-II superconductors? Describe magnetical properties and show formulas.
+<span style="font-size:1.5em;font-weight:700">   Which are the differences between Type-I and Type-II superconductors? Describe magnetical properties and show formulas. </span>
 Sources: _['Lecture2.pdf', 'Lecture2.pdf', 'Lecture1.pdf', 'Lecture3.pdf', 'Lecture1.pdf']_
 
 
@@ -515,7 +505,7 @@ Let me know if you have any other questions.
 
 
 
-### What are the London Equation? Why are they important?
+<span style="font-size:1.5em;font-weight:700">   What are the London Equation? Why are they important? </span>
 Sources: _['Lecture1.pdf', 'Lecture3.pdf', 'Lecture3.pdf', 'Lecture3.pdf', 'Lecture1.pdf']_
 
 
@@ -555,7 +545,7 @@ The provided text highlights the historical development of superconductivity the
 
 
 
-### Solve this problem: Consider a bulk superconductor containing a cylindrical hole of 0.1 mm diameter. There are 7 magnetic flux quanta trapped in the hole. Find the magnetic field in the hole.
+<span style="font-size:1.5em;font-weight:700">   Solve this problem: Consider a bulk superconductor containing a cylindrical hole of 0.1 mm diameter. There are 7 magnetic flux quanta trapped in the hole. Find the magnetic field in the hole.</span>
 Sources: _['Lecture3.pdf', 'Lecture3.pdf', 'Lecture3.pdf', 'Lecture3.pdf', 'Lecture3.pdf']_
 
 
@@ -599,7 +589,7 @@ Let me know if you have any further questions.
 
 
 
-## Conclusion
+## 8. Conclusion
 This implementation demonstrates the power of RAG in combining the strengths of large language models with the ability to retrieve and utilize specific, relevant information. By using FAISS for efficient similarity search and a state-of-the-art language model like Gemma-2-9b, this system can provide informed, context-aware responses to complex queries about superconductivity.
 The comparison between direct LLM responses and RAG responses would likely show the benefits of RAG in providing more detailed, accurate, and source-backed information. This approach is particularly valuable in domains requiring up-to-date or specialized knowledge, where the LLM's pre-trained knowledge might be insufficient or outdated.
 
