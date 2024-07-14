@@ -8,7 +8,7 @@ menu:
     identifier: gemma2_rag
     parent: nlp
     weight: 9
-hero: mermaid-diagram.svg
+hero: mermaid-diagram-hd.png
 tags: ["Deep Learning", "NLP", "Machine Learning"]
 categories: ["NLP"]
 ---
@@ -88,11 +88,6 @@ from llama_index.vector_stores.faiss import FaissVectorStore
 import faiss
 ```
 
-    /opt/conda/lib/python3.10/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_id" has conflict with protected namespace "model_".
-    
-    You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
-      warnings.warn(
-    
 
 ## Data Loading
 * Use *SimpleDirectoryReader* from llama_index.
@@ -113,48 +108,6 @@ documents = SimpleDirectoryReader('/kaggle/input/superconductivity-lectures/').l
 embed_model = HuggingFaceEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")
 ```
 
-
-    modules.json:   0%|          | 0.00/349 [00:00<?, ?B/s]
-
-
-
-    config_sentence_transformers.json:   0%|          | 0.00/116 [00:00<?, ?B/s]
-
-
-
-    README.md:   0%|          | 0.00/10.7k [00:00<?, ?B/s]
-
-
-
-    sentence_bert_config.json:   0%|          | 0.00/53.0 [00:00<?, ?B/s]
-
-
-
-    config.json:   0%|          | 0.00/612 [00:00<?, ?B/s]
-
-
-
-    model.safetensors:   0%|          | 0.00/90.9M [00:00<?, ?B/s]
-
-
-
-    tokenizer_config.json:   0%|          | 0.00/350 [00:00<?, ?B/s]
-
-
-
-    vocab.txt:   0%|          | 0.00/232k [00:00<?, ?B/s]
-
-
-
-    tokenizer.json:   0%|          | 0.00/466k [00:00<?, ?B/s]
-
-
-
-    special_tokens_map.json:   0%|          | 0.00/112 [00:00<?, ?B/s]
-
-
-
-    1_Pooling/config.json:   0%|          | 0.00/190 [00:00<?, ?B/s]
 
 
 ## 4. Language Model Setup and Loading

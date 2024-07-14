@@ -491,7 +491,7 @@
   <div class="content">
     <div class="container p-0 read-area">
       
-      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/mermaid-diagram.svg);'>
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/mermaid-diagram-hd.png);'>
       </div>
 
       
@@ -575,12 +575,7 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> llama_index.vector_stores.faiss <span style="color:#f92672">import</span> FaissVectorStore
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> faiss
-</span></span></code></pre></div><pre><code>/opt/conda/lib/python3.10/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field &quot;model_id&quot; has conflict with protected namespace &quot;model_&quot;.
-
-You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
-  warnings.warn(
-</code></pre>
-<h2 id="data-loading">Data Loading</h2>
+</span></span></code></pre></div><h2 id="data-loading">Data Loading</h2>
 <ul>
 <li>Use <em>SimpleDirectoryReader</em> from llama_index.</li>
 </ul>
@@ -593,49 +588,7 @@ You may be able to resolve this warning by setting `model_config['protected_name
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Load embedding model</span>
 </span></span><span style="display:flex;"><span>embed_model <span style="color:#f92672">=</span> HuggingFaceEmbedding(model_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;sentence-transformers/all-MiniLM-L6-v2&#34;</span>)
-</span></span></code></pre></div><pre><code>modules.json:   0%|          | 0.00/349 [00:00&lt;?, ?B/s]
-
-
-
-config_sentence_transformers.json:   0%|          | 0.00/116 [00:00&lt;?, ?B/s]
-
-
-
-README.md:   0%|          | 0.00/10.7k [00:00&lt;?, ?B/s]
-
-
-
-sentence_bert_config.json:   0%|          | 0.00/53.0 [00:00&lt;?, ?B/s]
-
-
-
-config.json:   0%|          | 0.00/612 [00:00&lt;?, ?B/s]
-
-
-
-model.safetensors:   0%|          | 0.00/90.9M [00:00&lt;?, ?B/s]
-
-
-
-tokenizer_config.json:   0%|          | 0.00/350 [00:00&lt;?, ?B/s]
-
-
-
-vocab.txt:   0%|          | 0.00/232k [00:00&lt;?, ?B/s]
-
-
-
-tokenizer.json:   0%|          | 0.00/466k [00:00&lt;?, ?B/s]
-
-
-
-special_tokens_map.json:   0%|          | 0.00/112 [00:00&lt;?, ?B/s]
-
-
-
-1_Pooling/config.json:   0%|          | 0.00/190 [00:00&lt;?, ?B/s]
-</code></pre>
-<h2 id="4-language-model-setup-and-loading">4. Language Model Setup and Loading</h2>
+</span></span></code></pre></div><h2 id="4-language-model-setup-and-loading">4. Language Model Setup and Loading</h2>
 <ul>
 <li>It uses the &ldquo;google/gemma-2-9b-it&rdquo; model, a powerful instruction-tuned language model.</li>
 <li>It configures 8-bit quantization to reduce memory usage</li>
