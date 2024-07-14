@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <title>Gemma-2 &#43; RAG &#43; LlamaIndex &#43; VectorDB</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<link rel="stylesheet" href="/application.fba7e2c0b4d0535aec97a3442d40338651f3354b1ee38f3630059796de18930f.css" integrity="sha256-&#43;6fiwLTQU1rsl6NELUAzhlHzNUse4482MAWXlt4Ykw8=" />
+
+
+
+
+
+  
+
+  
+  
+  
+    
+  
+  
+
+  <link rel="icon" type="image/png" href="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" />
+
+<meta property="og:url" content="http://localhost:1313/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/">
+  <meta property="og:site_name" content="Stefano Giannini">
+  <meta property="og:title" content="Gemma-2 &#43; RAG &#43; LlamaIndex &#43; VectorDB">
+  <meta property="og:description" content="Open Source LLM &#43; Local RAG">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-07-14T00:00:00+01:00">
+    <meta property="article:modified_time" content="2024-07-14T00:00:00+01:00">
+    <meta property="article:tag" content="Deep Learning">
+    <meta property="article:tag" content="NLP">
+    <meta property="article:tag" content="Machine Learning">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Gemma-2 &#43; RAG &#43; LlamaIndex &#43; VectorDB">
+  <meta name="twitter:description" content="Open Source LLM &#43; Local RAG">
+
+    
+    
+<meta name="description" content="Open Source LLM &#43; Local RAG" />
+
+
+    
+
+    
+
+
+
+
+<script>
+      theme = localStorage.getItem('darkmode:color-scheme') || 'system';
+      if (theme == 'system') {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          theme = 'dark';
+        } else {
+          theme = 'light';
+        }
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
+  </head>
+
+  <body class="type-posts kind-page" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
+    <div class="container-fluid bg-secondary wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+<nav class="navbar navbar-expand-xl top-navbar shadow " id="top-navbar">
+  <div class="container">
+    
+    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button">
+      <i data-feather="sidebar"></i>
+    </button>
+    
+    <a class="navbar-brand" href="/">
+      
+        <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" id="logo" alt="Logo">
+      Stefano Giannini</a>
+    <button
+      class="navbar-toggler navbar-light"
+      id="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#top-nav-items"
+      aria-label="menu"
+    >
+      <i data-feather="menu"></i>
+    </button>
+
+    <div class="collapse navbar-collapse dynamic-navbar" id="top-nav-items">
+      <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/#home">Home</a>
+        </li>
+        
+          
+          
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#about">About</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#experiences">Experiences</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#education">Education</a>
+                </li>
+              
+            
+          
+        
+        
+          <div id="top-navbar-divider"></div>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="blog-link" href="/posts">Posts</a>
+          </li>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="note-link" href="/notes">Notes</a>
+          </li>
+        
+        
+        
+        
+      </ul>
+    </div>
+  </div>
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="main-logo" alt="Logo">
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="inverted-logo" alt="Inverted Logo">
+  
+</nav>
+
+
+
+      
+      
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/posts/" data-filter="all">Posts</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/"> Finance</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/monte_carlo/"> Monte Carlo</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/monte_carlo/black-scholes/" title="Option Pricing">Option Pricing</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/stock_prediction/"> Stock Prediction</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/gru/" title="GRU">GRU</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/arima/" title="ARIMA">ARIMA</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/sarima/" title="SARIMA">SARIMA</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/sarimax/" title="SARIMAX">SARIMAX</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/machine-learning/"> Machine Learning</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/machine-learning/deep-learning/"> Deep Learning</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/machine-learning/deep-learning/computer-vision/"> Computer Vision</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/machine-learning/deep-learning/computer-vision/florence/" title="Florence-2 LVM">Florence-2 LVM</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/machine-learning/deep-learning/nlp/"> NLP</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li><a class="active list-link" href="/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/" title="Gemma-2 &#43; RAG">Gemma-2 &#43; RAG</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/physics/"> Physics</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/percolation/" title="Percolation">Percolation</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/physics/quantum_computing/"> Quantum Computing</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/quantum_computing/introduction/" title="Introduction">Introduction</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/quantum_computing/teleportation/" title="Teleportation">Teleportation</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content">
+    <div class="container p-0 read-area">
+      
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/mermaid-diagram.svg);'>
+      </div>
+
+      
+      <div class="page-content">
+        
+        <div class="author-profile ms-auto align-self-lg-center">
+          <img class="rounded-circle" src='/images/author/profile_hu8a567cefac8c1a165d433ac0796ac418_3088978_120x120_fit_q75_box.jpg' alt="Author Image">
+          <h5 class="author-name">Stefano Giannini</h5>
+          <p class="text-muted">Sunday, July 14, 2024 | 15 minutes</p>
+        </div>
+        
+        
+        <div class="title">
+          <h1>Gemma-2 &#43; RAG &#43; LlamaIndex &#43; VectorDB</h1>
+        </div>
+
+        
+
+        
+          <div class="tags">
+  <ul style="padding-left: 0;">
+    
+    
+    <li class="rounded"><a href="/tags/deep-learning/" class="btn btn-sm btn-info">Deep Learning</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/nlp/" class="btn btn-sm btn-info">NLP</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/machine-learning/" class="btn btn-sm btn-info">Machine Learning</a></li>
+    
+  </ul>
+</div>
+
+        
+        <div class="post-content" id="post-content">
+          <h2 id="1-introduction">1. Introduction</h2>
+<p>Retrieval-Augmented Generation (RAG) is an advanced AI technique that enhances large language models (LLMs) with the ability to access and utilize external knowledge. This guide will walk you through a practical implementation of RAG using Python and various libraries, explaining each component in detail.</p>
+<p><a href="https://mermaid.live/edit#pako:eNp1kt9ugjAUxl-l6ZXLdA_AxRIF_0VQp9tuiheVHpEEWlLaZcb47ju2uOGWcXHC6fdr-fpxzjRTAmhAc83rI3mNUknwGbK3BjR5saBPOzIYPJMRcw1Za5VB0xQy33l05OSQRYWGzJA4Tv5jIrYZTv-KvjZ27y2k9J5KqQfGLOKGk7nMoTGFkt7WhI2rPQiBIAk1cKf4DRMHTNk72lKabLHAbyZyzIyFShr4NGQDRhfwwctWnzl9ztBOVRuCWGO0zTongBTda_gaum0LhmG02NyvdKGFW4rZBpoazwUyBQm66y52RMJW1tTWkEeyVVZjLHfBjcngCakl60UqsxVI46_60FJLr8--Q7l2K9b7yS3BCShv-OoOn_puzXrdFG_sumVpn1agK14IHKTzVUupOUIFKQ3wVcCB29Jcf-QFUW6N2p5kRgOMEvpUK5sfaXDgZYOdrQU3EBUcp6G6ISAK_G7iJzVT8lDk9PIFuI7TUA" target="_blank" rel="noopener"><img src="https://mermaid.ink/img/pako:eNp1kt9ugjAUxl-l6ZXLdA_AxRIF_0VQp9tuiheVHpEEWlLaZcb47ju2uOGWcXHC6fdr-fpxzjRTAmhAc83rI3mNUknwGbK3BjR5saBPOzIYPJMRcw1Za5VB0xQy33l05OSQRYWGzJA4Tv5jIrYZTv-KvjZ27y2k9J5KqQfGLOKGk7nMoTGFkt7WhI2rPQiBIAk1cKf4DRMHTNk72lKabLHAbyZyzIyFShr4NGQDRhfwwctWnzl9ztBOVRuCWGO0zTongBTda_gaum0LhmG02NyvdKGFW4rZBpoazwUyBQm66y52RMJW1tTWkEeyVVZjLHfBjcngCakl60UqsxVI46_60FJLr8--Q7l2K9b7yS3BCShv-OoOn_puzXrdFG_sumVpn1agK14IHKTzVUupOUIFKQ3wVcCB29Jcf-QFUW6N2p5kRgOMEvpUK5sfaXDgZYOdrQU3EBUcp6G6ISAK_G7iJzVT8lDk9PIFuI7TUA?type=png"></a></p>
+<h2 id="2-setup-and-import">2. Setup and Import</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">%</span>pip install transformers accelerate bitsandbytes flash<span style="color:#f92672">-</span>attn faiss<span style="color:#f92672">-</span>cpu llama<span style="color:#f92672">-</span>index <span style="color:#f92672">-</span>Uq
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span>pip install llama<span style="color:#f92672">-</span>index<span style="color:#f92672">-</span>embeddings<span style="color:#f92672">-</span>huggingface <span style="color:#f92672">-</span>q
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span>pip install llama<span style="color:#f92672">-</span>index<span style="color:#f92672">-</span>llms<span style="color:#f92672">-</span>huggingface <span style="color:#f92672">-</span>q
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span>pip install llama<span style="color:#f92672">-</span>index<span style="color:#f92672">-</span>embeddings<span style="color:#f92672">-</span>instructor llama<span style="color:#f92672">-</span>index<span style="color:#f92672">-</span>vector<span style="color:#f92672">-</span>stores<span style="color:#f92672">-</span>faiss <span style="color:#f92672">-</span>q
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> contextlib
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>device <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>device(<span style="color:#e6db74">&#34;cuda&#34;</span> <span style="color:#66d9ef">if</span> torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>is_available() <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#34;cpu&#34;</span>)
+</span></span><span style="display:flex;"><span>device
+</span></span></code></pre></div><blockquote>
+<p>device(type=&lsquo;cuda&rsquo;)</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> huggingface_hub <span style="color:#f92672">import</span> login
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> kaggle_secrets <span style="color:#f92672">import</span> UserSecretsClient <span style="color:#75715e"># use this only in Kaggle, for other platform set your huggingface API secret key in an another way</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Get Secret HuggingFace token (only in Kaggle)</span>
+</span></span><span style="display:flex;"><span>user_secrets <span style="color:#f92672">=</span> UserSecretsClient()
+</span></span><span style="display:flex;"><span>secret_value <span style="color:#f92672">=</span> user_secrets<span style="color:#f92672">.</span>get_secret(<span style="color:#e6db74">&#34;huggingface_api&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>login(token<span style="color:#f92672">=</span>secret_value)
+</span></span></code></pre></div><h2 id="3-model-and-vectordb-imports">3. Model and VectorDB imports</h2>
+<ul>
+<li>This section imports various components from <strong>llama_index</strong> for document processing, indexing, and querying.</li>
+<li>It sets up <strong>FAISS</strong> (Facebook AI Similarity Search) for efficient similarity search in high-dimensional spaces.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> transformers <span style="color:#f92672">import</span> AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> IPython.display <span style="color:#f92672">import</span> Markdown, display
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> llama_index.core <span style="color:#f92672">import</span> SimpleDirectoryReader, VectorStoreIndex, ServiceContext
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> llama_index.embeddings.huggingface <span style="color:#f92672">import</span> HuggingFaceEmbedding
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> llama_index.llms.huggingface <span style="color:#f92672">import</span> HuggingFaceLLM
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> llama_index.core <span style="color:#f92672">import</span> set_global_tokenizer
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> llama_index.core <span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>    SimpleDirectoryReader,
+</span></span><span style="display:flex;"><span>    load_index_from_storage,
+</span></span><span style="display:flex;"><span>    VectorStoreIndex,
+</span></span><span style="display:flex;"><span>    StorageContext,
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> llama_index.vector_stores.faiss <span style="color:#f92672">import</span> FaissVectorStore
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> faiss
+</span></span></code></pre></div><pre><code>/opt/conda/lib/python3.10/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field &quot;model_id&quot; has conflict with protected namespace &quot;model_&quot;.
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+</code></pre>
+<h2 id="data-loading">Data Loading</h2>
+<ul>
+<li>Use <em>SimpleDirectoryReader</em> from llama_index.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#  Load the PDF</span>
+</span></span><span style="display:flex;"><span>documents <span style="color:#f92672">=</span> SimpleDirectoryReader(<span style="color:#e6db74">&#39;/kaggle/input/superconductivity-lectures/&#39;</span>)<span style="color:#f92672">.</span>load_data()
+</span></span></code></pre></div><h2 id="load-embedding-model">Load Embedding Model</h2>
+<ul>
+<li>It uses the &ldquo;sentence-transformers/all-MiniLM-L6-v2&rdquo; model to create vector representations of text.</li>
+<li>This model is known for its efficiency in creating semantic embeddings.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Load embedding model</span>
+</span></span><span style="display:flex;"><span>embed_model <span style="color:#f92672">=</span> HuggingFaceEmbedding(model_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;sentence-transformers/all-MiniLM-L6-v2&#34;</span>)
+</span></span></code></pre></div><pre><code>modules.json:   0%|          | 0.00/349 [00:00&lt;?, ?B/s]
+
+
+
+config_sentence_transformers.json:   0%|          | 0.00/116 [00:00&lt;?, ?B/s]
+
+
+
+README.md:   0%|          | 0.00/10.7k [00:00&lt;?, ?B/s]
+
+
+
+sentence_bert_config.json:   0%|          | 0.00/53.0 [00:00&lt;?, ?B/s]
+
+
+
+config.json:   0%|          | 0.00/612 [00:00&lt;?, ?B/s]
+
+
+
+model.safetensors:   0%|          | 0.00/90.9M [00:00&lt;?, ?B/s]
+
+
+
+tokenizer_config.json:   0%|          | 0.00/350 [00:00&lt;?, ?B/s]
+
+
+
+vocab.txt:   0%|          | 0.00/232k [00:00&lt;?, ?B/s]
+
+
+
+tokenizer.json:   0%|          | 0.00/466k [00:00&lt;?, ?B/s]
+
+
+
+special_tokens_map.json:   0%|          | 0.00/112 [00:00&lt;?, ?B/s]
+
+
+
+1_Pooling/config.json:   0%|          | 0.00/190 [00:00&lt;?, ?B/s]
+</code></pre>
+<h2 id="4-language-model-setup-and-loading">4. Language Model Setup and Loading</h2>
+<ul>
+<li>It uses the &ldquo;google/gemma-2-9b-it&rdquo; model, a powerful instruction-tuned language model.</li>
+<li>It configures 8-bit quantization to reduce memory usage</li>
+<li>The tokenizer is set globally for consistency.</li>
+<li>The model is configured with specific generation parameters and quantization for efficiency.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> transformers <span style="color:#f92672">import</span> AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>quantization_config <span style="color:#f92672">=</span> BitsAndBytesConfig(load_in_8bit<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tokenizer <span style="color:#f92672">=</span> AutoTokenizer<span style="color:#f92672">.</span>from_pretrained(<span style="color:#e6db74">&#34;google/gemma-2-9b-it&#34;</span>)<span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>set_global_tokenizer(tokenizer)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>llm_model <span style="color:#f92672">=</span> HuggingFaceLLM(model_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;google/gemma-2-9b-it&#34;</span>,
+</span></span><span style="display:flex;"><span>                           tokenizer_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;google/gemma-2-9b-it&#34;</span>, 
+</span></span><span style="display:flex;"><span>                           max_new_tokens<span style="color:#f92672">=</span><span style="color:#ae81ff">1500</span>,
+</span></span><span style="display:flex;"><span>                           generate_kwargs<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;temperature&#34;</span>: <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;num_return_sequences&#34;</span>:<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;do_sample&#34;</span>: <span style="color:#66d9ef">False</span>},
+</span></span><span style="display:flex;"><span>                           model_kwargs<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;quantization_config&#34;</span>: quantization_config},
+</span></span><span style="display:flex;"><span>                           device_map<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;auto&#39;</span>)
+</span></span></code></pre></div><h2 id="direct-llm-querying">Direct LLM Querying</h2>
+<p>This part demonstrates direct querying of the LLM:</p>
+<ul>
+<li>It defines a list of queries about superconductivity.</li>
+<li>It sends each query directly to the LLM and stores the responses.</li>
+<li>The responses are then displayed using Markdown formatting.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>llm_responses <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>queries <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;Which scientists contributed the most to superconductivity?&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;Which are the differences between Type-I and Type-II superconductors? Describe magnetical properties and show formulas.&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;What are the London Equation? Why are they important?&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;Solve this problem: Consider a bulk superconductor containing a cylindrical hole of 0.1 mm diameter. There are 7 magnetic flux quanta trapped in the hole. Find the magnetic field in the hole.&#34;</span>]
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> query <span style="color:#f92672">in</span> queries[:]:
+</span></span><span style="display:flex;"><span>    print(query)
+</span></span><span style="display:flex;"><span>    llm_responses<span style="color:#f92672">.</span>append(
+</span></span><span style="display:flex;"><span>        llm_model<span style="color:#f92672">.</span>complete(query)
+</span></span><span style="display:flex;"><span>    )
+</span></span></code></pre></div><pre><code>Which scientists contributed the most to superconductivity?
+Which are the differences between Type-I and Type-II superconductors? Describe magnetical properties and show formulas.
+What are the London Equation? Why are they important?
+Solve this problem: Consider a bulk superconductor containing a cylindrical hole of 0.1 mm diameter. There are 7 magnetic flux quanta trapped in the hole. Find the magnetic field in the hole.
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i, resp <span style="color:#f92672">in</span> enumerate(llm_responses):
+</span></span><span style="display:flex;"><span>    display(Markdown(<span style="color:#e6db74">&#34;## &#34;</span> <span style="color:#f92672">+</span> queries[i] <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> resp<span style="color:#f92672">.</span>text))
+</span></span></code></pre></div><h3 id="which-scientists-contributed-the-most-to-superconductivity">Which scientists contributed the most to superconductivity?</h3>
+<p>It&rsquo;s impossible to name just a few scientists who &ldquo;contributed the most&rdquo; to superconductivity, as it&rsquo;s a field built on the work of many brilliant minds over decades.</p>
+<p>However, some key figures stand out for their groundbreaking discoveries and contributions:</p>
+<p><strong>Early Pioneers:</strong></p>
+<ul>
+<li><strong>Heike Kamerlingh Onnes (1911):</strong> Discovered superconductivity in mercury at 4.2 K, laying the foundation for the field.</li>
+<li><strong>Walter Meissner and Robert Ochsenfeld (1933):</strong> Discovered the Meissner effect, demonstrating that superconductors expel magnetic fields, a defining characteristic.</li>
+</ul>
+<p><strong>Theoretical Advancements:</strong></p>
+<ul>
+<li><strong>John Bardeen, Leon Cooper, and John Robert Schrieffer (1957):</strong> Developed the BCS theory, explaining superconductivity in conventional materials based on electron pairing. This earned them the Nobel Prize in Physics in 1972.</li>
+<li><strong>Philip Anderson:</strong> Made significant contributions to understanding the electronic structure of superconductors and the role of disorder.</li>
+</ul>
+<p><strong>High-Temperature Superconductors:</strong></p>
+<ul>
+<li><strong>Georg Bednorz and Karl Müller (1986):</strong> Discovered the first high-temperature superconductor, a ceramic material with a critical temperature above 30 K. This revolutionized the field and earned them the Nobel Prize in Physics in 1987.</li>
+<li><strong>Numerous researchers:</strong> Since Bednorz and Müller&rsquo;s discovery, countless scientists have been working to understand and improve high-temperature superconductors, leading to ongoing research and development.</li>
+</ul>
+<p>This list is by no means exhaustive, and many other scientists have made significant contributions to our understanding of superconductivity.</p>
+<p>It&rsquo;s important to remember that scientific progress is a collaborative effort, built on the work of generations of researchers.</p>
+<h3 id="which-are-the-differences-between-type-i-and-type-ii-superconductors-describe-magnetical-properties-and-show-formulas">Which are the differences between Type-I and Type-II superconductors? Describe magnetical properties and show formulas.</h3>
+<h4 id="type-i-vs-type-ii-superconductors">Type-I vs. Type-II Superconductors</h4>
+<p>Superconductors are materials that exhibit zero electrical resistance below a critical temperature (Tc). They are classified into two main types: Type-I and Type-II, based on their response to magnetic fields.</p>
+<p><strong>Type-I Superconductors:</strong></p>
+<ul>
+<li>
+<p><strong>Magnetic Properties:</strong></p>
+<ul>
+<li><strong>Perfect diamagnetism:</strong> They expel all magnetic fields from their interior (Meissner effect).</li>
+<li><strong>Critical magnetic field (Hc):</strong> Above a certain critical magnetic field, superconductivity is destroyed and the material becomes normal.</li>
+<li><strong>Abrupt transition:</strong> The transition from superconducting to normal state is abrupt.</li>
+</ul>
+</li>
+<li>
+<p><strong>Formulae:</strong></p>
+<ul>
+<li><strong>Meissner effect:</strong> B(r) = 0 (where B is the magnetic field and r is the distance inside the superconductor)</li>
+<li><strong>Critical magnetic field:</strong> Hc = (Φ0 / (2πλ^2))</li>
+</ul>
+</li>
+</ul>
+<p><strong>Type-II Superconductors:</strong></p>
+<ul>
+<li>
+<p><strong>Magnetic Properties:</strong></p>
+<ul>
+<li><strong>Mixed state:</strong> They can sustain a magnetic field within their interior, forming quantized vortices.</li>
+<li><strong>Two critical fields:</strong>
+<ul>
+<li><strong>Lower critical field (Hc1):</strong> Below this field, the material is fully superconducting.</li>
+<li><strong>Upper critical field (Hc2):</strong> Above this field, the material becomes normal.</li>
+</ul>
+</li>
+<li><strong>Intermediate state:</strong> Between Hc1 and Hc2, the material exists in a mixed state with both superconducting and normal regions.</li>
+<li><strong>Gradual transition:</strong> The transition from superconducting to normal state is gradual.</li>
+</ul>
+</li>
+<li>
+<p><strong>Formulae:</strong></p>
+<ul>
+<li><strong>Flux quantization:</strong> Φ = Φ0 (where Φ is the magnetic flux through a loop and Φ0 is the flux quantum)</li>
+<li><strong>Critical fields:</strong> Hc1 and Hc2 are typically temperature-dependent.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Summary Table:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Type-I Superconductors</th>
+<th>Type-II Superconductors</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Magnetic Field Response</td>
+<td>Perfect diamagnetism</td>
+<td>Mixed state with quantized vortices</td>
+</tr>
+<tr>
+<td>Critical Field</td>
+<td>Single critical field (Hc)</td>
+<td>Two critical fields (Hc1 and Hc2)</td>
+</tr>
+<tr>
+<td>Transition</td>
+<td>Abrupt</td>
+<td>Gradual</td>
+</tr>
+<tr>
+<td>Examples</td>
+<td>Lead, mercury</td>
+<td>Niobium, YBCO</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong></p>
+<ul>
+<li>The critical temperature (Tc) is the temperature below which superconductivity occurs.</li>
+<li>The penetration depth (λ) is a measure of how deeply the magnetic field penetrates the superconductor.</li>
+<li>The flux quantum (Φ0) is a fundamental constant related to the magnetic flux.</li>
+</ul>
+<h3 id="what-are-the-london-equation-why-are-they-important">What are the London Equation? Why are they important?</h3>
+<p>The London equations are a set of equations that describe the behavior of superconductors. They were first derived by Fritz and Heinz London in 1935.</p>
+<p><strong>The London Equations:</strong></p>
+<ul>
+<li><strong>Equation 1:</strong> ∇² <strong>j</strong> = - (4π/c²) <strong>M</strong></li>
+<li><strong>Equation 2:</strong> <strong>j</strong> = - (1/μ₀) ∇ × <strong>B</strong></li>
+</ul>
+<p>Where:</p>
+<ul>
+<li><strong>j</strong> is the supercurrent density</li>
+<li><strong>M</strong> is the magnetization</li>
+<li><strong>B</strong> is the magnetic field</li>
+<li><strong>c</strong> is the speed of light</li>
+<li><strong>μ₀</strong> is the permeability of free space</li>
+</ul>
+<p><strong>Importance of the London Equations:</strong></p>
+<p>The London equations are important because they provide a fundamental understanding of the following phenomena in superconductors:</p>
+<ol>
+<li>
+<p><strong>Meissner Effect:</strong> The London equations predict that superconductors expel magnetic fields from their interior. This is known as the Meissner effect and is a defining characteristic of superconductivity.</p>
+</li>
+<li>
+<p><strong>Perfect Conductivity:</strong> The equations show that superconductors have zero electrical resistance. This is because the supercurrent density is proportional to the applied electric field, but the electric field inside a superconductor is zero.</p>
+</li>
+<li>
+<p><strong>London Penetration Depth:</strong> The equations predict a finite penetration depth for magnetic fields into a superconductor. This means that magnetic fields cannot penetrate the superconductor completely but decay exponentially within a certain distance.</p>
+</li>
+<li>
+<p><strong>Flux Quantization:</strong> The London equations, when combined with other theoretical frameworks, lead to the concept of flux quantization. This means that the magnetic flux trapped within a superconducting loop is quantized in units of the magnetic flux quantum.</p>
+</li>
+</ol>
+<p><strong>Limitations:</strong></p>
+<p>The London equations are a phenomenological theory and do not explain the microscopic mechanism of superconductivity. They are only valid for superconductors with a low critical temperature (Tc) and are not applicable to high-temperature superconductors.</p>
+<p><strong>Conclusion:</strong></p>
+<p>Despite their limitations, the London equations are a cornerstone of superconductivity theory. They provide a simple and elegant description of many key properties of superconductors and have paved the way for further theoretical and experimental advancements in the field.</p>
+<h3 id="solve-this-problem-consider-a-bulk-superconductor-containing-a-cylindrical-hole-of-01-mm-diameter-there-are-7-magnetic-flux-quanta-trapped-in-the-hole-find-the-magnetic-field-in-the-hole">Solve this problem: Consider a bulk superconductor containing a cylindrical hole of 0.1 mm diameter. There are 7 magnetic flux quanta trapped in the hole. Find the magnetic field in the hole.</h3>
+<p>Here&rsquo;s how to solve the problem:</p>
+<p><strong>1. Understand the Concept</strong></p>
+<ul>
+<li><strong>Bulk Superconductor:</strong> A material that completely expels magnetic fields from its interior when cooled below a critical temperature.</li>
+<li><strong>Meissner Effect:</strong> The expulsion of magnetic fields from a superconductor.</li>
+<li><strong>Flux Quantization:</strong>  Magnetic flux trapped within a superconductor is quantized, meaning it can only exist in discrete multiples of a fundamental unit, Φ₀ = h/2e, where h is Planck&rsquo;s constant and e is the elementary charge.</li>
+</ul>
+<p><strong>2. Apply the Formula</strong></p>
+<p>The magnetic field inside the hole is related to the trapped flux quanta (n) and the area of the hole (A) by:</p>
+<p>B = nΦ₀ / A</p>
+<p><strong>3. Calculate the Area</strong></p>
+<p>The area of the hole is:</p>
+<p>A = πr² = π(0.05 mm)² = 7.85 x 10⁻³ mm² = 7.85 x 10⁻⁹ m²</p>
+<p><strong>4. Calculate the Magnetic Field</strong></p>
+<p>Substitute the values into the formula:</p>
+<p>B = (7)(h/2e) / (7.85 x 10⁻⁹ m²)</p>
+<p><strong>5.  Plug in the Constants</strong></p>
+<ul>
+<li>h = 6.626 x 10⁻³⁴ J s</li>
+<li>e = 1.602 x 10⁻¹⁹ C</li>
+</ul>
+<p>Calculate the magnetic field (B) using these values.</p>
+<p>Let me know if you&rsquo;d like me to calculate the numerical value of the magnetic field.</p>
+<h2 id="vector-store-and-index-creation">Vector Store and Index Creation</h2>
+<p>This section sets up the vector store and creates the index:</p>
+<ul>
+<li>It initializes a FAISS index with the embedding dimension of 384 (the same as the embedding model)</li>
+<li>It creates a vector store using this index.</li>
+<li>It then builds a VectorStoreIndex from the documents, using the embedding model.</li>
+<li>The index is persisted for future use.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>d <span style="color:#f92672">=</span> <span style="color:#ae81ff">384</span>  <span style="color:#75715e"># embedding dimension</span>
+</span></span><span style="display:flex;"><span>faiss_index <span style="color:#f92672">=</span> faiss<span style="color:#f92672">.</span>IndexFlatL2(d)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>vector_store <span style="color:#f92672">=</span> FaissVectorStore(faiss_index<span style="color:#f92672">=</span>faiss_index)
+</span></span><span style="display:flex;"><span>storage_context <span style="color:#f92672">=</span> StorageContext<span style="color:#f92672">.</span>from_defaults(vector_store<span style="color:#f92672">=</span>vector_store)
+</span></span><span style="display:flex;"><span>index <span style="color:#f92672">=</span> VectorStoreIndex<span style="color:#f92672">.</span>from_documents(
+</span></span><span style="display:flex;"><span>    documents, storage_context<span style="color:#f92672">=</span>storage_context, embed_model<span style="color:#f92672">=</span>embed_model, show_progress<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># save the vector store locally</span>
+</span></span><span style="display:flex;"><span>index<span style="color:#f92672">.</span>storage_context<span style="color:#f92672">.</span>persist()
+</span></span></code></pre></div><h2 id="rag-querying">RAG Querying</h2>
+<ul>
+<li>Compare these results with the previous Direct LLM queries</li>
+<li>The default <em>similarity_top_k</em> values is 3. However, I set it up to 5 to have more exhaustive answers.</li>
+<li>We expect more accurate and truthful answers. Anyway, when asked about London Equations, they are wrong. Also in the first query, direct LLM provides only few scientists but do not quote &ldquo;Josephson&rdquo; in any case (even after multiple generation).</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>query_engine <span style="color:#f92672">=</span> index<span style="color:#f92672">.</span>as_query_engine(llm<span style="color:#f92672">=</span>llm_model, similarity_top_k<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>rag_responses <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># query = &#34;Which scientists contributed the most to superconductivity?&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> query <span style="color:#f92672">in</span> queries:
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> query_engine<span style="color:#f92672">.</span>query(query)
+</span></span><span style="display:flex;"><span>    rag_responses<span style="color:#f92672">.</span>append(response)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i, resp <span style="color:#f92672">in</span> enumerate(rag_responses):
+</span></span><span style="display:flex;"><span>    sources <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># extract file_name sources</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> node <span style="color:#f92672">in</span> resp<span style="color:#f92672">.</span>source_nodes:
+</span></span><span style="display:flex;"><span>        sources<span style="color:#f92672">.</span>append(node<span style="color:#f92672">.</span>metadata[<span style="color:#e6db74">&#39;file_name&#39;</span>])
+</span></span><span style="display:flex;"><span>    display(Markdown(<span style="color:#e6db74">&#34;## &#34;</span> <span style="color:#f92672">+</span> queries[i] <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Sources: _</span><span style="color:#e6db74">{</span>sources<span style="color:#e6db74">}</span><span style="color:#e6db74">_</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> resp<span style="color:#f92672">.</span>response))
+</span></span></code></pre></div><h3 id="which-scientists-contributed-the-most-to-superconductivity-1">Which scientists contributed the most to superconductivity?</h3>
+<p>Sources: <em>[&lsquo;Lecture1.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;]</em></p>
+<p>Based on the provided text, the scientists who contributed the most to superconductivity are:</p>
+<ul>
+<li><strong>Heike Kamerlingh Onnes:</strong> Discovered superconductivity.</li>
+<li><strong>Lev Davidovich Landau:</strong> Developed the theory of second-order phase transitions, which is relevant to superconductivity.</li>
+<li><strong>John Bardeen, Leon Cooper, and John Robert Schrieffer (BCS):</strong> Developed the BCS theory, which explains the mechanism of superconductivity.</li>
+<li><strong>Brian David Josephson:</strong> Predicted the Josephson effect, a key phenomenon in superconductivity.</li>
+<li><strong>Ivar Giaever:</strong> Experimentally verified the Josephson effect.</li>
+<li><strong>Pyotr Leonidovich Kapitsa:</strong> Made fundamental inventions and discoveries in low-temperature physics, crucial for studying superconductivity.</li>
+<li><strong>J. Georg Bednorz and K. Alexander Müller:</strong> Discovered high-temperature superconductivity in ceramic materials.</li>
+<li><strong>Alexei A. Abrikosov:</strong> Contributed to the theory of superconductors and superfluids.</li>
+<li><strong>Vitaly L. Ginzburg:</strong> Developed the Ginzburg-Landau theory, which describes the behavior of superconductors.</li>
+<li><strong>John Cooper:</strong>  His work on electron pairing in superconductors was crucial for the development of the BCS theory.</li>
+</ul>
+<p>The text emphasizes the importance of understanding the microscopic mechanism of superconductivity, highlighting the contributions of Cooper and the development of the BCS theory. It also provides some insights into why certain materials, like noble metals, do not become superconductors.</p>
+<h3 id="which-are-the-differences-between-type-i-and-type-ii-superconductors-describe-magnetical-properties-and-show-formulas-1">Which are the differences between Type-I and Type-II superconductors? Describe magnetical properties and show formulas.</h3>
+<p>Sources: <em>[&lsquo;Lecture2.pdf&rsquo;, &lsquo;Lecture2.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;]</em></p>
+<p>Superconductors can be divided into two groups, Type-I and Type-II, characterized by their different responses to external magnetic fields. This classification is crucial in understanding the behavior of superconductors in various applications.</p>
+<p><strong>Type-I Superconductors:</strong></p>
+<ul>
+<li><strong>Meissner Effect:</strong> Exhibit the complete Meissner effect, meaning they expel all magnetic fields from their interior. This expulsion is a fundamental characteristic of superconductivity.</li>
+<li><strong>Critical Field:</strong>  Have a single critical field (Hc) above which superconductivity is destroyed.  When the applied magnetic field exceeds Hc, the superconductor abruptly transitions to the normal state.</li>
+<li><strong>Magnetic Field Penetration:</strong> When the applied field exceeds Hc, the magnetic field penetrates the superconductor abruptly.</li>
+<li><strong>Magnetization Curve:</strong> The magnetization curve (B = B(H0)) shows a sharp transition from B = 0 to B = H0 at Hc.</li>
+</ul>
+<p><strong>Type-II Superconductors:</strong></p>
+<ul>
+<li><strong>Partial Meissner Effect:</strong> Show an incomplete (partial) Meissner effect at sufficiently large fields. They can sustain a finite magnetic field within their interior. This behavior is due to the formation of quantized vortices.</li>
+<li><strong>Mixed State:</strong>  In a magnetic field between two critical fields (Hc1 and Hc2), they exhibit a mixed state where magnetic flux penetrates the superconductor in quantized vortices. These vortices are essentially circulating supercurrents that carry magnetic flux.</li>
+<li><strong>Critical Fields:</strong> Possess two critical fields: Hc1 and Hc2.
+<ul>
+<li>Hc1: The field at which magnetic flux begins to penetrate.</li>
+<li>Hc2: The field above which superconductivity is completely destroyed.</li>
+</ul>
+</li>
+<li><strong>Magnetization Curve:</strong> The magnetization curve is more complex, showing a gradual decrease in magnetization as the field increases.</li>
+</ul>
+<p><strong>Formulas:</strong></p>
+<ul>
+<li>
+<p><strong>Magnetic Induction:</strong> B = H0 + 4πM</p>
+<ul>
+<li>B: Magnetic induction</li>
+<li>H0: Applied magnetic field</li>
+<li>M: Magnetization (magnetic moment per unit volume)</li>
+</ul>
+</li>
+<li>
+<p><strong>London Penetration Depth:</strong> λ = √(m/ (n e 2 ))</p>
+<ul>
+<li>λ: London penetration depth</li>
+<li>m: Mass of the electron</li>
+<li>n: Number density of electrons</li>
+<li>e: Charge of the electron</li>
+</ul>
+</li>
+<li>
+<p><strong>Rutgers Formula (Specific Heat Jump):</strong></p>
+<ul>
+<li>ΔC/T =  - (∂2G/∂T2)H |T=Tc = 4π/Tc</li>
+<li>ΔC: Difference in specific heat between superconducting and normal states</li>
+<li>Tc: Critical temperature</li>
+<li>G: Gibbs free energy</li>
+</ul>
+</li>
+</ul>
+<p>Let me know if you have any other questions.</p>
+<h3 id="what-are-the-london-equation-why-are-they-important-1">What are the London Equation? Why are they important?</h3>
+<p>Sources: <em>[&lsquo;Lecture1.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture1.pdf&rsquo;]</em></p>
+<p>The London equations are a set of two fundamental equations that describe the behavior of superconductors in electromagnetic fields. They are:</p>
+<ul>
+<li><strong>Equation (3.6):</strong> ∇²H = - (4π/λ²)J<sub>s</sub></li>
+<li><strong>Equation (3.8):</strong>  J<sub>s</sub> = -(π/λ²)A</li>
+</ul>
+<p>Where:</p>
+<ul>
+<li><strong>H</strong> is the magnetic field</li>
+<li><strong>J<sub>s</sub></strong> is the supercurrent density</li>
+<li><strong>λ</strong> is the London penetration depth</li>
+<li><strong>A</strong> is the vector potential</li>
+</ul>
+<p>These equations are crucial because they provide a simple yet effective model for understanding key superconducting properties:</p>
+<ol>
+<li>
+<p><strong>Perfect Diamagnetism:</strong> The equations demonstrate that superconductors expel magnetic fields from their interior, a phenomenon known as perfect diamagnetism. This is a direct consequence of the relationship between the magnetic field and the supercurrent density.</p>
+</li>
+<li>
+<p><strong>Zero Resistance:</strong> The London equations also explain the zero resistance to direct current (dc) flow in superconductors.</p>
+</li>
+</ol>
+<p><strong>Importance:</strong></p>
+<ul>
+<li>
+<p><strong>Foundation for Understanding:</strong> While the London theory has limitations, it served as a foundation for more advanced theories like the Ginzburg-Landau theory, which addressed some of its shortcomings.</p>
+</li>
+<li>
+<p><strong>Predictive Power:</strong> The London equations allow us to predict the behavior of superconductors in various electromagnetic fields, such as those found in magnetic levitation and superconducting magnets.</p>
+</li>
+<li>
+<p><strong>Technological Applications:</strong> Understanding the London equations is essential for developing and optimizing superconducting technologies, including MRI machines, particle accelerators, and power transmission systems.</p>
+</li>
+</ul>
+<p><strong>Contextual Connection:</strong></p>
+<p>The provided text highlights the historical development of superconductivity theory, culminating in the BCS theory. The London equations, while a simplified model, played a crucial role in laying the groundwork for these later, more sophisticated theories. They provided the first concrete explanation for the phenomenon of perfect diamagnetism and zero resistance, paving the way for a deeper understanding of superconductivity.</p>
+<h3 id="solve-this-problem-consider-a-bulk-superconductor-containing-a-cylindrical-hole-of-01-mm-diameter-there-are-7-magnetic-flux-quanta-trapped-in-the-hole-find-the-magnetic-field-in-the-hole-1">Solve this problem: Consider a bulk superconductor containing a cylindrical hole of 0.1 mm diameter. There are 7 magnetic flux quanta trapped in the hole. Find the magnetic field in the hole.</h3>
+<p>Sources: <em>[&lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;, &lsquo;Lecture3.pdf&rsquo;]</em></p>
+<p>To solve this problem, we can use the concept of magnetic flux quantization in superconductors.</p>
+<p><strong>1. Magnetic Flux Quantization:</strong></p>
+<p>Each flux quantum (Φ0) is given by:</p>
+<p>Φ0 = hc/e</p>
+<p>where:</p>
+<ul>
+<li>h is Planck&rsquo;s constant</li>
+<li>c is the speed of light</li>
+<li>e is the elementary charge</li>
+</ul>
+<p>Since 7 magnetic flux quanta are trapped in the hole, the total magnetic flux (Φ) is:</p>
+<p>Φ = 7Φ0</p>
+<p><strong>2. Magnetic Field Calculation:</strong></p>
+<p>The magnetic field (B) in the hole can be calculated using the relationship:</p>
+<p>Φ = B * A</p>
+<p>where A is the area of the hole.</p>
+<p>Therefore:</p>
+<p>B = Φ / A = (7Φ0) / (π * (d/2)^2)</p>
+<p>where d is the diameter of the hole (0.1 mm).</p>
+<p><strong>3. Numerical Calculation:</strong></p>
+<p>Substitute the values of Φ0, d, and π into the equation to obtain the numerical value of the magnetic field in the hole.</p>
+<p>Let me know if you have any further questions.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>This implementation demonstrates the power of RAG in combining the strengths of large language models with the ability to retrieve and utilize specific, relevant information. By using FAISS for efficient similarity search and a state-of-the-art language model like Gemma-2-9b, this system can provide informed, context-aware responses to complex queries about superconductivity.
+The comparison between direct LLM responses and RAG responses would likely show the benefits of RAG in providing more detailed, accurate, and source-backed information. This approach is particularly valuable in domains requiring up-to-date or specialized knowledge, where the LLM&rsquo;s pre-trained knowledge might be insufficient or outdated.</p>
+
+        </div>
+
+        
+        <div class="row ps-3 pe-3">
+        
+          <div class="col-md-6 share-buttons">
+          
+            <strong>Share on:</strong>
+            
+            <a class="btn icon-button bg-facebook" href="https://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fnlp%2fgemma2%2brag%2f" target="_blank">
+              <i class="fab fa-facebook"></i>
+            </a>
+            
+            
+            
+                <a  class="btn icon-button bg-reddit" href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fnlp%2fgemma2%2brag%2f&title=Gemma-2%20%2b%20RAG%20%2b%20LlamaIndex%20%2b%20VectorDB" target="_blank">
+                  <i class="fab fa-reddit"></i>
+                </a>
+            
+            
+            
+            
+                <a class="btn icon-button bg-linkedin" href="https://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fnlp%2fgemma2%2brag%2f&title=Gemma-2%20%2b%20RAG%20%2b%20LlamaIndex%20%2b%20VectorDB" target="_blank">
+                  <i class="fab fa-linkedin"></i>
+                </a>
+            
+            
+             
+            
+                 <a class="btn icon-button bg-whatsapp" href="https://api.whatsapp.com/send?text=Gemma-2%20%2b%20RAG%20%2b%20LlamaIndex%20%2b%20VectorDB http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fnlp%2fgemma2%2brag%2f" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+            
+            
+                <a class="btn icon-button" href="mailto:?subject=Gemma-2%20%2b%20RAG%20%2b%20LlamaIndex%20%2b%20VectorDB&body=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fnlp%2fgemma2%2brag%2f" target="_blank">
+                  <i class="fas fa-envelope-open-text"></i>
+                </a>
+            
+          
+          </div>
+
+        
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/ragespin/ragespin.github.io/edit/main/content/posts%5cmachine%20learning%5cdeep%20learning%5cNLP%5cGemma2&#43;RAG%5cindex.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+    
+    
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+    <div class="col-md-6 previous-article">
+      <a href="/posts/machine-learning/deep-learning/computer-vision/florence/" title="Florence-2 - Vision Foundation Model - Examples" class="btn filled-button">
+        <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
+        <div class="next-prev-text">Florence-2 - Vision Foundation Model - Examples</div>
+      </a>
+    </div>
+  
+  
+      
+      
+        
+      
+      <div class="col-md-6 next-article">
+        <a href="/posts/physics/percolation/" title="Percolation" class="btn filled-button">
+          <div>Next <i class="fas fa-chevron-circle-right"></i></div>
+          <div class="next-prev-text">Percolation</div>
+        </a>
+      </div>
+    
+</div>
+
+      <hr />
+
+      
+      
+
+      
+      
+
+      </div>
+    </div>
+  </div>
+  
+  <a id="scroll-to-top" class="btn" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Scroll to top">
+    <i class="fas fa-chevron-circle-up"></i>
+  </a>
+</section>
+
+
+      
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center ps-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-introduction">1. Introduction</a></li>
+    <li><a href="#2-setup-and-import">2. Setup and Import</a></li>
+    <li><a href="#3-model-and-vectordb-imports">3. Model and VectorDB imports</a></li>
+    <li><a href="#data-loading">Data Loading</a></li>
+    <li><a href="#load-embedding-model">Load Embedding Model</a></li>
+    <li><a href="#4-language-model-setup-and-loading">4. Language Model Setup and Loading</a></li>
+    <li><a href="#direct-llm-querying">Direct LLM Querying</a>
+      <ul>
+        <li><a href="#which-scientists-contributed-the-most-to-superconductivity">Which scientists contributed the most to superconductivity?</a></li>
+        <li><a href="#which-are-the-differences-between-type-i-and-type-ii-superconductors-describe-magnetical-properties-and-show-formulas">Which are the differences between Type-I and Type-II superconductors? Describe magnetical properties and show formulas.</a>
+          <ul>
+            <li><a href="#type-i-vs-type-ii-superconductors">Type-I vs. Type-II Superconductors</a></li>
+          </ul>
+        </li>
+        <li><a href="#what-are-the-london-equation-why-are-they-important">What are the London Equation? Why are they important?</a></li>
+        <li><a href="#solve-this-problem-consider-a-bulk-superconductor-containing-a-cylindrical-hole-of-01-mm-diameter-there-are-7-magnetic-flux-quanta-trapped-in-the-hole-find-the-magnetic-field-in-the-hole">Solve this problem: Consider a bulk superconductor containing a cylindrical hole of 0.1 mm diameter. There are 7 magnetic flux quanta trapped in the hole. Find the magnetic field in the hole.</a></li>
+      </ul>
+    </li>
+    <li><a href="#vector-store-and-index-creation">Vector Store and Index Creation</a></li>
+    <li><a href="#rag-querying">RAG Querying</a>
+      <ul>
+        <li><a href="#which-scientists-contributed-the-most-to-superconductivity-1">Which scientists contributed the most to superconductivity?</a></li>
+        <li><a href="#which-are-the-differences-between-type-i-and-type-ii-superconductors-describe-magnetical-properties-and-show-formulas-1">Which are the differences between Type-I and Type-II superconductors? Describe magnetical properties and show formulas.</a></li>
+        <li><a href="#what-are-the-london-equation-why-are-they-important-1">What are the London Equation? Why are they important?</a></li>
+        <li><a href="#solve-this-problem-consider-a-bulk-superconductor-containing-a-cylindrical-hole-of-01-mm-diameter-there-are-7-magnetic-flux-quanta-trapped-in-the-hole-find-the-magnetic-field-in-the-hole-1">Solve this problem: Consider a bulk superconductor containing a cylindrical hole of 0.1 mm diameter. There are 7 magnetic flux quanta trapped in the hole. Find the magnetic field in the hole.</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+      </div>
+    </div>
+    
+  </section>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+    
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-start">
+        
+        
+        
+        
+      </div>
+    </div>
+    
+    <hr />
+    <div class="container">
+      <p id="disclaimer"><strong>Liability Notice:</strong> This website is done experimentally by me, taking inspiration from the open-source Toha-Hugo theme.</p>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-start">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
+            <img src="/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2024 Copyright.</div>
+        <div class="col-md-4 text-end">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script src="/application.6d2e94fc21563a9870dd3bb4b040f95f24aa53c948e98c0c55ae9bae328a5e9c.js" integrity="sha256-bS6U/CFWOphw3Tu0sED5XySqU8lI6YwMVa6brjKKXpw=" defer></script>
+
+
+    
+     
+
+    
+    
+
+</body>
+</html>

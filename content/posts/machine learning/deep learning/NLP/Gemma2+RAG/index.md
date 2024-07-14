@@ -1,15 +1,28 @@
+---
+title: "Gemma-2 + RAG + LlamaIndex + VectorDB"
+date: 2024-07-14T00:00:00+01:00
+description: Open Source LLM + Local RAG
+menu:
+  sidebar:
+    name: Gemma-2 + RAG
+    identifier: gemma2_rag
+    parent: nlp
+    weight: 9
+hero: mermaid-diagram.svg
+tags: ["Deep Learning", "NLP", "Machine Learning"]
+categories: ["NLP"]
+---
 
 
-# Gemma-2 + RAG + LlamaIndex + VectorDB
 
 
 
-## Introduction
+## 1. Introduction
 Retrieval-Augmented Generation (RAG) is an advanced AI technique that enhances large language models (LLMs) with the ability to access and utilize external knowledge. This guide will walk you through a practical implementation of RAG using Python and various libraries, explaining each component in detail.
 
 [![](https://mermaid.ink/img/pako:eNp1kt9ugjAUxl-l6ZXLdA_AxRIF_0VQp9tuiheVHpEEWlLaZcb47ju2uOGWcXHC6fdr-fpxzjRTAmhAc83rI3mNUknwGbK3BjR5saBPOzIYPJMRcw1Za5VB0xQy33l05OSQRYWGzJA4Tv5jIrYZTv-KvjZ27y2k9J5KqQfGLOKGk7nMoTGFkt7WhI2rPQiBIAk1cKf4DRMHTNk72lKabLHAbyZyzIyFShr4NGQDRhfwwctWnzl9ztBOVRuCWGO0zTongBTda_gaum0LhmG02NyvdKGFW4rZBpoazwUyBQm66y52RMJW1tTWkEeyVVZjLHfBjcngCakl60UqsxVI46_60FJLr8--Q7l2K9b7yS3BCShv-OoOn_puzXrdFG_sumVpn1agK14IHKTzVUupOUIFKQ3wVcCB29Jcf-QFUW6N2p5kRgOMEvpUK5sfaXDgZYOdrQU3EBUcp6G6ISAK_G7iJzVT8lDk9PIFuI7TUA?type=png)](https://mermaid.live/edit#pako:eNp1kt9ugjAUxl-l6ZXLdA_AxRIF_0VQp9tuiheVHpEEWlLaZcb47ju2uOGWcXHC6fdr-fpxzjRTAmhAc83rI3mNUknwGbK3BjR5saBPOzIYPJMRcw1Za5VB0xQy33l05OSQRYWGzJA4Tv5jIrYZTv-KvjZ27y2k9J5KqQfGLOKGk7nMoTGFkt7WhI2rPQiBIAk1cKf4DRMHTNk72lKabLHAbyZyzIyFShr4NGQDRhfwwctWnzl9ztBOVRuCWGO0zTongBTda_gaum0LhmG02NyvdKGFW4rZBpoazwUyBQm66y52RMJW1tTWkEeyVVZjLHfBjcngCakl60UqsxVI46_60FJLr8--Q7l2K9b7yS3BCShv-OoOn_puzXrdFG_sumVpn1agK14IHKTzVUupOUIFKQ3wVcCB29Jcf-QFUW6N2p5kRgOMEvpUK5sfaXDgZYOdrQU3EBUcp6G6ISAK_G7iJzVT8lDk9PIFuI7TUA)
 
-## Setup and Import
+## 2. Setup and Import
 
 
 ```python
@@ -50,7 +63,7 @@ login(token=secret_value)
 
     
 
-## Model and VectorDB imports
+## 3. Model and VectorDB imports
 * This section imports various components from **llama_index** for document processing, indexing, and querying.
 * It sets up **FAISS** (Facebook AI Similarity Search) for efficient similarity search in high-dimensional spaces.
 
@@ -144,7 +157,7 @@ embed_model = HuggingFaceEmbedding(model_name="sentence-transformers/all-MiniLM-
     1_Pooling/config.json:   0%|          | 0.00/190 [00:00<?, ?B/s]
 
 
-## Language Model Setup and Loading
+## 4. Language Model Setup and Loading
 * It uses the "google/gemma-2-9b-it" model, a powerful instruction-tuned language model.
 * It configures 8-bit quantization to reduce memory usage
 * The tokenizer is set globally for consistency.
@@ -167,52 +180,6 @@ llm_model = HuggingFaceLLM(model_name="google/gemma-2-9b-it",
                            device_map='auto')
 ```
 
-
-    tokenizer_config.json:   0%|          | 0.00/40.6k [00:00<?, ?B/s]
-
-
-
-    tokenizer.model:   0%|          | 0.00/4.24M [00:00<?, ?B/s]
-
-
-
-    tokenizer.json:   0%|          | 0.00/17.5M [00:00<?, ?B/s]
-
-
-
-    special_tokens_map.json:   0%|          | 0.00/636 [00:00<?, ?B/s]
-
-
-
-    config.json:   0%|          | 0.00/857 [00:00<?, ?B/s]
-
-
-
-    model.safetensors.index.json:   0%|          | 0.00/39.1k [00:00<?, ?B/s]
-
-
-
-    Downloading shards:   0%|          | 0/4 [00:00<?, ?it/s]
-
-
-
-    model-00001-of-00004.safetensors:   0%|          | 0.00/4.90G [00:00<?, ?B/s]
-
-
-
-    model-00002-of-00004.safetensors:   0%|          | 0.00/4.95G [00:00<?, ?B/s]
-
-
-
-    model-00004-of-00004.safetensors:   0%|          | 0.00/3.67G [00:00<?, ?B/s]
-
-
-
-    Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
-
-
-
-    generation_config.json:   0%|          | 0.00/173 [00:00<?, ?B/s]
 
 
 ## Direct LLM Querying

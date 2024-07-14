@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>NLP on Stefano Giannini</title>
+    <link>http://localhost:1313/categories/nlp/</link>
+    <description>Recent content in NLP on Stefano Giannini</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 25 Jun 2024 00:08:25 +0100</lastBuildDate><atom:link href="http://localhost:1313/categories/nlp/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>Gemma-2 &#43; RAG &#43; LlamaIndex &#43; VectorDB</title>
+      <link>http://localhost:1313/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/</link>
+      <pubDate>Tue, 25 Jun 2024 00:08:25 +0100</pubDate>
+      
+      <guid>http://localhost:1313/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/</guid>
+      <description>Introduction Retrieval-Augmented Generation (RAG) is an advanced AI technique that enhances large language models (LLMs) with the ability to access and utilize external knowledge. This guide will walk you through a practical implementation of RAG using Python and various libraries, explaining each component in detail.
+Setup and Import %pip install transformers accelerate bitsandbytes flash-attn faiss-cpu llama-index -Uq %pip install llama-index-embeddings-huggingface -q %pip install llama-index-llms-huggingface -q %pip install llama-index-embeddings-instructor llama-index-vector-stores-faiss -q import contextlib import os import torch device = torch.</description>
+    </item>
+    
+    
+  </channel>
+</rss>
