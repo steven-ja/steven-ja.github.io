@@ -15,6 +15,8 @@ categories: ["NLP"]
 
 
 
+*Open in:*[<img src="https://www.kaggle.com/static/images/logos/kaggle-logo-gray-300.png" width="45"/>](https://www.kaggle.com/code/stefanogiannini/gemma-2-rag-llamaindex-faiss/)
+
 
 
 ## 1. Introduction
