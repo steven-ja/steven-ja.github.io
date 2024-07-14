@@ -1,9 +1,10 @@
+
+
 # Gemma-2 + RAG + LlamaIndex + VectorDB
-Load Gemma-2 9B (IT - fine-tuned on instructions)
 
 
 
-# Introduction
+## Introduction
 Retrieval-Augmented Generation (RAG) is an advanced AI technique that enhances large language models (LLMs) with the ability to access and utilize external knowledge. This guide will walk you through a practical implementation of RAG using Python and various libraries, explaining each component in detail.
 
 [![](https://mermaid.ink/img/pako:eNp1kt9ugjAUxl-l6ZXLdA_AxRIF_0VQp9tuiheVHpEEWlLaZcb47ju2uOGWcXHC6fdr-fpxzjRTAmhAc83rI3mNUknwGbK3BjR5saBPOzIYPJMRcw1Za5VB0xQy33l05OSQRYWGzJA4Tv5jIrYZTv-KvjZ27y2k9J5KqQfGLOKGk7nMoTGFkt7WhI2rPQiBIAk1cKf4DRMHTNk72lKabLHAbyZyzIyFShr4NGQDRhfwwctWnzl9ztBOVRuCWGO0zTongBTda_gaum0LhmG02NyvdKGFW4rZBpoazwUyBQm66y52RMJW1tTWkEeyVVZjLHfBjcngCakl60UqsxVI46_60FJLr8--Q7l2K9b7yS3BCShv-OoOn_puzXrdFG_sumVpn1agK14IHKTzVUupOUIFKQ3wVcCB29Jcf-QFUW6N2p5kRgOMEvpUK5sfaXDgZYOdrQU3EBUcp6G6ISAK_G7iJzVT8lDk9PIFuI7TUA?type=png)](https://mermaid.live/edit#pako:eNp1kt9ugjAUxl-l6ZXLdA_AxRIF_0VQp9tuiheVHpEEWlLaZcb47ju2uOGWcXHC6fdr-fpxzjRTAmhAc83rI3mNUknwGbK3BjR5saBPOzIYPJMRcw1Za5VB0xQy33l05OSQRYWGzJA4Tv5jIrYZTv-KvjZ27y2k9J5KqQfGLOKGk7nMoTGFkt7WhI2rPQiBIAk1cKf4DRMHTNk72lKabLHAbyZyzIyFShr4NGQDRhfwwctWnzl9ztBOVRuCWGO0zTongBTda_gaum0LhmG02NyvdKGFW4rZBpoazwUyBQm66y52RMJW1tTWkEeyVVZjLHfBjcngCakl60UqsxVI46_60FJLr8--Q7l2K9b7yS3BCShv-OoOn_puzXrdFG_sumVpn1agK14IHKTzVUupOUIFKQ3wVcCB29Jcf-QFUW6N2p5kRgOMEvpUK5sfaXDgZYOdrQU3EBUcp6G6ISAK_G7iJzVT8lDk9PIFuI7TUA)
@@ -252,7 +253,7 @@ for i, resp in enumerate(llm_responses):
 ```
 
 
-## Which scientists contributed the most to superconductivity?
+### Which scientists contributed the most to superconductivity?
 
 
 It's impossible to name just a few scientists who "contributed the most" to superconductivity, as it's a field built on the work of many brilliant minds over decades. 
@@ -281,10 +282,10 @@ It's important to remember that scientific progress is a collaborative effort, b
 
 
 
-## Which are the differences between Type-I and Type-II superconductors? Describe magnetical properties and show formulas.
+### Which are the differences between Type-I and Type-II superconductors? Describe magnetical properties and show formulas.
 
 
-## Type-I vs. Type-II Superconductors
+#### Type-I vs. Type-II Superconductors
 
 Superconductors are materials that exhibit zero electrical resistance below a critical temperature (Tc). They are classified into two main types: Type-I and Type-II, based on their response to magnetic fields.
 
@@ -333,7 +334,7 @@ Superconductors are materials that exhibit zero electrical resistance below a cr
 
 
 
-## What are the London Equation? Why are they important?
+### What are the London Equation? Why are they important?
 
 
 The London equations are a set of equations that describe the behavior of superconductors. They were first derived by Fritz and Heinz London in 1935.
@@ -374,7 +375,7 @@ Despite their limitations, the London equations are a cornerstone of superconduc
 
 
 
-## Solve this problem: Consider a bulk superconductor containing a cylindrical hole of 0.1 mm diameter. There are 7 magnetic flux quanta trapped in the hole. Find the magnetic field in the hole.
+### Solve this problem: Consider a bulk superconductor containing a cylindrical hole of 0.1 mm diameter. There are 7 magnetic flux quanta trapped in the hole. Find the magnetic field in the hole.
 
 
 Here's how to solve the problem:
@@ -439,31 +440,7 @@ index.storage_context.persist()
 ```
 
 
-    Parsing nodes:   0%|          | 0/28 [00:00<?, ?it/s]
 
-
-
-    Generating embeddings:   0%|          | 0/43 [00:00<?, ?it/s]
-
-
-
-    Batches:   0%|          | 0/1 [00:00<?, ?it/s]
-
-
-
-    Batches:   0%|          | 0/1 [00:00<?, ?it/s]
-
-
-
-    Batches:   0%|          | 0/1 [00:00<?, ?it/s]
-
-
-
-    Batches:   0%|          | 0/1 [00:00<?, ?it/s]
-
-
-
-    Batches:   0%|          | 0/1 [00:00<?, ?it/s]
 
 
 ## RAG Querying
@@ -486,21 +463,6 @@ for query in queries:
 ```
 
 
-    Batches:   0%|          | 0/1 [00:00<?, ?it/s]
-
-
-
-    Batches:   0%|          | 0/1 [00:00<?, ?it/s]
-
-
-
-    Batches:   0%|          | 0/1 [00:00<?, ?it/s]
-
-
-
-    Batches:   0%|          | 0/1 [00:00<?, ?it/s]
-
-
 
 ```python
 for i, resp in enumerate(rag_responses):
@@ -512,7 +474,7 @@ for i, resp in enumerate(rag_responses):
 ```
 
 
-## Which scientists contributed the most to superconductivity?
+### Which scientists contributed the most to superconductivity?
 Sources: _['Lecture1.pdf', 'Lecture1.pdf', 'Lecture1.pdf', 'Lecture1.pdf', 'Lecture1.pdf']_
 
 
@@ -538,7 +500,7 @@ The text emphasizes the importance of understanding the microscopic mechanism of
 
 
 
-## Which are the differences between Type-I and Type-II superconductors? Describe magnetical properties and show formulas.
+### Which are the differences between Type-I and Type-II superconductors? Describe magnetical properties and show formulas.
 Sources: _['Lecture2.pdf', 'Lecture2.pdf', 'Lecture1.pdf', 'Lecture3.pdf', 'Lecture1.pdf']_
 
 
@@ -586,7 +548,7 @@ Let me know if you have any other questions.
 
 
 
-## What are the London Equation? Why are they important?
+### What are the London Equation? Why are they important?
 Sources: _['Lecture1.pdf', 'Lecture3.pdf', 'Lecture3.pdf', 'Lecture3.pdf', 'Lecture1.pdf']_
 
 
@@ -626,7 +588,7 @@ The provided text highlights the historical development of superconductivity the
 
 
 
-## Solve this problem: Consider a bulk superconductor containing a cylindrical hole of 0.1 mm diameter. There are 7 magnetic flux quanta trapped in the hole. Find the magnetic field in the hole.
+### Solve this problem: Consider a bulk superconductor containing a cylindrical hole of 0.1 mm diameter. There are 7 magnetic flux quanta trapped in the hole. Find the magnetic field in the hole.
 Sources: _['Lecture3.pdf', 'Lecture3.pdf', 'Lecture3.pdf', 'Lecture3.pdf', 'Lecture3.pdf']_
 
 
@@ -675,11 +637,3 @@ This implementation demonstrates the power of RAG in combining the strengths of 
 The comparison between direct LLM responses and RAG responses would likely show the benefits of RAG in providing more detailed, accurate, and source-backed information. This approach is particularly valuable in domains requiring up-to-date or specialized knowledge, where the LLM's pre-trained knowledge might be insufficient or outdated.
 
 
-```python
-
-```
-
-
-```python
-
-```
