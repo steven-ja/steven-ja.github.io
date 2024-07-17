@@ -1,5 +1,5 @@
 ---
-title: "Quantum Computing - Fundementals - Teleportation"
+title: "Quantum Computing - Fundamentals - Teleportation"
 date: 2024-07-03T08:00:00+01:00
 description: Python Implentation of teleportation quantum circuits
 menu:

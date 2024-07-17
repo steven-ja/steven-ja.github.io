@@ -1,5 +1,5 @@
 ---
-title: "Quantum Computing - Fundementals (Part 1)"
+title: "Quantum Computing - Fundamentals (Part 1)"
 date: 2024-06-30T08:00:00+01:00
 description: Python Implentation of simple quantum circuits
 menu:
