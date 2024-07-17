@@ -54,3 +54,14 @@
 
   </body>
 </html>
+
+{{ with resources.Get "/scripts/features/syntaxhighlight/copybutton.js" }}
+    {{ $minifiedScript := . | minify | fingerprint }}
+    <script src="{{ $minifiedScript.Permalink }}" integrity="{{ $minifiedScript.Data.Integrity }}" defer></script>
+{{ else }}
+    {{ errorf "copybutton.js not found in assets/js/" }}
+{{ end }}
+
+{{ if (findRE "<pre" .Content 1) }}
+    <script src="/scripts/features/syntaxhighlight/copybutton.js""></script>
+{{ end }}

@@ -107,7 +107,40 @@
     <priority>0.1</priority>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2024-07-06T00:00:00+01:00</lastmod>
+    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/deep-learning/</loc>
+    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/machine-learning/deep-learning/</loc>
+    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/</loc>
+    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/machine-learning/</loc>
+    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/machine-learning/</loc>
+    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/nlp/</loc>
+    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/nlp/</loc>
+    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/machine-learning/deep-learning/nlp/</loc>
+    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/</loc>
+    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/finance/</loc>
     <lastmod>2024-07-06T00:00:00+01:00</lastmod>
@@ -121,22 +154,13 @@
     <loc>http://localhost:1313/tags/forecasting/</loc>
     <lastmod>2024-07-06T00:00:00+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2024-07-06T00:00:00+01:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/posts/finance/stock_prediction/sarimax/</loc>
     <lastmod>2024-07-06T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/statistics/</loc>
     <lastmod>2024-07-06T00:00:00+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
-    <lastmod>2024-07-06T00:00:00+01:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/posts/finance/stock_prediction/</loc>
-    <lastmod>2024-07-06T00:00:00+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
     <lastmod>2024-07-06T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/finance/stock_prediction/sarima/</loc>
@@ -178,31 +202,7 @@
     <loc>http://localhost:1313/posts/machine-learning/deep-learning/computer-vision/</loc>
     <lastmod>2024-06-25T00:08:25+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/deep-learning/</loc>
-    <lastmod>2024-06-25T00:08:25+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/machine-learning/deep-learning/</loc>
-    <lastmod>2024-06-25T00:08:25+01:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/posts/machine-learning/deep-learning/computer-vision/florence/</loc>
-    <lastmod>2024-06-25T00:08:25+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/</loc>
-    <lastmod>2024-06-25T00:08:25+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/machine-learning/</loc>
-    <lastmod>2024-06-25T00:08:25+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/machine-learning/</loc>
-    <lastmod>2024-06-25T00:08:25+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/nlp/</loc>
-    <lastmod>2024-06-25T00:08:25+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/categories/nlp/</loc>
-    <lastmod>2024-06-25T00:08:25+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/machine-learning/deep-learning/nlp/</loc>
     <lastmod>2024-06-25T00:08:25+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/finance/monte_carlo/</loc>

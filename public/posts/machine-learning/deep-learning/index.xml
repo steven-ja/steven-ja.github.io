@@ -6,7 +6,18 @@
     <description>Recent content in Deep Learning on Stefano Giannini</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 25 Jun 2024 00:08:25 +0100</lastBuildDate><atom:link href="http://localhost:1313/posts/machine-learning/deep-learning/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Sun, 14 Jul 2024 00:00:00 +0100</lastBuildDate><atom:link href="http://localhost:1313/posts/machine-learning/deep-learning/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>Gemma-2 &#43; RAG &#43; LlamaIndex &#43; VectorDB</title>
+      <link>http://localhost:1313/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/</link>
+      <pubDate>Sun, 14 Jul 2024 00:00:00 +0100</pubDate>
+      
+      <guid>http://localhost:1313/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/</guid>
+      <description>Open in:
+1. Introduction Retrieval-Augmented Generation (RAG) is an advanced AI technique that enhances large language models (LLMs) with the ability to access and utilize external knowledge. This guide will walk you through a practical implementation of RAG using Python and various libraries, explaining each component in detail.
+2. Setup and Import %pip install transformers accelerate bitsandbytes flash-attn faiss-cpu llama-index -Uq %pip install llama-index-embeddings-huggingface -q %pip install llama-index-llms-huggingface -q %pip install llama-index-embeddings-instructor llama-index-vector-stores-faiss -q import contextlib import os import torch device = torch.</description>
+    </item>
+    
+    <item>
       <title>Florence-2 - Vision Foundation Model - Examples</title>
       <link>http://localhost:1313/posts/machine-learning/deep-learning/computer-vision/florence/</link>
       <pubDate>Tue, 25 Jun 2024 00:08:25 +0100</pubDate>
@@ -15,16 +26,6 @@
       <description>Install dependencies Type the following command to install possible needed dependencies (especially if the inference is performed on the CPU)
 %pip install einops flash_attn In Kaggle, transformers and torch are already installed. Otherwise you also need to install them on your local PC.
 Import Libraries from transformers import AutoProcessor, AutoModelForCausalLM from PIL import Image import requests import copy import torch %matplotlib inline Import the model We can choose Florence-2-large or Florence-2-large-ft (fine-tuned).</description>
-    </item>
-    
-    <item>
-      <title>Gemma-2 &#43; RAG &#43; LlamaIndex &#43; VectorDB</title>
-      <link>http://localhost:1313/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/</link>
-      <pubDate>Tue, 25 Jun 2024 00:08:25 +0100</pubDate>
-      
-      <guid>http://localhost:1313/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/</guid>
-      <description>Introduction Retrieval-Augmented Generation (RAG) is an advanced AI technique that enhances large language models (LLMs) with the ability to access and utilize external knowledge. This guide will walk you through a practical implementation of RAG using Python and various libraries, explaining each component in detail.
-Setup and Import %pip install transformers accelerate bitsandbytes flash-attn faiss-cpu llama-index -Uq %pip install llama-index-embeddings-huggingface -q %pip install llama-index-llms-huggingface -q %pip install llama-index-embeddings-instructor llama-index-vector-stores-faiss -q import contextlib import os import torch device = torch.</description>
     </item>
     
     
