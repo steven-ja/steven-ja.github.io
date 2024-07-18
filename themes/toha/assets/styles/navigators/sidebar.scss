@@ -1,7 +1,7 @@
 .sidebar-section {
   order: 1;
   flex: 20%;
-  max-width: 20%;
+  // max-width: 20%;
   @include transition();
 
   .sidebar-holder {
@@ -9,6 +9,7 @@
     position: sticky;
     background-color: get-light-color('bg-primary');
     height: 100vh;
+    width: 80vh;
     overflow: auto;
     box-shadow: $box-shadow;
     @include transition();
@@ -20,9 +21,10 @@
 
       #search-box {
         margin-left: 5%;
-        margin-right: 5%;
+        margin-right: 4%;
         width: -webkit-fill-available;
         height: 35px;
+        width: 60vh;
         padding-left: 15px;
         margin-top: 30px;
         margin-bottom: 10px;
@@ -130,16 +132,16 @@
 
   @include media('<=ultra-large') {
     flex: 15%;
-    max-width: 15%;
+    max-width: 70vh;
 
     .sidebar-holder {
-      max-width: 100%;
+      max-width: 70vh;
     }
   }
 
   @include media('<=extra-large') {
     .sidebar-holder {
-      max-width: 20rem;
+      max-width: 30rem;
     }
   }
 

@@ -139,7 +139,7 @@ To achieve this, we will utilize the yfinance library to fetch stock information
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>http://localhost:1313/notes/physics/electromagnetism/</guid>
-      <description>Maxwell Equations (Integral) Gauss&amp;rsquo; Law: $$ \iint_{\partial \Omega} \mathbf{E} \cdot d\mathbf{S} = 4 \pi \iiint_{\Omega} \rho dV $$
+      <description>Maxwell Equations (Integral)Gauss&amp;rsquo; Law: $$ \iint_{\partial \Omega} \mathbf{E} \cdot d\mathbf{S} = 4 \pi \iiint_{\Omega} \rho dV $$
 Gauss&amp;rsquo; Law for Magnetism: $$ \iint_{\partial \Omega} \mathbf{B} \cdot d\mathbf{S} = 0 $$
 Maxwell-Faraday Equation:
 $$ \oint_{\partial \Omega} \mathbf{E} \cdot d\mathbf{l} = -\frac{d}{dt} \int_{\Sigma} \mathbf{B} \cdot d\mathbf{S} $$
@@ -152,7 +152,7 @@ Ampère&amp;rsquo;s circuital law: $$ \oint_{\partial \Omega} \mathbf{B} \cdot d
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>http://localhost:1313/notes/python/web/</guid>
-      <description>Connect to a Websocket A sample python program is shown here.
+      <description>Connect to a WebsocketA sample python program is shown here.
 import websocket def on_message(ws, message): print(message) def on_error(ws, error): print(f&amp;#34;Encountered error: {error}&amp;#34;) def on_close(ws, close_status_code, close_msg): print(&amp;#34;Connection closed&amp;#34;) def on_open(ws): print(&amp;#34;Connection opened&amp;#34;) ws.send(&amp;#34;Hello, Worldy!&amp;#34;) if __name__ == &amp;#34;__main__&amp;#34;: ws = websocket.WebSocketApp(&amp;#34;ws://localhost:xxxx&amp;#34;, # insert here you websocket addres on_message=on_message, on_error=on_error, on_close=on_close) ws.on_open = on_open ws.run_forever() Run the program as below:
 $ python websocket_example.py </description>
     </item>
