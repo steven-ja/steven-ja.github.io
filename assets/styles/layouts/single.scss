@@ -122,6 +122,7 @@ body.kind-page {
         overflow-y: auto;
         background-color: get-light-color('bg-primary');
         margin-right: 0.5rem;
+        border-radius: 18px;
         @include transition();
 
         .toc {
