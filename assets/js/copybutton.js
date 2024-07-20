@@ -28,7 +28,6 @@ function addCopyButtonToCodeBlocks() {
   
   
     // Get all code blocks with a class of "language-*"
-  
     const codeBlocks = document.querySelectorAll(
       'pre > code[class^="language-"]'
     );
@@ -38,18 +37,17 @@ function addCopyButtonToCodeBlocks() {
   
     // For each code block, add a copy button inside a header
     codeBlocks.forEach((codeBlock) => {
-  
       // Get the background color of the code block
       const computedStyle = window.getComputedStyle(codeBlock);
-      const backgroundColor = computedStyle.backgroundColor;
-  
-  
+      // const backgroundColor = computedStyle.backgroundColor;
+      const backgroundColor = "#455F92";
+      
       // Adjust the header color to be significantly lighter or darker than the background color
-  
-      const headerColor = isColorDark(backgroundColor)
-        ? adjustColorBrightness(backgroundColor, 65)
-        : adjustColorBrightness(backgroundColor, -65);  
-      const textColor = isColorDark(backgroundColor) ? "#d1d1d1" : "#606060";
+      // const headerColor = isColorDark(backgroundColor)
+      const headerColor = "#455F92";
+      //   ? adjustColorBrightness(backgroundColor, 65)
+      //   : adjustColorBrightness(backgroundColor, -65);  
+      const textColor = isColorDark(backgroundColor) ? "#e6e6e6" : "#e6e6e6";
   
   
       // Create the header div
@@ -57,16 +55,14 @@ function addCopyButtonToCodeBlocks() {
       const header = document.createElement("div");
   
       header.style.backgroundColor = headerColor;
-  
       header.style.display = "flex";
-  
       header.style.justifyContent = "space-between";
-  
       header.style.alignItems = "center";
       header.style.paddingRight = "0.5rem";
       header.style.paddingLeft = "0.5rem";
-      header.style.borderTopLeftRadius = "5px";
-      header.style.borderTopRightRadius = "5px";
+      header.style.borderTopLeftRadius = "18px";
+      header.style.borderTopRightRadius = "0px";
+      header.style.marginTop = "5px";
   
       header.style.color = textColor;
   
@@ -78,21 +74,13 @@ function addCopyButtonToCodeBlocks() {
       // Create the copy button
   
       const copyButton = document.createElement("button");
-  
       copyButton.classList.add("btn", "copy-code-button");
-  
       copyButton.style.background = "none";
-  
       copyButton.style.border = "none";
-  
       copyButton.style.color = textColor;
-  
       copyButton.style.fontSize = "100%"; // Override the font size
-  
       copyButton.style.cursor = "pointer";
-  
       copyButton.innerHTML = copyIcon;
-  
       copyButton.style.marginLeft = "auto";
   
   
