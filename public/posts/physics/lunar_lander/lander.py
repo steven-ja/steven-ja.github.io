@@ -28,7 +28,7 @@ class DQNAgent:
         self.gamma = 0.99    # discount rate
         self.epsilon = 1.0   # exploration rate
         self.epsilon_min = 0.01
-        self.epsilon_decay = 0.9995
+        self.epsilon_decay = 1 - 1e-5
         self.learning_rate = 0.002
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = DQN(state_size, action_size).to(self.device)
