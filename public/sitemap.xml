@@ -230,6 +230,8 @@
   </url><url>
     <loc>http://localhost:1313/posts/nanotech/</loc>
   </url><url>
+    <loc>http://localhost:1313/posts/physics/lunar_lander/links/</loc>
+  </url><url>
     <loc>http://localhost:1313/posts/poems/stacy/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/statistics/montecarlo_simulation/</loc>

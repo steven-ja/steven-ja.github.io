@@ -37,6 +37,15 @@ Superposition: Unlike classical bits that can be either 0 or 1, qubits can exist
       <description>Introduction Percolation theory is a fundamental concept in statistical physics and mathematics that describes the behavior of connected clusters in a random graph. It is a model for understanding how a network behaves when nodes or links are added, leading to a phase transition from a state of disconnected clusters to a state where a large, connected cluster spans the system. This transition occurs at a critical threshold, known as the percolation threshold.</description>
     </item>
     
+    <item>
+      <title></title>
+      <link>http://localhost:1313/posts/physics/lunar_lander/links/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/physics/lunar_lander/links/</guid>
+      <description> https://aayala4.github.io/Lunar-Lander-Python/ https://github.com/arda-guler/miniLanding3D/tree/master </description>
+    </item>
+    
     
   </channel>
 </rss>
