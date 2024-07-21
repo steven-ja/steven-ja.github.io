@@ -35,3 +35,7 @@ Moreover, I will use this website as a blogging platform. I will talk about seve
          - [ ] Text-to-Speech
    - Graph NN
    - Reinforcement Learing: 
+4. Renewables: 
+   - [ ] World Energy Production
+   - [ ] World Energy Potential 
+   - [ ] Solar Panel Simulations
