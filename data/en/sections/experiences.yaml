@@ -16,7 +16,7 @@ experiences:
     name: Sky Ray Capital
     url: 
     location: Portugal (Remote)
-    logo: 
+    logo: images/sections/experiences/skyray.png
     overview: Analysis of the latest financial data for portfolio and strategies optimization 
   positions:
   - designation: Senior Data Scientist
@@ -31,7 +31,7 @@ experiences:
     name: Stellantis
     url: "https://www.stellantis.com"
     location: Orbassano, Italy
-    logo: /images/sections/experience/stellantis_logo.png
+    logo: /images/sections/experiences/stellantis_logo.png
     # Can optionally show a different logo for dark theme
     # darkLogo: /images/sections/experiences/company1.jpg
     # company overview
@@ -60,7 +60,7 @@ experiences:
     name: Smairt Hero
     url: "#"
     location: Turin, Italy
-    logo: /images/sections/experience/smairthero.png
+    logo: /images/sections/experiences/smairthero.png
     # Can optionally show a different logo for dark theme
     # darkLogo: /images/sections/experiences/company2.jpg
     overview: Startup building healthcare wearable device for emergency detections
@@ -78,7 +78,7 @@ experiences:
     name: Soave Asset Management
     url: "#"
     location: Lugano, Switzerland
-    logo: images/sections/experience/Soave_logo.jpg
+    logo: images/sections/experiences/Soave_logo.jpg
     # Can optionally show a different logo for dark theme
     # darkLogo: /images/sections/experiences/company3.jpg
     overview: Blockchain and Data Analyst responsible for the technical analysis of crypto to choose in a investment portfolio.
