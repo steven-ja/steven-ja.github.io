@@ -68,3 +68,9 @@ skills:
 - name: C++
   logo: /images/sections/skills/c++.png
   summary: "Know basic C/C++ programming. I used often to accelerate python computational time"
+
+- name: Svelte
+  logo: /images/sections/skills/svelte.png
+  summary: "Learned Svelte in order to build fast and robust server-side webapps."
+
+
