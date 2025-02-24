@@ -102,7 +102,7 @@ params:
     favicon: /images/site/icon.png
 
   # GitHub repo of your site
-  gitRepo: https://github.com/ragespin/ragespin.github.io
+  gitRepo: https://github.com/steven-ja/steven-ja.github.io
   # Default branch of your Git repo
   gitBranch: main
 
@@ -161,7 +161,7 @@ params:
         #   issueTerm: title
         #   theme: github-light
         giscus:
-          repo: rageSpin/rageSpin.github.io
+          repo: steven-ja/steven-ja.github.io
           repoID: R_kgDOMJSsWA
           category: General
           categoryID: DIC_kwDOMJSsWM4Cg6n0
