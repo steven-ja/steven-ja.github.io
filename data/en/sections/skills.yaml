@@ -43,6 +43,7 @@ skills:
 #   logo: /images/sections/skills/prometheus.png
 #   summary: "Capable of setup, configure Prometheus metrics. Experienced with PromQL, AlertManager. Also, experienced with writing metric exporters."
 #   url: "https://prometheus.io/"
+
 - name: Apache Cassandra DB
   logo: /images/sections/skills/cassandra.png
   summary: "Experience with NoSQL and distributed database"
@@ -72,5 +73,6 @@ skills:
 - name: Svelte
   logo: /images/sections/skills/svelte.png
   summary: "Learned Svelte in order to build fast and robust server-side webapps."
+  url: "https://svelte.com/"
 
 
