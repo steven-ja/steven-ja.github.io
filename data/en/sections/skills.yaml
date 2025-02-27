@@ -35,7 +35,7 @@ skills:
   summary: "Worked with ARM-based devices and STM microcontrollers. Experience on devices like NVidia Jetson, Qualcomm Dev Boards and Arduino Nicla Sense ME (Bosch Sensortec)"
 
 - name: Docker
-  logo: /images/sections/skills/docker.svg
+  logo: /images/sections/skills/docker-mark-blue.svg
   summary: "Write most of the programs as dockerized container. Experienced with multi-stage, multi-arch build process."
   url: "https://www.docker.com/"
 
@@ -47,17 +47,17 @@ skills:
 - name: Apache Cassandra DB
   logo: /images/sections/skills/cassandra.png
   summary: "Experience with NoSQL and distributed database"
-  url: https://cassandra.apache.org/_/index.html
+  url: "https://cassandra.apache.org/_/index.html"
 
 - name: Apache Spark
   logo: /images/sections/skills/spark.png
   summary: Big Data Analytics and Processing. Used with Scala and Python.
-  url: https://spark.apache.org/
+  url: "https://spark.apache.org/"
 
 - name: TCAD Sentaurus
   logo: 
   summary: "Nanodevices design and electrical simulation (FinFET, GAAFET, NanoWires, InfraRed Pixels)"
-  url: https://www.synopsys.com/manufacturing/tcad.html
+  url: "https://www.synopsys.com/manufacturing/tcad.html"
 
 - name: Linux
   logo: /images/sections/skills/linux.png
