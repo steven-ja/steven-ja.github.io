@@ -88,12 +88,12 @@ badges:
   color: blue
 
 - type: soft-skill-indicator
-  name: Team Work
+  name: NLP
   percentage: 100
   color: yellow
 
 - type: soft-skill-indicator
-  name: Hard Working
+  name: Time-Series
   percentage: 100
   color: orange
 
