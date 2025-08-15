@@ -1,3 +1,22 @@
+---
+title: "Tutorial: GPT-OSS 20B"
+date: 2025-08-14T00:00:00+01:00
+description: Open Source OpenAI model 
+menu:
+  sidebar:
+    name: GPT-OSS
+    identifier: gptoss20B
+    parent: nlp
+    weight: 8
+hero: mermaid-diagram-hd.png
+tags: ["Deep Learning", "NLP", "Machine Learning"]
+categories: ["NLP"]
+---
+
+
+
+*Open in:*[<img src="https://www.kaggle.com/static/images/logos/kaggle-logo-gray-300.png" width="45"/>](https://www.kaggle.com/code/stefanogiannini/tutorial-run-gpt-oss-20b-in-kaggle)
+
 # GPT-OSS 20B - Tutorial
 ## 1. Install Dependencies and Imports
 
