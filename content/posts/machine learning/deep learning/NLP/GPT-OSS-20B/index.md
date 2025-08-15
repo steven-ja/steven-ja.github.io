@@ -8,7 +8,7 @@ menu:
     identifier: gptoss20B
     parent: nlp
     weight: 8
-hero: mermaid-diagram-hd.png
+hero: OpenAI_gpt-oss.png
 tags: ["Deep Learning", "NLP", "Machine Learning"]
 categories: ["NLP"]
 ---
