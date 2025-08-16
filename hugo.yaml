@@ -72,9 +72,9 @@ defaultContentLanguage: en
 
 
 # Paginator
-pagination:
-  pagerSize: 2
-  path: page
+# pagination:
+#   pagerSize: 2
+#   path: page
 
 # Allow raw html in markdown file
 markup:
