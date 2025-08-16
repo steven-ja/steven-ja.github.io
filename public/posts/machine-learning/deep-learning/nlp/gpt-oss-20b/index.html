@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <title>Tutorial: GPT-OSS 20B</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<link rel="stylesheet" href="/application.b75fd7db826474d1a95fad8a5aec65f60f4e668ee19f6012e8a4af47b191edd3.css" integrity="sha256-t1/X24JkdNGpX62KWuxl9g9OZo7hn2AS6KSvR7GR7dM=" />
+
+
+
+
+
+  
+
+  
+  
+  
+    
+  
+  
+
+  <link rel="icon" type="image/png" href="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" />
+
+<meta property="og:url" content="http://localhost:1313/posts/machine-learning/deep-learning/nlp/gpt-oss-20b/">
+  <meta property="og:site_name" content="Stefano Giannini">
+  <meta property="og:title" content="Tutorial: GPT-OSS 20B">
+  <meta property="og:description" content="Open Source OpenAI model">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-08-14T00:00:00+01:00">
+    <meta property="article:modified_time" content="2025-08-14T00:00:00+01:00">
+    <meta property="article:tag" content="Deep Learning">
+    <meta property="article:tag" content="NLP">
+    <meta property="article:tag" content="Machine Learning">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Tutorial: GPT-OSS 20B">
+  <meta name="twitter:description" content="Open Source OpenAI model">
+
+    
+    
+<meta name="description" content="Open Source OpenAI model" />
+
+
+    
+
+    
+
+
+
+
+<script>
+      theme = localStorage.getItem('darkmode:color-scheme') || 'system';
+      if (theme == 'system') {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          theme = 'dark';
+        } else {
+          theme = 'light';
+        }
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
+  </head>
+
+  <body class="type-posts kind-page" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
+    <div class="container-fluid bg-secondary wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+<nav class="navbar navbar-expand-xl top-navbar shadow " id="top-navbar">
+  <div class="container">
+    
+    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button">
+      <i data-feather="sidebar"></i>
+    </button>
+    
+    <a class="navbar-brand" href="/">
+      
+        <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" id="logo" alt="Logo">
+      Stefano Giannini</a>
+    <button
+      class="navbar-toggler navbar-light"
+      id="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#top-nav-items"
+      aria-label="menu"
+    >
+      <i data-feather="menu"></i>
+    </button>
+
+    <div class="collapse navbar-collapse dynamic-navbar" id="top-nav-items">
+      <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/#home">Home</a>
+        </li>
+        
+          
+          
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#about">About</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#experiences">Experiences</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#education">Education</a>
+                </li>
+              
+            
+          
+        
+        
+          <div id="top-navbar-divider"></div>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="blog-link" href="/posts">Posts</a>
+          </li>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="note-link" href="/notes">Notes</a>
+          </li>
+        
+        
+        
+        
+      </ul>
+    </div>
+  </div>
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="main-logo" alt="Logo">
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="inverted-logo" alt="Inverted Logo">
+  
+</nav>
+
+
+
+      
+      
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/posts/" data-filter="all">Posts</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/"> Finance</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/monte_carlo/"> Monte Carlo</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/monte_carlo/black-scholes/" title="Option Pricing">Option Pricing</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/stock_prediction/"> Stock Prediction</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/gru/" title="GRU">GRU</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/arima/" title="ARIMA">ARIMA</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/sarima/" title="SARIMA">SARIMA</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/sarimax/" title="SARIMAX">SARIMAX</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/machine-learning/"> Machine Learning</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/machine-learning/deep-learning/"> Deep Learning</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/machine-learning/deep-learning/computer-vision/"> Computer Vision</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/machine-learning/deep-learning/computer-vision/florence/" title="Florence-2 LVM">Florence-2 LVM</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/machine-learning/deep-learning/nlp/"> NLP</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li><a class="active list-link" href="/posts/machine-learning/deep-learning/nlp/gpt-oss-20b/" title="GPT-OSS">GPT-OSS</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/" title="Gemma-2 &#43; RAG">Gemma-2 &#43; RAG</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/physics/"> Physics</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/percolation/" title="Percolation">Percolation</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/physics/quantum_computing/"> Quantum Computing</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/quantum_computing/introduction/" title="Introduction">Introduction</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/quantum_computing/teleportation/" title="Teleportation">Teleportation</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content">
+    <div class="container p-0 read-area">
+      
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/posts/machine-learning/deep-learning/nlp/gpt-oss-20b/OpenAI_gpt-oss.png);'>
+      </div>
+
+      
+      <div class="page-content">
+        
+        <div class="author-profile ms-auto align-self-lg-center">
+          <img class="rounded-circle" src='/images/author/profile_hu8a567cefac8c1a165d433ac0796ac418_3088978_120x120_fit_q75_box.jpg' alt="Author Image">
+          <h5 class="author-name">Stefano Giannini</h5>
+          <p class="text-muted">Thursday, August 14, 2025 | 22 minutes</p>
+        </div>
+        
+        
+        <div class="title">
+          <h1>Tutorial: GPT-OSS 20B</h1>
+        </div>
+
+        
+
+        
+          <div class="tags">
+  <ul style="padding-left: 0;">
+    
+    
+    <li class="rounded"><a href="/tags/deep-learning/" class="btn btn-sm btn-info">Deep Learning</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/nlp/" class="btn btn-sm btn-info">NLP</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/machine-learning/" class="btn btn-sm btn-info">Machine Learning</a></li>
+    
+  </ul>
+</div>
+
+        
+        <div class="post-content" id="post-content">
+          <p><em>Open in:</em><a href="https://www.kaggle.com/code/stefanogiannini/tutorial-run-gpt-oss-20b-in-kaggle" target="_blank" rel="noopener"><img src="https://www.kaggle.com/static/images/logos/kaggle-logo-gray-300.png" width="45"/></a></p>
+<h1 id="gpt-oss-20b---tutorial">GPT-OSS 20B - Tutorial</h1>
+<h2 id="1-install-dependencies-and-imports">1. Install Dependencies and Imports</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> subprocess
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> time
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> IPython.display <span style="color:#f92672">import</span> display, HTML, clear_output, Markdown
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Install required packages</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;📦 Installing required packages...&#34;</span>)
+</span></span><span style="display:flex;"><span>subprocess<span style="color:#f92672">.</span>check_call([sys<span style="color:#f92672">.</span>executable, <span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#e6db74">&#34;pip&#34;</span>, <span style="color:#e6db74">&#34;install&#34;</span>, <span style="color:#e6db74">&#34;-q&#34;</span>, <span style="color:#e6db74">&#34;openai&#34;</span>])
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;✅ Packages installed successfully!&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> openai <span style="color:#f92672">import</span> OpenAI
+</span></span></code></pre></div><p>📦 Installing required packages&hellip;
+✅ Packages installed successfully!</p>
+<h2 id="2-setup-display-functions">2. Setup Display Functions</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">display_status</span>(message, status<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;info&#34;</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Display colored status messages&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    colors <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;info&#34;</span>: <span style="color:#e6db74">&#34;#3498db&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;success&#34;</span>: <span style="color:#e6db74">&#34;#2ecc71&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;warning&#34;</span>: <span style="color:#e6db74">&#34;#f39c12&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;#e74c3c&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;processing&#34;</span>: <span style="color:#e6db74">&#34;#9b59b6&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    html <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;div style=&#34;padding: 10px; margin: 10px 0; border-left: 4px solid </span><span style="color:#e6db74">{</span>colors<span style="color:#f92672">.</span>get(status, <span style="color:#e6db74">&#39;#3498db&#39;</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">; background-color: #f8f9fa;&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;strong style=&#34;color: </span><span style="color:#e6db74">{</span>colors<span style="color:#f92672">.</span>get(status, <span style="color:#e6db74">&#39;#3498db&#39;</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">;&#34;&gt;</span><span style="color:#e6db74">{</span>message<span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/strong&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    display(HTML(html))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">display_progress</span>(current, total, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Progress&#34;</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Display a progress bar&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    percentage <span style="color:#f92672">=</span> (current <span style="color:#f92672">/</span> total) <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>    bar_length <span style="color:#f92672">=</span> <span style="color:#ae81ff">50</span>
+</span></span><span style="display:flex;"><span>    filled_length <span style="color:#f92672">=</span> int(bar_length <span style="color:#f92672">*</span> current <span style="color:#f92672">//</span> total)
+</span></span><span style="display:flex;"><span>    bar <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;█&#39;</span> <span style="color:#f92672">*</span> filled_length <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;░&#39;</span> <span style="color:#f92672">*</span> (bar_length <span style="color:#f92672">-</span> filled_length)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    html <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;div style=&#34;margin: 10px 0;&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;div style=&#34;font-weight: bold; margin-bottom: 5px;&#34;&gt;</span><span style="color:#e6db74">{</span>label<span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;div style=&#34;background-color: #ecf0f1; border-radius: 10px; padding: 3px;&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            &lt;div style=&#34;background-color: #3498db; width: </span><span style="color:#e6db74">{</span>percentage<span style="color:#e6db74">}</span><span style="color:#e6db74">%; border-radius: 10px; padding: 5px; color: white; text-align: center;&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                </span><span style="color:#e6db74">{</span>bar<span style="color:#e6db74">}</span><span style="color:#e6db74"> </span><span style="color:#e6db74">{</span>percentage<span style="color:#e6db74">:</span><span style="color:#e6db74">.1f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">%
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    display(HTML(html))
+</span></span></code></pre></div><h2 id="3-install-and-start-ollama">3. Install and Start Ollama</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>display_status(<span style="color:#e6db74">&#34;🚀 Setting up Ollama...&#34;</span>, <span style="color:#e6db74">&#34;processing&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Install Ollama</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Installing Ollama... This may take a minute...&#34;</span>)
+</span></span><span style="display:flex;"><span>result <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>system(<span style="color:#e6db74">&#34;curl -fsSL https://ollama.com/install.sh | sh 2&gt;/dev/null&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> result <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>    display_status(<span style="color:#e6db74">&#34;✅ Ollama installed successfully!&#34;</span>, <span style="color:#e6db74">&#34;success&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    display_status(<span style="color:#e6db74">&#34;⚠️ Ollama installation had warnings but may still work&#34;</span>, <span style="color:#e6db74">&#34;warning&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Start Ollama server</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Starting Ollama server...&#34;</span>)
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>system(<span style="color:#e6db74">&#34;nohup ollama serve &gt; /tmp/ollama_serve_stdout.log 2&gt;/tmp/ollama_serve_stderr.log &amp;&#34;</span>)
+</span></span><span style="display:flex;"><span>time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Check if running</span>
+</span></span><span style="display:flex;"><span>running <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>system(<span style="color:#e6db74">&#34;ps aux | grep -E &#39;ollama serve&#39; | grep -v grep &gt; /dev/null 2&gt;&amp;1&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> running <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>    display_status(<span style="color:#e6db74">&#34;✅ Ollama server is running!&#34;</span>, <span style="color:#e6db74">&#34;success&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    display_status(<span style="color:#e6db74">&#34;❌ Ollama server failed to start. Check troubleshooting section.&#34;</span>, <span style="color:#e6db74">&#34;error&#34;</span>)
+</span></span></code></pre></div><div style="padding: 10px; margin: 10px 0; border-left: 4px solid #9b59b6; background-color: #f8f9fa !important;">
+    <strong style="color: #9b59b6 !important;">🚀 Setting up Ollama...</strong>
+</div>
+<p>Installing Ollama&hellip; This may take a minute&hellip;</p>
+<div style="padding: 10px; margin: 10px 0; border-left: 4px solid #2ecc71; background-color: #f8f9fa !important;">
+    <strong style="color: #2ecc71 !important;">✅ Ollama installed successfully!</strong>
+</div>
+<p>Starting Ollama server&hellip;</p>
+<div style="padding: 10px; margin: 10px 0; border-left: 4px solid #2ecc71; background-color: #f8f9fa !important;">
+    <strong style="color: #2ecc71 !important;">✅ Ollama server is running!</strong>
+</div>
+<h2 id="4-download-model-with-progress">4. Download Model with Progress</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>display_status(<span style="color:#e6db74">&#34;📥 Downloading GPT-OSS:20B Model (~13GB)&#34;</span>, <span style="color:#e6db74">&#34;processing&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;This will take several minutes. Please be patient...&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;=&#34;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Start the download</span>
+</span></span><span style="display:flex;"><span>start_time <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>time()
+</span></span><span style="display:flex;"><span>result <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>system(<span style="color:#e6db74">&#34;ollama pull gpt-oss:20b&#34;</span>)
+</span></span><span style="display:flex;"><span>end_time <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>time()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> result <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>    elapsed <span style="color:#f92672">=</span> end_time <span style="color:#f92672">-</span> start_time
+</span></span><span style="display:flex;"><span>    display_status(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;✅ Model downloaded successfully in </span><span style="color:#e6db74">{</span>elapsed<span style="color:#f92672">/</span><span style="color:#ae81ff">60</span><span style="color:#e6db74">:</span><span style="color:#e6db74">.1f</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> minutes!&#34;</span>, <span style="color:#e6db74">&#34;success&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    display_status(<span style="color:#e6db74">&#34;❌ Model download failed. Please check your connection and try again.&#34;</span>, <span style="color:#e6db74">&#34;error&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Verify model is available</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">📋 Available models:&#34;</span>)
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>system(<span style="color:#e6db74">&#34;ollama list&#34;</span>)
+</span></span></code></pre></div><div style="padding: 10px; margin: 10px 0; border-left: 4px solid #9b59b6; background-color: #f8f9fa !important;">
+    <strong style="color: #9b59b6 !important;">📥 Downloading GPT-OSS:20B Model (~13GB)</strong>
+</div>
+<h1 id="this-will-take-several-minutes-please-be-patient">This will take several minutes. Please be patient&hellip;</h1>
+<div style="padding: 10px; margin: 10px 0; border-left: 4px solid #2ecc71; background-color: #f8f9fa !important;">
+    <strong style="color: #2ecc71 !important;">✅ Model downloaded successfully in 1.4 minutes!</strong>
+</div>
+<p>📋 Available models:
+NAME           ID              SIZE     MODIFIED          <br>
+gpt-oss:20b    e95023cf3b7b    13 GB    Less than a second ago</p>
+<h2 id="5-setup-model-interface">5. Setup Model Interface</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GPTOSSChat</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, system_message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;You are a helpful AI assistant.&#34;</span>):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>client <span style="color:#f92672">=</span> OpenAI(base_url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://localhost:11434/v1&#34;</span>, api_key<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ollama&#34;</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>conversation_history <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>system_message <span style="color:#f92672">=</span> system_message
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">set_system_message</span>(self, message):
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;Change the system message&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>system_message <span style="color:#f92672">=</span> message
+</span></span><span style="display:flex;"><span>        display_status(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;System message updated: </span><span style="color:#e6db74">{</span>message[:<span style="color:#ae81ff">100</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">...&#34;</span>, <span style="color:#e6db74">&#34;info&#34;</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">clear_history</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;Clear conversation history&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>conversation_history <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        display_status(<span style="color:#e6db74">&#34;Conversation history cleared&#34;</span>, <span style="color:#e6db74">&#34;info&#34;</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">chat</span>(self, user_input, include_history<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;Send a message to the model&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            messages <span style="color:#f92672">=</span> [{<span style="color:#e6db74">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;system&#34;</span>, <span style="color:#e6db74">&#34;content&#34;</span>: self<span style="color:#f92672">.</span>system_message}]
+</span></span><span style="display:flex;"><span>          
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> include_history:
+</span></span><span style="display:flex;"><span>                messages<span style="color:#f92672">.</span>extend(self<span style="color:#f92672">.</span>conversation_history)
+</span></span><span style="display:flex;"><span>          
+</span></span><span style="display:flex;"><span>            messages<span style="color:#f92672">.</span>append({<span style="color:#e6db74">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;user&#34;</span>, <span style="color:#e6db74">&#34;content&#34;</span>: user_input})
+</span></span><span style="display:flex;"><span>          
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Show processing indicator</span>
+</span></span><span style="display:flex;"><span>            display_status(<span style="color:#e6db74">&#34;🤔 Thinking...&#34;</span>, <span style="color:#e6db74">&#34;processing&#34;</span>)
+</span></span><span style="display:flex;"><span>          
+</span></span><span style="display:flex;"><span>            response <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>client<span style="color:#f92672">.</span>chat<span style="color:#f92672">.</span>completions<span style="color:#f92672">.</span>create(
+</span></span><span style="display:flex;"><span>                model<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gpt-oss:20b&#34;</span>,
+</span></span><span style="display:flex;"><span>                messages<span style="color:#f92672">=</span>messages
+</span></span><span style="display:flex;"><span>            )
+</span></span><span style="display:flex;"><span>          
+</span></span><span style="display:flex;"><span>            assistant_response <span style="color:#f92672">=</span> response<span style="color:#f92672">.</span>choices[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>message<span style="color:#f92672">.</span>content
+</span></span><span style="display:flex;"><span>          
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Update history</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> include_history:
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>conversation_history<span style="color:#f92672">.</span>append({<span style="color:#e6db74">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;user&#34;</span>, <span style="color:#e6db74">&#34;content&#34;</span>: user_input})
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>conversation_history<span style="color:#f92672">.</span>append({<span style="color:#e6db74">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;assistant&#34;</span>, <span style="color:#e6db74">&#34;content&#34;</span>: assistant_response})
+</span></span><span style="display:flex;"><span>          
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Display response with nice formatting</span>
+</span></span><span style="display:flex;"><span>            clear_output(wait<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>            display(Markdown(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;**You:** </span><span style="color:#e6db74">{</span>user_input<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>))
+</span></span><span style="display:flex;"><span>            display(Markdown(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;**Assistant:** </span><span style="color:#e6db74">{</span>assistant_response<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>))
+</span></span><span style="display:flex;"><span>          
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> assistant_response
+</span></span><span style="display:flex;"><span>          
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span>            display_status(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Error: </span><span style="color:#e6db74">{</span>str(e)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">&#34;error&#34;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">interactive_chat</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;Start an interactive chat session&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        display(HTML(<span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;div style=&#34;background-color: #3498db; color: white; padding: 15px; border-radius: 10px; margin: 10px 0;&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            &lt;h3&gt;🤖 Interactive Chat with GPT-OSS:20B&lt;/h3&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            &lt;p&gt;Type your messages below. Type &#39;exit&#39; to end the chat, &#39;clear&#39; to clear history, or &#39;system:&#39; followed by a message to change the system prompt.&lt;/p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;&#34;&#34;</span>))
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>            user_input <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">💬 You: &#34;</span>)
+</span></span><span style="display:flex;"><span>          
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> user_input<span style="color:#f92672">.</span>lower() <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;exit&#39;</span>:
+</span></span><span style="display:flex;"><span>                display_status(<span style="color:#e6db74">&#34;Chat session ended. Goodbye! 👋&#34;</span>, <span style="color:#e6db74">&#34;info&#34;</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">elif</span> user_input<span style="color:#f92672">.</span>lower() <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;clear&#39;</span>:
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>clear_history()
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">elif</span> user_input<span style="color:#f92672">.</span>lower()<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#39;system:&#39;</span>):
+</span></span><span style="display:flex;"><span>                new_system <span style="color:#f92672">=</span> user_input[<span style="color:#ae81ff">7</span>:]<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>set_system_message(new_system)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>          
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>chat(user_input)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Initialize the chat interface</span>
+</span></span><span style="display:flex;"><span>display_status(<span style="color:#e6db74">&#34;🎉 Initializing GPT-OSS Chat Interface...&#34;</span>, <span style="color:#e6db74">&#34;processing&#34;</span>)
+</span></span><span style="display:flex;"><span>chat <span style="color:#f92672">=</span> GPTOSSChat()
+</span></span><span style="display:flex;"><span>pirate_chat <span style="color:#f92672">=</span> GPTOSSChat(system_message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;You only reply as a pirate!&#39;</span>)
+</span></span><span style="display:flex;"><span>display_status(<span style="color:#e6db74">&#34;✅ Chat interface ready!&#34;</span>, <span style="color:#e6db74">&#34;success&#34;</span>)
+</span></span></code></pre></div><div style="padding: 10px; margin: 10px 0; border-left: 4px solid #9b59b6; background-color: #f8f9fa !important;">
+    <strong style="color: #9b59b6 !important;">🎉 Initializing GPT-OSS Chat Interface...</strong>
+</div>
+<div style="padding: 10px; margin: 10px 0; border-left: 4px solid #2ecc71; background-color: #f8f9fa !important;">
+    <strong style="color: #2ecc71 !important;">✅ Chat interface ready!</strong>
+</div>
+<h2 id="6-test-the-model">6. Test the Model</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>display(HTML(<span style="color:#e6db74">&#34;&lt;h2&gt;🧪 Testing the Model&lt;/h2&gt;&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Test with a simple query</span>
+</span></span><span style="display:flex;"><span>test_response <span style="color:#f92672">=</span> chat<span style="color:#f92672">.</span>chat(<span style="color:#e6db74">&#34;Hello! Can you confirm you&#39;re working properly? Please respond with a brief greeting.&#34;</span>, include_history<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> test_response:
+</span></span><span style="display:flex;"><span>    display_status(<span style="color:#e6db74">&#34;✅ Model is working perfectly!&#34;</span>, <span style="color:#e6db74">&#34;success&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    display_status(<span style="color:#e6db74">&#34;❌ Model test failed. Please check the troubleshooting section.&#34;</span>, <span style="color:#e6db74">&#34;error&#34;</span>)
+</span></span></code></pre></div><div style="background-color: #00001e; padding: 20px; border-radius: 10px; margin: 20px 0;">
+    <h2>7. 📚 Usage Examples</h2>
+    <p>Here are different ways to use the model:</p>
+</div>
+<h3 id="example-1">Example 1</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Example 1: Simple query</span>
+</span></span><span style="display:flex;"><span>display(Markdown(<span style="color:#e6db74">&#34;### Example 1: Simple Query&#34;</span>))
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;chat.chat(&#39;What is the capital of France?&#39;)&#34;</span>)
+</span></span></code></pre></div><h3 id="examples-2-3-4">Examples 2-3-4</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Example 2: Creative writing</span>
+</span></span><span style="display:flex;"><span>display(Markdown(<span style="color:#e6db74">&#34;### Example 2: Creative Writing&#34;</span>))
+</span></span><span style="display:flex;"><span>chat<span style="color:#f92672">.</span>set_system_message(<span style="color:#e6db74">&#34;You are a creative writer who specializes in science fiction.&#34;</span>)
+</span></span><span style="display:flex;"><span>creative_response <span style="color:#f92672">=</span> chat<span style="color:#f92672">.</span>chat(<span style="color:#e6db74">&#34;Write a haiku about artificial intelligence&#34;</span>, include_history<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Example 3: Code assistance</span>
+</span></span><span style="display:flex;"><span>display(Markdown(<span style="color:#e6db74">&#34;### Example 3: Code Assistance&#34;</span>))
+</span></span><span style="display:flex;"><span>chat<span style="color:#f92672">.</span>set_system_message(<span style="color:#e6db74">&#34;You are a helpful coding assistant.&#34;</span>)
+</span></span><span style="display:flex;"><span>code_response <span style="color:#f92672">=</span> chat<span style="color:#f92672">.</span>chat(<span style="color:#e6db74">&#34;Write a Python function to calculate fibonacci numbers&#34;</span>, include_history<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Reset to default</span>
+</span></span><span style="display:flex;"><span>chat<span style="color:#f92672">.</span>set_system_message(<span style="color:#e6db74">&#34;You are a helpful AI assistant.&#34;</span>)
+</span></span><span style="display:flex;"><span>chat<span style="color:#f92672">.</span>clear_history()
+</span></span></code></pre></div><p><strong>You:</strong> Write a Python function to calculate fibonacci numbers</p>
+<p><strong>Assistant:</strong> Below is a tiny, self‑contained Python module that gives you a handful of ways to ask for Fibonacci numbers.
+Feel free to pick the one that best matches your use‑case (simple recursion, memoised recursion, or an iterative loop that is fast even for millions o terms).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> __future__ <span style="color:#f92672">import</span> annotations
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> Iterable, List, Sequence
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1️⃣  Simple pure recursion (good for tiny values of n)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fib_recursive</span>(n: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Return the *n*‑th Fibonacci number (0‑based).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &gt;&gt;&gt; fib_recursive(0)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    0
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &gt;&gt;&gt; fib_recursive(1)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &gt;&gt;&gt; fib_recursive(10)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    55
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">&#34;n must be a non‑negative integer.&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> n
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> fib_recursive(n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> fib_recursive(n <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2️⃣  Recursive + memoisation (fast for repeated calls)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fib_memoised</span>(n: int, cache: dict[int, int] <span style="color:#f92672">|</span> <span style="color:#66d9ef">None</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Return the *n*‑th Fibonacci number with memoisation.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    The optional *cache* dict is used internally – you can supply one to
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    share memoisation across multiple calls.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &gt;&gt;&gt; fib_memoised(50)                # 12586269025
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    12586269025
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &gt;&gt;&gt; cache: dict[int, int] = </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &gt;&gt;&gt; fib_memoised(50, cache=cache)  # uses cache
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    12586269025
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> cache <span style="color:#f92672">is</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>        cache <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">&#34;n must be a non‑negative integer.&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">in</span> cache:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> cache[n]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>        cache[n] <span style="color:#f92672">=</span> n
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        cache[n] <span style="color:#f92672">=</span> fib_memoised(n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, cache) <span style="color:#f92672">+</span> fib_memoised(n <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>, cache)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> cache[n]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3️⃣  Iterative, constant‑space (fastest for large n)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fib_iterative</span>(n: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Return the *n*‑th Fibonacci number using an O(1) space loop.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &gt;&gt;&gt; fib_iterative(10)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    55
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &gt;&gt;&gt; fib_iterative(100)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    354224848179261915075
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">&#34;n must be a non‑negative integer.&#34;</span>)
+</span></span><span style="display:flex;"><span>    a, b <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(n):
+</span></span><span style="display:flex;"><span>        a, b <span style="color:#f92672">=</span> b, a <span style="color:#f92672">+</span> b
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> a
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 4️⃣  Generator – yields as many Fibonacci numbers as you need</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fibonacci_generator</span>() <span style="color:#f92672">-&gt;</span> Iterable[int]:
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Yield Fibonacci numbers forever (0, 1, 1, 2, …).&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    a, b <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">yield</span> a
+</span></span><span style="display:flex;"><span>        a, b <span style="color:#f92672">=</span> b, a <span style="color:#f92672">+</span> b
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 5️⃣  Build a list of the first *n* Fibonacci numbers</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">first_n_fibonacci</span>(n: int) <span style="color:#f92672">-&gt;</span> Sequence[int]:
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Return a list of the first *n* Fibonacci numbers (0‑based).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &gt;&gt;&gt; first_n_fibonacci(7)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    [0, 1, 1, 2, 3, 5, 8]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">&#34;n must be a non‑negative integer.&#34;</span>)
+</span></span><span style="display:flex;"><span>    seq: List[int] <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(n):
+</span></span><span style="display:flex;"><span>        seq<span style="color:#f92672">.</span>append(fib_iterative(i))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> seq
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Quick sanity tests (run `python -m pytest` if you set this up as a test file)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> func <span style="color:#f92672">in</span> [fib_recursive, fib_memoised, fib_iterative]:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">10</span>]:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">assert</span> func(n) <span style="color:#f92672">==</span> fib_iterative(n), <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>func<span style="color:#f92672">.</span>__name__<span style="color:#e6db74">}</span><span style="color:#e6db74"> failed on n=</span><span style="color:#e6db74">{</span>n<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;All basic checks passed!&#34;</span>)
+</span></span></code></pre></div><h3 id="when-should-you-use-each-one">When should you use each one?</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Speed</th>
+<th>Memory</th>
+<th>Use‑case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fib_recursive</code></td>
+<td>O(2ⁿ) – terrible for<code>n&gt;30</code></td>
+<td>Very little</td>
+<td>Educational or trivial<code>n</code></td>
+</tr>
+<tr>
+<td><code>fib_memoised</code></td>
+<td>O(n)</td>
+<td>O(n)</td>
+<td>Many successive calls where<code>n</code> varies</td>
+</tr>
+<tr>
+<td><code>fib_iterative</code></td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td>One big Fibonacci number</td>
+</tr>
+<tr>
+<td><code>fibonacci_generator</code></td>
+<td>O(1) per value</td>
+<td>O(1)</td>
+<td>Streaming Fibonacci sequence (e.g. plotting)</td>
+</tr>
+<tr>
+<td><code>first_n_fibonacci</code></td>
+<td>O(n log φ) via iterative per element</td>
+<td>O(n)</td>
+<td>Build a list of the first few values</td>
+</tr>
+</tbody>
+</table>
+<p>Pick the variant that matches your performance &amp; memory constraints!</p>
+<div style="padding: 10px; margin: 10px 0; border-left: 4px solid #3498db; background-color: #f8f9fa !important;">
+    <strong style="color: #3498db !important;">System message updated: You are a helpful AI assistant....</strong>
+</div>
+<div style="padding: 10px; margin: 10px 0; border-left: 4px solid #3498db; background-color: #f8f9fa !important;">
+    <strong style="color: #3498db !important;">Conversation history cleared</strong>
+</div>
+<h2 id="8-interactive-chat-session">8. Interactive Chat Session</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>display(HTML(<span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;div style=&#34;background-color: #2ecc71; color: white; padding: 20px; border-radius: 10px; margin: 20px 0;&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;h2&gt;💬 Start Interactive Chat&lt;/h2&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;p&gt;Run the cell below to start an interactive chat session with GPT-OSS:20B&lt;/p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;ul&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;li&gt;Type your messages and press Enter&lt;/li&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;li&gt;Type &#39;exit&#39; to end the chat&lt;/li&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;li&gt;Type &#39;clear&#39; to clear conversation history&lt;/li&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;li&gt;Type &#39;system: [message]&#39; to change the AI&#39;s behavior&lt;/li&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;/ul&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Uncomment the line below to start interactive chat</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># chat.interactive_chat()</span>
+</span></span></code></pre></div><h2 id="9-quick-chat-function">9. Quick Chat Function</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">quick_chat</span>(message, system<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;You are a helpful AI assistant.&#34;</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Quick one-off chat without history&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>        client <span style="color:#f92672">=</span> OpenAI(base_url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://localhost:11434/v1&#34;</span>, api_key<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ollama&#34;</span>)
+</span></span><span style="display:flex;"><span>        response <span style="color:#f92672">=</span> client<span style="color:#f92672">.</span>chat<span style="color:#f92672">.</span>completions<span style="color:#f92672">.</span>create(
+</span></span><span style="display:flex;"><span>            model<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gpt-oss:20b&#34;</span>,
+</span></span><span style="display:flex;"><span>            messages<span style="color:#f92672">=</span>[
+</span></span><span style="display:flex;"><span>                {<span style="color:#e6db74">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;system&#34;</span>, <span style="color:#e6db74">&#34;content&#34;</span>: system},
+</span></span><span style="display:flex;"><span>                {<span style="color:#e6db74">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;user&#34;</span>, <span style="color:#e6db74">&#34;content&#34;</span>: message}
+</span></span><span style="display:flex;"><span>            ]
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>        result <span style="color:#f92672">=</span> response<span style="color:#f92672">.</span>choices[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>message<span style="color:#f92672">.</span>content
+</span></span><span style="display:flex;"><span>        display(Markdown(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;**Question:** </span><span style="color:#e6db74">{</span>message<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>))
+</span></span><span style="display:flex;"><span>        display(Markdown(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;**Answer:** </span><span style="color:#e6db74">{</span>result<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> result
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span>        display_status(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Error: </span><span style="color:#e6db74">{</span>str(e)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">&#34;error&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Example usage</span>
+</span></span><span style="display:flex;"><span>display(HTML(<span style="color:#e6db74">&#34;&lt;h3&gt;Quick Chat Example:&lt;/h3&gt;&#34;</span>))
+</span></span><span style="display:flex;"><span>quick_chat(<span style="color:#e6db74">&#34;What are the three laws of robotics?&#34;</span>)
+</span></span></code></pre></div><h2 id="10-trobleshooting-utilities">10. Trobleshooting Utilities</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">check_ollama_status</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Check the current status of Ollama&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    display_status(<span style="color:#e6db74">&#34;Checking Ollama status...&#34;</span>, <span style="color:#e6db74">&#34;info&#34;</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Check if process is running</span>
+</span></span><span style="display:flex;"><span>    running <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>system(<span style="color:#e6db74">&#34;ps aux | grep -E &#39;ollama serve&#39; | grep -v grep &gt; /dev/null 2&gt;&amp;1&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> running <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        display_status(<span style="color:#e6db74">&#34;✅ Ollama server is running&#34;</span>, <span style="color:#e6db74">&#34;success&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        display_status(<span style="color:#e6db74">&#34;❌ Ollama server is not running&#34;</span>, <span style="color:#e6db74">&#34;error&#34;</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Check if API is responding</span>
+</span></span><span style="display:flex;"><span>    api_check <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>system(<span style="color:#e6db74">&#34;curl -s http://localhost:11434/v1/models &gt; /dev/null 2&gt;&amp;1&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> api_check <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        display_status(<span style="color:#e6db74">&#34;✅ Ollama API is responding&#34;</span>, <span style="color:#e6db74">&#34;success&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">Available models:&#34;</span>)
+</span></span><span style="display:flex;"><span>        os<span style="color:#f92672">.</span>system(<span style="color:#e6db74">&#34;ollama list&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        display_status(<span style="color:#e6db74">&#34;❌ Ollama API is not responding&#34;</span>, <span style="color:#e6db74">&#34;error&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">restart_ollama</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Restart Ollama server&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    display_status(<span style="color:#e6db74">&#34;Restarting Ollama server...&#34;</span>, <span style="color:#e6db74">&#34;processing&#34;</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Kill existing processes</span>
+</span></span><span style="display:flex;"><span>    os<span style="color:#f92672">.</span>system(<span style="color:#e6db74">&#34;pkill -9 ollama 2&gt;/dev/null&#34;</span>)
+</span></span><span style="display:flex;"><span>    time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Start server</span>
+</span></span><span style="display:flex;"><span>    os<span style="color:#f92672">.</span>system(<span style="color:#e6db74">&#34;nohup ollama serve &gt; /tmp/ollama_serve_stdout.log 2&gt;/tmp/ollama_serve_stderr.log &amp;&#34;</span>)
+</span></span><span style="display:flex;"><span>    time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Check status</span>
+</span></span><span style="display:flex;"><span>    check_ollama_status()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">view_ollama_logs</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;View the last 20 lines of Ollama logs&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    display_status(<span style="color:#e6db74">&#34;📜 Ollama Server Logs (last 20 lines):&#34;</span>, <span style="color:#e6db74">&#34;info&#34;</span>)
+</span></span><span style="display:flex;"><span>    os<span style="color:#f92672">.</span>system(<span style="color:#e6db74">&#34;tail -20 /tmp/ollama_serve_stdout.log 2&gt;/dev/null&#34;</span>)
+</span></span><span style="display:flex;"><span>    os<span style="color:#f92672">.</span>system(<span style="color:#e6db74">&#34;tail -20 /tmp/ollama_serve_stderr.log 2&gt;/dev/null&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Test the status</span>
+</span></span><span style="display:flex;"><span>check_ollama_status()
+</span></span></code></pre></div><div style="background-color: #f39c12; color: white; padding: 20px; border-radius: 10px; margin: 20px 0;">
+    <h2>🔧 Troubleshooting Utilities</h2>
+    <p>Use these functions if you encounter any issues</p>
+</div>
+<div style="padding: 10px; margin: 10px 0; border-left: 4px solid #3498db; background-color: #f8f9fa !important;">
+    <strong style="color: #3498db !important;">Checking Ollama status...</strong>
+</div>
+<div style="padding: 10px; margin: 10px 0; border-left: 4px solid #2ecc71; background-color: #f8f9fa !important;">
+    <strong style="color: #2ecc71 !important;">✅ Ollama server is running</strong>
+</div>
+<div style="padding: 10px; margin: 10px 0; border-left: 4px solid #2ecc71; background-color: #f8f9fa !important;">
+    <strong style="color: #2ecc71 !important;">✅ Ollama API is responding</strong>
+</div>
+<p>Available models:
+NAME           ID              SIZE     MODIFIED <br>
+gpt-oss:20b    e95023cf3b7b    13 GB    4 minutes ago</p>
+<h2 id="11-custom-chat-widgets">11. Custom Chat Widgets</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_chat_widget</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Create a simple chat widget for notebook interaction&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    html_code <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;div id=&#34;chat-container&#34; style=&#34;border: 2px solid #3498db; border-radius: 10px; padding: 20px; margin: 10px 0;&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;h3&gt;💬 Chat with GPT-OSS:20B&lt;/h3&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;div id=&#34;chat-messages&#34; style=&#34;height: 300px; overflow-y: auto; border: 1px solid #ecf0f1; padding: 10px; margin: 10px 0; background-color: #f8f9fa;&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            &lt;p style=&#34;color: #7f8c8d;&#34;&gt;Chat messages will appear here...&lt;/p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;div style=&#34;display: flex; gap: 10px;&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            &lt;input type=&#34;text&#34; id=&#34;user-input&#34; placeholder=&#34;Type your message here...&#34; 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                   style=&#34;flex: 1; padding: 10px; border: 1px solid #3498db; border-radius: 5px;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                   onkeypress=&#34;if(event.key === &#39;Enter&#39;) sendMessage()&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            &lt;button onclick=&#34;sendMessage()&#34; 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                    style=&#34;padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                Send
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            &lt;/button&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            &lt;button onclick=&#34;clearChat()&#34; 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                    style=&#34;padding: 10px 20px; background-color: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                Clear
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            &lt;/button&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;script&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    function sendMessage() {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        const input = document.getElementById(&#39;user-input&#39;);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        const messages = document.getElementById(&#39;chat-messages&#39;);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        if (input.value.trim() === &#39;&#39;) return;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        // Add user message to chat
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        messages.innerHTML += &#39;&lt;div style=&#34;margin: 10px 0;&#34;&gt;&lt;strong&gt;You:&lt;/strong&gt; &#39; + input.value + &#39;&lt;/div&gt;&#39;;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        // Add processing indicator
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        messages.innerHTML += &#39;&lt;div style=&#34;margin: 10px 0; color: #7f8c8d;&#34;&gt;&lt;em&gt;Processing...&lt;/em&gt;&lt;/div&gt;&#39;;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        // Note: In a real implementation, you would send this to the kernel
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        messages.innerHTML += &#39;&lt;div style=&#34;margin: 10px 0; color: #3498db;&#34;&gt;&lt;strong&gt;Note:&lt;/strong&gt; Run chat.chat(&#34;&#39; + input.value + &#39;&#34;) in the next cell to get the response.&lt;/div&gt;&#39;;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        input.value = &#39;&#39;;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        messages.scrollTop = messages.scrollHeight;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    function clearChat() {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        document.getElementById(&#39;chat-messages&#39;).innerHTML = &#39;&lt;p style=&#34;color: #7f8c8d;&#34;&gt;Chat messages will appear here...&lt;/p&gt;&#39;;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;/script&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    display(HTML(html_code))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Display the chat widget</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># create_chat_widget()</span>
+</span></span></code></pre></div><h2 id="12-save-and-load-conversations">12. Save and Load Conversations</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">save_conversation</span>(filename<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;conversation.json&#34;</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Save the current conversation to a file&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span>    data <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;system_message&#34;</span>: chat<span style="color:#f92672">.</span>system_message,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;conversation&#34;</span>: chat<span style="color:#f92672">.</span>conversation_history,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;timestamp&#34;</span>: datetime<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>isoformat()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(filename, <span style="color:#e6db74">&#39;w&#39;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>        json<span style="color:#f92672">.</span>dump(data, f, indent<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>    display_status(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;✅ Conversation saved to </span><span style="color:#e6db74">{</span>filename<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">&#34;success&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load_conversation</span>(filename<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;conversation.json&#34;</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Load a conversation from a file&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> open(filename, <span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>            data <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>load(f)
+</span></span><span style="display:flex;"><span>        chat<span style="color:#f92672">.</span>system_message <span style="color:#f92672">=</span> data[<span style="color:#e6db74">&#34;system_message&#34;</span>]
+</span></span><span style="display:flex;"><span>        chat<span style="color:#f92672">.</span>conversation_history <span style="color:#f92672">=</span> data[<span style="color:#e6db74">&#34;conversation&#34;</span>]
+</span></span><span style="display:flex;"><span>        display_status(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;✅ Conversation loaded from </span><span style="color:#e6db74">{</span>filename<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">&#34;success&#34;</span>)
+</span></span><span style="display:flex;"><span>        display_status(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Loaded </span><span style="color:#e6db74">{</span>len(data[<span style="color:#e6db74">&#39;conversation&#39;</span>])<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> exchanges from </span><span style="color:#e6db74">{</span>data[<span style="color:#e6db74">&#39;timestamp&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">&#34;info&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">FileNotFoundError</span>:
+</span></span><span style="display:flex;"><span>        display_status(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;❌ File </span><span style="color:#e6db74">{</span>filename<span style="color:#e6db74">}</span><span style="color:#e6db74"> not found&#34;</span>, <span style="color:#e6db74">&#34;error&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span>        display_status(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;❌ Error loading conversation: </span><span style="color:#e6db74">{</span>str(e)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">&#34;error&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Example: Save current conversation</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># save_conversation(&#34;my_chat.json&#34;)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Example: Load a conversation</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># load_conversation(&#34;my_chat.json&#34;)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ============================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># FINAL MESSAGE</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ============================================</span>
+</span></span><span style="display:flex;"><span>display(HTML(<span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;div style=&#34;background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px; margin: 20px 0; text-align: center;&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;h1&gt;🎉 GPT-OSS:20B is Ready!&lt;/h1&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;p style=&#34;font-size: 18px;&#34;&gt;Your model is set up and ready to use.&lt;/p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;p&gt;Use &lt;code&gt;chat.chat(&#34;your message&#34;)&lt;/code&gt; to interact with the model&lt;/p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;p&gt;Or uncomment &lt;code&gt;chat.interactive_chat()&lt;/code&gt; for an interactive session&lt;/p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>))
+</span></span></code></pre></div><div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px; margin: 20px 0; text-align: center;">
+    <h1>🎉 GPT-OSS:20B is Ready!</h1>
+    <p style="font-size: 18px;">Your model is set up and ready to use.</p>
+    <p>Use <code>chat.chat("your message")</code> to interact with the model</p>
+    <p>Or uncomment <code>chat.interactive_chat()</code> for an interactive session</p>
+</div>
+<p><strong>You:</strong> What is the definition of illegal recruitment according to Philippines law?</p>
+<p><strong>Assistant:</strong> <strong>Illegal recruitment</strong> – as defined in the Philippine labor law – is the <em>unsanctioned procurement and placement of prospective workers</em> that violates the licensing rules of the Department of Labor and Employment (DLE).
+The definition is codified in the Labor Code of the Philippines (Republic Act No. 7725) under <strong>Section 297</strong> (and reiterated in Section 297‑b). The key points are:</p>
+<table>
+<thead>
+<tr>
+<th>Clause</th>
+<th>What it Covers</th>
+<th>Practical Implication</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>297‑a</strong></td>
+<td><em>Solicitation and procurement of prospective employees for employment or placement <strong>without a license</strong> issued by the DLE.</em></td>
+<td>Any individual or firm that advertises or “recruits” workers for a job, yet has not been officially licensed as a recruitment agency, is acting illegally.</td>
+</tr>
+<tr>
+<td><strong>297‑a (continued)</strong></td>
+<td><em>Procurement or placement by a licensed agency that <strong>fails to comply</strong> with the terms or conditions of its license.</em></td>
+<td>Even a licensed recruiter who breaches its license terms (e.g., hiring workers outside its permitted scope) is guilty of illegal recruitment.</td>
+</tr>
+<tr>
+<td><strong>297‑a (continued)</strong></td>
+<td><em>Procurement or placement by an employee of a licensed agency who <strong>lacks a written directive</strong> from the agency’s master license to place a prospective employee.</em></td>
+<td>A recruiter inside a licensed agency who works without the agency’s explicit permission is also unlawful.</td>
+</tr>
+<tr>
+<td><strong>297‑b</strong></td>
+<td><em>Any person who procures a prospective worker for a position <strong>in exchange for a fee or other incentive</strong> (monetary or otherwise), or who places a worker under false or deceptive pretenses (misrepresenting the nature of the job, contract, or benefits).</em></td>
+<td>Charging recruiters or agents to secure a job for someone, or lying about job terms, is prohibited.</td>
+</tr>
+<tr>
+<td><strong>297‑c</strong></td>
+<td><em>The placement of a prospective employee in a job that is <strong>inconsistent with the workers’ actual qualifications</strong> or the employer’s legitimate needs.</em></td>
+<td>“Exploiting a worker’s situation (e.g., hiring an unqualified person when a qualified one is available) for personal gain” is illegal.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="why-it-matters">Why It Matters</h3>
+<ul>
+<li><strong>Licensing protects workers</strong> from exploitation, ensures fairness, and guarantees that employers meet labor standards.</li>
+<li>The DLE enforces this definition through inspections, permits, and penalties (see Section 299 for fines and imprisonment).</li>
+<li>Illegal recruitment is a <strong>criminal offense</strong> and can lead to fines, suspension, or jail time for the recruiter or hiring party.</li>
+</ul>
+<hr>
+<h4 id="quick-reference">Quick Reference</h4>
+<ul>
+<li><strong>Law</strong>: Labor Code of the Philippines, <strong>Section 297</strong> (illegal recruitment).</li>
+<li><strong>Authority</strong>: Department of Labor and Employment (DLE) – Office of the Chief Labor Officer.</li>
+<li><strong>Penalty</strong>: Section 299 – up to a fine of PHP 35,000, imprisonment of up to 3 years, or both.</li>
+</ul>
+<p>By keeping recruitment practices within the limits of this definition, employers, recruiters, and workers can avoid legal trouble and ensure fair, transparent employment arrangements.</p>
+<p>&lsquo;<strong>Illegal recruitment</strong> – as defined in the Philippine labor law – is the <em>unsanctioned procurement and placement of prospective workers</em> that violates the licensing rules of the Department of Labor and Employment (DLE).  \nThe definition is codified in the Labor Code of the Philippines (Republic Act No.\u202f7725) under <strong>Section\u202f297</strong> (and reiterated in Section\u202f297‑b). The key points are:\n\n| Clause | What it Covers | Practical Implication |\n|&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;&mdash;&mdash;-|&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;|\n| <strong>297‑a</strong> | <em>Solicitation and procurement of prospective employees for employment or placement <strong>without a license</strong> issued by the DLE.</em> | Any individual or firm that advertises or “recruits” workers for a job, yet has not been officially licensed as a recruitment agency, is acting illegally. |\n| <strong>297‑a (continued)</strong> | <em>Procurement or placement by a licensed agency that <strong>fails to comply</strong> with the terms or conditions of its license.</em> | Even a licensed recruiter who breaches its license terms (e.g., hiring workers outside its permitted scope) is guilty of illegal recruitment. |\n| <strong>297‑a (continued)</strong> | <em>Procurement or placement by an employee of a licensed agency who <strong>lacks a written directive</strong> from the agency’s master license to place a prospective employee.</em> | A recruiter inside a licensed agency who works without the agency’s explicit permission is also unlawful. |\n| <strong>297‑b</strong> | <em>Any person who procures a prospective worker for a position <strong>in exchange for a fee or other incentive</strong> (monetary or otherwise), or who places a worker under false or deceptive pretenses (misrepresenting the nature of the job, contract, or benefits).</em> | Charging recruiters or agents to secure a job for someone, or lying about job terms, is prohibited. |\n| <strong>297‑c</strong> | <em>The placement of a prospective employee in a job that is <strong>inconsistent with the workers’ actual qualifications</strong> or the employer’s legitimate needs.</em> | “Exploiting a worker’s situation (e.g., hiring an unqualified person when a qualified one is available) for personal gain” is illegal. |\n\n&mdash;\n\n### Why It Matters\n\n- <strong>Licensing protects workers</strong> from exploitation, ensures fairness, and guarantees that employers meet labor standards.\n- The DLE enforces this definition through inspections, permits, and penalties (see Section\u202f299 for fines and imprisonment).\n- Illegal recruitment is a <strong>criminal offense</strong> and can lead to fines, suspension, or jail time for the recruiter or hiring party.\n\n&mdash;\n\n#### Quick Reference\n\n- <strong>Law</strong>: Labor Code of the Philippines, <strong>Section\u202f297</strong> (illegal recruitment).\n- <strong>Authority</strong>: Department of Labor and Employment (DLE) – Office of the Chief Labor Officer.\n- <strong>Penalty</strong>: Section\u202f299 – up to a fine of PHP\u202f35,000, imprisonment of up to 3 years, or both.\n\nBy keeping recruitment practices within the limits of this definition, employers, recruiters, and workers can avoid legal trouble and ensure fair, transparent employment arrangements.&rsquo;</p>
+<h3 id="another-question-without-conversation-history">Another Question (without conversation history)</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>chat<span style="color:#f92672">.</span>chat(<span style="color:#e6db74">&#34;What is the capital of Germany?&#34;</span>, include_history<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span></code></pre></div><p><strong>You:</strong> What is the capital of Germany?</p>
+<p><strong>Assistant:</strong> The capital of Germany is <strong>Berlin</strong>.</p>
+<p>&lsquo;The capital of Germany is <strong>Berlin</strong>.&rsquo;</p>
+<h3 id="conversation-history">Conversation History</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(chat<span style="color:#f92672">.</span>conversation_history)
+</span></span></code></pre></div><p>[{&lsquo;role&rsquo;: &lsquo;user&rsquo;, &lsquo;content&rsquo;: &lsquo;What is the definition of illegal recruitment according to Philippines law?&rsquo;}, {&lsquo;role&rsquo;: &lsquo;assistant&rsquo;, &lsquo;content&rsquo;: &lsquo;<strong>Illegal recruitment</strong> – as defined in the Philippine labor law – is the <em>unsanctioned procurement and placement of prospective workers</em> that violates the licensing rules of the Department of Labor and Employment (DLE).  \nThe definition is codified in the Labor Code of the Philippines (Republic Act No.\u202f7725) under <strong>Section\u202f297</strong> (and reiterated in Section\u202f297‑b). The key points are:\n\n| Clause | What it Covers | Practical Implication |\n|&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;&mdash;&mdash;-|&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;|\n| <strong>297‑a</strong> | <em>Solicitation and procurement of prospective employees for employment or placement <strong>without a license</strong> issued by the DLE.</em> | Any individual or firm that advertises or “recruits” workers for a job, yet has not been officially licensed as a recruitment agency, is acting illegally. |\n| <strong>297‑a (continued)</strong> | <em>Procurement or placement by a licensed agency that <strong>fails to comply</strong> with the terms or conditions of its license.</em> | Even a licensed recruiter who breaches its license terms (e.g., hiring workers outside its permitted scope) is guilty of illegal recruitment. |\n| <strong>297‑a (continued)</strong> | <em>Procurement or placement by an employee of a licensed agency who <strong>lacks a written directive</strong> from the agency’s master license to place a prospective employee.</em> | A recruiter inside a licensed agency who works without the agency’s explicit permission is also unlawful. |\n| <strong>297‑b</strong> | <em>Any person who procures a prospective worker for a position <strong>in exchange for a fee or other incentive</strong> (monetary or otherwise), or who places a worker under false or deceptive pretenses (misrepresenting the nature of the job, contract, or benefits).</em> | Charging recruiters or agents to secure a job for someone, or lying about job terms, is prohibited. |\n| <strong>297‑c</strong> | <em>The placement of a prospective employee in a job that is <strong>inconsistent with the workers’ actual qualifications</strong> or the employer’s legitimate needs.</em> | “Exploiting a worker’s situation (e.g., hiring an unqualified person when a qualified one is available) for personal gain” is illegal. |\n\n&mdash;\n\n### Why It Matters\n\n- <strong>Licensing protects workers</strong> from exploitation, ensures fairness, and guarantees that employers meet labor standards.\n- The DLE enforces this definition through inspections, permits, and penalties (see Section\u202f299 for fines and imprisonment).\n- Illegal recruitment is a <strong>criminal offense</strong> and can lead to fines, suspension, or jail time for the recruiter or hiring party.\n\n&mdash;\n\n#### Quick Reference\n\n- <strong>Law</strong>: Labor Code of the Philippines, <strong>Section\u202f297</strong> (illegal recruitment).\n- <strong>Authority</strong>: Department of Labor and Employment (DLE) – Office of the Chief Labor Officer.\n- <strong>Penalty</strong>: Section\u202f299 – up to a fine of PHP\u202f35,000, imprisonment of up to 3 years, or both.\n\nBy keeping recruitment practices within the limits of this definition, employers, recruiters, and workers can avoid legal trouble and ensure fair, transparent employment arrangements.&rsquo;}]</p>
+<h3 id="system-prompt">System Prompt</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pirate_chat<span style="color:#f92672">.</span>chat(<span style="color:#e6db74">&#34;What is the capital of Germany?&#34;</span>, include_history<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span></code></pre></div><p><strong>You:</strong> What is the capital of Germany?</p>
+<p><strong>Assistant:</strong> Arrr! The mighty capital o’ the German archipelago be none other than Berlin, me heartie! Set yer compass true and hoist the sails—ye’ll find it there, arrr!</p>
+<p>&lsquo;Arrr! The mighty capital o’ the German archipelago be none other than Berlin, me heartie! Set yer compass true and hoist the sails—ye’ll find it there, arrr!&rsquo;</p>
+<h3 id="further-questions">Further Questions</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>quick_chat(<span style="color:#e6db74">&#34;A list of 10 Oscar Wilde&#39;s Books&#34;</span>, system <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;You are an English Aristocrat of 1800&#39;s&#34;</span>)
+</span></span></code></pre></div><p><strong>Question:</strong> A list of 10 Oscar Wilde&rsquo;s Books</p>
+<p><strong>Answer:</strong> <strong>Oscar Wilde – a quick‑reference list of ten of his most celebrated works</strong></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Title</th>
+<th>Year of Publication</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><em>The Picture of Dorian Gray</em></td>
+<td>1890</td>
+<td>Wilde’s only full novel, a tale of aestheticism and moral decay.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><em>The Importance of Being Earnest</em></td>
+<td>1895</td>
+<td>Comic farce in two acts, a masterstroke of witty dialogue.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><em>The Canterville Ghost</em></td>
+<td>1887</td>
+<td>Short story (first appears in a collection of fairy‑tales).</td>
+</tr>
+<tr>
+<td>4</td>
+<td><em>Lady Windermere’s Fan</em></td>
+<td>1892</td>
+<td>One‑act melodrama, often paired theatrically with**<em>Earnest</em>**.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><em>An Ideal Husband</em></td>
+<td>1895</td>
+<td>Three‑act comedy, exploring marriage and politics.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><em>The Ballad of Reading Gaol</em></td>
+<td>1898</td>
+<td>Poetic lament written during Wilde’s imprisonment.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><em>The Happy Prince</em></td>
+<td>1908 (post‑hum)</td>
+<td>Fairy tale in<em>The Happy Prince and Other Tales</em> book.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><em>The Decay of Lying</em></td>
+<td>1891</td>
+<td>Satirical essay lampooning Victorian morality.</td>
+</tr>
+<tr>
+<td>9</td>
+<td><em>The Soul of Man Under Socialism</em></td>
+<td>1891</td>
+<td>Political and philosophical treatise on individualism.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><em>The Age of Pygmalion</em></td>
+<td>1901 (post‑hum)</td>
+<td>Long prose narrative, unfinished at Wilde’s death.</td>
+</tr>
+</tbody>
+</table>
+<p>These ten titles cover Wilde’s main forms—novel, plays, short stories, poems, and essays—and illustrate the breadth of his contribution to 19th‑century literature.</p>
+<p>&lsquo;<strong>Oscar\u202fWilde – a quick‑reference list of ten of his most celebrated works</strong>\n\n| # | Title | Year of Publication | Notes |\n|&mdash;|&mdash;&mdash;-|&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;|&mdash;&mdash;-|\n| 1 | <em>The Picture of Dorian Gray</em> | 1890 | Wilde’s only full novel, a tale of aestheticism and moral decay. |\n| 2 | <em>The Importance of Being Earnest</em> | 1895 | Comic farce in two acts, a masterstroke of witty dialogue. |\n| 3 | <em>The Canterville Ghost</em> | 1887 | Short story (first appears in a collection of fairy‑tales). |\n| 4 | <em>Lady Windermere’s Fan</em> | 1892 | One‑act melodrama, often paired theatrically with <strong><em>Earnest</em></strong>. |\n| 5 | <em>An Ideal Husband</em> | 1895 | Three‑act comedy, exploring marriage and politics. |\n| 6 | <em>The Ballad of Reading Gaol</em> | 1898 | Poetic lament written during Wilde’s imprisonment. |\n| 7 | <em>The Happy Prince</em> | 1908 (post‑hum) | Fairy tale in <em>The Happy Prince and Other Tales</em> book. |\n| 8 | <em>The Decay of Lying</em> | 1891 | Satirical essay lampooning Victorian morality. |\n| 9 | <em>The Soul of Man Under Socialism</em> | 1891 | Political and philosophical treatise on individualism. |\n|10 | <em>The Age of Pygmalion</em> | 1901 (post‑hum) | Long prose narrative, unfinished at Wilde’s death. |\n\nThese ten titles cover Wilde’s main forms—novel, plays, short stories, poems, and essays—and illustrate the breadth of his contribution to 19th‑century literature.&rsquo;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># chat.set_system_message()</span>
+</span></span><span style="display:flex;"><span>chat<span style="color:#f92672">.</span>clear_history()
+</span></span><span style="display:flex;"><span>chat<span style="color:#f92672">.</span>set_system_message(<span style="color:#e6db74">&#34;You are an helpful assistant. Reasoning: low! &#34;</span>) <span style="color:#75715e"># Reasoning Levels: High, Medium, Low</span>
+</span></span><span style="display:flex;"><span>chat<span style="color:#f92672">.</span>chat(<span style="color:#e6db74">&#34;Lista di film Marvel dopo Avengers: Endgame&#34;</span>)
+</span></span></code></pre></div><p><strong>You:</strong> Lista di film Marvel dopo Avengers: Endgame</p>
+<p><strong>Assistant:</strong> <strong>Film del Marvel Cinematic Universe (MCU) usciti <em>dopo</em> “Avengers: Endgame” (2019)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Anno</th>
+<th>Titolo</th>
+<th>Fase del MCU</th>
+<th>Note rilevanti</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2019</strong></td>
+<td><em>Spider‑Man: Far From Home</em></td>
+<td>4</td>
+<td>Il primo “spider‑man” con Tom Holland dopo l’evento di Endgame.</td>
+</tr>
+<tr>
+<td><strong>2022</strong></td>
+<td><em>Doctor Strange in the Multiverse of Madness</em></td>
+<td>4</td>
+<td>Espande il concetto di multiverso introdotto in<em>Endgame</em>.</td>
+</tr>
+<tr>
+<td><strong>2022</strong></td>
+<td><em>Thor: Love and Thunder</em></td>
+<td>4</td>
+<td>Insegna che Thor è di nuovo “l’amico del mondo”.</td>
+</tr>
+<tr>
+<td><strong>2022</strong></td>
+<td><em>Black Panther : Wakanda Forever</em></td>
+<td>4</td>
+<td>Continua la storia di Wakanda con nuovo leader e nuove minacce.</td>
+</tr>
+<tr>
+<td><strong>2023</strong></td>
+<td><em>Ant‑Man and the Wasp : Quantumania</em></td>
+<td>5</td>
+<td>Prima esplorazione più profonda del Quantum.</td>
+</tr>
+<tr>
+<td><strong>2023</strong></td>
+<td><em>Guardians of the Galaxy Vol. 3</em></td>
+<td>5</td>
+<td>Conclusione della trilogia di Guardians sotto la direzione di James Gunn.</td>
+</tr>
+<tr>
+<td><strong>2023</strong></td>
+<td><em>The Marvels</em></td>
+<td>5</td>
+<td>L’unione di Captain Marvel, Ms. Marvel e Monica Rambeau.</td>
+</tr>
+<tr>
+<td><strong>2024 (previsto)</strong></td>
+<td><em>Blade</em></td>
+<td>5</td>
+<td>Rinascimento del vampiro classico di Marvel.</td>
+</tr>
+<tr>
+<td><strong>2024 (previsto)</strong></td>
+<td><em>Thunderbolts</em></td>
+<td>5</td>
+<td>Il team “bancher” di eroi e anti‑eroi.</td>
+</tr>
+<tr>
+<td><strong>2024 (previsto)</strong></td>
+<td><em>Captain America 4</em></td>
+<td>5</td>
+<td>Continua la saga di Sam Wilson.</td>
+</tr>
+<tr>
+<td><strong>2025 (previsto)</strong></td>
+<td><em>Guardians of the Galaxy Vol. 4</em></td>
+<td>6</td>
+<td>Nuovo episodio che espande l’universo dei Guardiani.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Come trovare altre informazioni</strong></p>
+<ul>
+<li>Per gli ultimi aggiornamenti, ti consiglio di consultare la pagina ufficiale del MCU (<a href="https://www.marvel.com/movies" target="_blank" rel="noopener">www.marvel.com/movies</a>) o le piattaforme di streaming come Disney+ e AMC+ dove sono disponibili tutti i film, esclusi quelli ancora in uscita.</li>
+<li>Puoi anche seguire gli account social ufficiali di Marvel (Twitter, Instagram) che annunciano le date di uscita e i trailer.</li>
+</ul>
+</blockquote>
+<p>Se ti servono dettagli su qualsiasi film (casting, trama, curiosità), fammelo sapere!</p>
+<p>&lsquo;<strong>Film del Marvel Cinematic Universe (MCU) usciti <em>dopo</em> “Avengers: Endgame” (2019)</strong>  \n\n| Anno | Titolo | Fase del MCU | Note rilevanti |\n|&mdash;&mdash;|&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;&mdash;&mdash;-|\n| <strong>2019</strong> | <em>Spider‑Man: Far From Home</em> | 4 | Il primo “spider‑man” con Tom Holland dopo l’evento di Endgame. |\n| <strong>2022</strong> | <em>Doctor Strange\xa0in the Multiverse of Madness</em> | 4 | Espande il concetto di multiverso introdotto in <em>Endgame</em>. |\n| <strong>2022</strong> | <em>Thor: Love and Thunder</em> | 4 | Insegna che Thor è di nuovo “l’amico del mondo”. |\n| <strong>2022</strong> | <em>Black Panther\xa0: Wakanda Forever</em> | 4 | Continua la storia di Wakanda con nuovo leader e nuove minacce. |\n| <strong>2023</strong> | <em>Ant‑Man\xa0and the Wasp\xa0: Quantumania</em> | 5 | Prima esplorazione più profonda del Quantum. |\n| <strong>2023</strong> | <em>Guardians of the Galaxy\xa0Vol.\u202f3</em> | 5 | Conclusione della trilogia di Guardians sotto la direzione di James Gunn. |\n| <strong>2023</strong> | <em>The Marvels</em> | 5 | L’unione di Captain Marvel, Ms.\u202fMarvel e Monica Rambeau. |\n| <strong>2024 (previsto)</strong> | <em>Blade</em> | 5 | Rinascimento del vampiro classico di Marvel. |\n| <strong>2024 (previsto)</strong> | <em>Thunderbolts</em> | 5 | Il team “bancher” di eroi e anti‑eroi. |\n| <strong>2024 (previsto)</strong> | <em>Captain America\xa04</em> | 5 | Continua la saga di Sam Wilson. |\n| <strong>2025 (previsto)</strong> | <em>Guardians of the Galaxy\xa0Vol.\u202f4</em> | 6 | Nuovo episodio che espande l’universo dei Guardiani. |\n\n&gt; <strong>Come trovare altre informazioni</strong>  \n&gt; - Per gli ultimi aggiornamenti, ti consiglio di consultare la pagina ufficiale del MCU (<a href="https://www.marvel.com/movies" target="_blank" rel="noopener">www.marvel.com/movies</a>) o le piattaforme di streaming come Disney+ e AMC+ dove sono disponibili tutti i film, esclusi quelli ancora in uscita.  \n&gt; - Puoi anche seguire gli account social ufficiali di Marvel (Twitter, Instagram) che annunciano le date di uscita e i trailer.  \n\nSe ti servono dettagli su qualsiasi film (casting, trama, curiosità), fammelo sapere!&rsquo;</p>
+
+        </div>
+
+        
+        <div class="row ps-3 pe-3">
+        
+          <div class="col-md-6 share-buttons">
+          
+            <strong>Share on:</strong>
+            
+            <a class="btn icon-button bg-facebook" href="https://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fnlp%2fgpt-oss-20b%2f" target="_blank">
+              <i class="fab fa-facebook"></i>
+            </a>
+            
+            
+            
+                <a  class="btn icon-button bg-reddit" href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fnlp%2fgpt-oss-20b%2f&title=Tutorial%3a%20GPT-OSS%2020B" target="_blank">
+                  <i class="fab fa-reddit"></i>
+                </a>
+            
+            
+            
+            
+                <a class="btn icon-button bg-linkedin" href="https://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fnlp%2fgpt-oss-20b%2f&title=Tutorial%3a%20GPT-OSS%2020B" target="_blank">
+                  <i class="fab fa-linkedin"></i>
+                </a>
+            
+            
+             
+            
+                 <a class="btn icon-button bg-whatsapp" href="https://api.whatsapp.com/send?text=Tutorial%3a%20GPT-OSS%2020B http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fnlp%2fgpt-oss-20b%2f" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+            
+            
+                <a class="btn icon-button" href="mailto:?subject=Tutorial%3a%20GPT-OSS%2020B&body=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fnlp%2fgpt-oss-20b%2f" target="_blank">
+                  <i class="fas fa-envelope-open-text"></i>
+                </a>
+            
+          
+          </div>
+
+        
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/steven-ja/steven-ja.github.io/edit/main/content/posts%5cmachine%20learning%5cdeep%20learning%5cNLP%5cGPT-OSS-20B%5cindex.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+    
+    
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+    <div class="col-md-6 previous-article">
+      <a href="/posts/machine-learning/deep-learning/computer-vision/florence/" title="Florence-2 - Vision Foundation Model - Examples" class="btn filled-button">
+        <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
+        <div class="next-prev-text">Florence-2 - Vision Foundation Model - Examples</div>
+      </a>
+    </div>
+  
+  
+      
+      
+        
+      
+      <div class="col-md-6 next-article">
+        <a href="/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/" title="Gemma-2 &#43; RAG &#43; LlamaIndex &#43; VectorDB" class="btn filled-button">
+          <div>Next <i class="fas fa-chevron-circle-right"></i></div>
+          <div class="next-prev-text">Gemma-2 &#43; RAG &#43; LlamaIndex &#43; VectorDB</div>
+        </a>
+      </div>
+    
+</div>
+
+      <hr />
+
+      
+      
+        
+    
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://giscus.app/client.js"
+        data-repo="steven-ja/steven-ja.github.io"
+        data-repo-id="R_kgDOMJSsWA"
+        data-category="General"
+        data-category-id="DIC_kwDOMJSsWM4Cg6n0"
+        data-mapping="title"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang=""
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+
+      
+
+      
+      
+
+      </div>
+    </div>
+  </div>
+  
+  <a id="scroll-to-top" class="btn" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Scroll to top">
+    <i class="fas fa-chevron-circle-up"></i>
+  </a>
+</section>
+
+
+      
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center ps-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-install-dependencies-and-imports">1. Install Dependencies and Imports</a></li>
+    <li><a href="#2-setup-display-functions">2. Setup Display Functions</a></li>
+    <li><a href="#3-install-and-start-ollama">3. Install and Start Ollama</a></li>
+    <li><a href="#4-download-model-with-progress">4. Download Model with Progress</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#5-setup-model-interface">5. Setup Model Interface</a></li>
+    <li><a href="#6-test-the-model">6. Test the Model</a>
+      <ul>
+        <li><a href="#example-1">Example 1</a></li>
+        <li><a href="#examples-2-3-4">Examples 2-3-4</a></li>
+        <li><a href="#when-should-you-use-each-one">When should you use each one?</a></li>
+      </ul>
+    </li>
+    <li><a href="#8-interactive-chat-session">8. Interactive Chat Session</a></li>
+    <li><a href="#9-quick-chat-function">9. Quick Chat Function</a></li>
+    <li><a href="#10-trobleshooting-utilities">10. Trobleshooting Utilities</a></li>
+    <li><a href="#11-custom-chat-widgets">11. Custom Chat Widgets</a></li>
+    <li><a href="#12-save-and-load-conversations">12. Save and Load Conversations</a>
+      <ul>
+        <li><a href="#why-it-matters">Why It Matters</a>
+          <ul>
+            <li><a href="#quick-reference">Quick Reference</a></li>
+          </ul>
+        </li>
+        <li><a href="#another-question-without-conversation-history">Another Question (without conversation history)</a></li>
+        <li><a href="#conversation-history">Conversation History</a></li>
+        <li><a href="#system-prompt">System Prompt</a></li>
+        <li><a href="#further-questions">Further Questions</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+      </div>
+    </div>
+    
+  </section>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+    
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-start">
+        
+        
+        
+        
+      </div>
+    </div>
+    
+    <hr />
+    <div class="container">
+      <p id="disclaimer"><strong>Liability Notice:</strong> This website is done experimentally by me, taking inspiration from the open-source Toha-Hugo theme.</p>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-start">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
+            <img src="/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2025 Copyright.</div>
+        <div class="col-md-4 text-end">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script src="/application.c34ca2f2905a800f297550706d23063437a5848667a7d5221f01e8d00185eb39.js" integrity="sha256-w0yi8pBagA8pdVBwbSMGNDelhIZnp9UiHwHo0AGF6zk=" defer></script>
+
+
+    
+     
+
+    
+    
+
+</body>
+</html>
+
+
+    
+    <script src="http://localhost:1313/js/copybutton.min.608f75dc2cc75e4b968d3472ab640b15b0b986a3bf6405a77c92f8eb207e1c16.js" integrity="sha256-YI913CzHXkuWjTRyq2QLFbC5hqO/ZAWnfJL46yB&#43;HBY=" defer></script>
+

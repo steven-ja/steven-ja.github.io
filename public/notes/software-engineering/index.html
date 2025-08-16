@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <title></title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<link rel="stylesheet" href="/application.b75fd7db826474d1a95fad8a5aec65f60f4e668ee19f6012e8a4af47b191edd3.css" integrity="sha256-t1/X24JkdNGpX62KWuxl9g9OZo7hn2AS6KSvR7GR7dM=" />
+
+
+
+
+
+  
+
+  
+  
+  
+    
+  
+  
+
+  <link rel="icon" type="image/png" href="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" />
+
+<meta property="og:url" content="http://localhost:1313/notes/software-engineering/">
+  <meta property="og:site_name" content="Stefano Giannini">
+  <meta property="og:title" content="Stefano Giannini">
+  <meta property="og:description" content="Software Engineering - Book Recommendations Software Structure Designing Data Intensive Applications Modern API Design with gRPC Clean Architecture Python For Beginners: Python Crash Course GO Learning Go: An Idiomatic Approach to Real-World Go Programming ">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="notes">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Stefano Giannini">
+  <meta name="twitter:description" content="Software Engineering - Book Recommendations Software Structure Designing Data Intensive Applications Modern API Design with gRPC Clean Architecture Python For Beginners: Python Crash Course GO Learning Go: An Idiomatic Approach to Real-World Go Programming ">
+
+    
+     
+
+    
+
+    
+
+
+
+
+<script>
+      theme = localStorage.getItem('darkmode:color-scheme') || 'system';
+      if (theme == 'system') {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          theme = 'dark';
+        } else {
+          theme = 'light';
+        }
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
+  </head>
+
+  <body class="type-notes kind-page" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
+    <div class="container-fluid bg-secondary wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+<nav class="navbar navbar-expand-xl top-navbar shadow " id="top-navbar">
+  <div class="container">
+    
+    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button">
+      <i data-feather="sidebar"></i>
+    </button>
+    
+    <a class="navbar-brand" href="/">
+      
+        <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" id="logo" alt="Logo">
+      Stefano Giannini</a>
+    <button
+      class="navbar-toggler navbar-light"
+      id="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#top-nav-items"
+      aria-label="menu"
+    >
+      <i data-feather="menu"></i>
+    </button>
+
+    <div class="collapse navbar-collapse dynamic-navbar" id="top-nav-items">
+      <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/#home">Home</a>
+        </li>
+        
+          
+          
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#about">About</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#experiences">Experiences</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#education">Education</a>
+                </li>
+              
+            
+          
+        
+        
+          <div id="top-navbar-divider"></div>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="blog-link" href="/posts">Posts</a>
+          </li>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="note-link" href="/notes">Notes</a>
+          </li>
+        
+        
+        
+        
+      </ul>
+    </div>
+  </div>
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="main-logo" alt="Logo">
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="inverted-logo" alt="Inverted Logo">
+  
+</nav>
+
+
+
+      
+      
+  
+  
+
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/notes" data-filter="all">Notes</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/notes/physics/"> Physics</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/notes/physics/electromagnetism/" title="Electromagnetism">Electromagnetism</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/notes/python/"> Python</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/notes/python/web/" title="WebSocket">WebSocket</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content container-fluid" id="content">
+    <div class="container-fluid note-card-holder" id="note-card-holder">
+      <h1 id="software-engineering---book-recommendations">Software Engineering - Book Recommendations</h1>
+<h2 id="software-structure">Software Structure</h2>
+<ol>
+<li><a href="https://www.amazon.it/dp/1449373321?linkCode=gg2&amp;tag=javamysqlanta-20https" target="_blank" rel="noopener">Designing Data Intensive Applications</a></li>
+<li><a href="https://www.amazon.com/dp/8197081832/ref=sspa_dk_detail_2?psc=1&amp;pd_rd_i=8197081832&amp;pd_rd_w=G4KD5&amp;content-id=amzn1.sym.10c44ba0-99a9-46d2-be7c-ad851b65838d&amp;pf_rd_p=10c44ba0-99a9-46d2-be7c-ad851b65838d&amp;pf_rd_r=8MJ2JRRPA7Q4NZX1ZKRN&amp;pd_rd_wg=1a6d2&amp;pd_rd_r=d368cae6-edf9-4dfe-9707-f53ab42084c0&amp;s=english-books&amp;sp_csd=d2lkZ2V0TmFtZT1zcF9kZXRhaWwhttps:/" target="_blank" rel="noopener">Modern API Design with gRPC</a></li>
+<li><a href="https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure/dp/0134494164/r" target="_blank" rel="noopener">Clean Architecture</a></li>
+</ol>
+<h2 id="python">Python</h2>
+<ol>
+<li>For Beginners: <a href="https://www.amazon.com/Python-Crash-Course-Eric-Matthes/dp/1718502702/" target="_blank" rel="noopener">Python Crash Course</a></li>
+</ol>
+<h2 id="go">GO</h2>
+<ol>
+<li><a href="https://www.amazon.com/Learning-Go-Idiomatic-Real-World-Programming/dp/1098139291/ref=sr_1_1?crid=NLV5KSZC2HUO&amp;dib=eyJ2IjoiMSJ9.g7w_cTVkRCbXfYYfB-x4Qmcw2QRDjk3qRikyx1anv10EjtaYnMbyaLrnlmZyV8dwWRt_Mz_Jpkt-LBtiM-9aBdukcwERI7FAm82s5fB3aUKJcRHPzHDJmq-_fJ5p3QIVcbX2kxAmJe2Lq9rUpdXEf0LxRheF5S-HJ4Km2b9QwJtbvZlXLgJbpqPcQa2b0Pv02Er636BK_h5CRsnbRp6gwu811uCrnMmmBmU8hmtYgq8.H3WrLSb1urR6p5E2WWR6w0Hjgg04vWVf02dY8ZYdbKg&amp;dib_tag=se&amp;keywords=programming&#43;go&amp;qid=1745273713&amp;sprefix=programming&#43;go%2Caps%2C183&amp;sr=8-1#customerReviewshttps:/" target="_blank" rel="noopener">Learning Go: An Idiomatic Approach to Real-World Go Programming</a></li>
+</ol>
+
+    </div>
+  </div>
+</section>
+
+
+      
+       
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+    
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-start">
+        
+        
+        
+        
+      </div>
+    </div>
+    
+    <hr />
+    <div class="container">
+      <p id="disclaimer"><strong>Liability Notice:</strong> This website is done experimentally by me, taking inspiration from the open-source Toha-Hugo theme.</p>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-start">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
+            <img src="/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2025 Copyright.</div>
+        <div class="col-md-4 text-end">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script src="/application.c34ca2f2905a800f297550706d23063437a5848667a7d5221f01e8d00185eb39.js" integrity="sha256-w0yi8pBagA8pdVBwbSMGNDelhIZnp9UiHwHo0AGF6zk=" defer></script>
+
+
+    
+     
+
+    
+    
+
+</body>
+</html>
+
+
+    
+    <script src="http://localhost:1313/js/copybutton.min.608f75dc2cc75e4b968d3472ab640b15b0b986a3bf6405a77c92f8eb207e1c16.js" integrity="sha256-YI913CzHXkuWjTRyq2QLFbC5hqO/ZAWnfJL46yB&#43;HBY=" defer></script>
+
