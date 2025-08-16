@@ -6,6 +6,8 @@
   </url><url>
     <loc>http://localhost:1313/notes/python/web/</loc>
   </url><url>
+    <loc>http://localhost:1313/notes/software-engineering/books/</loc>
+  </url><url>
     <loc>http://localhost:1313/search/</loc>
     <lastmod>2010-06-08T08:06:25+06:00</lastmod>
     <priority>0.1</priority>
@@ -107,39 +109,42 @@
     <priority>0.1</priority>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+    <lastmod>2025-08-14T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/deep-learning/</loc>
-    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+    <lastmod>2025-08-14T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/machine-learning/deep-learning/</loc>
-    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/</loc>
-    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+    <lastmod>2025-08-14T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/machine-learning/</loc>
-    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+    <lastmod>2025-08-14T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/machine-learning/</loc>
-    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+    <lastmod>2025-08-14T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/nlp/</loc>
-    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+    <lastmod>2025-08-14T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/nlp/</loc>
-    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+    <lastmod>2025-08-14T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/machine-learning/deep-learning/nlp/</loc>
-    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+    <lastmod>2025-08-14T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+    <lastmod>2025-08-14T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2024-07-14T00:00:00+01:00</lastmod>
+    <lastmod>2025-08-14T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2025-08-14T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/machine-learning/deep-learning/nlp/gpt-oss-20b/</loc>
+    <lastmod>2025-08-14T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/</loc>
     <lastmod>2024-07-14T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/finance/</loc>
@@ -242,5 +247,7 @@
   </url><url>
     <loc>http://localhost:1313/search/</loc>
     <priority>0.1</priority>
+  </url><url>
+    <loc>http://localhost:1313/notes/software-engineering/</loc>
   </url>
 </urlset>

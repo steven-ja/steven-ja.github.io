@@ -21,7 +21,7 @@
   }
 
   .card-body {
-    text-align: center;
+    text-align: justify;
   }
 
   .card-img-top {
@@ -119,4 +119,8 @@ html[data-theme='dark'] {
       }
     }
   }
+}
+
+.highlight {
+  text-align: justify;
 }

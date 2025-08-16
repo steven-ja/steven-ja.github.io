@@ -6,7 +6,18 @@
     <description>Recent content in NLP on Stefano Giannini</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 14 Jul 2024 00:00:00 +0100</lastBuildDate><atom:link href="http://localhost:1313/categories/nlp/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Thu, 14 Aug 2025 00:00:00 +0100</lastBuildDate><atom:link href="http://localhost:1313/categories/nlp/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>Tutorial: GPT-OSS 20B</title>
+      <link>http://localhost:1313/posts/machine-learning/deep-learning/nlp/gpt-oss-20b/</link>
+      <pubDate>Thu, 14 Aug 2025 00:00:00 +0100</pubDate>
+      
+      <guid>http://localhost:1313/posts/machine-learning/deep-learning/nlp/gpt-oss-20b/</guid>
+      <description>Open in:
+GPT-OSS 20B - Tutorial 1. Install Dependencies and Imports import subprocess import sys import os import time import json from datetime import datetime from IPython.display import display, HTML, clear_output, Markdown # Install required packages print(&amp;#34;📦 Installing required packages...&amp;#34;) subprocess.check_call([sys.executable, &amp;#34;-m&amp;#34;, &amp;#34;pip&amp;#34;, &amp;#34;install&amp;#34;, &amp;#34;-q&amp;#34;, &amp;#34;openai&amp;#34;]) print(&amp;#34;✅ Packages installed successfully!&amp;#34;) from openai import OpenAI 📦 Installing required packages&amp;hellip; ✅ Packages installed successfully!
+2. Setup Display Functions def display_status(message, status=&amp;#34;info&amp;#34;): &amp;#34;&amp;#34;&amp;#34;Display colored status messages&amp;#34;&amp;#34;&amp;#34; colors = { &amp;#34;info&amp;#34;: &amp;#34;#3498db&amp;#34;, &amp;#34;success&amp;#34;: &amp;#34;#2ecc71&amp;#34;, &amp;#34;warning&amp;#34;: &amp;#34;#f39c12&amp;#34;, &amp;#34;error&amp;#34;: &amp;#34;#e74c3c&amp;#34;, &amp;#34;processing&amp;#34;: &amp;#34;#9b59b6&amp;#34; } html = f&amp;#34;&amp;#34;&amp;#34; &amp;lt;div style=&amp;#34;padding: 10px; margin: 10px 0; border-left: 4px solid {colors.</description>
+    </item>
+    
+    <item>
       <title>Gemma-2 &#43; RAG &#43; LlamaIndex &#43; VectorDB</title>
       <link>http://localhost:1313/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/</link>
       <pubDate>Sun, 14 Jul 2024 00:00:00 +0100</pubDate>

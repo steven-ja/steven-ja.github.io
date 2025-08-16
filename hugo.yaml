@@ -44,6 +44,8 @@ languages:
     languageName: English
     title: "Stefano Giannini"
     weight: 1
+
+
   # it:
   #   languageCode: it
   #   languageName: Italiano
@@ -67,6 +69,12 @@ languages:
   
 # default language for the content
 defaultContentLanguage: en
+
+
+# Paginator
+pagination:
+  pagerSize: 2
+  path: page
 
 # Allow raw html in markdown file
 markup:
