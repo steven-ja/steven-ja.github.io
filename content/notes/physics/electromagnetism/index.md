@@ -1,12 +1,12 @@
 ---
 title: Electromagnetism
-weight: 10
+weight: 1
 menu:
   notes:
     name: Electromagnetism
     identifier: notes-physics-em
     parent: notes-physics
-    weight: 10
+    weight: 1
 ---
 <!-- A Sample Program -->
 {{< note title="Maxwell Equations (Integral)">}}

@@ -1,12 +1,13 @@
 ---
 title: Software Engineering - Book Recommendations
-weight: 14
+weight: 3
+page: 2
 menu:
   notes:
     name: Books
     identifier: notes-swe-books
     parent: notes-swe
-    weight: 14
+    weight: 3
 ---
 
 {{< note title="Software Engineering - Book Recommendations">}}

@@ -4,7 +4,7 @@ menu:
   notes:
     name: Software-Engineering
     identifier: notes-swe
-    weight: 11
+    weight: 3
 ---
 
 # Software-Engineering

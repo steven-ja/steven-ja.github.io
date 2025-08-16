@@ -1,4 +1,5 @@
 .card {
+  border-radius: 10px;
   box-shadow: none;
   @include transition();
   overflow: hidden;
@@ -7,22 +8,25 @@
   &:hover,
   &:focus {
     box-shadow: $box-shadow;
-    border: 1px solid get-light-color('bg-primary');
+    border: 3px solid get-light-color('bg-primary');
     @include transition();
   }
 
   .card-head {
-    height: 172px;
+    height: 180px;
     display: flex;
+    align-items: center;
     overflow: hidden;
+    background-color: black;
   }
 
   .card-body {
-    text-align: justify;
+    text-align: center;
   }
 
   .card-img-top {
     object-fit: cover;
+    min-height: 150px;
     @include transition();
   }
 
@@ -60,7 +64,7 @@
     &:hover,
     &:focus {
       .card-img-top {
-        transform: scale(1.2);
+        transform: scale(1.1);
         object-fit: cover;
         @include transition();
       }
@@ -74,7 +78,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        max-height: 144px;
+        max-height: 100px;
         /* fallback */
         -webkit-line-clamp: 5;
         /* number of lines to show */
@@ -87,7 +91,7 @@
       span {
         font-size: 10pt;
         color: get-light-color('muted-text-color') !important;
-        padding-top: 5px;
+        padding-top: 4px;
       }
     }
   }

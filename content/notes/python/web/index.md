@@ -1,12 +1,12 @@
 ---
 title: WebSocket
-weight: 10
+weight: 2
 menu:
   notes:
     name: WebSocket
     identifier: notes-python-web
     parent: notes-python
-    weight: 10
+    weight: 2
 ---
 
 <!-- A Sample Program -->

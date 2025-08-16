@@ -31,7 +31,7 @@
 <section class="content-section" id="content-section">
   <div class="content container-fluid" id="content">
     <div class="container-fluid note-card-holder" id="note-card-holder">
-      {{ $paginator := .Paginate .RegularPagesRecursive 10 }}
+      {{ $paginator := .Paginate .RegularPagesRecursive 2 }}
       {{ range $paginator.Pages }}
         {{ if .Layout }}
         {{/* ignore search.md file*/}}

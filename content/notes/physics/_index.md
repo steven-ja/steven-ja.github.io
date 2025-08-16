@@ -4,7 +4,7 @@ menu:
   notes:
     name: Physics
     identifier: notes-physics
-    weight: 10
+    weight: 1
 ---
 
 # Physics Notes
