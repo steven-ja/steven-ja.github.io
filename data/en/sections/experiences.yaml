@@ -16,7 +16,7 @@ experiences:
     name:  Fairfiel S.P.A.
     url: "https://fairfieldmarketplace.com/"
     location: Italy (Remote)
-    logo: 
+    logo: /images/sections/experiences/fairfield.png
     overview: Building the most innovative private-debt collection web platform
   positions:
   - designation: Full-Stack Developer
