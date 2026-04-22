@@ -12,6 +12,21 @@ section:
 # I think my hybrid background can be a great fit for your company.
 # Your experiences
 experiences:
+- company:
+    name:  Fairfiel S.P.A.
+    url: "https://fairfieldmarketplace.com/"
+    location: Italy (Remote)
+    logo: 
+    overview: Building the most innovative private-debt collection web platform
+  positions:
+  - designation: Full-Stack Developer
+    start: Apr 2025
+
+    responsibilities:
+    - Refactoring of management software
+    - Improvement of automatic business processes
+    - Business data analysis to improve core profits
+
 - company: 
     name: Sky Ray Capital
     url: 
