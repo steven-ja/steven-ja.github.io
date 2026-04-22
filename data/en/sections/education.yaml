@@ -11,7 +11,7 @@ section:
 
 degrees:
 - name: PhD in Physics
-  icon: fa-microscope
+  icon: fa-book
   timeframe: 2026-2030
   institution:
     name: Stockholm University
