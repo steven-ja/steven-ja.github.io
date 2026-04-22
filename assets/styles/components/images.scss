@@ -59,6 +59,8 @@ html[data-theme='dark'] {
   border-radius: 50%;
   overflow: hidden;   /* clips the image inside the circle */
   flex-shrink: 0;
+  padding: 0;
+  margin: 5px;
   
 }
 

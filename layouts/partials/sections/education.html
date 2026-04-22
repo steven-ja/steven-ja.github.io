@@ -32,9 +32,7 @@
                     <td class="details">
                         <div class="degree-info card">
 
-                            
-
-                            <div class="row">
+                            <!-- <div class="row">
                                 {{ $logoImage:= resources.Get .institution.logo}}
                                 {{ $darkLogoImage:= resources.Get .institution.darkLogo}}
                                 {{ if $logoImage }}
@@ -54,6 +52,29 @@
                                     <h6>{{ .name }}</h6>
                                 </div>
                                 <div class="timeframe col-lg-2 col-md-4">{{ .timeframe }}</div>
+                            </div> -->
+                            <div class="degree-header">
+                                {{ $logoImage := resources.Get .institution.logo }}
+                                {{ $darkLogoImage := resources.Get .institution.darkLogo }}
+                                {{ if $logoImage }}
+                                <div class="logo-holder-edu">
+                                    <img class="company-logo-edu light-logo" src="{{ $logoImage.RelPermalink }}" alt="{{ .name }}" />
+                                    {{ if $darkLogoImage }}
+                                    <img class="company-logo-edu dark-logo" src="{{ $darkLogoImage.RelPermalink }}" alt="{{ .name }}" />
+                                    {{ end }}
+                                </div>
+                                {{ end }}
+                            
+                                <div class="degree-title">
+                                    {{ if .institution.url }}
+                                        <h5><a href="{{ .institution.url }}" title="{{ .institution.name }}" target="_blank" rel="noopener">{{ .institution.name }}</a></h5>
+                                    {{ else }}
+                                        <h5>{{ .institution.name }}</h5>
+                                    {{ end }}
+                                    <h6>{{ .name }}</h6>
+                                </div>
+                            
+                                <div class="timeframe">{{ .timeframe }}</div>
                             </div>
                             
                             {{ if .grade }}
