@@ -10,6 +10,20 @@ section:
   # hideTitle: true
 
 degrees:
+- name: PhD in Physics
+  icon: fa-microscope
+  timeframe: 2026-2030
+  institution:
+    name: Stockholm University
+    url: "https://www.su.se/english/divisions/department-of-physics/education/courses-and-programmes/doctoral-studies-at-the-department-of-physics?eventopenforinternationalstudents=true&notforcedreason=0&q=&xpanded="
+    logo: /images/sections/education/stockholm_university.png
+    # Can optionally show a different logo for dark theme
+    # darkLogo: /images/sections/education/tech_college.png
+  # grade: #(optional)
+  #   scale: CGPA
+  #   achieved: 4.5
+  #   outOf: 5
+
 - name: M.Sc. in Nanotechnology
   icon: fa-microscope
   timeframe: 2021-2024
