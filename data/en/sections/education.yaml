@@ -83,7 +83,8 @@ degrees:
   - Guest and Host at School of AI Turin.
   - Partecipation in several Hackathlonn
   - Partecipation  in many startup meetings
-  # custonSections: #(optional)
+
+  # customSections: #(optional)
   #   - name: Thesis
   #     content: 
   #   - name: Supervisor - Stefano Argirò
