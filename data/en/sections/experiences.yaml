@@ -21,6 +21,7 @@ experiences:
   positions:
   - designation: Full-Stack Developer
     start: Apr 2025
+    end: Dec 2025
 
     responsibilities:
     - Refactoring of management software
@@ -36,6 +37,7 @@ experiences:
   positions:
   - designation: Senior Data Scientist
     start: Mar 2024
+    end: Apr 2025
     
     responsibilities:
     - Time-series Analysis

@@ -14,8 +14,8 @@ Moreover, I will use this website as a blogging platform. I will talk about seve
       - [x] GRU/ LSTM
       - [x] GARCH
    - [x] Monte Carlo 
-   - Hidden Markov Models for Market Condition
-   - Portfolio Optimization
+   - [ ] Hidden Markov Models for Market Condition
+   - [ ] Portfolio Optimization
 2. [Physics](https://steven-ja.github.io/posts/physics):
    - [x] Percolation 
    - [ ] Water Dynamics
