@@ -26,9 +26,14 @@ skills:
   summary: "Developing and understanding of foundations models. Used in particular for initial prototyping along with Keras"
   url: "https://tensorflow.org/"
 
+- name: LangChain
+  logo: /images/sections/skills/langchain.png
+  summary: "Building and evaluating agents for financial applications"
+  url: "https://www.langchain.com/"
+
 - name: Cloud Computing
   logo: /images/sections/skills/cloud.png
-  summary: "Worked with most of the major clouds such as IBM Watson, AWS, Azure etc."
+  summary: "Worked with most of the major clouds such as IBM Watson, AWS and Azure"
 
 - name: Edge Computing
   logo: /images/sections/skills/microcontroller.png

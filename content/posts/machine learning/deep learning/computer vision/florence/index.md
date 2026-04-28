@@ -12,6 +12,7 @@ hero: images/florence-2-lvm-computer-vision-exploration_28_3.png
 tags: ["Deep Learning", "Computer Vision", "Machine Learning"]
 categories: ["Computer Vision"]
 ---
+
 ## Install dependencies
 
 Type the following command to install possible needed dependencies (especially if the inference is performed on the CPU)
