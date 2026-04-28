@@ -40,3 +40,9 @@ Moreover, I will use this website as a blogging platform. I will talk about seve
    - [ ] World Energy Production
    - [ ] World Energy Potential 
    - [ ] Solar Panel Simulations
+
+
+### Notebook to Markdown Conversion
+```bash
+jupyter nbconvert --show-input --to markdown <filepath>
+```
