@@ -13,6 +13,8 @@ tags: ["Deep Learning", "Computer Vision", "Machine Learning"]
 categories: ["Computer Vision"]
 ---
 
+*Open in:*[<img src="https://www.kaggle.com/static/images/logos/kaggle-logo-gray-300.png" width="45"/>](https://www.kaggle.com/code/stefanogiannini/medmnist-foundation-models-vs-specialized)
+
 # MedMNIST: Testing a Foundation Model, a Specialized CNN, and Fine-Tuning
 
 MedMNIST+ is one of the easiest ways to start serious experimentation in medical imaging because it packages **18** standardized biomedical image classification datasets into a single benchmark family and adds higher-resolution variants intended for stronger representation learning and medical foundation-model research. At the same time, the broader research direction in medical imaging has shifted toward foundation models, transfer learning, and adaptation benchmarks rather than only training narrow models from scratch, which makes MedMNIST+ a good educational bridge between beginner workflows and current SoTA research.
