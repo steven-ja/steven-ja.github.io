@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <title>MedMNIST - ViT vs. ResNet18 vs. DINOv2 Test - Part 1</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<link rel="stylesheet" href="/application.efe6b45a1210597f9cf355d89ca0d531f3a1527c046b1c24938241faaa8af088.css" integrity="sha256-7&#43;a0WhIQWX&#43;c81XYnKDVMfOhUnwEaxwkk4JB&#43;qqK8Ig=" />
+
+
+
+
+
+  
+
+  
+  
+  
+    
+  
+  
+
+  <link rel="icon" type="image/png" href="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" />
+
+<meta property="og:url" content="http://localhost:1313/posts/machine-learning/deep-learning/computer-vision/bloodmnist/">
+  <meta property="og:site_name" content="Stefano Giannini">
+  <meta property="og:title" content="MedMNIST - ViT vs. ResNet18 vs. DINOv2 Test - Part 1">
+  <meta property="og:description" content="Testing various models (including a foundation model) on the BloodMNIST dataset">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-11-25T00:08:25+01:00">
+    <meta property="article:modified_time" content="2025-11-25T00:08:25+01:00">
+    <meta property="article:tag" content="Deep Learning">
+    <meta property="article:tag" content="Computer Vision">
+    <meta property="article:tag" content="Machine Learning">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="MedMNIST - ViT vs. ResNet18 vs. DINOv2 Test - Part 1">
+  <meta name="twitter:description" content="Testing various models (including a foundation model) on the BloodMNIST dataset">
+
+    
+    
+<meta name="description" content="Testing various models (including a foundation model) on the BloodMNIST dataset" />
+
+
+    
+
+    
+
+
+
+
+<script>
+      theme = localStorage.getItem('darkmode:color-scheme') || 'system';
+      if (theme == 'system') {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          theme = 'dark';
+        } else {
+          theme = 'light';
+        }
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
+  </head>
+
+  <body class="type-posts kind-page" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
+    <div class="container-fluid bg-secondary wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+<nav class="navbar navbar-expand-xl top-navbar shadow " id="top-navbar">
+  <div class="container">
+    
+    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button">
+      <i data-feather="sidebar"></i>
+    </button>
+    
+    <a class="navbar-brand" href="/">
+      
+        <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" id="logo" alt="Logo">
+      Stefano Giannini</a>
+    <button
+      class="navbar-toggler navbar-light"
+      id="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#top-nav-items"
+      aria-label="menu"
+    >
+      <i data-feather="menu"></i>
+    </button>
+
+    <div class="collapse navbar-collapse dynamic-navbar" id="top-nav-items">
+      <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/#home">Home</a>
+        </li>
+        
+          
+          
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#about">About</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#experiences">Experiences</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#education">Education</a>
+                </li>
+              
+            
+          
+        
+        
+          <div id="top-navbar-divider"></div>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="blog-link" href="/posts">Posts</a>
+          </li>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="note-link" href="/notes">Notes</a>
+          </li>
+        
+        
+        
+        
+      </ul>
+    </div>
+  </div>
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="main-logo" alt="Logo">
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="inverted-logo" alt="Inverted Logo">
+  
+</nav>
+
+
+
+      
+      
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/posts/" data-filter="all">Posts</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/"> Finance</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/monte_carlo/"> Monte Carlo</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/monte_carlo/black-scholes/" title="Option Pricing">Option Pricing</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/stock_prediction/"> Stock Prediction</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/gru/" title="GRU">GRU</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/arima/" title="ARIMA">ARIMA</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/sarima/" title="SARIMA">SARIMA</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/sarimax/" title="SARIMAX">SARIMAX</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/machine-learning/"> Machine Learning</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/machine-learning/deep-learning/"> Deep Learning</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/machine-learning/deep-learning/computer-vision/"> Computer Vision</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/machine-learning/deep-learning/computer-vision/florence/" title="Florence-2 LVM">Florence-2 LVM</a></li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li><a class="active list-link" href="/posts/machine-learning/deep-learning/computer-vision/bloodmnist/" title="MedMNIST - P1">MedMNIST - P1</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/machine-learning/deep-learning/nlp/"> NLP</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/machine-learning/deep-learning/nlp/gpt-oss-20b/" title="GPT-OSS">GPT-OSS</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/" title="Gemma-2 &#43; RAG">Gemma-2 &#43; RAG</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/physics/"> Physics</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/percolation/" title="Percolation">Percolation</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/physics/quantum_computing/"> Quantum Computing</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/quantum_computing/introduction/" title="Introduction">Introduction</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/quantum_computing/teleportation/" title="Teleportation">Teleportation</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content">
+    <div class="container p-0 read-area">
+      
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/posts/machine-learning/deep-learning/computer-vision/bloodmnist/medmnist-foundation-models-vs-specialized_files/hero.jpg);'>
+      </div>
+
+      
+      <div class="page-content">
+        
+        <div class="author-profile ms-auto align-self-lg-center">
+          <img class="rounded-circle" src='/images/author/profile_hu8a567cefac8c1a165d433ac0796ac418_3088978_120x120_fit_q75_box.jpg' alt="Author Image">
+          <h5 class="author-name">Stefano Giannini</h5>
+          <p class="text-muted">Tuesday, November 25, 2025 | 15 minutes</p>
+        </div>
+        
+        
+        <div class="title">
+          <h1>MedMNIST - ViT vs. ResNet18 vs. DINOv2 Test - Part 1</h1>
+        </div>
+
+        
+
+        
+          <div class="tags">
+  <ul style="padding-left: 0;">
+    
+    
+    <li class="rounded"><a href="/tags/deep-learning/" class="btn btn-sm btn-info">Deep Learning</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/computer-vision/" class="btn btn-sm btn-info">Computer Vision</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/machine-learning/" class="btn btn-sm btn-info">Machine Learning</a></li>
+    
+  </ul>
+</div>
+
+        
+        <div class="post-content" id="post-content">
+          <h1 id="medmnist-testing-a-foundation-model-a-specialized-cnn-and-fine-tuning">MedMNIST: Testing a Foundation Model, a Specialized CNN, and Fine-Tuning</h1>
+<p>MedMNIST+ is one of the easiest ways to start serious experimentation in medical imaging because it packages <strong>18</strong> standardized biomedical image classification datasets into a single benchmark family and adds higher-resolution variants intended for stronger representation learning and medical foundation-model research. At the same time, the broader research direction in medical imaging has shifted toward foundation models, transfer learning, and adaptation benchmarks rather than only training narrow models from scratch, which makes MedMNIST+ a good educational bridge between beginner workflows and current SoTA research.</p>
+<p>In this notebook, 3 models for 1 MedMNIST+ subset are going to be tested:</p>
+<ol>
+<li>Classic <strong>ResNet</strong> + training from scratch</li>
+<li><strong>ViT</strong> with transfer learning (backbone freezing) or complete fine-tuning</li>
+<li><strong>DINOvs</strong> (ViT base): complete frozen + fine-tuning</li>
+</ol>
+<h2 id="1-install-dependencies-and-imports">1. Install Dependencies and Imports</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> subprocess
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> time
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> IPython.display <span style="color:#f92672">import</span> display, HTML, clear_output, Markdown
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>packages <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;medmnist timm tqdm&#34;</span><span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34; &#34;</span>)
+</span></span><span style="display:flex;"><span>packages_torch <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;torch torchvision --index-url https://download.pytorch.org/whl/cu118&#34;</span><span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34; &#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Install required packages</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;📦 Installing required packages...&#34;</span>)
+</span></span><span style="display:flex;"><span>subprocess<span style="color:#f92672">.</span>check_call([sys<span style="color:#f92672">.</span>executable, <span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#e6db74">&#34;pip&#34;</span>, <span style="color:#e6db74">&#34;install&#34;</span>, <span style="color:#e6db74">&#34;-q&#34;</span>] <span style="color:#f92672">+</span> packages)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> float(torch<span style="color:#f92672">.</span>version<span style="color:#f92672">.</span>cuda)<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">11.8</span>:
+</span></span><span style="display:flex;"><span>    subprocess<span style="color:#f92672">.</span>check_call([sys<span style="color:#f92672">.</span>executable, <span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#e6db74">&#34;pip&#34;</span>, <span style="color:#e6db74">&#34;uninstall&#34;</span>, <span style="color:#e6db74">&#34;-y&#34;</span>, <span style="color:#e6db74">&#34;torchaudio&#34;</span>] <span style="color:#f92672">+</span> packages_torch[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">2</span>])
+</span></span><span style="display:flex;"><span>subprocess<span style="color:#f92672">.</span>check_call([sys<span style="color:#f92672">.</span>executable, <span style="color:#e6db74">&#34;-m&#34;</span>, <span style="color:#e6db74">&#34;pip&#34;</span>, <span style="color:#e6db74">&#34;install&#34;</span>, <span style="color:#e6db74">&#34;-q&#34;</span>] <span style="color:#f92672">+</span> packages_torch)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;✅ Packages installed successfully!&#34;</span>)
+</span></span></code></pre></div><pre><code>📦 Installing required packages...
+✅ Packages installed successfully!
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.optim <span style="color:#66d9ef">as</span> optim
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torch.utils.data <span style="color:#f92672">import</span> DataLoader
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torchvision <span style="color:#f92672">import</span> transforms
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> medmnist <span style="color:#f92672">import</span> INFO, Evaluator
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> medmnist.dataset <span style="color:#f92672">import</span> PathMNIST, BloodMNIST, OCTMNIST
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> timm
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> tqdm <span style="color:#f92672">import</span> tqdm
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>__version__
+</span></span></code></pre></div><pre><code>'2.7.1+cu118'
+</code></pre>
+<h2 id="2-setup-utility-functions">2. Setup Utility Functions</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">display_status</span>(message, status<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;info&#34;</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Display colored status messages&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    colors <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;info&#34;</span>: <span style="color:#e6db74">&#34;#3498db&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;success&#34;</span>: <span style="color:#e6db74">&#34;#2ecc71&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;warning&#34;</span>: <span style="color:#e6db74">&#34;#f39c12&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;#e74c3c&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;processing&#34;</span>: <span style="color:#e6db74">&#34;#9b59b6&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    html <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;div style=&#34;padding: 10px; margin: 10px 0; border-left: 4px solid </span><span style="color:#e6db74">{</span>colors<span style="color:#f92672">.</span>get(status, <span style="color:#e6db74">&#39;#3498db&#39;</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">; background-color: #f8f9fa;&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;strong style=&#34;color: </span><span style="color:#e6db74">{</span>colors<span style="color:#f92672">.</span>get(status, <span style="color:#e6db74">&#39;#3498db&#39;</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">;&#34;&gt;</span><span style="color:#e6db74">{</span>message<span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/strong&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    display(HTML(html))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">display_progress</span>(current, total, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Progress&#34;</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Display a progress bar&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    percentage <span style="color:#f92672">=</span> (current <span style="color:#f92672">/</span> total) <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>    bar_length <span style="color:#f92672">=</span> <span style="color:#ae81ff">50</span>
+</span></span><span style="display:flex;"><span>    filled_length <span style="color:#f92672">=</span> int(bar_length <span style="color:#f92672">*</span> current <span style="color:#f92672">//</span> total)
+</span></span><span style="display:flex;"><span>    bar <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;█&#39;</span> <span style="color:#f92672">*</span> filled_length <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;░&#39;</span> <span style="color:#f92672">*</span> (bar_length <span style="color:#f92672">-</span> filled_length)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    html <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;div style=&#34;margin: 10px 0;&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;div style=&#34;font-weight: bold; margin-bottom: 5px;&#34;&gt;</span><span style="color:#e6db74">{</span>label<span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;div style=&#34;background-color: #ecf0f1; border-radius: 10px; padding: 3px;&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            &lt;div style=&#34;background-color: #3498db; width: </span><span style="color:#e6db74">{</span>percentage<span style="color:#e6db74">}</span><span style="color:#e6db74">%; border-radius: 10px; padding: 5px; color: white; text-align: center;&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                </span><span style="color:#e6db74">{</span>bar<span style="color:#e6db74">}</span><span style="color:#e6db74"> </span><span style="color:#e6db74">{</span>percentage<span style="color:#e6db74">:</span><span style="color:#e6db74">.1f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">%
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    display(HTML(html))
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># ================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># TRAINING UTILITIES</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ================================</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">train_epoch</span>(model, loader, criterion, optimizer, device):
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>train()
+</span></span><span style="display:flex;"><span>    running_loss <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>
+</span></span><span style="display:flex;"><span>    correct <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    total <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> imgs, labels <span style="color:#f92672">in</span> tqdm(loader, desc<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Train&#39;</span>, leave<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>):
+</span></span><span style="display:flex;"><span>        imgs <span style="color:#f92672">=</span> imgs<span style="color:#f92672">.</span>to(device)
+</span></span><span style="display:flex;"><span>        labels <span style="color:#f92672">=</span> labels<span style="color:#f92672">.</span>to(device)<span style="color:#f92672">.</span>long()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        optimizer<span style="color:#f92672">.</span>zero_grad()
+</span></span><span style="display:flex;"><span>        outputs <span style="color:#f92672">=</span> model(imgs)
+</span></span><span style="display:flex;"><span>        loss <span style="color:#f92672">=</span> criterion(outputs, labels)
+</span></span><span style="display:flex;"><span>        loss<span style="color:#f92672">.</span>backward()
+</span></span><span style="display:flex;"><span>        optimizer<span style="color:#f92672">.</span>step()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        running_loss <span style="color:#f92672">+=</span> loss<span style="color:#f92672">.</span>item() <span style="color:#f92672">*</span> imgs<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        _, preds <span style="color:#f92672">=</span> outputs<span style="color:#f92672">.</span>max(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        correct <span style="color:#f92672">+=</span> preds<span style="color:#f92672">.</span>eq(labels)<span style="color:#f92672">.</span>sum()<span style="color:#f92672">.</span>item()
+</span></span><span style="display:flex;"><span>        total <span style="color:#f92672">+=</span> labels<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> running_loss <span style="color:#f92672">/</span> total, correct <span style="color:#f92672">/</span> total
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">evaluate</span>(model, loader, criterion, device):
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>eval()
+</span></span><span style="display:flex;"><span>    running_loss <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>
+</span></span><span style="display:flex;"><span>    correct <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    total <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    all_preds <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    all_labels <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> imgs, labels <span style="color:#f92672">in</span> tqdm(loader, desc<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Eval&#39;</span>, leave<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>):
+</span></span><span style="display:flex;"><span>            imgs <span style="color:#f92672">=</span> imgs<span style="color:#f92672">.</span>to(device)
+</span></span><span style="display:flex;"><span>            labels <span style="color:#f92672">=</span> labels<span style="color:#f92672">.</span>to(device)<span style="color:#f92672">.</span>long()
+</span></span><span style="display:flex;"><span>            outputs <span style="color:#f92672">=</span> model(imgs)
+</span></span><span style="display:flex;"><span>            loss <span style="color:#f92672">=</span> criterion(outputs, labels)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            running_loss <span style="color:#f92672">+=</span> loss<span style="color:#f92672">.</span>item() <span style="color:#f92672">*</span> imgs<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            _, preds <span style="color:#f92672">=</span> outputs<span style="color:#f92672">.</span>max(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>            correct <span style="color:#f92672">+=</span> preds<span style="color:#f92672">.</span>eq(labels)<span style="color:#f92672">.</span>sum()<span style="color:#f92672">.</span>item()
+</span></span><span style="display:flex;"><span>            total <span style="color:#f92672">+=</span> labels<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            all_preds<span style="color:#f92672">.</span>append(preds<span style="color:#f92672">.</span>cpu()<span style="color:#f92672">.</span>numpy())
+</span></span><span style="display:flex;"><span>            all_labels<span style="color:#f92672">.</span>append(labels<span style="color:#f92672">.</span>cpu()<span style="color:#f92672">.</span>numpy())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    acc <span style="color:#f92672">=</span> correct <span style="color:#f92672">/</span> total
+</span></span><span style="display:flex;"><span>    avg_loss <span style="color:#f92672">=</span> running_loss <span style="color:#f92672">/</span> total
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> avg_loss, acc, np<span style="color:#f92672">.</span>concatenate(all_preds), np<span style="color:#f92672">.</span>concatenate(all_labels)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">compute_macro_f1</span>(y_true, y_pred, num_classes):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Simple macro-F1 computation.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># one-hot for macro F1</span>
+</span></span><span style="display:flex;"><span>    y_true_oh <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>eye(num_classes)[y_true]
+</span></span><span style="display:flex;"><span>    y_pred_oh <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>eye(num_classes)[y_pred]
+</span></span><span style="display:flex;"><span>    f1s <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> range(num_classes):
+</span></span><span style="display:flex;"><span>        tp <span style="color:#f92672">=</span> ((y_pred <span style="color:#f92672">==</span> c) <span style="color:#f92672">&amp;</span> (y_true <span style="color:#f92672">==</span> c))<span style="color:#f92672">.</span>sum()
+</span></span><span style="display:flex;"><span>        fp <span style="color:#f92672">=</span> ((y_pred <span style="color:#f92672">==</span> c) <span style="color:#f92672">&amp;</span> (y_true <span style="color:#f92672">!=</span> c))<span style="color:#f92672">.</span>sum()
+</span></span><span style="display:flex;"><span>        fn <span style="color:#f92672">=</span> ((y_pred <span style="color:#f92672">!=</span> c) <span style="color:#f92672">&amp;</span> (y_true <span style="color:#f92672">==</span> c))<span style="color:#f92672">.</span>sum()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> tp <span style="color:#f92672">+</span> fp <span style="color:#f92672">+</span> fn <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            f1s<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">0.0</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            f1s<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> tp <span style="color:#f92672">/</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> tp <span style="color:#f92672">+</span> fp <span style="color:#f92672">+</span> fn))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>mean(f1s)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run_experiment</span>(model_fn, model_name, train_loader, val_loader, test_loader, num_classes):
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">{</span><span style="color:#e6db74">&#39;=&#39;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">40</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Running: </span><span style="color:#e6db74">{</span>model_name<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span><span style="color:#e6db74">&#39;=&#39;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">40</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    model <span style="color:#f92672">=</span> model_fn(num_classes, in_chans<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)<span style="color:#f92672">.</span>to(DEVICE)
+</span></span><span style="display:flex;"><span>    criterion <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>CrossEntropyLoss()
+</span></span><span style="display:flex;"><span>    optimizer <span style="color:#f92672">=</span> optim<span style="color:#f92672">.</span>AdamW(model<span style="color:#f92672">.</span>parameters(), lr<span style="color:#f92672">=</span>LR, weight_decay<span style="color:#f92672">=</span>WEIGHT_DECAY)
+</span></span><span style="display:flex;"><span>    scheduler <span style="color:#f92672">=</span> optim<span style="color:#f92672">.</span>lr_scheduler<span style="color:#f92672">.</span>CosineAnnealingLR(optimizer, T_max<span style="color:#f92672">=</span>EPOCHS)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    best_val_acc <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>
+</span></span><span style="display:flex;"><span>    best_state <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>    history <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(EPOCHS):
+</span></span><span style="display:flex;"><span>        train_loss, train_acc <span style="color:#f92672">=</span> train_epoch(model, train_loader, criterion, optimizer, DEVICE)
+</span></span><span style="display:flex;"><span>        val_loss, val_acc, _, _ <span style="color:#f92672">=</span> evaluate(model, val_loader, criterion, DEVICE)
+</span></span><span style="display:flex;"><span>        scheduler<span style="color:#f92672">.</span>step()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Epoch </span><span style="color:#e6db74">{</span>epoch<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span><span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{</span>EPOCHS<span style="color:#e6db74">}</span><span style="color:#e6db74"> | Train Loss: </span><span style="color:#e6db74">{</span>train_loss<span style="color:#e6db74">:</span><span style="color:#e6db74">.4f</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> Acc: </span><span style="color:#e6db74">{</span>train_acc<span style="color:#e6db74">:</span><span style="color:#e6db74">.4f</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> | Val Loss: </span><span style="color:#e6db74">{</span>val_loss<span style="color:#e6db74">:</span><span style="color:#e6db74">.4f</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> Acc: </span><span style="color:#e6db74">{</span>val_acc<span style="color:#e6db74">:</span><span style="color:#e6db74">.4f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        history<span style="color:#f92672">.</span>append({
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;epoch&#39;</span>: epoch<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;train_loss&#39;</span>: float(train_loss),
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;train_acc&#39;</span>: float(train_acc),
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;val_loss&#39;</span>: float(val_loss),
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;val_acc&#39;</span>: float(val_acc)
+</span></span><span style="display:flex;"><span>        })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> val_acc <span style="color:#f92672">&gt;</span> best_val_acc:
+</span></span><span style="display:flex;"><span>            best_val_acc <span style="color:#f92672">=</span> val_acc
+</span></span><span style="display:flex;"><span>            best_state <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>state_dict()<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Load best and evaluate on test</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> best_state <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>        model<span style="color:#f92672">.</span>load_state_dict(best_state)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    test_loss, test_acc, y_pred, y_true <span style="color:#f92672">=</span> evaluate(model, test_loader, criterion, DEVICE)
+</span></span><span style="display:flex;"><span>    test_f1 <span style="color:#f92672">=</span> compute_macro_f1(y_true, y_pred, num_classes)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Test Accuracy: </span><span style="color:#e6db74">{</span>test_acc<span style="color:#e6db74">:</span><span style="color:#e6db74">.4f</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> | Test Macro-F1: </span><span style="color:#e6db74">{</span>test_f1<span style="color:#e6db74">:</span><span style="color:#e6db74">.4f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;model&#39;</span>: model_name,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;test_acc&#39;</span>: float(test_acc),
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;test_macro_f1&#39;</span>: float(test_f1),
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;best_val_acc&#39;</span>: float(best_val_acc),
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;history&#39;</span>: history
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><h2 id="3-setup-for-reproducibility">3. Setup for reproducibility</h2>
+<p>We chose an image size of <em>128x128</em>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># ================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># CONFIGURATION</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ================================</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>DATA_FLAG <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;bloodmnist&#39;</span>          <span style="color:#75715e"># Change to &#39;bloodmnist&#39;, &#39;octmnist&#39;, &#39;breastmist&#39;, &#39;pathmnist&#39;, etc.</span>
+</span></span><span style="display:flex;"><span>SIZE <span style="color:#f92672">=</span> <span style="color:#ae81ff">28</span>                       <span style="color:#75715e"># MedMNIST+ supports 64, 128, 224 for 2D</span>
+</span></span><span style="display:flex;"><span>BATCH_SIZE <span style="color:#f92672">=</span> <span style="color:#ae81ff">128</span>
+</span></span><span style="display:flex;"><span>EPOCHS <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>LR <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-3</span>
+</span></span><span style="display:flex;"><span>WEIGHT_DECAY <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-5</span>
+</span></span><span style="display:flex;"><span>DEVICE <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>device(<span style="color:#e6db74">&#39;cuda&#39;</span> <span style="color:#66d9ef">if</span> torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>is_available() <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;cpu&#39;</span>)
+</span></span><span style="display:flex;"><span>SEED <span style="color:#f92672">=</span> <span style="color:#ae81ff">42</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>manual_seed(SEED)
+</span></span><span style="display:flex;"><span>np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>seed(SEED)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>display_status(<span style="color:#e6db74">&#34;🚀 Device: &#34;</span> <span style="color:#f92672">+</span> str(DEVICE)<span style="color:#f92672">.</span>upper() <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; &#34;</span> \
+</span></span><span style="display:flex;"><span>               <span style="color:#f92672">+</span> torch<span style="color:#f92672">.</span>version<span style="color:#f92672">.</span>cuda <span style="color:#66d9ef">if</span> torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>is_available() <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#34;&#34;</span> , <span style="color:#e6db74">&#34;processing&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># DATA LOADING</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ================================</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_dataloaders</span>(data_flag, size, batch_size, transform<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Load MedMNIST+ dataset with the specified resolution.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    info <span style="color:#f92672">=</span> INFO[data_flag]
+</span></span><span style="display:flex;"><span>    DataClass <span style="color:#f92672">=</span> getattr(__import__(<span style="color:#e6db74">&#39;medmnist.dataset&#39;</span>, fromlist<span style="color:#f92672">=</span>[info[<span style="color:#e6db74">&#39;python_class&#39;</span>]]), info[<span style="color:#e6db74">&#39;python_class&#39;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Note: MedMNIST+ images at size 28,64,128,224 are loaded directly</span>
+</span></span><span style="display:flex;"><span>    train_dataset <span style="color:#f92672">=</span> DataClass(split<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;train&#39;</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, size<span style="color:#f92672">=</span>size)
+</span></span><span style="display:flex;"><span>    val_dataset <span style="color:#f92672">=</span> DataClass(split<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;val&#39;</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, size<span style="color:#f92672">=</span>size)
+</span></span><span style="display:flex;"><span>    test_dataset <span style="color:#f92672">=</span> DataClass(split<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;test&#39;</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, size<span style="color:#f92672">=</span>size)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># MedMNIST images come as PIL or numpy in [0,255] or [0,1]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># We&#39;ll use ToTensor and Normalize for pretrained models</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> transform:
+</span></span><span style="display:flex;"><span>        transform <span style="color:#f92672">=</span> transforms<span style="color:#f92672">.</span>Compose([
+</span></span><span style="display:flex;"><span>            transforms<span style="color:#f92672">.</span>ToTensor(),
+</span></span><span style="display:flex;"><span>            transforms<span style="color:#f92672">.</span>Normalize(mean<span style="color:#f92672">=</span>[<span style="color:#ae81ff">.5</span>], std<span style="color:#f92672">=</span>[<span style="color:#ae81ff">.5</span>])  <span style="color:#75715e"># scale to [-1, 1]</span>
+</span></span><span style="display:flex;"><span>        ])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Wrap datasets with transform</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># MedMNIST dataset returns (img, label) where img is PIL or ndarray</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># We&#39;ll apply transform in collate or override __getitem__</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Simpler: use standard approach with a small wrapper</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TransformedDataset</span>(torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>Dataset):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">def</span> __init__(self, base_dataset, transform):
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>base <span style="color:#f92672">=</span> base_dataset
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>transform <span style="color:#f92672">=</span> transform
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">def</span> __len__(self):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> len(self<span style="color:#f92672">.</span>base)
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">def</span> __getitem__(self, idx):
+</span></span><span style="display:flex;"><span>            img, label <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>base[idx]
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>transform:
+</span></span><span style="display:flex;"><span>                img <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>transform(img)
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># label might be array, take scalar</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> isinstance(label, np<span style="color:#f92672">.</span>ndarray):
+</span></span><span style="display:flex;"><span>                label <span style="color:#f92672">=</span> label<span style="color:#f92672">.</span>item()
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> img, label
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    train_ds <span style="color:#f92672">=</span> TransformedDataset(train_dataset, transform)
+</span></span><span style="display:flex;"><span>    val_ds <span style="color:#f92672">=</span> TransformedDataset(val_dataset, transform)
+</span></span><span style="display:flex;"><span>    test_ds <span style="color:#f92672">=</span> TransformedDataset(test_dataset, transform)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    train_loader <span style="color:#f92672">=</span> DataLoader(train_ds, batch_size<span style="color:#f92672">=</span>batch_size, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, persistent_workers<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    val_loader <span style="color:#f92672">=</span> DataLoader(val_ds, batch_size<span style="color:#f92672">=</span>batch_size, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>    test_loader <span style="color:#f92672">=</span> DataLoader(test_ds, batch_size<span style="color:#f92672">=</span>batch_size, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> train_loader, val_loader, test_loader, info
+</span></span></code></pre></div><div style="padding: 10px; margin: 10px 0; border-left: 4px solid #9b59b6!important; background-color: #f8f9fa;">
+    <strong style="color: #9b59b6!important;">🚀 Device: CUDA 11.8</strong>
+</div>
+<h3 id="data-loading">Data Loading</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>display_status(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Dataset subset: </span><span style="color:#e6db74">{</span>DATA_FLAG<span style="color:#e6db74">}</span><span style="color:#e6db74">, Size: </span><span style="color:#e6db74">{</span>SIZE<span style="color:#e6db74">}</span><span style="color:#e6db74">, Batch Size: </span><span style="color:#e6db74">{</span>BATCH_SIZE<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> , <span style="color:#e6db74">&#34;info&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>display_status(<span style="color:#e6db74">&#34;Extracting Dataset&#34;</span>, <span style="color:#e6db74">&#39;processing&#39;</span>)
+</span></span><span style="display:flex;"><span>train_loader, val_loader, test_loader, info <span style="color:#f92672">=</span> get_dataloaders(DATA_FLAG, SIZE, BATCH_SIZE)
+</span></span><span style="display:flex;"><span>num_classes <span style="color:#f92672">=</span> len(info[<span style="color:#e6db74">&#39;label&#39;</span>])
+</span></span><span style="display:flex;"><span>display_status(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Dataset Extracted -&gt; # Classes: </span><span style="color:#e6db74">{</span>num_classes<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">&#39;success&#39;</span>)
+</span></span></code></pre></div><div style="padding: 10px; margin: 10px 0; border-left: 4px solid #3498db; background-color: #f8f9fa;">
+    <strong style="color: #3498db!important;">Dataset subset: bloodmnist, Size: 28, Batch Size: 128</strong>
+</div>
+<div style="padding: 10px; margin: 10px 0; border-left: 4px solid #9b59b6!important; background-color: #f8f9fa;">
+    <strong style="color: #9b59b6!important;">Extracting Dataset</strong>
+</div>
+<pre><code>100%|██████████| 35.5M/35.5M [00:16&lt;00:00, 2.21MB/s]
+</code></pre>
+<div style="padding: 10px; margin: 10px 0; border-left: 4px solid #2ecc71; background-color: #f8f9fa;">
+    <strong style="color: #2ecc71!important;">Dataset Extracted -> # Classes: 8</strong>
+</div>
+<h3 id="visualization">Visualization</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> medmnist <span style="color:#f92672">import</span> INFO
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> medmnist.dataset <span style="color:#f92672">import</span> BloodMNIST
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">visualize_dataset_samples</span>(dataset, num_images<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">12</span>), 
+</span></span><span style="display:flex;"><span>                              class_names<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>, title<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Dataset Samples&#34;</span>, 
+</span></span><span style="display:flex;"><span>                              save_path<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;output/dataset_visualization.png&#34;</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Visualize random samples from a MedMNIST+ dataset with class labels.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    num_images should be a perfect square (e.g., 9, 16, 25) for a clean grid.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    grid_size <span style="color:#f92672">=</span> int(np<span style="color:#f92672">.</span>ceil(np<span style="color:#f92672">.</span>sqrt(num_images)))
+</span></span><span style="display:flex;"><span>    fig, axes <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(grid_size, grid_size, figsize<span style="color:#f92672">=</span>figsize)
+</span></span><span style="display:flex;"><span>    axes <span style="color:#f92672">=</span> axes<span style="color:#f92672">.</span>flatten()
+</span></span><span style="display:flex;"><span>    fig<span style="color:#f92672">.</span>suptitle(title, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">14</span>, fontweight<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;bold&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> idx <span style="color:#f92672">in</span> range(num_images):
+</span></span><span style="display:flex;"><span>        ax <span style="color:#f92672">=</span> axes[idx]
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Random sample</span>
+</span></span><span style="display:flex;"><span>        sample_idx <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, len(dataset))
+</span></span><span style="display:flex;"><span>        img, label <span style="color:#f92672">=</span> dataset[sample_idx]
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Convert to numpy for display</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> isinstance(img, torch<span style="color:#f92672">.</span>Tensor):
+</span></span><span style="display:flex;"><span>            img_np <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>numpy()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">elif</span> isinstance(img, np<span style="color:#f92672">.</span>ndarray):
+</span></span><span style="display:flex;"><span>            img_np <span style="color:#f92672">=</span> img
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            img_np <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(img)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># MedMNIST images are (C, H, W) after ToTensor; convert to (H, W, C)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> img_np<span style="color:#f92672">.</span>ndim <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> img_np<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">in</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>]:
+</span></span><span style="display:flex;"><span>            img_np <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>transpose(img_np, (<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Squeeze single-channel dimension</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> img_np<span style="color:#f92672">.</span>ndim <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> img_np<span style="color:#f92672">.</span>shape[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>            img_np <span style="color:#f92672">=</span> img_np<span style="color:#f92672">.</span>squeeze(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Normalize if pixel values are in [0, 255]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> img_np<span style="color:#f92672">.</span>max() <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1.5</span>:
+</span></span><span style="display:flex;"><span>            img_np <span style="color:#f92672">=</span> img_np <span style="color:#f92672">/</span> <span style="color:#ae81ff">255.0</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Display</span>
+</span></span><span style="display:flex;"><span>        cmap <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;gray&#39;</span> <span style="color:#66d9ef">if</span> img_np<span style="color:#f92672">.</span>ndim <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>        ax<span style="color:#f92672">.</span>imshow(img_np, cmap<span style="color:#f92672">=</span>cmap)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Label</span>
+</span></span><span style="display:flex;"><span>        label_val <span style="color:#f92672">=</span> label<span style="color:#f92672">.</span>item() <span style="color:#66d9ef">if</span> hasattr(label, <span style="color:#e6db74">&#39;item&#39;</span>) <span style="color:#66d9ef">else</span> int(label)
+</span></span><span style="display:flex;"><span>        label_str <span style="color:#f92672">=</span> class_names[label_val] <span style="color:#66d9ef">if</span> class_names <span style="color:#66d9ef">else</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Class </span><span style="color:#e6db74">{</span>label_val<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>        max_s <span style="color:#f92672">=</span> <span style="color:#ae81ff">15</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> len(label_str) <span style="color:#f92672">&gt;</span> max_s:
+</span></span><span style="display:flex;"><span>            new_label <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> l <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, len(label_str), max_s<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>                new_label <span style="color:#f92672">+=</span> label_str[l:l<span style="color:#f92672">+</span>max_s<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e"># print(len(new_label), l, l+max_s-1, len(label_str))</span>
+</span></span><span style="display:flex;"><span>            label_str <span style="color:#f92672">=</span> new_label
+</span></span><span style="display:flex;"><span>        ax<span style="color:#f92672">.</span>set_title(label_str, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">9</span>)
+</span></span><span style="display:flex;"><span>        ax<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#39;off&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Hide unused subplots</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> idx <span style="color:#f92672">in</span> range(num_images, len(axes)):
+</span></span><span style="display:flex;"><span>        axes[idx]<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#39;off&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>tight_layout(rect<span style="color:#f92672">=</span>[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0.03</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0.95</span>])
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># plt.savefig(save_path, dpi=150, bbox_inches=&#39;tight&#39;)</span>
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>show()
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Saved to </span><span style="color:#e6db74">{</span>save_path<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --- Usage ---</span>
+</span></span><span style="display:flex;"><span>info <span style="color:#f92672">=</span> INFO[DATA_FLAG]
+</span></span><span style="display:flex;"><span>class_names <span style="color:#f92672">=</span> list(info[<span style="color:#e6db74">&#39;label&#39;</span>]<span style="color:#f92672">.</span>values())  <span style="color:#75715e"># e.g., [&#39;adipose&#39;, &#39;background&#39;, ...]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>train_dataset <span style="color:#f92672">=</span> BloodMNIST(split<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;train&#39;</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, size<span style="color:#f92672">=</span>SIZE)
+</span></span><span style="display:flex;"><span>visualize_dataset_samples(train_dataset, num_images<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span>, class_names<span style="color:#f92672">=</span>class_names,
+</span></span><span style="display:flex;"><span>                          title<span style="color:#f92672">=</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>DATA_FLAG<span style="color:#f92672">.</span>upper()<span style="color:#e6db74">}</span><span style="color:#e6db74"> Training Samples (128x128)&#34;</span>)
+</span></span></code></pre></div><p><img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/bloodmnist/medmnist-foundation-models-vs-specialized_files/medmnist-foundation-models-vs-specialized_13_0.png"></p>
+<h2 id="4-resnet">4. Resnet</h2>
+<p>The first baseline model is a compact convolutional neural network trained only on the target dataset. A <strong>ResNet-18</strong> is an interesting starting point because it is small, fast, and still strong enough to provide a real baseline. In the article, this model can be framed as the specialized approach: no broad pretraining, no external representation bank, only supervised learning on the medical task itself.</p>
+<p>This setup teaches readers several important lessons. First, it shows the natural performance ceiling of a straightforward medical imaging pipeline. Second, it highlights how quickly small medical datasets can overfit. Third, it gives a realistic comparison point for later transfer-learning results.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">build_resnet18</span>(num_classes, in_chans<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Standard ResNet-18 from torchvision for medical image classification.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">from</span> torchvision.models <span style="color:#f92672">import</span> resnet18
+</span></span><span style="display:flex;"><span>    model <span style="color:#f92672">=</span> resnet18(weights<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>)  <span style="color:#75715e"># trained from scratch</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Adjust first conv if needed (MedMNIST is grayscale but we can repeat channels)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> in_chans <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>        print(in_chans)
+</span></span><span style="display:flex;"><span>        model<span style="color:#f92672">.</span>conv1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">64</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, bias<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>fc <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(model<span style="color:#f92672">.</span>fc<span style="color:#f92672">.</span>in_features, num_classes)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> model
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># resnet_model = build_resnet18(num_classes)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#resnet_model</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>resnet_result <span style="color:#f92672">=</span> run_experiment(build_resnet18, <span style="color:#e6db74">&#34;ResNet-18 (from scratch)&#34;</span>,
+</span></span><span style="display:flex;"><span>                                  train_loader, val_loader, test_loader, num_classes)
+</span></span></code></pre></div><pre><code>========================================
+Running: ResNet-18 (from scratch)
+========================================
+                                                       
+Test Accuracy: 0.9512 | Test Macro-F1: 0.9460
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">plot_training_history</span>(result_dict, save_path<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;output/training_curves.png&#34;</span>, 
+</span></span><span style="display:flex;"><span>                          figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">5</span>)):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Plot training curves from the dict returned by run_experiment().
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Args:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        result_dict: dict with keys &#39;model&#39;, &#39;test_acc&#39;, &#39;test_macro_f1&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                     &#39;best_val_acc&#39;, &#39;history&#39; (list of per-epoch dicts)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        save_path:   path for the PNG output
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        figsize:     matplotlib figure size
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    history <span style="color:#f92672">=</span> result_dict[<span style="color:#e6db74">&#39;history&#39;</span>]
+</span></span><span style="display:flex;"><span>    epochs  <span style="color:#f92672">=</span> [h[<span style="color:#e6db74">&#39;epoch&#39;</span>] <span style="color:#66d9ef">for</span> h <span style="color:#f92672">in</span> history]
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    train_loss <span style="color:#f92672">=</span> [h[<span style="color:#e6db74">&#39;train_loss&#39;</span>] <span style="color:#66d9ef">for</span> h <span style="color:#f92672">in</span> history]
+</span></span><span style="display:flex;"><span>    val_loss   <span style="color:#f92672">=</span> [h[<span style="color:#e6db74">&#39;val_loss&#39;</span>]   <span style="color:#66d9ef">for</span> h <span style="color:#f92672">in</span> history]
+</span></span><span style="display:flex;"><span>    train_acc  <span style="color:#f92672">=</span> [h[<span style="color:#e6db74">&#39;train_acc&#39;</span>]  <span style="color:#66d9ef">for</span> h <span style="color:#f92672">in</span> history]
+</span></span><span style="display:flex;"><span>    val_acc    <span style="color:#f92672">=</span> [h[<span style="color:#e6db74">&#39;val_acc&#39;</span>]    <span style="color:#66d9ef">for</span> h <span style="color:#f92672">in</span> history]
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    fig, (ax1, ax2) <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, figsize<span style="color:#f92672">=</span>figsize, dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">200</span>)
+</span></span><span style="display:flex;"><span>    fig<span style="color:#f92672">.</span>suptitle(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Training History: </span><span style="color:#e6db74">{</span>result_dict[<span style="color:#e6db74">&#39;model&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, 
+</span></span><span style="display:flex;"><span>                 fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">14</span>, fontweight<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;bold&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># --- Loss ---</span>
+</span></span><span style="display:flex;"><span>    ax1<span style="color:#f92672">.</span>plot(epochs, train_loss, <span style="color:#e6db74">&#39;b-o&#39;</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Train Loss&#39;</span>, 
+</span></span><span style="display:flex;"><span>             markersize<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>, linewidth<span style="color:#f92672">=</span><span style="color:#ae81ff">1.5</span>)
+</span></span><span style="display:flex;"><span>    ax1<span style="color:#f92672">.</span>plot(epochs, val_loss,   <span style="color:#e6db74">&#39;r-s&#39;</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Val Loss&#39;</span>,   
+</span></span><span style="display:flex;"><span>             markersize<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>, linewidth<span style="color:#f92672">=</span><span style="color:#ae81ff">1.5</span>)
+</span></span><span style="display:flex;"><span>    ax1<span style="color:#f92672">.</span>set_xlabel(<span style="color:#e6db74">&#39;Epoch&#39;</span>, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span>)
+</span></span><span style="display:flex;"><span>    ax1<span style="color:#f92672">.</span>set_ylabel(<span style="color:#e6db74">&#39;Cross-Entropy Loss&#39;</span>, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span>)
+</span></span><span style="display:flex;"><span>    ax1<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;Loss Curves&#39;</span>)
+</span></span><span style="display:flex;"><span>    ax1<span style="color:#f92672">.</span>legend(loc<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;upper right&#39;</span>)
+</span></span><span style="display:flex;"><span>    ax1<span style="color:#f92672">.</span>grid(<span style="color:#66d9ef">True</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.3</span>)
+</span></span><span style="display:flex;"><span>    ax1<span style="color:#f92672">.</span>set_xticks(epochs)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># --- Accuracy ---</span>
+</span></span><span style="display:flex;"><span>    ax2<span style="color:#f92672">.</span>plot(epochs, train_acc, <span style="color:#e6db74">&#39;b-o&#39;</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Train Acc&#39;</span>, 
+</span></span><span style="display:flex;"><span>             markersize<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>, linewidth<span style="color:#f92672">=</span><span style="color:#ae81ff">1.5</span>)
+</span></span><span style="display:flex;"><span>    ax2<span style="color:#f92672">.</span>plot(epochs, val_acc,   <span style="color:#e6db74">&#39;r-s&#39;</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Val Acc&#39;</span>,   
+</span></span><span style="display:flex;"><span>             markersize<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>, linewidth<span style="color:#f92672">=</span><span style="color:#ae81ff">1.5</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Mark best validation epoch</span>
+</span></span><span style="display:flex;"><span>    best_epoch_idx <span style="color:#f92672">=</span> val_acc<span style="color:#f92672">.</span>index(max(val_acc))
+</span></span><span style="display:flex;"><span>    best_epoch     <span style="color:#f92672">=</span> epochs[best_epoch_idx]
+</span></span><span style="display:flex;"><span>    best_val       <span style="color:#f92672">=</span> val_acc[best_epoch_idx]
+</span></span><span style="display:flex;"><span>    ax2<span style="color:#f92672">.</span>axvline(x<span style="color:#f92672">=</span>best_epoch, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;green&#39;</span>, linestyle<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;--&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>)
+</span></span><span style="display:flex;"><span>    ax2<span style="color:#f92672">.</span>scatter([best_epoch], [best_val], color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;green&#39;</span>, s<span style="color:#f92672">=</span><span style="color:#ae81ff">120</span>, 
+</span></span><span style="display:flex;"><span>                zorder<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, marker<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;*&#39;</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Best Val (</span><span style="color:#e6db74">{</span>best_val<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">)&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Test metrics box (top-left, inside axes)</span>
+</span></span><span style="display:flex;"><span>    textstr <span style="color:#f92672">=</span> (<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Test Acc: </span><span style="color:#e6db74">{</span>result_dict[<span style="color:#e6db74">&#39;test_acc&#39;</span>]<span style="color:#e6db74">:</span><span style="color:#e6db74">.4f</span><span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Test Macro-F1: </span><span style="color:#e6db74">{</span>result_dict[<span style="color:#e6db74">&#39;test_macro_f1&#39;</span>]<span style="color:#e6db74">:</span><span style="color:#e6db74">.4f</span><span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Best Val Acc: </span><span style="color:#e6db74">{</span>result_dict[<span style="color:#e6db74">&#39;best_val_acc&#39;</span>]<span style="color:#e6db74">:</span><span style="color:#e6db74">.4f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    ax2<span style="color:#f92672">.</span>text(<span style="color:#ae81ff">0.02</span>, <span style="color:#ae81ff">0.17</span>, textstr, transform<span style="color:#f92672">=</span>ax2<span style="color:#f92672">.</span>transAxes, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>,
+</span></span><span style="display:flex;"><span>             verticalalignment<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;top&#39;</span>,
+</span></span><span style="display:flex;"><span>             bbox<span style="color:#f92672">=</span>dict(boxstyle<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;round&#39;</span>, facecolor<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;wheat&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.9</span>))
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    ax2<span style="color:#f92672">.</span>set_xlabel(<span style="color:#e6db74">&#39;Epoch&#39;</span>, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span>)
+</span></span><span style="display:flex;"><span>    ax2<span style="color:#f92672">.</span>set_ylabel(<span style="color:#e6db74">&#39;Accuracy&#39;</span>, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span>)
+</span></span><span style="display:flex;"><span>    ax2<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;Accuracy Curves&#39;</span>)
+</span></span><span style="display:flex;"><span>    ax2<span style="color:#f92672">.</span>legend(loc<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;lower right&#39;</span>)
+</span></span><span style="display:flex;"><span>    ax2<span style="color:#f92672">.</span>grid(<span style="color:#66d9ef">True</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.3</span>)
+</span></span><span style="display:flex;"><span>    ax2<span style="color:#f92672">.</span>set_xticks(epochs)
+</span></span><span style="display:flex;"><span>    ax2<span style="color:#f92672">.</span>set_ylim([<span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">1.05</span>])
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>tight_layout(rect<span style="color:#f92672">=</span>[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0.03</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0.95</span>])
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># plt.savefig(save_path, dpi=150, bbox_inches=&#39;tight&#39;)</span>
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>show()
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># print(f&#34;Saved plot to {save_path}&#34;)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>plot_training_history(resnet_result, save_path<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;output/resnet_curves.png&#34;</span>)
+</span></span></code></pre></div><p><img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/bloodmnist/medmnist-foundation-models-vs-specialized_files/medmnist-foundation-models-vs-specialized_16_0.png"></p>
+<hr>
+<h2 id="5-vit-foundation-model">5. ViT: Foundation Model</h2>
+<p>The second setup should use a pretrained vision transformer encoder as a foundation model, keeping the encoder frozen and training only a lightweight classification head. This is the simplest way to test whether broad visual pretraining already captures features that transfer to medical imagery.</p>
+<p>Conceptually, this setup asks a useful question: can general visual representations classify pathology before any task-specific adaptation? That question aligns well with the current direction of medical imaging benchmarks, where model transfer and adaptation quality are increasingly central evaluation themes rather than optional extras.</p>
+<h3 id="-frozen">❄️ Frozen</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">build_vit_frozen</span>(num_classes, in_chans<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Pretrained ViT from timm with backbone frozen.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Using vit_base_patch16_224.augreg_in21k is common, but for 128 images we use</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># a smaller model for speed: vit_tiny_patch16_224 or deit_tiny</span>
+</span></span><span style="display:flex;"><span>    model <span style="color:#f92672">=</span> timm<span style="color:#f92672">.</span>create_model(<span style="color:#e6db74">&#39;vit_tiny_patch16_224.augreg_in21k&#39;</span>, pretrained<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, num_classes<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Freeze backbone</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> param <span style="color:#f92672">in</span> model<span style="color:#f92672">.</span>parameters():
+</span></span><span style="display:flex;"><span>        param<span style="color:#f92672">.</span>requires_grad <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Replace/add head</span>
+</span></span><span style="display:flex;"><span>    in_features <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>num_features
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>head <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(in_features, num_classes)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> model
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> timm<span style="color:#f92672">.</span>create_model(<span style="color:#e6db74">&#39;vit_tiny_patch16_224.augreg_in21k_ft_in1k&#39;</span>, pretrained<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>eval()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># get model specific transforms (normalization, resize)</span>
+</span></span><span style="display:flex;"><span>data_config <span style="color:#f92672">=</span> timm<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>resolve_model_data_config(model)
+</span></span><span style="display:flex;"><span>transform_vit <span style="color:#f92672">=</span> timm<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>create_transform(<span style="color:#f92672">**</span>data_config, is_training<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>train_loader, val_loader, test_loader, info <span style="color:#f92672">=</span> get_dataloaders(DATA_FLAG, SIZE, BATCH_SIZE, transform_vit)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>vit_frozen_res <span style="color:#f92672">=</span> run_experiment(build_vit_frozen, <span style="color:#e6db74">&#34;ViT-Tiny (frozen backbone)&#34;</span>,
+</span></span><span style="display:flex;"><span>                                  train_loader, val_loader, test_loader, num_classes)
+</span></span></code></pre></div><pre><code>========================================
+Running: ViT-Tiny (frozen backbone)
+========================================
+
+                                                
+
+Test Accuracy: 0.8875 | Test Macro-F1: 0.8676
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>plot_training_history(vit_frozen_res, save_path<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;output/resnet_curves.png&#34;</span>)
+</span></span></code></pre></div><p><img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/bloodmnist/medmnist-foundation-models-vs-specialized_files/medmnist-foundation-models-vs-specialized_20_0.png"></p>
+<h3 id="-fine-tuned">⚙️ Fine-Tuned</h3>
+<p>The third setup should reuse the same pretrained encoder but unfreeze some or all of the backbone for end-to-end fine-tuning. This is usually the most informative configuration because it reveals whether the pretrained representation is already sufficient as-is or whether the target task needs domain adaptation.</p>
+<p>This configuration often performs best in practice when the dataset is large enough to support stable updates. It also creates the clearest narrative for readers: a frozen foundation model offers speed and simplicity, while fine-tuning trades extra compute and tuning effort for stronger task alignment.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">build_vit_finetune</span>(num_classes, in_chans<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Pretrained ViT from timm with all layers trainable.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    model <span style="color:#f92672">=</span> timm<span style="color:#f92672">.</span>create_model(<span style="color:#e6db74">&#39;vit_tiny_patch16_224.augreg_in21k&#39;</span>, pretrained<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, num_classes<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    in_features <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>num_features
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>head <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(in_features, num_classes)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> model
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># train_loader, val_loader, test_loader, info = get_dataloaders(DATA_FLAG, SIZE, BATCH_SIZE, transforms)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>vit_finetune_res <span style="color:#f92672">=</span> run_experiment(build_vit_finetune, <span style="color:#e6db74">&#34;ViT-Tiny (fine-tuned)&#34;</span>,
+</span></span><span style="display:flex;"><span>                                  train_loader, val_loader, test_loader, num_classes)
+</span></span></code></pre></div><pre><code>========================================
+Running: ViT-Tiny (fine-tuned)
+========================================
+
+
+Test Accuracy: 0.9611 | Test Macro-F1: 0.9563
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>plot_training_history(vit_finetune_res, save_path<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;output/resnet_curves.png&#34;</span>)
+</span></span></code></pre></div><p><img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/bloodmnist/medmnist-foundation-models-vs-specialized_files/medmnist-foundation-models-vs-specialized_23_0.png"></p>
+<p>ViT fine-tuned perform slightly better results (95.5% accuracy vs 94% of ResNet) but provides higher accuracy when compared with the frozen-backbone training.</p>
+<h2 id="6-dinov2">6. DINOv2</h2>
+<p>In order to get closer to SoTa model, we test DINOv2 (v3 has restricted access from META, so not everyone can use it yet).</p>
+<h3 id="-frozen-1">❄️ Frozen</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> timm
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> timm.data <span style="color:#f92672">import</span> resolve_model_data_config, create_transform
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torchvision <span style="color:#f92672">import</span> transforms
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DINOv2Classifier</span>(nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, model_name, num_classes, freeze_backbone<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, img_size<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>):
+</span></span><span style="display:flex;"><span>        super()<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># num_classes=0 removes the original classifier head</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># DINOv2 then outputs (batch_size, num_features) directly</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>backbone <span style="color:#f92672">=</span> timm<span style="color:#f92672">.</span>create_model(
+</span></span><span style="display:flex;"><span>            model_name,
+</span></span><span style="display:flex;"><span>            pretrained<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
+</span></span><span style="display:flex;"><span>            num_classes<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>            img_size<span style="color:#f92672">=</span>img_size
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Freeze all backbone parameters</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> freeze_backbone:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> param <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>backbone<span style="color:#f92672">.</span>parameters():
+</span></span><span style="display:flex;"><span>                param<span style="color:#f92672">.</span>requires_grad <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># DINOv2 exposes num_features (384 for small, 768 for base)</span>
+</span></span><span style="display:flex;"><span>        feat_dim <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>backbone<span style="color:#f92672">.</span>num_features
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>head <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(feat_dim, num_classes)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[DINOv2Classifier] Backbone: </span><span style="color:#e6db74">{</span>model_name<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">Feature dim: </span><span style="color:#e6db74">{</span>feat_dim<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">Backbone frozen: </span><span style="color:#e6db74">{</span>freeze_backbone<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">img_size: </span><span style="color:#e6db74">{</span>img_size<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># backbone(x) returns (B, num_features)</span>
+</span></span><span style="display:flex;"><span>        features <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>backbone(x)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>head(features)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Builder functions for your training pipeline</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">build_dinov2_frozen</span>(num_classes, in_chans<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, img_size<span style="color:#f92672">=</span><span style="color:#ae81ff">224</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Frozen DINOv2-Small: only linear head trained. Fast, good baseline.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> DINOv2Classifier(
+</span></span><span style="display:flex;"><span>        model_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;vit_small_patch14_dinov2.lvd142m&#34;</span>,
+</span></span><span style="display:flex;"><span>        num_classes<span style="color:#f92672">=</span>num_classes,
+</span></span><span style="display:flex;"><span>        freeze_backbone<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
+</span></span><span style="display:flex;"><span>        img_size<span style="color:#f92672">=</span>img_size
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">build_dinov2_finetune</span>(num_classes, in_chans<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, img_size<span style="color:#f92672">=</span><span style="color:#ae81ff">224</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Fine-tunable DINOv2-Small: all 22M parameters trainable.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> DINOv2Classifier(
+</span></span><span style="display:flex;"><span>        model_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;vit_small_patch14_dinov2.lvd142m&#34;</span>,
+</span></span><span style="display:flex;"><span>        num_classes<span style="color:#f92672">=</span>num_classes,
+</span></span><span style="display:flex;"><span>        freeze_backbone<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
+</span></span><span style="display:flex;"><span>        img_size<span style="color:#f92672">=</span>img_size
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> timm<span style="color:#f92672">.</span>create_model(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;vit_small_patch14_dinov2.lvd142m&#39;</span>,
+</span></span><span style="display:flex;"><span>    pretrained<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
+</span></span><span style="display:flex;"><span>    num_classes<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,  
+</span></span><span style="display:flex;"><span>    img_size<span style="color:#f92672">=</span><span style="color:#ae81ff">224</span>,<span style="color:#75715e"># remove classifier nn.Linear</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>eval()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># get model specific transforms (normalization, resize)</span>
+</span></span><span style="display:flex;"><span>data_config <span style="color:#f92672">=</span> timm<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>resolve_model_data_config(model)
+</span></span><span style="display:flex;"><span>transform_dino <span style="color:#f92672">=</span> timm<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>create_transform(<span style="color:#f92672">**</span>data_config, is_training<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># use DINOv2 last transformation for normalization</span>
+</span></span><span style="display:flex;"><span>transform_dino <span style="color:#f92672">=</span> transforms<span style="color:#f92672">.</span>Compose(transform_vit<span style="color:#f92672">.</span>transforms[:<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> [transform_dino<span style="color:#f92672">.</span>transforms[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>train_loader, val_loader, test_loader, info <span style="color:#f92672">=</span> get_dataloaders(DATA_FLAG, SIZE, BATCH_SIZE, transform_dino)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dinov2_frozen_res <span style="color:#f92672">=</span> run_experiment(
+</span></span><span style="display:flex;"><span>    build_dinov2_frozen, <span style="color:#e6db74">&#34;DINOv2-Small (frozen)&#34;</span>,
+</span></span><span style="display:flex;"><span>    train_loader, val_loader, test_loader, num_classes 
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><pre><code>========================================
+Running: DINOv2-Small (frozen)
+========================================
+[DINOv2Classifier] Backbone: vit_small_patch14_dinov2.lvd142m
+	Feature dim: 384
+	Backbone frozen: True
+	img_size: 224
+
+Test Accuracy: 0.9184 | Test Macro-F1: 0.9047
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>plot_training_history(dinov2_frozen_res, save_path<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;output/dinov2_frozen_curves.png&#34;</span>)
+</span></span></code></pre></div><p><img alt="png" src="/posts/machine-learning/deep-learning/computer-vision/bloodmnist/medmnist-foundation-models-vs-specialized_files/medmnist-foundation-models-vs-specialized_27_0.png"></p>
+<h3 id="-fine-tuned-1">⚙️ Fine-Tuned</h3>
+<p>The following code is commented since the results are disappointing and the training time is quite slow.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># train_loader, val_loader, test_loader, info = get_dataloaders(DATA_FLAG, </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#                           SIZE, BATCH_SIZE, transform_dino)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># # Fine-tuned DINOv2</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># dinov2_finetune_res = run_experiment(</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#     build_dinov2_finetune, &#34;DINOv2-Small (fine-tuned)&#34;,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#     train_loader, val_loader, test_loader, num_classes</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># )</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># plot_training_history(dinov2_finetune_res, save_path=&#34;output/dinov2_frozen_curves.png&#34;)</span>
+</span></span></code></pre></div><p>Complete fine-tuning of DINOv2 performs slighlty better than the frozen one, however lower than ViT and ResNet. Moreover, the training time is much larger (3-5 times slower) than the previous cases.
+It should be tested with higher resolution since it is a much more complex model.</p>
+<hr>
+<h2 id="7-results-and-discussion">7. Results and Discussion</h2>
+<p>On BloodMNIST, a nine-class hematology classification task from MedMNIST+, three modeling strategies were evaluated: a classical ResNet-18 trained from scratch, a supervised Vision Transformer with frozen and fine-tuned backbones, and a self-supervised DINOv2-base under the same two adaptation modes. The highest performance came from the fine-tuned supervised ViT at approximately 96% accuracy, narrowly outperforming the ResNet-18 baseline at roughly 95%, while the DINOv2 variants trailed both supervised approaches. These results illustrate a central tension in modern medical imaging: foundation models can improve accuracy, but the gain is not automatic, and the choice of pretraining objective matters as much as the choice of architecture. [<a href="https://github.com/MedMNIST/MedMNIST" target="_blank" rel="noopener">github</a>]</p>
+<p>The good performance (even though not optimal) of frozen ViT/ DINOv2 (respectively with a validation accuracy of 86% and 92%) suggests that BloodMNIST, despite being a medical dataset, contains visual patterns—cell shape, color, and texture—that are already reasonably represented in ImageNet-pretrained features. The small but consistent edge gained by unfreezing and fine-tuning the ViT backbone indicates that domain adaptation is still worthwhile; the extra capacity and pretraining signal help the model refine coarse transfer features into clinically discriminating ones. For a reader building their first medical imaging pipeline, this is encouraging: a frozen foundation model provides a strong baseline with minimal training time, while a brief fine-tuning stage often yields the best result without requiring a custom architecture or long-training sessions.</p>
+<p>DINOv2’s slightly weaker results for the fine-tuned version is more interesting than disappointing. DINOv2 was pretrained through self-supervised learning on the LVD-142M dataset at its native resolution of 518×518, and in these first experiments the BloodMNIST images were upscaled from 28×28 to 224×224 via bicubic interpolation. At such an aggressive upsampling ratio, fine morphological details—nuclear shape, cytoplasmic granulation, and cell membrane boundaries—are smoothed into blurred approximations. Because DINOv2’s representations were learned from high-resolution natural images where patch-level texture matters, the heavily interpolated medical thumbnails may fall outside the distribution its encoder expects. In contrast, supervised ViT and ResNet-18 are more forgiving of low-resolution input because their training regimes included extensive data augmentation and lower-resolution crops that partially overlap with the blurry upscaled regime. [<a href="https://arxiv.org/abs/2312.02366" target="_blank" rel="noopener">arxiv</a>]</p>
+<p>This resolution hypothesis carries a practical lesson: foundation model transfer is not only about architecture or pretraining data size; it is also about the fidelity of the input presented to the encoder. A model trained on sharp, high-resolution imagery may underperform on aggressively resized small images not because the model is weak, but because the preprocessing pipeline destroys the very cues the model was designed to exploit. This observation motivates the experimental design of the next article, where the same model suite will be evaluated across multiple MedMNIST+ resolutions—28×28, 64×64, 128×128, and 224×224—to isolate how input size and interpolation quality affect each architecture’s ability to transfer to hematology images.</p>
+<h2 id="8-conclusion">8. Conclusion</h2>
+<p>This first experiment establishes that foundation model transfer learning is viable on compact medical benchmarks, but it also sets realistic expectations: the gains over a well-trained classical CNN are measurable yet modest, and self-supervised foundation models may need adequate input resolution to express their full advantage. For practitioners, the recommended workflow is to start with a frozen pretrained ViT for rapid prototyping, then fine-tune if compute allows, while carefully matching the input resolution to the model’s pretraining regime. The follow-up article will test whether increasing native resolution—from 28×28 up to full 224×224—closes the gap between DINOv2 and its supervised counterparts, providing concrete guidance on when high-resolution medical imaging data is worth the acquisition and storage cost.</p>
+
+        </div>
+
+        
+        <div class="row ps-3 pe-3">
+        
+          <div class="col-md-6 share-buttons">
+          
+            <strong>Share on:</strong>
+            
+            <a class="btn icon-button bg-facebook" href="https://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fcomputer-vision%2fbloodmnist%2f" target="_blank">
+              <i class="fab fa-facebook"></i>
+            </a>
+            
+            
+            
+                <a  class="btn icon-button bg-reddit" href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fcomputer-vision%2fbloodmnist%2f&title=MedMNIST%20-%20ViT%20vs.%20ResNet18%20vs.%20DINOv2%20Test%20-%20Part%201" target="_blank">
+                  <i class="fab fa-reddit"></i>
+                </a>
+            
+            
+            
+            
+                <a class="btn icon-button bg-linkedin" href="https://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fcomputer-vision%2fbloodmnist%2f&title=MedMNIST%20-%20ViT%20vs.%20ResNet18%20vs.%20DINOv2%20Test%20-%20Part%201" target="_blank">
+                  <i class="fab fa-linkedin"></i>
+                </a>
+            
+            
+             
+            
+                 <a class="btn icon-button bg-whatsapp" href="https://api.whatsapp.com/send?text=MedMNIST%20-%20ViT%20vs.%20ResNet18%20vs.%20DINOv2%20Test%20-%20Part%201 http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fcomputer-vision%2fbloodmnist%2f" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+            
+            
+                <a class="btn icon-button" href="mailto:?subject=MedMNIST%20-%20ViT%20vs.%20ResNet18%20vs.%20DINOv2%20Test%20-%20Part%201&body=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2fdeep-learning%2fcomputer-vision%2fbloodmnist%2f" target="_blank">
+                  <i class="fas fa-envelope-open-text"></i>
+                </a>
+            
+          
+          </div>
+
+        
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/steven-ja/steven-ja.github.io/edit/main/content/posts%5cmachine%20learning%5cdeep%20learning%5ccomputer%20vision%5cBloodMNIST%5cindex.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+    
+    
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+    <div class="col-md-6 previous-article">
+      <a href="/posts/machine-learning/deep-learning/computer-vision/florence/" title="Florence-2 - Vision Foundation Model - Examples" class="btn filled-button">
+        <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
+        <div class="next-prev-text">Florence-2 - Vision Foundation Model - Examples</div>
+      </a>
+    </div>
+  
+  
+      
+      
+        
+      
+      <div class="col-md-6 next-article">
+        <a href="/posts/machine-learning/deep-learning/nlp/gpt-oss-20b/" title="Tutorial: GPT-OSS 20B" class="btn filled-button">
+          <div>Next <i class="fas fa-chevron-circle-right"></i></div>
+          <div class="next-prev-text">Tutorial: GPT-OSS 20B</div>
+        </a>
+      </div>
+    
+</div>
+
+      <hr />
+
+      
+      
+        
+    
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://giscus.app/client.js"
+        data-repo="steven-ja/steven-ja.github.io"
+        data-repo-id="R_kgDOMJSsWA"
+        data-category="General"
+        data-category-id="DIC_kwDOMJSsWM4Cg6n0"
+        data-mapping="title"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang=""
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+
+      
+
+      
+      
+
+      </div>
+    </div>
+  </div>
+  
+  <a id="scroll-to-top" class="btn" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Scroll to top">
+    <i class="fas fa-chevron-circle-up"></i>
+  </a>
+</section>
+
+
+      
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center ps-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-install-dependencies-and-imports">1. Install Dependencies and Imports</a></li>
+    <li><a href="#2-setup-utility-functions">2. Setup Utility Functions</a></li>
+    <li><a href="#3-setup-for-reproducibility">3. Setup for reproducibility</a>
+      <ul>
+        <li><a href="#data-loading">Data Loading</a></li>
+        <li><a href="#visualization">Visualization</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-resnet">4. Resnet</a></li>
+    <li><a href="#5-vit-foundation-model">5. ViT: Foundation Model</a>
+      <ul>
+        <li><a href="#-frozen">❄️ Frozen</a></li>
+        <li><a href="#-fine-tuned">⚙️ Fine-Tuned</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-dinov2">6. DINOv2</a>
+      <ul>
+        <li><a href="#-frozen-1">❄️ Frozen</a></li>
+        <li><a href="#-fine-tuned-1">⚙️ Fine-Tuned</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-results-and-discussion">7. Results and Discussion</a></li>
+    <li><a href="#8-conclusion">8. Conclusion</a></li>
+  </ul>
+</nav>
+      </div>
+    </div>
+    
+  </section>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+    
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-start">
+        
+        
+        
+        
+      </div>
+    </div>
+    
+    <hr />
+    <div class="container">
+      <p id="disclaimer"><strong>Liability Notice:</strong> This website is done experimentally by me, taking inspiration from the open-source Toha-Hugo theme.</p>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-start">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
+            <img src="/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2026 Copyright.</div>
+        <div class="col-md-4 text-end">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script src="/application.c34ca2f2905a800f297550706d23063437a5848667a7d5221f01e8d00185eb39.js" integrity="sha256-w0yi8pBagA8pdVBwbSMGNDelhIZnp9UiHwHo0AGF6zk=" defer></script>
+
+
+    
+     
+
+    
+    
+
+</body>
+</html>
+
+
+    
+    <script src="http://localhost:1313/js/copybutton.min.608f75dc2cc75e4b968d3472ab640b15b0b986a3bf6405a77c92f8eb207e1c16.js" integrity="sha256-YI913CzHXkuWjTRyq2QLFbC5hqO/ZAWnfJL46yB&#43;HBY=" defer></script>
+

@@ -4,7 +4,7 @@ date: 2025-11-25T00:08:25+01:00
 description: Testing various models (including a foundation model) on the BloodMNIST dataset
 menu:
   sidebar:
-    name: MedMNIST - ViT vs. ResNet18 vs. DINOv2
+    name: MedMNIST - P1
     identifier: bloodmnist
     parent: computer_vision
     weight: 10
@@ -319,8 +319,8 @@ def get_dataloaders(data_flag, size, batch_size, transform=None):
 
 
 
-<div style="padding: 10px; margin: 10px 0; border-left: 4px solid #9b59b6; background-color: #f8f9fa;">
-    <strong style="color: #9b59b6;">🚀 Device: CUDA 11.8</strong>
+<div style="padding: 10px; margin: 10px 0; border-left: 4px solid #9b59b6!important; background-color: #f8f9fa;">
+    <strong style="color: #9b59b6!important;">🚀 Device: CUDA 11.8</strong>
 </div>
 
 
@@ -337,29 +337,18 @@ num_classes = len(info['label'])
 display_status(f"Dataset Extracted -> # Classes: {num_classes}", 'success')
 ```
 
-
-
 <div style="padding: 10px; margin: 10px 0; border-left: 4px solid #3498db; background-color: #f8f9fa;">
-    <strong style="color: #3498db;">Dataset subset: bloodmnist, Size: 28, Batch Size: 128</strong>
+    <strong style="color: #3498db!important;">Dataset subset: bloodmnist, Size: 28, Batch Size: 128</strong>
 </div>
 
-
-
-
-
-<div style="padding: 10px; margin: 10px 0; border-left: 4px solid #9b59b6; background-color: #f8f9fa;">
-    <strong style="color: #9b59b6;">Extracting Dataset</strong>
+<div style="padding: 10px; margin: 10px 0; border-left: 4px solid #9b59b6!important; background-color: #f8f9fa;">
+    <strong style="color: #9b59b6!important;">Extracting Dataset</strong>
 </div>
-
-
 
     100%|██████████| 35.5M/35.5M [00:16<00:00, 2.21MB/s]
     
-
-
-
 <div style="padding: 10px; margin: 10px 0; border-left: 4px solid #2ecc71; background-color: #f8f9fa;">
-    <strong style="color: #2ecc71;">Dataset Extracted -> # Classes: 8</strong>
+    <strong style="color: #2ecc71!important;">Dataset Extracted -> # Classes: 8</strong>
 </div>
 
 
@@ -449,14 +438,9 @@ train_dataset = BloodMNIST(split='train', download=True, size=SIZE)
 visualize_dataset_samples(train_dataset, num_images=16, class_names=class_names,
                           title=f"{DATA_FLAG.upper()} Training Samples (128x128)")
 ```
-
-
     
 ![png](medmnist-foundation-models-vs-specialized_files/medmnist-foundation-models-vs-specialized_13_0.png)
     
-
-
-    Saved to output/dataset_visualization.png
     
 
 ## 4. Resnet
@@ -489,136 +473,9 @@ resnet_result = run_experiment(build_resnet18, "ResNet-18 (from scratch)",
     ========================================
     Running: ResNet-18 (from scratch)
     ========================================
-    
-
-                                                          
-
-
-    Epoch 1/20 | Train Loss: 0.5803 Acc: 0.7869 | Val Loss: 0.4707 Acc: 0.8201
-    
-
-                                                          
-
-
-    Epoch 2/20 | Train Loss: 0.3497 Acc: 0.8747 | Val Loss: 0.7018 Acc: 0.7582
-    
-
-                                                          
-
-
-    Epoch 3/20 | Train Loss: 0.2944 Acc: 0.8926 | Val Loss: 0.5647 Acc: 0.7786
-    
-
-                                                          
-
-
-    Epoch 4/20 | Train Loss: 0.2423 Acc: 0.9097 | Val Loss: 0.5364 Acc: 0.8242
-    
-
-                                                          
-
-
-    Epoch 5/20 | Train Loss: 0.2214 Acc: 0.9186 | Val Loss: 0.3066 Acc: 0.8960
-    
-
-                                                          
-
-
-    Epoch 6/20 | Train Loss: 0.1911 Acc: 0.9319 | Val Loss: 0.6234 Acc: 0.8388
-    
-
-                                                          
-
-
-    Epoch 7/20 | Train Loss: 0.1589 Acc: 0.9426 | Val Loss: 0.3507 Acc: 0.8814
-    
-
-                                                          
-
-
-    Epoch 8/20 | Train Loss: 0.1350 Acc: 0.9501 | Val Loss: 0.3688 Acc: 0.8879
-    
-
-                                                          
-
-
-    Epoch 9/20 | Train Loss: 0.0966 Acc: 0.9644 | Val Loss: 0.2568 Acc: 0.9159
-    
-
-                                                          
-
-
-    Epoch 10/20 | Train Loss: 0.0893 Acc: 0.9679 | Val Loss: 0.3243 Acc: 0.8919
-    
-
-                                                          
-
-
-    Epoch 11/20 | Train Loss: 0.0605 Acc: 0.9793 | Val Loss: 0.3322 Acc: 0.9030
-    
-
-                                                          
-
-
-    Epoch 12/20 | Train Loss: 0.0546 Acc: 0.9789 | Val Loss: 0.1886 Acc: 0.9393
-    
-
-                                                          
-
-
-    Epoch 13/20 | Train Loss: 0.0275 Acc: 0.9904 | Val Loss: 0.2392 Acc: 0.9334
-    
-
-                                                          
-
-
-    Epoch 14/20 | Train Loss: 0.0207 Acc: 0.9927 | Val Loss: 0.2451 Acc: 0.9322
-    
-
-                                                          
-
-
-    Epoch 15/20 | Train Loss: 0.0123 Acc: 0.9958 | Val Loss: 0.2075 Acc: 0.9422
-    
-
-                                                          
-
-
-    Epoch 16/20 | Train Loss: 0.0058 Acc: 0.9989 | Val Loss: 0.1963 Acc: 0.9463
-    
-
-                                                          
-
-
-    Epoch 17/20 | Train Loss: 0.0038 Acc: 0.9990 | Val Loss: 0.2068 Acc: 0.9474
-    
-
-                                                          
-
-
-    Epoch 18/20 | Train Loss: 0.0029 Acc: 0.9996 | Val Loss: 0.1850 Acc: 0.9509
-    
-
-                                                          
-
-
-    Epoch 19/20 | Train Loss: 0.0023 Acc: 0.9997 | Val Loss: 0.1880 Acc: 0.9509
-    
-
-                                                          
-
-
-    Epoch 20/20 | Train Loss: 0.0019 Acc: 0.9999 | Val Loss: 0.1855 Acc: 0.9539
-    
-
-                                                         
-
+                                                           
     Test Accuracy: 0.9512 | Test Macro-F1: 0.9460
     
-
-    
-
-
 
 ```python
 
@@ -690,7 +547,7 @@ def plot_training_history(result_dict, save_path="output/training_curves.png",
     plt.tight_layout(rect=[0, 0.03, 1, 0.95])
     # plt.savefig(save_path, dpi=150, bbox_inches='tight')
     plt.show()
-    print(f"Saved plot to {save_path}")
+    # print(f"Saved plot to {save_path}")
 
 
 
@@ -701,10 +558,8 @@ plot_training_history(resnet_result, save_path="output/resnet_curves.png")
     
 ![png](medmnist-foundation-models-vs-specialized_files/medmnist-foundation-models-vs-specialized_16_0.png)
     
-
-
-    Saved plot to output/resnet_curves.png
     
+--- 
 
 ## 5. ViT: Foundation Model
 The second setup should use a pretrained vision transformer encoder as a foundation model, keeping the encoder frozen and training only a lightweight classification head. This is the simplest way to test whether broad visual pretraining already captures features that transfer to medical imagery.
@@ -747,134 +602,10 @@ vit_frozen_res = run_experiment(build_vit_frozen, "ViT-Tiny (frozen backbone)",
     Running: ViT-Tiny (frozen backbone)
     ========================================
     
-
-                                                          
-
-
-    Epoch 1/20 | Train Loss: 1.3019 Acc: 0.5786 | Val Loss: 0.7162 Acc: 0.7728
-    
-
-                                                          
-
-
-    Epoch 2/20 | Train Loss: 0.6289 Acc: 0.7987 | Val Loss: 0.5378 Acc: 0.8289
-    
-
-                                                          
-
-
-    Epoch 3/20 | Train Loss: 0.5102 Acc: 0.8347 | Val Loss: 0.4693 Acc: 0.8470
-    
-
-                                                          
-
-
-    Epoch 4/20 | Train Loss: 0.4555 Acc: 0.8517 | Val Loss: 0.4323 Acc: 0.8540
-    
-
-                                                          
-
-
-    Epoch 5/20 | Train Loss: 0.4176 Acc: 0.8630 | Val Loss: 0.4033 Acc: 0.8645
-    
-
-                                                          
-
-
-    Epoch 6/20 | Train Loss: 0.3994 Acc: 0.8675 | Val Loss: 0.3908 Acc: 0.8557
-    
-
-                                                          
-
-
-    Epoch 7/20 | Train Loss: 0.3818 Acc: 0.8726 | Val Loss: 0.3701 Acc: 0.8738
-    
-
-                                                          
-
-
-    Epoch 8/20 | Train Loss: 0.3672 Acc: 0.8775 | Val Loss: 0.3574 Acc: 0.8797
-    
-
-                                                          
-
-
-    Epoch 9/20 | Train Loss: 0.3571 Acc: 0.8808 | Val Loss: 0.3452 Acc: 0.8785
-    
-
-                                                          
-
-
-    Epoch 10/20 | Train Loss: 0.3462 Acc: 0.8848 | Val Loss: 0.3357 Acc: 0.8820
-    
-
-                                                          
-
-
-    Epoch 11/20 | Train Loss: 0.3403 Acc: 0.8879 | Val Loss: 0.3328 Acc: 0.8849
-    
-
-                                                          
-
-
-    Epoch 12/20 | Train Loss: 0.3344 Acc: 0.8895 | Val Loss: 0.3305 Acc: 0.8838
-    
-
-                                                          
-
-
-    Epoch 13/20 | Train Loss: 0.3298 Acc: 0.8897 | Val Loss: 0.3252 Acc: 0.8855
-    
-
-                                                          
-
-
-    Epoch 14/20 | Train Loss: 0.3264 Acc: 0.8896 | Val Loss: 0.3219 Acc: 0.8879
-    
-
-                                                          
-
-
-    Epoch 15/20 | Train Loss: 0.3233 Acc: 0.8934 | Val Loss: 0.3220 Acc: 0.8826
-    
-
-                                                          
-
-
-    Epoch 16/20 | Train Loss: 0.3204 Acc: 0.8930 | Val Loss: 0.3183 Acc: 0.8861
-    
-
-                                                          
-
-
-    Epoch 17/20 | Train Loss: 0.3186 Acc: 0.8945 | Val Loss: 0.3182 Acc: 0.8867
-    
-
-                                                          
-
-
-    Epoch 18/20 | Train Loss: 0.3175 Acc: 0.8946 | Val Loss: 0.3183 Acc: 0.8879
-    
-
-                                                          
-
-
-    Epoch 19/20 | Train Loss: 0.3168 Acc: 0.8947 | Val Loss: 0.3175 Acc: 0.8855
-    
-
-                                                          
-
-
-    Epoch 20/20 | Train Loss: 0.3163 Acc: 0.8949 | Val Loss: 0.3173 Acc: 0.8861
-    
-
-                                                         
+                                                    
 
     Test Accuracy: 0.8875 | Test Macro-F1: 0.8676
     
-
-    
-
 
 
 ```python
@@ -887,7 +618,6 @@ plot_training_history(vit_frozen_res, save_path="output/resnet_curves.png")
     
 
 
-    Saved plot to output/resnet_curves.png
     
 
 ### ⚙️ Fine-Tuned
@@ -916,128 +646,6 @@ vit_finetune_res = run_experiment(build_vit_finetune, "ViT-Tiny (fine-tuned)",
     ========================================
     
 
-                                                          
-
-
-    Epoch 1/20 | Train Loss: 1.6863 Acc: 0.4445 | Val Loss: 0.7338 Acc: 0.7366
-    
-
-                                                          
-
-
-    Epoch 2/20 | Train Loss: 0.5881 Acc: 0.7836 | Val Loss: 0.3984 Acc: 0.8645
-    
-
-                                                          
-
-
-    Epoch 3/20 | Train Loss: 0.3863 Acc: 0.8606 | Val Loss: 0.3008 Acc: 0.8826
-    
-
-                                                          
-
-
-    Epoch 4/20 | Train Loss: 0.2958 Acc: 0.8956 | Val Loss: 0.2862 Acc: 0.8855
-    
-
-                                                          
-
-
-    Epoch 5/20 | Train Loss: 0.2477 Acc: 0.9099 | Val Loss: 0.3398 Acc: 0.8703
-    
-
-                                                          
-
-
-    Epoch 6/20 | Train Loss: 0.2237 Acc: 0.9196 | Val Loss: 0.2049 Acc: 0.9299
-    
-
-                                                          
-
-
-    Epoch 7/20 | Train Loss: 0.1973 Acc: 0.9279 | Val Loss: 0.3049 Acc: 0.9077
-    
-
-                                                          
-
-
-    Epoch 8/20 | Train Loss: 0.1787 Acc: 0.9339 | Val Loss: 0.2284 Acc: 0.9229
-    
-
-                                                          
-
-
-    Epoch 9/20 | Train Loss: 0.1325 Acc: 0.9523 | Val Loss: 0.1494 Acc: 0.9428
-    
-
-                                                          
-
-
-    Epoch 10/20 | Train Loss: 0.1208 Acc: 0.9569 | Val Loss: 0.1419 Acc: 0.9486
-    
-
-                                                          
-
-
-    Epoch 11/20 | Train Loss: 0.0915 Acc: 0.9673 | Val Loss: 0.1729 Acc: 0.9416
-    
-
-                                                          
-
-
-    Epoch 12/20 | Train Loss: 0.0801 Acc: 0.9706 | Val Loss: 0.1694 Acc: 0.9451
-    
-
-                                                          
-
-
-    Epoch 13/20 | Train Loss: 0.0539 Acc: 0.9804 | Val Loss: 0.1630 Acc: 0.9509
-    
-
-                                                          
-
-
-    Epoch 14/20 | Train Loss: 0.0359 Acc: 0.9870 | Val Loss: 0.2202 Acc: 0.9428
-    
-
-                                                          
-
-
-    Epoch 15/20 | Train Loss: 0.0303 Acc: 0.9880 | Val Loss: 0.1592 Acc: 0.9591
-    
-
-                                                          
-
-
-    Epoch 16/20 | Train Loss: 0.0114 Acc: 0.9964 | Val Loss: 0.1981 Acc: 0.9509
-    
-
-                                                          
-
-
-    Epoch 17/20 | Train Loss: 0.0035 Acc: 0.9993 | Val Loss: 0.2031 Acc: 0.9568
-    
-
-                                                          
-
-
-    Epoch 18/20 | Train Loss: 0.0014 Acc: 0.9998 | Val Loss: 0.2056 Acc: 0.9562
-    
-
-                                                          
-
-
-    Epoch 19/20 | Train Loss: 0.0010 Acc: 1.0000 | Val Loss: 0.2068 Acc: 0.9568
-    
-
-                                                          
-
-
-    Epoch 20/20 | Train Loss: 0.0009 Acc: 1.0000 | Val Loss: 0.2074 Acc: 0.9568
-    
-
-                                                         
-
     Test Accuracy: 0.9611 | Test Macro-F1: 0.9563
     
 
@@ -1052,10 +660,7 @@ plot_training_history(vit_finetune_res, save_path="output/resnet_curves.png")
 
     
 ![png](medmnist-foundation-models-vs-specialized_files/medmnist-foundation-models-vs-specialized_23_0.png)
-    
 
-
-    Saved plot to output/resnet_curves.png
     
 
 ViT fine-tuned perform slightly better results (95.5% accuracy vs 94% of ResNet) but provides higher accuracy when compared with the frozen-backbone training.
@@ -1063,7 +668,7 @@ ViT fine-tuned perform slightly better results (95.5% accuracy vs 94% of ResNet)
 ## 6. DINOv2
 In order to get closer to SoTa model, we test DINOv2 (v3 has restricted access from META, so not everyone can use it yet).
 
-
+### ❄️ Frozen 
 ```python
 import timm
 from timm.data import resolve_model_data_config, create_transform
@@ -1147,11 +752,6 @@ dinov2_frozen_res = run_experiment(
 )
 ```
 
-
-    model.safetensors:   0%|          | 0.00/88.2M [00:00<?, ?B/s]
-
-
-    
     ========================================
     Running: DINOv2-Small (frozen)
     ========================================
@@ -1160,134 +760,8 @@ dinov2_frozen_res = run_experiment(
     	Backbone frozen: True
     	img_size: 224
     
-
-                                                          
-
-
-    Epoch 1/20 | Train Loss: 1.0284 Acc: 0.6613 | Val Loss: 0.5685 Acc: 0.8435
-    
-
-                                                          
-
-
-    Epoch 2/20 | Train Loss: 0.5159 Acc: 0.8470 | Val Loss: 0.4277 Acc: 0.8803
-    
-
-                                                          
-
-
-    Epoch 3/20 | Train Loss: 0.4134 Acc: 0.8760 | Val Loss: 0.3547 Acc: 0.8931
-    
-
-                                                          
-
-
-    Epoch 4/20 | Train Loss: 0.3644 Acc: 0.8854 | Val Loss: 0.3248 Acc: 0.9048
-    
-
-                                                          
-
-
-    Epoch 5/20 | Train Loss: 0.3308 Acc: 0.8982 | Val Loss: 0.2990 Acc: 0.9060
-    
-
-                                                          
-
-
-    Epoch 6/20 | Train Loss: 0.3100 Acc: 0.9018 | Val Loss: 0.2800 Acc: 0.9147
-    
-
-                                                          
-
-
-    Epoch 7/20 | Train Loss: 0.2947 Acc: 0.9066 | Val Loss: 0.2770 Acc: 0.9071
-    
-
-                                                          
-
-
-    Epoch 8/20 | Train Loss: 0.2816 Acc: 0.9094 | Val Loss: 0.2576 Acc: 0.9182
-    
-
-                                                          
-
-
-    Epoch 9/20 | Train Loss: 0.2711 Acc: 0.9127 | Val Loss: 0.2513 Acc: 0.9188
-    
-
-                                                          
-
-
-    Epoch 10/20 | Train Loss: 0.2629 Acc: 0.9161 | Val Loss: 0.2508 Acc: 0.9171
-    
-
-                                                          
-
-
-    Epoch 11/20 | Train Loss: 0.2553 Acc: 0.9174 | Val Loss: 0.2430 Acc: 0.9229
-    
-
-                                                          
-
-
-    Epoch 12/20 | Train Loss: 0.2520 Acc: 0.9191 | Val Loss: 0.2462 Acc: 0.9194
-    
-
-                                                          
-
-
-    Epoch 13/20 | Train Loss: 0.2477 Acc: 0.9203 | Val Loss: 0.2379 Acc: 0.9200
-    
-
-                                                          
-
-
-    Epoch 14/20 | Train Loss: 0.2427 Acc: 0.9211 | Val Loss: 0.2347 Acc: 0.9206
-    
-
-                                                          
-
-
-    Epoch 15/20 | Train Loss: 0.2389 Acc: 0.9238 | Val Loss: 0.2320 Acc: 0.9217
-    
-
-                                                          
-
-
-    Epoch 16/20 | Train Loss: 0.2365 Acc: 0.9241 | Val Loss: 0.2314 Acc: 0.9235
-    
-
-                                                          
-
-
-    Epoch 17/20 | Train Loss: 0.2356 Acc: 0.9249 | Val Loss: 0.2320 Acc: 0.9241
-    
-
-                                                          
-
-
-    Epoch 18/20 | Train Loss: 0.2338 Acc: 0.9251 | Val Loss: 0.2305 Acc: 0.9223
-    
-
-                                                          
-
-
-    Epoch 19/20 | Train Loss: 0.2332 Acc: 0.9258 | Val Loss: 0.2296 Acc: 0.9246
-    
-
-                                                          
-
-
-    Epoch 20/20 | Train Loss: 0.2325 Acc: 0.9262 | Val Loss: 0.2293 Acc: 0.9241
-    
-
-                                                         
-
     Test Accuracy: 0.9184 | Test Macro-F1: 0.9047
     
-
-    
-
 
 
 ```python
@@ -1298,15 +772,13 @@ plot_training_history(dinov2_frozen_res, save_path="output/dinov2_frozen_curves.
     
 ![png](medmnist-foundation-models-vs-specialized_files/medmnist-foundation-models-vs-specialized_27_0.png)
     
-
-
-    Saved plot to output/dinov2_frozen_curves.png
-    
-
+### ⚙️ Fine-Tuned
+The following code is commented since the results are disappointing and the training time is quite slow.
 
 ```python
 
-# train_loader, val_loader, test_loader, info = get_dataloaders(DATA_FLAG, SIZE, BATCH_SIZE, transform_dino)
+# train_loader, val_loader, test_loader, info = get_dataloaders(DATA_FLAG, 
+#                           SIZE, BATCH_SIZE, transform_dino)
 
 # # Fine-tuned DINOv2
 # dinov2_finetune_res = run_experiment(
@@ -1324,9 +796,7 @@ Complete fine-tuning of DINOv2 performs slighlty better than the frozen one, how
 It should be tested with higher resolution since it is a much more complex model.
 
 
-```python
-
-```
+--- 
 
 ## 7. Results and Discussion
 
@@ -1343,7 +813,3 @@ This resolution hypothesis carries a practical lesson: foundation model transfer
 This first experiment establishes that foundation model transfer learning is viable on compact medical benchmarks, but it also sets realistic expectations: the gains over a well-trained classical CNN are measurable yet modest, and self-supervised foundation models may need adequate input resolution to express their full advantage. For practitioners, the recommended workflow is to start with a frozen pretrained ViT for rapid prototyping, then fine-tune if compute allows, while carefully matching the input resolution to the model’s pretraining regime. The follow-up article will test whether increasing native resolution—from 28×28 up to full 224×224—closes the gap between DINOv2 and its supervised counterparts, providing concrete guidance on when high-resolution medical imaging data is worth the acquisition and storage cost. 
 
 
-
-```python
-
-```
