@@ -27,7 +27,7 @@ skills:
   url: "https://tensorflow.org/"
 
 - name: LangChain
-  logo: /images/sections/skills/langchain.png
+  logo: /images/sections/skills/langchain_light.png
   summary: "Building and evaluating agents for financial applications"
   url: "https://www.langchain.com/"
 
