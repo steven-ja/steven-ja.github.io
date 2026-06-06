@@ -28,8 +28,8 @@ In this guide, we will unpack how DE works from first principles, dissect its ma
 
 To see why we need Differential Evolution, we need an objective function designed specifically to break traditional optimizers. The **Ackley Function** is a classic multimodal test landscape characterized by a flat outer region littered with hundreds of deceptive local minima, all surrounding a single, incredibly sharp hole containing the true global minimum at $(0,0)$.
 
-Mathematically, for a $d$-dimensional vector $\mathbf{x}$, it is expressed as:$$
-f(\mathbf{x}) = -a \exp\left(-b \sqrt{\frac{1}{d} \sum_{i=1}^d x_i^2}\right) - \exp\left(\frac{1}{d} \sum_{i=1}^d \cos(c x_i)\right) + a + \exp(1)$$
+Mathematically, for a $d$-dimensional vector $x$, it is expressed as:$$
+f(x) = -a \exp\left(-b \sqrt{\frac{1}{d} \sum_{i=1}^d x_i^2}\right) - \exp\left(\frac{1}{d} \sum_{i=1}^d \cos(c x_i)\right) + a + \exp(1)$$
 
 Where standard benchmark constants are typically set to $a = 20$, $b = 0.2$, and $c = 2\pi$.
 
@@ -48,33 +48,40 @@ The algorithm operates in a continuous generational loop consisting of four fund
 
 ### Step 1: Initialization
 
-We instantiate a population of $NP$ vectors in a $d$-dimensional space. Each candidate solution $i$ at generation $g$ is represented as:$$
-\mathbf{x}_i^{(g)} = [x_{i,1}^{(g)}, x_{i,2}^{(g)}, \dots, x_{i,d}^{(g)}]$$
+We instantiate a population of $NP$ vectors in a $d$-dimensional space. Each candidate solution $i$ at generation $g$ is represented as:
+
+$$
+x_i^{(g)} = [x_{i,1}^{(g)}, x_{i,2}^{(g)}, \dots, x_{i,d}^{(g)}]
+$$
 
 These vectors are distributed uniformly across the user-defined upper and lower bounds of the search space.
 
 ### Step 2: Mutation
 
-For each target vector $\mathbf{x}_i^{(g)}$, we randomly select three *distinct* individuals from our population: $\mathbf{x}_{r_1}^{(g)}$, $\mathbf{x}_{r_2}^{(g)}$, and $\mathbf{x}_{r_3}^{(g)}$, such that $r_1 \neq r_2 \neq r_3 \neq i$.
+For each target vector $x_i^{(g)}$, we randomly select three *distinct* individuals from our population: $x_{r_1}^{(g)}$, $x_{r_2}^{(g)}$, and $x_{r_3}^{(g)}$, such that $r_1 \neq r_2 \neq r_3 \neq i$.
 
-We calculate the difference vector between two of them, scale it by a mutation factor $F \in [0, 2]$, and add it to the third. This yields a **mutant vector** $\mathbf{v}_i^{(g+1)}$:$$
-\mathbf{v}_i^{(g+1)} = \mathbf{x}_{r_1}^{(g)} + F \cdot \left(\mathbf{x}_{r_2}^{(g)} - \mathbf{x}_{r_3}^{(g)}\right)$$
+We calculate the difference vector between two of them, scale it by a mutation factor $F \in [0, 2]$, and add it to the third. This yields a **mutant vector** $v_i^{(g+1)}$:$$
+v_i^{(g+1)} = x_{r_1}^{(g)} + F \cdot \left(x_{r_2}^{(g)} - x_{r_3}^{(g)}\right)$$
 
 > **Why this is brilliant:** Early in the optimization run, the individuals are highly scattered, making the difference vector large. This forces the algorithm to take massive exploratory steps. As the population naturally converges on a promising basin, the individuals get closer together, causing the difference vector to automatically shrink. DE inherently scales its step sizes based on its structural confidence!
 
 ### Step 3: Crossover (Recombination)
 
-To maintain diversity and prevent the population from cloning itself too quickly, we mix components of the original target vector $\mathbf{x}_i^{(g)}$ and our newly minted mutant vector $\mathbf{v}_i^{(g+1)}$ to construct a **trial vector** $\mathbf{u}_i^{(g+1)}$.
+To maintain diversity and prevent the population from cloning itself too quickly, we mix components of the original target vector $x_i^{(g)}$ and our newly minted mutant vector $v_i^{(g+1)}$ to construct a **trial vector** $u_i^{(g+1)}$.
 
-For each dimension $j \in \{1, \dots, d\}$, we decide which parent to inherit from based on a crossover probability $CR \in [0, 1]$:$$
-\mathbf{u}_{i,j}^{(g+1)} = \begin{cases} \mathbf{v}_{i,j}^{(g+1)} & \text{if } \text{rand}_j(0,1) \le CR \text{ or } j = j_{\text{rand}} \\ \mathbf{x}_{i,j}^{(g)} & \text{otherwise} \end{cases}$$
+For each dimension $j \in \{1, \dots, d\}$, we decide which parent to inherit from based on a crossover probability $CR \in [0, 1]$:
+$$u_{i,j}^{(g+1)} = v_{i,j}^{(g+1)}$$  if $rand_j(0,1) \le CR $ or $j = j_{rand}$
+
+$$u_{i,j}^{(g+1)} = x_{i,j}^{(g)}$$  otherwise
+
+
 
 Here, $j_{\text{rand}}$ is a randomly selected index ensuring that the trial vector receives *at least one* component from the mutant vector, preventing completely stagnant generations.
 
 ### Step 4: Selection
 
-Finally, we run a ruthless head-to-head tournament. We evaluate the fitness (loss) of our trial vector $\mathbf{u}_i^{(g+1)}$ against our original target vector $\mathbf{x}_i^{(g)}$.$$
-\mathbf{x}_i^{(g+1)} = \begin{cases} \mathbf{u}_i^{(g+1)} & \text{if } f\left(\mathbf{u}_i^{(g+1)}\right) \le f\left(\mathbf{x}_i^{(g)}\right) \\ \mathbf{x}_i^{(g)} & \text{otherwise} \end{cases}$$
+Finally, we run a ruthless head-to-head tournament. We evaluate the fitness (loss) of our trial vector $u_i^{(g+1)}$ against our original target vector $x_i^{(g)}$.$$
+x_i^{(g+1)} = \begin{cases} u_i^{(g+1)} & \text{if } f\left(u_i^{(g+1)}\right) \le f\left(x_i^{(g)}\right) \\ x_i^{(g)} & \text{otherwise} \end{cases}$$
 
 If the newcomer is better or equal, it takes the target's place in the next generation. If it fails, it is unceremoniously discarded.
 
@@ -339,9 +346,9 @@ solutions = {
 plot_comparative_minima(X, Y, Z, solutions)
 ```
 
-<div style="width:1000px; height:450px; overflow:hidden;">
+<div style="height:450px; overflow:hidden;">
 
-  <img src="ackley_best_min.svg" width="1000" style="margin-top:-50px;margin-bottom:-50px">
+  <img src="ackley_best_min.svg" style="margin-top:-50px;margin-bottom:-50px">
 </div>
 
 
