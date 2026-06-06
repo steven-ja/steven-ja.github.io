@@ -6,13 +6,24 @@
     <description>Recent content in Posts on Stefano Giannini</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 25 Nov 2025 00:08:25 +0100</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Mon, 01 Jun 2026 00:08:25 +0100</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>Differential Evolution Algorithm</title>
+      <link>http://localhost:1313/posts/machine-learning/optimization/differential_evolution/</link>
+      <pubDate>Mon, 01 Jun 2026 00:08:25 +0100</pubDate>
+      
+      <guid>http://localhost:1313/posts/machine-learning/optimization/differential_evolution/</guid>
+      <description>Beyond the Gradient: Master Global Optimization with Differential Evolution If you have spent any time in the machine learning world, you are likely intimately familiar with Gradient Descent and its various turbo-charged derivatives (like Adam or RMSprop). Gradients are wonderful—assuming your optimization landscape is as smooth and predictable as a bowling green.
+But what happens when your loss landscape looks less like a gentle bowl and more like a jagged mountain range after an earthquake?</description>
+    </item>
+    
+    <item>
       <title>MedMNIST - ViT vs. ResNet18 vs. DINOv2 Test - Part 1</title>
       <link>http://localhost:1313/posts/machine-learning/deep-learning/computer-vision/bloodmnist/</link>
       <pubDate>Tue, 25 Nov 2025 00:08:25 +0100</pubDate>
       
       <guid>http://localhost:1313/posts/machine-learning/deep-learning/computer-vision/bloodmnist/</guid>
-      <description>MedMNIST: Testing a Foundation Model, a Specialized CNN, and Fine-Tuning MedMNIST+ is one of the easiest ways to start serious experimentation in medical imaging because it packages 18 standardized biomedical image classification datasets into a single benchmark family and adds higher-resolution variants intended for stronger representation learning and medical foundation-model research. At the same time, the broader research direction in medical imaging has shifted toward foundation models, transfer learning, and adaptation benchmarks rather than only training narrow models from scratch, which makes MedMNIST+ a good educational bridge between beginner workflows and current SoTA research.</description>
+      <description>Open in:
+MedMNIST: Testing a Foundation Model, a Specialized CNN, and Fine-Tuning MedMNIST+ is one of the easiest ways to start serious experimentation in medical imaging because it packages 18 standardized biomedical image classification datasets into a single benchmark family and adds higher-resolution variants intended for stronger representation learning and medical foundation-model research. At the same time, the broader research direction in medical imaging has shifted toward foundation models, transfer learning, and adaptation benchmarks rather than only training narrow models from scratch, which makes MedMNIST+ a good educational bridge between beginner workflows and current SoTA research.</description>
     </item>
     
     <item>

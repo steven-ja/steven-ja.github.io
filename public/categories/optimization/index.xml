@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Optimization on Stefano Giannini</title>
+    <link>http://localhost:1313/categories/optimization/</link>
+    <description>Recent content in Optimization on Stefano Giannini</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 01 Jun 2026 00:08:25 +0100</lastBuildDate><atom:link href="http://localhost:1313/categories/optimization/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>Differential Evolution Algorithm</title>
+      <link>http://localhost:1313/posts/machine-learning/optimization/differential_evolution/</link>
+      <pubDate>Mon, 01 Jun 2026 00:08:25 +0100</pubDate>
+      
+      <guid>http://localhost:1313/posts/machine-learning/optimization/differential_evolution/</guid>
+      <description>Beyond the Gradient: Master Global Optimization with Differential Evolution If you have spent any time in the machine learning world, you are likely intimately familiar with Gradient Descent and its various turbo-charged derivatives (like Adam or RMSprop). Gradients are wonderful—assuming your optimization landscape is as smooth and predictable as a bowling green.
+But what happens when your loss landscape looks less like a gentle bowl and more like a jagged mountain range after an earthquake?</description>
+    </item>
+    
+    
+  </channel>
+</rss>

@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <title>Differential Evolution Algorithm</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<link rel="stylesheet" href="/application.efe6b45a1210597f9cf355d89ca0d531f3a1527c046b1c24938241faaa8af088.css" integrity="sha256-7&#43;a0WhIQWX&#43;c81XYnKDVMfOhUnwEaxwkk4JB&#43;qqK8Ig=" />
+
+
+
+
+
+  
+
+  
+  
+  
+    
+  
+  
+
+  <link rel="icon" type="image/png" href="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" />
+
+<meta property="og:url" content="http://localhost:1313/posts/machine-learning/optimization/differential_evolution/">
+  <meta property="og:site_name" content="Stefano Giannini">
+  <meta property="og:title" content="Differential Evolution Algorithm">
+  <meta property="og:description" content="Swarm Intelligence">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-06-01T00:08:25+01:00">
+    <meta property="article:modified_time" content="2026-06-01T00:08:25+01:00">
+    <meta property="article:tag" content="Statistics">
+    <meta property="article:tag" content="Optimization">
+    <meta property="article:tag" content="Machine Learning">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Differential Evolution Algorithm">
+  <meta name="twitter:description" content="Swarm Intelligence">
+
+    
+    
+<meta name="description" content="Swarm Intelligence" />
+
+
+    
+
+    
+
+
+
+
+<script>
+      theme = localStorage.getItem('darkmode:color-scheme') || 'system';
+      if (theme == 'system') {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          theme = 'dark';
+        } else {
+          theme = 'light';
+        }
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
+  </head>
+
+  <body class="type-posts kind-page" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
+    <div class="container-fluid bg-secondary wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+<nav class="navbar navbar-expand-xl top-navbar shadow " id="top-navbar">
+  <div class="container">
+    
+    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button">
+      <i data-feather="sidebar"></i>
+    </button>
+    
+    <a class="navbar-brand" href="/">
+      
+        <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" id="logo" alt="Logo">
+      Stefano Giannini</a>
+    <button
+      class="navbar-toggler navbar-light"
+      id="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#top-nav-items"
+      aria-label="menu"
+    >
+      <i data-feather="menu"></i>
+    </button>
+
+    <div class="collapse navbar-collapse dynamic-navbar" id="top-nav-items">
+      <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/#home">Home</a>
+        </li>
+        
+          
+          
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#about">About</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#experiences">Experiences</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#education">Education</a>
+                </li>
+              
+            
+          
+        
+        
+          <div id="top-navbar-divider"></div>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="blog-link" href="/posts">Posts</a>
+          </li>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="note-link" href="/notes">Notes</a>
+          </li>
+        
+        
+        
+        
+      </ul>
+    </div>
+  </div>
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="main-logo" alt="Logo">
+  
+  
+    <img src="/images/site/icon_hu65d76dfee5a8e0802e55f59432358110_6732567_42x0_resize_box_3.png" class="d-none" id="inverted-logo" alt="Inverted Logo">
+  
+</nav>
+
+
+
+      
+      
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/posts/" data-filter="all">Posts</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/"> Finance</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/monte_carlo/"> Monte Carlo</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/monte_carlo/black-scholes/" title="Option Pricing">Option Pricing</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/finance/stock_prediction/"> Stock Prediction</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/gru/" title="GRU">GRU</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/arima/" title="ARIMA">ARIMA</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/sarima/" title="SARIMA">SARIMA</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/finance/stock_prediction/sarimax/" title="SARIMAX">SARIMAX</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/machine-learning/"> Machine Learning</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/machine-learning/deep-learning/"> Deep Learning</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/machine-learning/deep-learning/computer-vision/"> Computer Vision</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/machine-learning/deep-learning/computer-vision/florence/" title="Florence-2 LVM">Florence-2 LVM</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/machine-learning/deep-learning/computer-vision/bloodmnist/" title="MedMNIST - P1">MedMNIST - P1</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/machine-learning/deep-learning/nlp/"> NLP</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/machine-learning/deep-learning/nlp/gpt-oss-20b/" title="GPT-OSS">GPT-OSS</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/" title="Gemma-2 &#43; RAG">Gemma-2 &#43; RAG</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/machine-learning/optimization/"> Optimization</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li><a class="active list-link" href="/posts/machine-learning/optimization/differential_evolution/" title="Differential Evolution">Differential Evolution</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/physics/"> Physics</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/percolation/" title="Percolation">Percolation</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/physics/quantum_computing/"> Quantum Computing</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/quantum_computing/introduction/" title="Introduction">Introduction</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/physics/quantum_computing/teleportation/" title="Teleportation">Teleportation</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content">
+    <div class="container p-0 read-area">
+      
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/posts/machine-learning/optimization/differential_evolution/ackley.svg);'>
+      </div>
+
+      
+      <div class="page-content">
+        
+        <div class="author-profile ms-auto align-self-lg-center">
+          <img class="rounded-circle" src='/images/author/profile_hu8a567cefac8c1a165d433ac0796ac418_3088978_120x120_fit_q75_box.jpg' alt="Author Image">
+          <h5 class="author-name">Stefano Giannini</h5>
+          <p class="text-muted">Monday, June 1, 2026 | 11 minutes</p>
+        </div>
+        
+        
+        <div class="title">
+          <h1>Differential Evolution Algorithm</h1>
+        </div>
+
+        
+
+        
+          <div class="tags">
+  <ul style="padding-left: 0;">
+    
+    
+    <li class="rounded"><a href="/tags/statistics/" class="btn btn-sm btn-info">Statistics</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/optimization/" class="btn btn-sm btn-info">Optimization</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/machine-learning/" class="btn btn-sm btn-info">Machine Learning</a></li>
+    
+  </ul>
+</div>
+
+        
+        <div class="post-content" id="post-content">
+          <h1 id="beyond-the-gradient-master-global-optimization-with-differential-evolution">Beyond the Gradient: Master Global Optimization with Differential Evolution</h1>
+<p>If you have spent any time in the machine learning world, you are likely intimately familiar with Gradient Descent and its various turbo-charged derivatives (like Adam or RMSprop). Gradients are wonderful—assuming your optimization landscape is as smooth and predictable as a bowling green.</p>
+<p>But what happens when your loss landscape looks less like a gentle bowl and more like a jagged mountain range after an earthquake?</p>
+<p>When gradients lie to you, trap you in local minima, or simply refuse to exist because your objective function is non-differentiable, it’s time to change paradigms. Enter <strong>Differential Evolution (DE)</strong>: a population-based, stochastic global optimizer that doesn&rsquo;t care about your gradients, doesn&rsquo;t cry over discontinuities, and systematically hunts down global minima.</p>
+<p>In this guide, we will unpack how DE works from first principles, dissect its mathematical core, implement a complete evaluation framework in Python, and visualize its conquest over a notoriously deceptive benchmark function.</p>
+<hr>
+<h2 id="1-the-mathematical-battlefield-the-ackley-function">1. The Mathematical Battlefield: The Ackley Function</h2>
+<p>To see why we need Differential Evolution, we need an objective function designed specifically to break traditional optimizers. The <strong>Ackley Function</strong> is a classic multimodal test landscape characterized by a flat outer region littered with hundreds of deceptive local minima, all surrounding a single, incredibly sharp hole containing the true global minimum at $(0,0)$.</p>
+<p>Mathematically, for a $d$-dimensional vector $\mathbf{x}$, it is expressed as:$$
+f(\mathbf{x}) = -a \exp\left(-b \sqrt{\frac{1}{d} \sum_{i=1}^d x_i^2}\right) - \exp\left(\frac{1}{d} \sum_{i=1}^d \cos(c x_i)\right) + a + \exp(1)$$</p>
+<p>Where standard benchmark constants are typically set to $a = 20$, $b = 0.2$, and $c = 2\pi$.</p>
+<ul>
+<li><strong>The first exponential term</strong> creates the macro-topography: a large, sloping bowl determined by the Euclidean distance to the origin.</li>
+<li><strong>The second exponential term</strong> uses cosine waves to superimpose high-frequency, periodic ripples across the entire landscape. This creates the matrix of local traps.</li>
+</ul>
+<p>Trying to run standard gradient descent here is like trying to find a dropped contact lens in a dark room covered in bubble wrap; your local optimizer will happily fall into the nearest tiny pocket and declare victory, completely oblivious to the massive sinkhole just a few steps away.</p>
+<p><img src="/posts/machine-learning/optimization/differential_evolution/ackley.svg"></p>
+<h2 id="2-differential-evolution-from-first-principles">2. Differential Evolution from First Principles</h2>
+<p>Differential Evolution avoids the local minimum trap by maintaining a <em>population</em> of candidate solutions that explore the space simultaneously. Instead of calculating a derivative to see which way is &ldquo;down,&rdquo; DE uses the <em>spatial differences between its own individuals</em> to guide its search steps.</p>
+<p>The algorithm operates in a continuous generational loop consisting of four fundamental phases:</p>
+<h3 id="step-1-initialization">Step 1: Initialization</h3>
+<p>We instantiate a population of $NP$ vectors in a $d$-dimensional space. Each candidate solution $i$ at generation $g$ is represented as:$$
+\mathbf{x}<em>i^{(g)} = [x</em>{i,1}^{(g)}, x_{i,2}^{(g)}, \dots, x_{i,d}^{(g)}]$$</p>
+<p>These vectors are distributed uniformly across the user-defined upper and lower bounds of the search space.</p>
+<h3 id="step-2-mutation">Step 2: Mutation</h3>
+<p>For each target vector $\mathbf{x}<em>i^{(g)}$, we randomly select three <em>distinct</em> individuals from our population: $\mathbf{x}</em>{r_1}^{(g)}$, $\mathbf{x}<em>{r_2}^{(g)}$, and $\mathbf{x}</em>{r_3}^{(g)}$, such that $r_1 \neq r_2 \neq r_3 \neq i$.</p>
+<p>We calculate the difference vector between two of them, scale it by a mutation factor $F \in [0, 2]$, and add it to the third. This yields a <strong>mutant vector</strong> $\mathbf{v}<em>i^{(g+1)}$:$$
+\mathbf{v}<em>i^{(g+1)} = \mathbf{x}</em>{r_1}^{(g)} + F \cdot \left(\mathbf{x}</em>{r_2}^{(g)} - \mathbf{x}_{r_3}^{(g)}\right)$$</p>
+<blockquote>
+<p><strong>Why this is brilliant:</strong> Early in the optimization run, the individuals are highly scattered, making the difference vector large. This forces the algorithm to take massive exploratory steps. As the population naturally converges on a promising basin, the individuals get closer together, causing the difference vector to automatically shrink. DE inherently scales its step sizes based on its structural confidence!</p>
+</blockquote>
+<h3 id="step-3-crossover-recombination">Step 3: Crossover (Recombination)</h3>
+<p>To maintain diversity and prevent the population from cloning itself too quickly, we mix components of the original target vector $\mathbf{x}_i^{(g)}$ and our newly minted mutant vector $\mathbf{v}_i^{(g+1)}$ to construct a <strong>trial vector</strong> $\mathbf{u}_i^{(g+1)}$.</p>
+<p>For each dimension $j \in {1, \dots, d}$, we decide which parent to inherit from based on a crossover probability $CR \in [0, 1]$:$$
+\mathbf{u}<em>{i,j}^{(g+1)} = \begin{cases} \mathbf{v}</em>{i,j}^{(g+1)} &amp; \text{if } \text{rand}<em>j(0,1) \le CR \text{ or } j = j</em>{\text{rand}} \ \mathbf{x}_{i,j}^{(g)} &amp; \text{otherwise} \end{cases}$$</p>
+<p>Here, $j_{\text{rand}}$ is a randomly selected index ensuring that the trial vector receives <em>at least one</em> component from the mutant vector, preventing completely stagnant generations.</p>
+<h3 id="step-4-selection">Step 4: Selection</h3>
+<p>Finally, we run a ruthless head-to-head tournament. We evaluate the fitness (loss) of our trial vector $\mathbf{u}_i^{(g+1)}$ against our original target vector $\mathbf{x}_i^{(g)}$.$$
+\mathbf{x}_i^{(g+1)} = \begin{cases} \mathbf{u}_i^{(g+1)} &amp; \text{if } f\left(\mathbf{u}_i^{(g+1)}\right) \le f\left(\mathbf{x}_i^{(g)}\right) \ \mathbf{x}_i^{(g)} &amp; \text{otherwise} \end{cases}$$</p>
+<p>If the newcomer is better or equal, it takes the target&rsquo;s place in the next generation. If it fails, it is unceremoniously discarded.</p>
+<hr>
+<h2 id="3-architectural-trade-offs-advantages-and-limitations">3. Architectural Trade-offs: Advantages and Limitations</h2>
+<p>Before we look at the code, let&rsquo;s look at the theoretical profile of DE.</p>
+<h3 id="advantages">Advantages</h3>
+<ul>
+<li><strong>No Gradient Required:</strong> It treats the objective function as a black box. It can optimize functions that are discontinuous, non-differentiable, or highly noisy.</li>
+<li><strong>Inherent Self-Scaling:</strong> As mentioned above, the step sizes naturally shrink as the population converges, removing the need for complex learning rate schedules.</li>
+<li><strong>Global Convergence:</strong> The parallel exploration of multiple vectors coupled with stochastic mutation makes it highly robust against getting stuck in local valleys.</li>
+</ul>
+<h3 id="limitations">Limitations</h3>
+<ul>
+<li><strong>The Curse of Dimensionality:</strong> As dimensions ($d$) scale up dramatically into the thousands, the volume of the search space explodes, requiring larger population sizes and significantly more function evaluations.</li>
+<li><strong>Hyperparameter Sensitivity:</strong> Finding the perfect sweet spot for $NP$, $F$, and $CR$ can sometimes feel like an optimization problem in its own right.</li>
+<li><strong>Higher Computational Footprint:</strong> Because it evaluates an entire population every generation, it can demand significantly more individual function calls than a simple local gradient descent trajectory.</li>
+</ul>
+<hr>
+<h2 id="4-putting-it-to-the-test-full-benchmark-code">4. Putting it to the Test: Full Benchmark Code</h2>
+<p>Below is the complete, self-contained Python implementation comparing our custom Differential Evolution engine against traditional machine learning optimization techniques: <strong>Random Search</strong>, <strong>Gradient Descent (with Multi-Start Restarts)</strong>, and <strong>Bayesian Optimization</strong>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> scipy.optimize <span style="color:#f92672">import</span> minimize
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> skopt <span style="color:#f92672">import</span> gp_minimize
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> skopt.space <span style="color:#f92672">import</span> Real
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> time
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1. THE ACKLEY BENCHMARK FUNCTION</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">ackley</span>(x):
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>asarray(x)
+</span></span><span style="display:flex;"><span>    a, b, c <span style="color:#f92672">=</span> <span style="color:#ae81ff">20.0</span>, <span style="color:#ae81ff">0.2</span>, <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>pi
+</span></span><span style="display:flex;"><span>    d <span style="color:#f92672">=</span> len(x)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    sum_sq <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(x<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>    sum_cos <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(np<span style="color:#f92672">.</span>cos(c <span style="color:#f92672">*</span> x))
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    term1 <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>a <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>exp(<span style="color:#f92672">-</span>b <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sqrt(sum_sq <span style="color:#f92672">/</span> d))
+</span></span><span style="display:flex;"><span>    term2 <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>np<span style="color:#f92672">.</span>exp(sum_cos <span style="color:#f92672">/</span> d)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> term1 <span style="color:#f92672">+</span> term2 <span style="color:#f92672">+</span> a <span style="color:#f92672">+</span> np<span style="color:#f92672">.</span>e
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. FROM-SCRATCH DIFFERENTIAL EVOLUTION ENGINE</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">differential_evolution</span>(fobj, bounds, mut<span style="color:#f92672">=</span><span style="color:#ae81ff">0.8</span>, crossp<span style="color:#f92672">=</span><span style="color:#ae81ff">0.7</span>, popsize<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>, its<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>, seed<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> seed <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>        np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>seed(seed)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    dimensions <span style="color:#f92672">=</span> len(bounds)
+</span></span><span style="display:flex;"><span>    pop <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>rand(popsize, dimensions)
+</span></span><span style="display:flex;"><span>    min_b, max_b <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>asarray(bounds)<span style="color:#f92672">.</span>T
+</span></span><span style="display:flex;"><span>    diff <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>fabs(min_b <span style="color:#f92672">-</span> max_b)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    pop_denorm <span style="color:#f92672">=</span> min_b <span style="color:#f92672">+</span> pop <span style="color:#f92672">*</span> diff
+</span></span><span style="display:flex;"><span>    fitness <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>asarray([fobj(ind) <span style="color:#66d9ef">for</span> ind <span style="color:#f92672">in</span> pop_denorm])
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    best_idx <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmin(fitness)
+</span></span><span style="display:flex;"><span>    best <span style="color:#f92672">=</span> pop_denorm[best_idx]
+</span></span><span style="display:flex;"><span>    best_fitness <span style="color:#f92672">=</span> fitness[best_idx]
+</span></span><span style="display:flex;"><span>    eval_count <span style="color:#f92672">=</span> popsize
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">yield</span> best, best_fitness, <span style="color:#ae81ff">0</span>, eval_count
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(its):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(popsize):
+</span></span><span style="display:flex;"><span>            idxs <span style="color:#f92672">=</span> [idx <span style="color:#66d9ef">for</span> idx <span style="color:#f92672">in</span> range(popsize) <span style="color:#66d9ef">if</span> idx <span style="color:#f92672">!=</span> j]
+</span></span><span style="display:flex;"><span>            a, b, c <span style="color:#f92672">=</span> pop[np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>choice(idxs, <span style="color:#ae81ff">3</span>, replace<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)]
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>            mutant <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>clip(a <span style="color:#f92672">+</span> mut <span style="color:#f92672">*</span> (b <span style="color:#f92672">-</span> c), <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>            cross_points <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>rand(dimensions) <span style="color:#f92672">&lt;</span> crossp
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> np<span style="color:#f92672">.</span>any(cross_points):
+</span></span><span style="display:flex;"><span>                cross_points[np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, dimensions)] <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>            trial <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(cross_points, mutant, pop[j])
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>            trial_denorm <span style="color:#f92672">=</span> min_b <span style="color:#f92672">+</span> trial <span style="color:#f92672">*</span> diff
+</span></span><span style="display:flex;"><span>            f_trial <span style="color:#f92672">=</span> fobj(trial_denorm)
+</span></span><span style="display:flex;"><span>            eval_count <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> f_trial <span style="color:#f92672">&lt;</span> fitness[j]:
+</span></span><span style="display:flex;"><span>                fitness[j] <span style="color:#f92672">=</span> f_trial
+</span></span><span style="display:flex;"><span>                pop[j] <span style="color:#f92672">=</span> trial
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> f_trial <span style="color:#f92672">&lt;</span> best_fitness:
+</span></span><span style="display:flex;"><span>                    best <span style="color:#f92672">=</span> trial_denorm
+</span></span><span style="display:flex;"><span>                    best_fitness <span style="color:#f92672">=</span> f_trial
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">yield</span> best, best_fitness, i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>, eval_count
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run_de</span>(fobj, bounds, max_evals<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span>, <span style="color:#f92672">**</span>kwargs):
+</span></span><span style="display:flex;"><span>    history <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    de_gen <span style="color:#f92672">=</span> differential_evolution(fobj, bounds, <span style="color:#f92672">**</span>kwargs)
+</span></span><span style="display:flex;"><span>    final_best, final_fitness <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>, <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> best, fitness, gen, evals <span style="color:#f92672">in</span> de_gen:
+</span></span><span style="display:flex;"><span>        history<span style="color:#f92672">.</span>append((gen, evals, fitness, best))
+</span></span><span style="display:flex;"><span>        final_best, final_fitness <span style="color:#f92672">=</span> best, fitness
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> evals <span style="color:#f92672">&gt;=</span> max_evals:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> final_best, final_fitness, history
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. TRADITIONAL OPTIMIZER BASELINES</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gradient_descent</span>(fobj, x0, learning_rate<span style="color:#f92672">=</span><span style="color:#ae81ff">0.01</span>, max_iter<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span>, tol<span style="color:#f92672">=</span><span style="color:#ae81ff">1e-7</span>):
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(x0, dtype<span style="color:#f92672">=</span>float)
+</span></span><span style="display:flex;"><span>    dim <span style="color:#f92672">=</span> len(x)
+</span></span><span style="display:flex;"><span>    history <span style="color:#f92672">=</span> [(<span style="color:#ae81ff">0</span>, fobj(x), x<span style="color:#f92672">.</span>copy())]
+</span></span><span style="display:flex;"><span>    epsilon <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-8</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> iteration <span style="color:#f92672">in</span> range(max_iter):
+</span></span><span style="display:flex;"><span>        grad <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(dim)
+</span></span><span style="display:flex;"><span>        f_current <span style="color:#f92672">=</span> fobj(x)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(dim):
+</span></span><span style="display:flex;"><span>            x_plus <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span>            x_plus[i] <span style="color:#f92672">+=</span> epsilon
+</span></span><span style="display:flex;"><span>            grad[i] <span style="color:#f92672">=</span> (fobj(x_plus) <span style="color:#f92672">-</span> f_current) <span style="color:#f92672">/</span> epsilon
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>        x_new <span style="color:#f92672">=</span> x <span style="color:#f92672">-</span> learning_rate <span style="color:#f92672">*</span> grad
+</span></span><span style="display:flex;"><span>        f_new <span style="color:#f92672">=</span> fobj(x_new)
+</span></span><span style="display:flex;"><span>        history<span style="color:#f92672">.</span>append((iteration<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>, f_new, x_new<span style="color:#f92672">.</span>copy()))
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>norm(grad) <span style="color:#f92672">&lt;</span> tol <span style="color:#f92672">or</span> abs(f_new <span style="color:#f92672">-</span> f_current) <span style="color:#f92672">&lt;</span> tol:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> x_new
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#39;x&#39;</span>: x, <span style="color:#e6db74">&#39;fun&#39;</span>: f_new, <span style="color:#e6db74">&#39;history&#39;</span>: history}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run_gd</span>(fobj, bounds, max_evals<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span>, n_restarts<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, learning_rate<span style="color:#f92672">=</span><span style="color:#ae81ff">0.001</span>):
+</span></span><span style="display:flex;"><span>    best_x, best_f <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>, np<span style="color:#f92672">.</span>inf
+</span></span><span style="display:flex;"><span>    all_histories <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> restart <span style="color:#f92672">in</span> range(n_restarts):
+</span></span><span style="display:flex;"><span>        x0 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>uniform(low, high) <span style="color:#66d9ef">for</span> low, high <span style="color:#f92672">in</span> bounds])
+</span></span><span style="display:flex;"><span>        result <span style="color:#f92672">=</span> gradient_descent(fobj, x0, learning_rate<span style="color:#f92672">=</span>learning_rate, max_iter<span style="color:#f92672">=</span>max_evals)
+</span></span><span style="display:flex;"><span>        all_histories<span style="color:#f92672">.</span>append(result[<span style="color:#e6db74">&#39;history&#39;</span>])
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> result[<span style="color:#e6db74">&#39;fun&#39;</span>] <span style="color:#f92672">&lt;</span> best_f:
+</span></span><span style="display:flex;"><span>            best_f <span style="color:#f92672">=</span> result[<span style="color:#e6db74">&#39;fun&#39;</span>]
+</span></span><span style="display:flex;"><span>            best_x <span style="color:#f92672">=</span> result[<span style="color:#e6db74">&#39;x&#39;</span>]
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> best_x, best_f, all_histories
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">random_search</span>(fobj, bounds, max_evals<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span>, seed<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> seed <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>        np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>seed(seed)
+</span></span><span style="display:flex;"><span>    best_x, best_f <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>, np<span style="color:#f92672">.</span>inf
+</span></span><span style="display:flex;"><span>    history <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(max_evals):
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>uniform(low, high) <span style="color:#66d9ef">for</span> low, high <span style="color:#f92672">in</span> bounds])
+</span></span><span style="display:flex;"><span>        f_val <span style="color:#f92672">=</span> fobj(x)
+</span></span><span style="display:flex;"><span>        history<span style="color:#f92672">.</span>append((i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>, f_val, x<span style="color:#f92672">.</span>copy()))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> f_val <span style="color:#f92672">&lt;</span> best_f:
+</span></span><span style="display:flex;"><span>            best_f <span style="color:#f92672">=</span> f_val
+</span></span><span style="display:flex;"><span>            best_x <span style="color:#f92672">=</span> x
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> best_x, best_f, history
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run_bayesian_optimization</span>(fobj, bounds, max_evals<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">42</span>):
+</span></span><span style="display:flex;"><span>    space <span style="color:#f92672">=</span> [Real(low, high, name<span style="color:#f92672">=</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;x</span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>) <span style="color:#66d9ef">for</span> i, (low, high) <span style="color:#f92672">in</span> enumerate(bounds)]
+</span></span><span style="display:flex;"><span>    history <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    eval_count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">safe_objective</span>(x):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">nonlocal</span> eval_count
+</span></span><span style="display:flex;"><span>        eval_count <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        f_val <span style="color:#f92672">=</span> fobj(x)
+</span></span><span style="display:flex;"><span>        history<span style="color:#f92672">.</span>append((eval_count, f_val))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> f_val
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> gp_minimize(safe_objective, space, n_calls<span style="color:#f92672">=</span>max_evals, 
+</span></span><span style="display:flex;"><span>                         random_state<span style="color:#f92672">=</span>random_state, n_initial_points<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, acq_func<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;EI&#39;</span>, verbose<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result<span style="color:#f92672">.</span>x, result<span style="color:#f92672">.</span>fun, history
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 4. EXECUTION PIPELINE</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span>bounds <span style="color:#f92672">=</span> [(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>), (<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>)]
+</span></span><span style="display:flex;"><span>max_evaluations <span style="color:#f92672">=</span> <span style="color:#ae81ff">500</span>
+</span></span><span style="display:flex;"><span>seed <span style="color:#f92672">=</span> <span style="color:#ae81ff">42</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>de_best, de_fitness, de_history <span style="color:#f92672">=</span> run_de(ackley, bounds, max_evals<span style="color:#f92672">=</span>max_evaluations, seed<span style="color:#f92672">=</span>seed)
+</span></span><span style="display:flex;"><span>gd_best, gd_fitness, gd_histories <span style="color:#f92672">=</span> run_gd(ackley, bounds, max_evals<span style="color:#f92672">=</span>max_evaluations, n_restarts<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>rs_best, rs_fitness, rs_history <span style="color:#f92672">=</span> random_search(ackley, bounds, max_evals<span style="color:#f92672">=</span>max_evaluations, seed<span style="color:#f92672">=</span>seed)
+</span></span><span style="display:flex;"><span>bo_best, bo_fitness, bo_history <span style="color:#f92672">=</span> run_bayesian_optimization(ackley, bounds, max_evals<span style="color:#f92672">=</span>max_evaluations<span style="color:#f92672">//</span><span style="color:#ae81ff">50</span>, random_state<span style="color:#f92672">=</span>seed)
+</span></span></code></pre></div><hr>
+<h2 id="5-visualizing-the-conquest-two-view-topology-analysis">5. Visualizing the Conquest: Two-View Topology Analysis</h2>
+<p>To understand exactly how these algorithms behave when working on the Ackley function, we can generate a dual-view 3D projection map using an enhanced visualization workflow. This allows us to observe the spatial locations where each optimizer ultimately terminated relative to the true global optimum.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">plot_comparative_minima</span>(X, Y, Z, solutions_dict):
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Generates an improved dual-perspective visualization comparing
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">optimization landing points on the Ackley landscape.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>fig <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">8</span>), dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Perspective View 1: 3D Angled Profile Elevation</span>
+</span></span><span style="display:flex;"><span>ax1 <span style="color:#f92672">=</span> fig<span style="color:#f92672">.</span>add_subplot(<span style="color:#ae81ff">121</span>, projection<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;3d&#39;</span>)
+</span></span><span style="display:flex;"><span>surf1 <span style="color:#f92672">=</span> ax1<span style="color:#f92672">.</span>plot_surface(X, Y, Z, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;viridis&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.4</span>, linewidth<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, antialiased<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>ax1<span style="color:#f92672">.</span>view_init(elevation<span style="color:#f92672">=</span><span style="color:#ae81ff">28</span>, azimuth<span style="color:#f92672">=-</span><span style="color:#ae81ff">45</span>)  <span style="color:#75715e"># Enhanced angle for structural depth</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Perspective View 2: Top-Down Planar Contour</span>
+</span></span><span style="display:flex;"><span>ax2 <span style="color:#f92672">=</span> fig<span style="color:#f92672">.</span>add_subplot(<span style="color:#ae81ff">122</span>, projection<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;3d&#39;</span>)
+</span></span><span style="display:flex;"><span>surf2 <span style="color:#f92672">=</span> ax2<span style="color:#f92672">.</span>plot_surface(X, Y, Z, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;viridis&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.7</span>, linewidth<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, antialiased<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>ax2<span style="color:#f92672">.</span>view_init(elevation<span style="color:#f92672">=</span><span style="color:#ae81ff">90</span>, azimuth<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)   <span style="color:#75715e"># Clean orthographic top-down map</span>
+</span></span><span style="display:flex;"><span>ax2<span style="color:#f92672">.</span>set_zticks([])                       <span style="color:#75715e"># Remove Z axis for clean overhead layout</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>colors <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;DE&#39;</span>: <span style="color:#e6db74">&#39;blue&#39;</span>, <span style="color:#e6db74">&#39;RandomSearch&#39;</span>: <span style="color:#e6db74">&#39;green&#39;</span>, <span style="color:#e6db74">&#39;BayesianOpt&#39;</span>: <span style="color:#e6db74">&#39;magenta&#39;</span>, <span style="color:#e6db74">&#39;GradientDescent&#39;</span>: <span style="color:#e6db74">&#39;red&#39;</span>}
+</span></span><span style="display:flex;"><span>markers <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;DE&#39;</span>: <span style="color:#e6db74">&#39;o&#39;</span>, <span style="color:#e6db74">&#39;RandomSearch&#39;</span>: <span style="color:#e6db74">&#39;^&#39;</span>, <span style="color:#e6db74">&#39;BayesianOpt&#39;</span>: <span style="color:#e6db74">&#39;s&#39;</span>, <span style="color:#e6db74">&#39;GradientDescent&#39;</span>: <span style="color:#e6db74">&#39;D&#39;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> ax <span style="color:#f92672">in</span> [ax1, ax2]:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> label, (sol, z_val) <span style="color:#f92672">in</span> solutions_dict<span style="color:#f92672">.</span>items():
+</span></span><span style="display:flex;"><span>        ax<span style="color:#f92672">.</span>scatter(sol[<span style="color:#ae81ff">0</span>], sol[<span style="color:#ae81ff">1</span>], z_val, color<span style="color:#f92672">=</span>colors[label], s<span style="color:#f92672">=</span><span style="color:#ae81ff">120</span>, 
+</span></span><span style="display:flex;"><span>                   marker<span style="color:#f92672">=</span>markers[label], edgecolors<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;black&#39;</span>, linewidth<span style="color:#f92672">=</span><span style="color:#ae81ff">1.5</span>, zorder<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>,
+</span></span><span style="display:flex;"><span>                   label<span style="color:#f92672">=</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span>label<span style="color:#e6db74">}</span><span style="color:#e6db74"> (</span><span style="color:#e6db74">{</span>z_val<span style="color:#e6db74">:</span><span style="color:#e6db74">.4f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">)&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Mark True Global Optimum</span>
+</span></span><span style="display:flex;"><span>    ax<span style="color:#f92672">.</span>scatter(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gold&#39;</span>, s<span style="color:#f92672">=</span><span style="color:#ae81ff">200</span>, marker<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;*&#39;</span>, edgecolors<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;black&#39;</span>, linewidth<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, zorder<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Global Min (0,0)&#39;</span>)
+</span></span><span style="display:flex;"><span>    ax<span style="color:#f92672">.</span>set_xlabel(<span style="color:#e6db74">&#39;x₁&#39;</span>, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span>)
+</span></span><span style="display:flex;"><span>    ax<span style="color:#f92672">.</span>set_ylabel(<span style="color:#e6db74">&#39;x₂&#39;</span>, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ax <span style="color:#f92672">==</span> ax1:
+</span></span><span style="display:flex;"><span>        ax<span style="color:#f92672">.</span>set_zlabel(<span style="color:#e6db74">&#39;f(x₁, x₂)&#39;</span>, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span>)
+</span></span><span style="display:flex;"><span>        ax<span style="color:#f92672">.</span>legend(loc<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;upper left&#39;</span>, bbox_to_anchor<span style="color:#f92672">=</span>(<span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">0.95</span>), framealpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.9</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>suptitle(<span style="color:#e6db74">&#39;Structural Breakdown of Optimization Terminal Points on Ackley Topology&#39;</span>, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">14</span>, fontweight<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;bold&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>tight_layout()
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Prepare Mesh Grid data</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>x_vals <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linspace(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">200</span>)
+</span></span><span style="display:flex;"><span>y_vals <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linspace(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">200</span>)
+</span></span><span style="display:flex;"><span>X, Y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>meshgrid(x_vals, y_vals)
+</span></span><span style="display:flex;"><span>Z <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[ackley([x, y]) <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> x_vals] <span style="color:#66d9ef">for</span> y <span style="color:#f92672">in</span> y_vals])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>solutions <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;DE&#39;</span>: (de_best, de_fitness),
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;GradientDescent&#39;</span>: (gd_best, gd_fitness),
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;RandomSearch&#39;</span>: (rs_best, rs_fitness),
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;BayesianOpt&#39;</span>: (bo_best, bo_fitness)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>plot_comparative_minima(X, Y, Z, solutions)
+</span></span></code></pre></div><div style="width:1000px; height:450px; overflow:hidden;">
+  <img src="ackley_best_min.svg" width="1000" style="margin-top:-50px;margin-bottom:-50px">
+</div>
+<h3 id="the-optimization-in-motion">The Optimization in Motion</h3>
+<p>To witness the evolutionary process unfold in real-time, we can capture the generational state updates into an animated sequence. This visualization highlights how the population tracks across the noisy contours of the search space.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> matplotlib.animation <span style="color:#f92672">import</span> FuncAnimation, PillowWriter
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_optimization_animation</span>(X, Y, Z, de_history):
+</span></span><span style="display:flex;"><span>    fig, ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">6</span>), dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">150</span>)
+</span></span><span style="display:flex;"><span>    contour <span style="color:#f92672">=</span> ax<span style="color:#f92672">.</span>contourf(X, Y, Z, levels<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;inferno&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.7</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>colorbar(contour, ax<span style="color:#f92672">=</span>ax, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;f(x,y)&#39;</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    ax<span style="color:#f92672">.</span>set_xlim(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>    ax<span style="color:#f92672">.</span>set_ylim(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>    ax<span style="color:#f92672">.</span>set_xlabel(<span style="color:#e6db74">&#39;x₁&#39;</span>)
+</span></span><span style="display:flex;"><span>    ax<span style="color:#f92672">.</span>set_ylabel(<span style="color:#e6db74">&#39;x₂&#39;</span>)
+</span></span><span style="display:flex;"><span>    ax<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;Differential Evolution Progress on Ackley Function&#39;</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    best_scat <span style="color:#f92672">=</span> ax<span style="color:#f92672">.</span>scatter([], [], c<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;blue&#39;</span>, s<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>, marker<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;o&#39;</span>, edgecolors<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;black&#39;</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Best Agent Location&#39;</span>)
+</span></span><span style="display:flex;"><span>    ax<span style="color:#f92672">.</span>legend(loc<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;upper right&#39;</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    text <span style="color:#f92672">=</span> ax<span style="color:#f92672">.</span>text(<span style="color:#ae81ff">0.02</span>, <span style="color:#ae81ff">0.95</span>, <span style="color:#e6db74">&#39;&#39;</span>, transform<span style="color:#f92672">=</span>ax<span style="color:#f92672">.</span>transAxes, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span>,
+</span></span><span style="display:flex;"><span>                   verticalalignment<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;top&#39;</span>, bbox<span style="color:#f92672">=</span>dict(boxstyle<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;round&#39;</span>, facecolor<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;white&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.8</span>))
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>tight_layout()
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">update</span>(frame):
+</span></span><span style="display:flex;"><span>        best_pos <span style="color:#f92672">=</span> de_history[frame][<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>        fitness <span style="color:#f92672">=</span> de_history[frame][<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span>        best_scat<span style="color:#f92672">.</span>set_offsets([best_pos])
+</span></span><span style="display:flex;"><span>        text<span style="color:#f92672">.</span>set_text(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Generation: </span><span style="color:#e6db74">{</span>frame<span style="color:#e6db74">}</span><span style="color:#e6db74"> | Best Loss = </span><span style="color:#e6db74">{</span>fitness<span style="color:#e6db74">:</span><span style="color:#e6db74">.6f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> best_scat, text
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ani <span style="color:#f92672">=</span> FuncAnimation(fig, update, frames<span style="color:#f92672">=</span>len(de_history), interval<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>, blit<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, repeat<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    ani<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#39;de_ackley_animation_inf.gif&#39;</span>, writer<span style="color:#f92672">=</span>PillowWriter(fps<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>))
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>close(fig)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>generate_optimization_animation(X, Y, Z, de_history)
+</span></span></code></pre></div><p>Here is the real-time generational collapse as saved directly from the tracking code:</p>
+<p><img src="/posts/machine-learning/optimization/differential_evolution/de_ackley_animation_inf.gif"></p>
+<hr>
+<h2 id="6-performance-matrix-analysis">6. Performance Matrix Analysis</h2>
+<p>When running all algorithms under a standardized configuration, the architectural differences between global exploration and local descent become clear:</p>
+<table>
+<thead>
+<tr>
+<th>Optimization Framework</th>
+<th>Strategy Class</th>
+<th>Exploits Gradients?</th>
+<th>Convergence Quality (Ackley Target: 0.0)</th>
+<th>Computational Velocity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Differential Evolution</strong></td>
+<td>Population Stochastic</td>
+<td>❌ No</td>
+<td><strong>0.07</strong> (Near-Perfect Global Optimum)</td>
+<td>Balanced / Steady</td>
+</tr>
+<tr>
+<td><strong>Gradient Descent (Multi-Start)</strong></td>
+<td>Local Trajectory</td>
+<td>Yes</td>
+<td>2.56 (Trapped in Local Minimum)</td>
+<td><strong>Ultra-Fast</strong></td>
+</tr>
+<tr>
+<td><strong>Random Search</strong></td>
+<td>Uniform Sampling</td>
+<td>❌ No</td>
+<td>0.64 (Sub-Optimal Basin)</td>
+<td>Instantly Fast</td>
+</tr>
+<tr>
+<td><strong>Bayesian Optimization</strong></td>
+<td>Surrogate Model</td>
+<td>❌ No</td>
+<td>6.51 (Highly Accurate)</td>
+<td>High Overhead per Step</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="conclusion">Conclusion</h2>
+<p>Our experiment highlights a classic engineering trade-off. <strong>Differential Evolution was slightly slower in raw wall-clock execution time than gradient descent.</strong> However, while gradient descent sprinted blindly into a local minimum and got trapped by the deceptive pockets of the Ackley surface, DE deliberately worked its way across the landscape.</p>
+<p>By relying on vector differences rather than local slopes, DE navigated past the sub-optimal valleys to find a remarkably low loss value—virtually touching the true global minimum. When precision on an unforgiving landscape is your highest priority, the slight time trade-off pays for itself.</p>
+<h3 id="coming-up-next">Coming Up Next!</h3>
+<p>In our next article, we will take this concept to the absolute limit. We will explore how Differential Evolution performs on a wider variety of high-dimensional benchmark surfaces (<a href="Link">https://www.sfu.ca/~ssurjano/optimization.html</a>), and look at how to scale our code using production-grade external engines like <strong>SciPy</strong>, alongside modern, hardware-accelerated auto-diff frameworks like <strong>JAX</strong>. Stay tuned!</p>
+
+        </div>
+
+        
+        <div class="row ps-3 pe-3">
+        
+          <div class="col-md-6 share-buttons">
+          
+            <strong>Share on:</strong>
+            
+            <a class="btn icon-button bg-facebook" href="https://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2foptimization%2fdifferential_evolution%2f" target="_blank">
+              <i class="fab fa-facebook"></i>
+            </a>
+            
+            
+            
+                <a  class="btn icon-button bg-reddit" href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2foptimization%2fdifferential_evolution%2f&title=Differential%20Evolution%20Algorithm" target="_blank">
+                  <i class="fab fa-reddit"></i>
+                </a>
+            
+            
+            
+            
+                <a class="btn icon-button bg-linkedin" href="https://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2foptimization%2fdifferential_evolution%2f&title=Differential%20Evolution%20Algorithm" target="_blank">
+                  <i class="fab fa-linkedin"></i>
+                </a>
+            
+            
+             
+            
+                 <a class="btn icon-button bg-whatsapp" href="https://api.whatsapp.com/send?text=Differential%20Evolution%20Algorithm http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2foptimization%2fdifferential_evolution%2f" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+            
+            
+                <a class="btn icon-button" href="mailto:?subject=Differential%20Evolution%20Algorithm&body=http%3a%2f%2flocalhost%3a1313%2fposts%2fmachine-learning%2foptimization%2fdifferential_evolution%2f" target="_blank">
+                  <i class="fas fa-envelope-open-text"></i>
+                </a>
+            
+          
+          </div>
+
+        
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/steven-ja/steven-ja.github.io/edit/main/content/posts%5cmachine%20learning%5coptimization%5cdifferential_evolution%5cindex.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+    
+    
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+    <div class="col-md-6 previous-article">
+      <a href="/posts/machine-learning/deep-learning/nlp/gemma2&#43;rag/" title="Gemma-2 &#43; RAG &#43; LlamaIndex &#43; VectorDB" class="btn filled-button">
+        <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
+        <div class="next-prev-text">Gemma-2 &#43; RAG &#43; LlamaIndex &#43; VectorDB</div>
+      </a>
+    </div>
+  
+  
+      
+      
+        
+      
+      <div class="col-md-6 next-article">
+        <a href="/posts/physics/percolation/" title="Percolation" class="btn filled-button">
+          <div>Next <i class="fas fa-chevron-circle-right"></i></div>
+          <div class="next-prev-text">Percolation</div>
+        </a>
+      </div>
+    
+</div>
+
+      <hr />
+
+      
+      
+        
+    
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://giscus.app/client.js"
+        data-repo="steven-ja/steven-ja.github.io"
+        data-repo-id="R_kgDOMJSsWA"
+        data-category="General"
+        data-category-id="DIC_kwDOMJSsWM4Cg6n0"
+        data-mapping="title"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang=""
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+
+      
+
+      
+      
+
+      </div>
+    </div>
+  </div>
+  
+  <a id="scroll-to-top" class="btn" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Scroll to top">
+    <i class="fas fa-chevron-circle-up"></i>
+  </a>
+</section>
+
+
+      
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center ps-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-the-mathematical-battlefield-the-ackley-function">1. The Mathematical Battlefield: The Ackley Function</a></li>
+    <li><a href="#2-differential-evolution-from-first-principles">2. Differential Evolution from First Principles</a>
+      <ul>
+        <li><a href="#step-1-initialization">Step 1: Initialization</a></li>
+        <li><a href="#step-2-mutation">Step 2: Mutation</a></li>
+        <li><a href="#step-3-crossover-recombination">Step 3: Crossover (Recombination)</a></li>
+        <li><a href="#step-4-selection">Step 4: Selection</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-architectural-trade-offs-advantages-and-limitations">3. Architectural Trade-offs: Advantages and Limitations</a>
+      <ul>
+        <li><a href="#advantages">Advantages</a></li>
+        <li><a href="#limitations">Limitations</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-putting-it-to-the-test-full-benchmark-code">4. Putting it to the Test: Full Benchmark Code</a></li>
+    <li><a href="#5-visualizing-the-conquest-two-view-topology-analysis">5. Visualizing the Conquest: Two-View Topology Analysis</a>
+      <ul>
+        <li><a href="#the-optimization-in-motion">The Optimization in Motion</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-performance-matrix-analysis">6. Performance Matrix Analysis</a></li>
+    <li><a href="#conclusion">Conclusion</a>
+      <ul>
+        <li><a href="#coming-up-next">Coming Up Next!</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+      </div>
+    </div>
+    
+  </section>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+    
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-start">
+        
+        
+        
+        
+      </div>
+    </div>
+    
+    <hr />
+    <div class="container">
+      <p id="disclaimer"><strong>Liability Notice:</strong> This website is done experimentally by me, taking inspiration from the open-source Toha-Hugo theme.</p>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-start">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
+            <img src="/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2026 Copyright.</div>
+        <div class="col-md-4 text-end">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script src="/application.c34ca2f2905a800f297550706d23063437a5848667a7d5221f01e8d00185eb39.js" integrity="sha256-w0yi8pBagA8pdVBwbSMGNDelhIZnp9UiHwHo0AGF6zk=" defer></script>
+
+
+    
+     
+
+    
+    
+
+</body>
+</html>
+
+
+    
+    <script src="http://localhost:1313/js/copybutton.min.608f75dc2cc75e4b968d3472ab640b15b0b986a3bf6405a77c92f8eb207e1c16.js" integrity="sha256-YI913CzHXkuWjTRyq2QLFbC5hqO/ZAWnfJL46yB&#43;HBY=" defer></script>
+

@@ -6,7 +6,17 @@
     <description>Recent content in Statistics on Stefano Giannini</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 06 Jul 2024 00:00:00 +0100</lastBuildDate><atom:link href="http://localhost:1313/tags/statistics/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Mon, 01 Jun 2026 00:08:25 +0100</lastBuildDate><atom:link href="http://localhost:1313/tags/statistics/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>Differential Evolution Algorithm</title>
+      <link>http://localhost:1313/posts/machine-learning/optimization/differential_evolution/</link>
+      <pubDate>Mon, 01 Jun 2026 00:08:25 +0100</pubDate>
+      
+      <guid>http://localhost:1313/posts/machine-learning/optimization/differential_evolution/</guid>
+      <description>Beyond the Gradient: Master Global Optimization with Differential Evolution If you have spent any time in the machine learning world, you are likely intimately familiar with Gradient Descent and its various turbo-charged derivatives (like Adam or RMSprop). Gradients are wonderful—assuming your optimization landscape is as smooth and predictable as a bowling green.
+But what happens when your loss landscape looks less like a gentle bowl and more like a jagged mountain range after an earthquake?</description>
+    </item>
+    
+    <item>
       <title>SARIMAX Model Analysis of Apple Stock with Exogenous Variables</title>
       <link>http://localhost:1313/posts/finance/stock_prediction/sarimax/</link>
       <pubDate>Sat, 06 Jul 2024 00:00:00 +0100</pubDate>

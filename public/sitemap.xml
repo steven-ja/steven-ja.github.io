@@ -109,7 +109,37 @@
     <priority>0.1</priority>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2025-11-25T00:08:25+01:00</lastmod>
+    <lastmod>2026-06-01T00:08:25+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/machine-learning/optimization/differential_evolution/</loc>
+    <lastmod>2026-06-01T00:08:25+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/machine-learning/</loc>
+    <lastmod>2026-06-01T00:08:25+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/machine-learning/</loc>
+    <lastmod>2026-06-01T00:08:25+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/optimization/</loc>
+    <lastmod>2026-06-01T00:08:25+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/optimization/</loc>
+    <lastmod>2026-06-01T00:08:25+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/machine-learning/optimization/</loc>
+    <lastmod>2026-06-01T00:08:25+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/</loc>
+    <lastmod>2026-06-01T00:08:25+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/statistics/</loc>
+    <lastmod>2026-06-01T00:08:25+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2026-06-01T00:08:25+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2026-06-01T00:08:25+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/computer-vision/</loc>
     <lastmod>2025-11-25T00:08:25+01:00</lastmod>
@@ -126,22 +156,7 @@
     <loc>http://localhost:1313/posts/machine-learning/deep-learning/</loc>
     <lastmod>2025-11-25T00:08:25+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/machine-learning/</loc>
-    <lastmod>2025-11-25T00:08:25+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/machine-learning/</loc>
-    <lastmod>2025-11-25T00:08:25+01:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/posts/machine-learning/deep-learning/computer-vision/bloodmnist/</loc>
-    <lastmod>2025-11-25T00:08:25+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2025-11-25T00:08:25+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/</loc>
-    <lastmod>2025-11-25T00:08:25+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
     <lastmod>2025-11-25T00:08:25+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/nlp/</loc>
@@ -172,9 +187,6 @@
     <lastmod>2024-07-06T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/finance/stock_prediction/sarimax/</loc>
-    <lastmod>2024-07-06T00:00:00+01:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/statistics/</loc>
     <lastmod>2024-07-06T00:00:00+01:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/finance/stock_prediction/</loc>
