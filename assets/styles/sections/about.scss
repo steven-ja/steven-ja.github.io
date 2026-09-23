@@ -1,155 +1,377 @@
 @use 'sass:map';
+// =============================================================================
+// Progress bar configuration
+// =============================================================================
 
 $progress-bar-colors: (
-  'blue': #048dff,
-  'yellow': #eebb4d,
-  'pink': #ed63d2,
-  'green': #2dca73,
-  'sky': #00c9e3,
-  'orange': #ff7c7c,
+  'blue': #00a8ff,
+  'yellow': #ffd43b,
+  'pink': #ff4fd8,
+  'green': #20e879,
+  'sky': #00e5ff,
+  'orange': #ff6b4a,
 );
 
-@mixin circular-progress-bar-color() {
-  @each $color, $value in $progress-bar-colors {
-    &.#{$color} {
-      .circular-progress-bar {
-        border-color: $value;
+$progress-size: 150px;
+$progress-border-width: 5px;
+
+$progress-animation-delay: 1.0s;
+$progress-animation-step: 0.3s;
+$progress-animation-steps: 20;
+
+
+// =============================================================================
+// Progress bar mixins
+// =============================================================================
+
+/// Generate color variants.
+///
+/// Example:
+/// .circular-progress.blue
+/// .circular-progress.green
+/// .circular-progress-pink
+@mixin progress-colors {
+  @each $name, $color in $progress-bar-colors {
+    &.#{$name} {
+      --progress-color: #{$color};
+    }
+  }
+}
+
+
+/// Generate percentage-based progress animations.
+///
+/// Generates:
+/// 0%, 5%, 10%, ... 100%
+@mixin progress-animations(
+  $steps: $progress-animation-steps,
+  $step-duration: $progress-animation-step,
+  $initial-delay: $progress-animation-delay
+) {
+  @for $i from 0 through $steps {
+    $percentage: $i * 5;
+    $duration: $i * $step-duration;
+
+    .circular-progress-percentage-#{$percentage} {
+      animation:
+        circular-loading-#{$percentage}
+        $duration
+        linear
+        both
+        $initial-delay;
+    }
+
+    .circular-progress-percentage-#{$percentage}-delay {
+      animation-delay: $duration + $initial-delay;
+    }
+
+    @keyframes circular-loading-#{$percentage} {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(#{$percentage * 3.6}deg);
       }
     }
   }
 }
 
-@mixin circular-progress-animation-breakpoints() {
-  $progress: 0;
-  $duration: 0;
-  $delay: 1.8;
 
-  @for $i from 0 through 20 {
-    .circular-progress-percentage-#{$progress} {
-      animation: circular-loading-#{$progress} #{$duration}s linear forwards 1.8s;
-    }
-    .circular-progress-percentage-#{$progress}-delay {
-        animation-delay: #{$delay}s;
-    }
-    $progress: $progress + 5;
-    $duration: $duration + 0.18;
-    $delay: $duration + 1.8;
-  }
-}
-
-@mixin circular-progress-animation-keyframes($progress, $degree, $keyframes) {
-  @for $i from 0 through $keyframes {
-    @keyframes circular-loading-#{$progress} {
-      0% {
-        transform: rotate(0);
-      }
-      100% {
-        transform: rotate(#{$degree}deg);
-      }
-    }
-    $progress: $progress + 5;
-    $degree: $degree + 18;
-  }
-}
+// =============================================================================
+// About section
+// =============================================================================
 
 .about-section {
+
+  // ---------------------------------------------------------------------------
+  // Component variables
+  // ---------------------------------------------------------------------------
+
+  --progress-size: #{$progress-size};
+  --progress-border-width: #{$progress-border-width};
+
+  --progress-track-color: #{get-light-color('bg-primary')};
+  --progress-value-background: #{get-light-color('text-color')};
+  --progress-value-color: #{get-light-color('bg-primary')};
+
+  --progress-color: #{map-get($progress-bar-colors, 'blue')};
+
+
+  // ===========================================================================
+  // Social links
+  // ===========================================================================
+
   .social-link {
-    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+
     padding: 0.2rem;
 
+    list-style: none;
+
     a {
-      font-size: 1.5rem;
-      color: get-light-color('text-color');
       padding: 0.5rem;
 
-      &:hover {
+      color: get-light-color('text-color');
+
+      font-size: 1.5rem;
+      line-height: 1;
+
+      transition: color 0.2s ease;
+
+      &:hover,
+      &:focus-visible {
         color: get-light-color('accent-color');
-        @include transition();
       }
     }
   }
 
+
+  // ===========================================================================
+  // Circular progress
+  // ===========================================================================
+
   .circular-progress {
-    width: 150px;
-    height: 150px;
-    line-height: 150px;
-    background: none;
-    margin: 0 auto;
-    box-shadow: none;
     position: relative;
+    isolation: isolate;
+
+    width: var(--progress-size);
+    height: var(--progress-size);
+
+    margin: 0 auto;
+
+    background: transparent;
+
+    line-height: 1;
+
+    box-sizing: border-box;
+
+
+    // -------------------------------------------------------------------------
+    // Ambient glow
+    // -------------------------------------------------------------------------
+
+    &::before {
+      position: absolute;
+      top: -12%;
+      left: -12%;
+      z-index: -2;
+
+      width: 124%;
+      height: 124%;
+
+      content: '';
+
+      border: 14px solid var(--progress-color);
+      border-radius: 50%;
+
+      opacity: 0.22;
+
+      filter: blur(14px);
+
+      pointer-events: none;
+
+      animation: circular-progress-glow 3s ease-in-out infinite;
+    }
+
+
+    // -------------------------------------------------------------------------
+    // Background track
+    // -------------------------------------------------------------------------
 
     &::after {
-      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+
       width: 100%;
       height: 100%;
+
+      content: '';
+
+      border:
+        var(--progress-border-width)
+        solid
+        var(--progress-track-color);
+
       border-radius: 50%;
-      border: 12px solid get-light-color('bg-primary');
-      position: absolute;
-      top: 0;
-      left: 0;
+
+      box-sizing: border-box;
+
+      box-shadow:
+        inset 0 0 6px rgba(255, 255, 255, 0.05),
+        inset 0 0 18px rgba(0, 0, 0, 0.08);
+
+      pointer-events: none;
     }
-    span {
-      width: 50%;
-      height: 100%;
-      overflow: hidden;
+
+
+    // -------------------------------------------------------------------------
+    // Color variants
+    // -------------------------------------------------------------------------
+
+    @include progress-colors;
+
+
+    // -------------------------------------------------------------------------
+    // Progress halves
+    //
+    // The +1px overlap prevents the subpixel seam that appears where the
+    // left/right halves meet.
+    // -------------------------------------------------------------------------
+
+    > span {
       position: absolute;
       top: 0;
       z-index: 1;
+
+      width: calc(50% + 1px);
+      height: 100%;
+
+      overflow: hidden;
+
+      box-sizing: border-box;
     }
 
-    .circular-progress-bar {
-      width: 100%;
-      height: 100%;
-      background: none;
-      border-width: 12px;
-      border-style: solid;
-      position: absolute;
-      top: 0;
-    }
+
+    // -------------------------------------------------------------------------
+    // Left half
+    // -------------------------------------------------------------------------
 
     .circular-progress-left {
       left: 0;
 
       .circular-progress-bar {
         left: 100%;
-        border-top-right-radius: 80px;
-        border-bottom-right-radius: 80px;
-        border-left: 0;
+
         transform-origin: center left;
+
+        border-left: 0;
+
+        border-top-right-radius: 999px;
+        border-bottom-right-radius: 999px;
       }
     }
+
+
+    // -------------------------------------------------------------------------
+    // Right half
+    // -------------------------------------------------------------------------
+
     .circular-progress-right {
       right: 0;
 
       .circular-progress-bar {
         left: -100%;
-        border-top-left-radius: 80px;
-        border-bottom-left-radius: 80px;
-        border-right: 0;
+
         transform-origin: center right;
+
+        border-right: 0;
+
+        border-top-left-radius: 999px;
+        border-bottom-left-radius: 999px;
       }
     }
+
+
+    // -------------------------------------------------------------------------
+    // Progress ring
+    // -------------------------------------------------------------------------
+
+    .circular-progress-bar {
+      position: absolute;
+      top: 0;
+
+      width: 100%;
+      height: 100%;
+
+      background: transparent;
+
+      border:
+        var(--progress-border-width)
+        solid
+        var(--progress-color);
+
+      border-radius: 0;
+
+      box-sizing: border-box;
+
+      backface-visibility: hidden;
+
+      transform: translateZ(0);
+
+      will-change: transform;
+
+      // Sharp luminous edge
+      box-shadow:
+        0 0 3px var(--progress-color),
+        0 0 7px var(--progress-color),
+        0 0 14px var(--progress-color);
+
+      filter: brightness(1.15) saturate(1.25);
+    }
+
+
+    // -------------------------------------------------------------------------
+    // Center value
+    // -------------------------------------------------------------------------
+
     .circular-progress-value {
-      width: 90%;
-      height: 90%;
-      padding: 1rem;
-      border-radius: 50%;
-      background: get-light-color('text-color');
-      font-size: 1rem;
-      color: get-light-color('bg-primary');
-      line-height: initial;
-      text-align: center;
       position: absolute;
       top: 5%;
       left: 5%;
+      z-index: 3;
+
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+
+      width: 90%;
+      height: 90%;
+
+      padding: 1rem;
+
+      box-sizing: border-box;
+
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 50%;
+
+      background: var(--progress-value-background);
+
+      color: var(--progress-value-color);
+
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1;
+
+      text-align: center;
+
+      box-shadow:
+        0 0 12px rgba(0, 0, 0, 0.15),
+        inset 0 0 15px rgba(255, 255, 255, 0.025);
+
+      text-shadow:
+        0 0 8px currentColor;
+
+      transition:
+        background 0.3s ease,
+        color 0.3s ease;
     }
-    @include circular-progress-bar-color();
-    @include circular-progress-animation-breakpoints();
-    @include circular-progress-animation-keyframes($progress: 0, $degree: 0, $keyframes: 20);
+
+
+    // -------------------------------------------------------------------------
+    // Progress animations
+    // -------------------------------------------------------------------------
+
+    @include progress-animations;
   }
+
+
+  // ===========================================================================
+  // Responsive layout
+  // ===========================================================================
 
   @include media('<=large') {
     .circular-progress {
@@ -157,26 +379,25 @@ $progress-bar-colors: (
     }
   }
 
+
   @include media('<=medium') {
-    .about-section.container {
+    &.container {
       max-width: 100%;
     }
 
     .circular-progress {
-      width: 135px;
-      height: 135px;
+      --progress-size: 135px;
     }
   }
+
+
   @include media('<=small') {
     .circular-progress {
-      width: 150px;
-      height: 150px;
-    }
-
-    .circular-progress .circular-progress-value {
-      font-size: 1rem;
+      --progress-size: 150px;
     }
   }
+
+
   @include media('<=tiny') {
     .col-6 {
       flex: auto;
@@ -186,46 +407,90 @@ $progress-bar-colors: (
     .social-link {
       flex-wrap: wrap;
     }
+
     .certificate-badge {
       padding-left: 2rem;
       padding-right: 2rem;
     }
+
     .circular-progress {
-      width: 200px;
-      height: 200px;
+      --progress-size: 200px;
 
       .circular-progress-left .circular-progress-bar {
-        border-top-right-radius: 100px;
-        border-bottom-right-radius: 100px;
+        border-top-right-radius: 999px;
+        border-bottom-right-radius: 999px;
       }
+
       .circular-progress-right .circular-progress-bar {
-        border-top-left-radius: 100px;
-        border-bottom-left-radius: 100px;
+        border-top-left-radius: 999px;
+        border-bottom-left-radius: 999px;
       }
     }
   }
 }
 
+
+// =============================================================================
+// Glow animation
+// =============================================================================
+
+@keyframes circular-progress-glow {
+  0%,
+  100% {
+    transform: scale(0.97);
+
+    opacity: 0.14;
+
+    filter: blur(14px);
+  }
+
+  50% {
+    transform: scale(1.02);
+
+    opacity: 0.32;
+
+    filter: blur(19px);
+  }
+}
+
+
+// =============================================================================
+// Reduced motion
+// =============================================================================
+
+@media (prefers-reduced-motion: reduce) {
+  .circular-progress {
+    &::before {
+      animation: none;
+      opacity: 0.22;
+    }
+  }
+}
+
+
+// =============================================================================
+// Dark theme
+// =============================================================================
+
 html[data-theme='dark'] {
   .about-section {
+    --progress-track-color: #{get-dark-color('bg-primary')};
+    --progress-value-background: #{get-dark-color('inverse-text-color')};
+    --progress-value-color: #{get-dark-color('text-color')};
+
+
+    // -------------------------------------------------------------------------
+    // Social links
+    // -------------------------------------------------------------------------
+
     .social-link {
       a {
         color: get-dark-color('text-color');
 
-        &:hover {
+        &:hover,
+        &:focus-visible {
           color: get-dark-color('accent-color');
         }
-      }
-    }
-
-    .circular-progress {
-      &::after {
-        border: 12px solid get-dark-color('bg-primary');
-      }
-
-      .circular-progress-value {
-        background: get-dark-color('inverse-text-color');
-        color: get-dark-color('text-color');
       }
     }
   }
