@@ -1,4 +1,8 @@
-@use 'sass:map';
+// @use 'sass:map';
+
+// -----------------------------------------------------------------------------
+// Configuration
+// -----------------------------------------------------------------------------
 
 $progress-bar-colors: (
   'blue': #048dff,
@@ -9,102 +13,150 @@ $progress-bar-colors: (
   'orange': #ff7c7c,
 );
 
-@mixin circular-progress-bar-color() {
-  @each $color, $value in $progress-bar-colors {
-    &.#{$color} {
-      .circular-progress-bar {
-        border-color: $value;
+$progress-size: 150px;
+$progress-border-width: 12px;
+$progress-animation-delay: 1.8s;
+$progress-animation-step: 0.18s;
+$progress-animation-steps: 20;
+
+// -----------------------------------------------------------------------------
+// Mixins
+// -----------------------------------------------------------------------------
+
+/// Generate color modifiers.
+///
+/// Usage:
+/// .circular-progress.blue
+/// .circular-progress.green
+/// etc.
+@mixin progress-colors {
+  @each $name, $color in $progress-bar-colors {
+    &.#{$name} {
+      --progress-color: #{$color};
+    }
+  }
+}
+
+/// Generate percentage-based animation classes and keyframes.
+///
+/// 21 states are generated:
+/// 0, 5, 10, ..., 100
+@mixin progress-animations(
+  $steps: $progress-animation-steps,
+  $step-duration: $progress-animation-step,
+  $initial-delay: $progress-animation-delay
+) {
+  @for $i from 0 through $steps {
+    $percentage: $i * 5;
+    $duration: $i * $step-duration;
+
+    .circular-progress-percentage-#{$percentage} {
+      animation:
+        circular-loading-#{$percentage}
+        $duration
+        linear
+        both
+        $initial-delay;
+    }
+
+    .circular-progress-percentage-#{$percentage}-delay {
+      animation-delay: calc(#{$initial-delay} + #{$duration});
+    }
+
+    @keyframes circular-loading-#{$percentage} {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(#{$percentage * 3.6}deg);
       }
     }
   }
 }
 
-@mixin circular-progress-animation-breakpoints() {
-  $progress: 0;
-  $duration: 0;
-  $delay: 1.8;
-
-  @for $i from 0 through 20 {
-    .circular-progress-percentage-#{$progress} {
-      animation: circular-loading-#{$progress} #{$duration}s linear forwards 1.8s;
-    }
-    .circular-progress-percentage-#{$progress}-delay {
-        animation-delay: #{$delay}s;
-    }
-    $progress: $progress + 5;
-    $duration: $duration + 0.18;
-    $delay: $duration + 1.8;
-  }
-}
-
-@mixin circular-progress-animation-keyframes($progress, $degree, $keyframes) {
-  @for $i from 0 through $keyframes {
-    @keyframes circular-loading-#{$progress} {
-      0% {
-        transform: rotate(0);
-      }
-      100% {
-        transform: rotate(#{$degree}deg);
-      }
-    }
-    $progress: $progress + 5;
-    $degree: $degree + 18;
-  }
-}
+// -----------------------------------------------------------------------------
+// About section
+// -----------------------------------------------------------------------------
 
 .about-section {
+  // ---------------------------------------------------------------------------
+  // Component variables
+  // ---------------------------------------------------------------------------
+
+  --progress-size: #{$progress-size};
+  --progress-border-width: #{$progress-border-width};
+  --progress-track-color: #{get-light-color('bg-primary')};
+  --progress-value-background: #{get-light-color('text-color')};
+  --progress-value-color: #{get-light-color('bg-primary')};
+  --progress-color: #{map.get($progress-bar-colors, 'blue')};
+
+  // ---------------------------------------------------------------------------
+  // Social links
+  // ---------------------------------------------------------------------------
+
   .social-link {
-    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
     padding: 0.2rem;
+    list-style: none;
 
     a {
-      font-size: 1.5rem;
-      color: get-light-color('text-color');
       padding: 0.5rem;
+      color: get-light-color('text-color');
+      font-size: 1.5rem;
+      line-height: 1;
+      transition: color 0.2s ease;
 
-      &:hover {
+      &:hover,
+      &:focus-visible {
         color: get-light-color('accent-color');
-        @include transition();
       }
     }
   }
 
+  // ---------------------------------------------------------------------------
+  // Circular progress
+  // ---------------------------------------------------------------------------
+
   .circular-progress {
-    width: 150px;
-    height: 150px;
-    line-height: 150px;
-    background: none;
-    margin: 0 auto;
-    box-shadow: none;
     position: relative;
 
+    width: var(--progress-size);
+    height: var(--progress-size);
+    margin: 0 auto;
+
+    background: transparent;
+    line-height: 1;
+
+    // Track
     &::after {
-      content: '';
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      border: 12px solid get-light-color('bg-primary');
       position: absolute;
-      top: 0;
-      left: 0;
+      inset: 0;
+      z-index: 0;
+
+      content: '';
+      border: var(--progress-border-width) solid var(--progress-track-color);
+      border-radius: 50%;
+      pointer-events: none;
     }
-    span {
-      width: 50%;
-      height: 100%;
-      overflow: hidden;
+
+    // Color variants
+    @include progress-colors;
+
+    // -------------------------------------------------------------------------
+    // Progress halves
+    // -------------------------------------------------------------------------
+
+    > span {
       position: absolute;
       top: 0;
       z-index: 1;
-    }
 
-    .circular-progress-bar {
-      width: 100%;
+      width: 50%;
       height: 100%;
-      background: none;
-      border-width: 12px;
-      border-style: solid;
-      position: absolute;
-      top: 0;
+      overflow: hidden;
     }
 
     .circular-progress-left {
@@ -112,120 +164,153 @@ $progress-bar-colors: (
 
       .circular-progress-bar {
         left: 100%;
-        border-top-right-radius: 80px;
-        border-bottom-right-radius: 80px;
-        border-left: 0;
         transform-origin: center left;
+
+        border-left: 0;
+        border-top-right-radius: 999px;
+        border-bottom-right-radius: 999px;
       }
     }
+
     .circular-progress-right {
       right: 0;
 
       .circular-progress-bar {
         left: -100%;
-        border-top-left-radius: 80px;
-        border-bottom-left-radius: 80px;
-        border-right: 0;
         transform-origin: center right;
+
+        border-right: 0;
+        border-top-left-radius: 999px;
+        border-bottom-left-radius: 999px;
       }
     }
-    .circular-progress-value {
-      width: 90%;
-      height: 90%;
-      padding: 1rem;
-      border-radius: 50%;
-      background: get-light-color('text-color');
-      font-size: 1rem;
-      color: get-light-color('bg-primary');
-      line-height: initial;
-      text-align: center;
+
+    // -------------------------------------------------------------------------
+    // Animated progress bar
+    // -------------------------------------------------------------------------
+
+    .circular-progress-bar {
       position: absolute;
-      top: 5%;
-      left: 5%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      top: 0;
+
+      width: 100%;
+      height: 100%;
+
+      background: transparent;
+      border: var(--progress-border-width) solid var(--progress-color);
+      border-radius: 0;
+
+      backface-visibility: hidden;
+      will-change: transform;
     }
-    @include circular-progress-bar-color();
-    @include circular-progress-animation-breakpoints();
-    @include circular-progress-animation-keyframes($progress: 0, $degree: 0, $keyframes: 20);
+
+    // -------------------------------------------------------------------------
+    // Center value
+    // -------------------------------------------------------------------------
+
+    .circular-progress-value {
+      position: absolute;
+      inset: 5%;
+      z-index: 2;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: auto;
+      height: auto;
+      padding: 1rem;
+
+      border-radius: 50%;
+      background: var(--progress-value-background);
+
+      color: var(--progress-value-color);
+      font-size: 1rem;
+      line-height: 1;
+      text-align: center;
+    }
+
+    // -------------------------------------------------------------------------
+    // Percentage animations
+    // -------------------------------------------------------------------------
+
+    @include progress-animations;
   }
+
+  // ---------------------------------------------------------------------------
+  // Responsive adjustments
+  // ---------------------------------------------------------------------------
 
   @include media('<=large') {
     .circular-progress {
-      margin-bottom: 20px;
+      margin-bottom: 1.25rem;
     }
   }
 
   @include media('<=medium') {
-    .about-section.container {
+    .circular-progress {
+      --progress-size: 135px;
+    }
+
+    &.container {
       max-width: 100%;
     }
-
-    .circular-progress {
-      width: 135px;
-      height: 135px;
-    }
   }
+
   @include media('<=small') {
     .circular-progress {
-      width: 150px;
-      height: 150px;
-    }
-
-    .circular-progress .circular-progress-value {
-      font-size: 1rem;
+      --progress-size: 150px;
     }
   }
+
   @include media('<=tiny') {
     .col-6 {
-      flex: auto;
+      flex: 0 0 100%;
       max-width: 100%;
     }
 
     .social-link {
       flex-wrap: wrap;
     }
+
     .certificate-badge {
-      padding-left: 2rem;
-      padding-right: 2rem;
+      padding-inline: 2rem;
     }
+
     .circular-progress {
-      width: 200px;
-      height: 200px;
+      --progress-size: 200px;
 
       .circular-progress-left .circular-progress-bar {
-        border-top-right-radius: 100px;
-        border-bottom-right-radius: 100px;
+        border-top-right-radius: 999px;
+        border-bottom-right-radius: 999px;
       }
+
       .circular-progress-right .circular-progress-bar {
-        border-top-left-radius: 100px;
-        border-bottom-left-radius: 100px;
+        border-top-left-radius: 999px;
+        border-bottom-left-radius: 999px;
       }
     }
   }
 }
 
+// -----------------------------------------------------------------------------
+// Dark theme
+// -----------------------------------------------------------------------------
+
 html[data-theme='dark'] {
   .about-section {
+    --progress-track-color: #{get-dark-color('bg-primary')};
+    --progress-value-background: #{get-dark-color('inverse-text-color')};
+    --progress-value-color: #{get-dark-color('text-color')};
+
     .social-link {
       a {
         color: get-dark-color('text-color');
 
-        &:hover {
+        &:hover,
+        &:focus-visible {
           color: get-dark-color('accent-color');
         }
-      }
-    }
-
-    .circular-progress {
-      &::after {
-        border: 12px solid get-dark-color('bg-primary');
-      }
-
-      .circular-progress-value {
-        background: get-dark-color('inverse-text-color');
-        color: get-dark-color('text-color');
       }
     }
   }

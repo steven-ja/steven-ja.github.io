@@ -88,7 +88,7 @@ badges:
   color: blue
 
 - type: soft-skill-indicator
-  name: NLP
+  name: LLMs
   percentage: 100
   color: yellow
 
@@ -108,7 +108,7 @@ badges:
   color: "#ddddef"
 
 - type: soft-skill-indicator
-  name: Computer Vision
+  name: Foundation models
   percentage: 100
   color: "#85672d"
 
